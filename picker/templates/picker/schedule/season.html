@@ -1,0 +1,48 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}NFL {{ season }}{% endblock %}
+{% block main_content %}
+<h3>NFL {{ season }} Schedule</h3>
+<div class="season-nav clearfix">
+    <ul> 
+        <li>Weeks</li>{% for sw in weeks %}
+        <li>
+            <a href="#week_{{ sw.week }}">{{ sw.week }}</a>
+        </li> {% endfor %}
+    </ul>
+</div>
+<style type="text/css" media="screen">
+    .winner { font-weight: bold; font-size: 1.125em; }
+</style>
+<div>
+<table>
+    <tbody>
+    {% for week in weeks %}
+    <tr>
+        <th id="week_{{ week.week }}" colspan="4" class="center">Week {{ week.week}}</th>
+    </tr>    
+    <tr>
+        <th>Kickoff</th>
+        <th>Away</th>
+        <th>Home</th>
+        <th>TV</th>
+    </tr>
+    {% for game in week.game_set.all %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
+        <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
+        <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
+        <td>{{ game.tv }}</td>
+    </tr>
+    {% endfor %}
+    {% if week.byes.count %}
+    <tr>
+        <td colspan="4" style="background-color: #eee;">
+            Byes: {{ week.byes.all|join:", "}}
+        </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

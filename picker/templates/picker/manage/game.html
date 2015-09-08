@@ -1,0 +1,33 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Manage Game Management{% endblock %}
+{% block extra_head %}
+    {{ block.super }}
+    <style media="screen">
+        input.error { border: 1px solid #800; }
+    </style>
+{% endblock extra_head %}
+{% block main_content %}
+    <h3>{{ game.away }} @ {{ game.home }}</h3>
+    <p>
+        Week {{ game.week.week }} &middot; {{ game.kickoff }}
+    </p>
+    <form method="post">
+        <table>
+            <tr>
+                <th>Kickoff</th>
+                <td>
+                    <input {% if error %}class="error"{% endif %} type="text" name="kickoff" value="{{ kickoff|date:"Y-m-d H:i" }}">
+                    {% if error %}
+                        {{ error }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Save">
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

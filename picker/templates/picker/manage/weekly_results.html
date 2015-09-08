@@ -1,0 +1,66 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Game picks{% endblock %}
+{% block extra_head %}
+    <style type="text/css" media="screen">
+        .actions input {
+            border: 1px solid #d3ad00;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 10em;
+            background: #fceabb;
+            background: -moz-linear-gradient(top, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fceabb), color-stop(50%,#fccd4d), color-stop(51%,#f8b500), color-stop(100%,#fbdf93));
+            background: -ms-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%);
+            background: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=0);
+        }
+    </style>
+{% endblock extra_head %}
+{% block main_content %}
+    <h3>Manage Picks: Week {{ week.week }}, {{ week.season }}</h3>
+    {% season_nav week "results" %}
+    <form action="" method="post" class="actions">
+        <input type="submit" name="reminder" value="Reminder Email" />
+        <input type="submit" name="kickoff" value="Kickoff Autopicks" />
+        <input type="submit" name="update" value="Auto Update" />
+    </form>
+
+    {% if form.errors %}
+    <p>Please fix the errors below:</p>    
+    {% endif %}
+    <form method="post" action="">
+    <table class="picks">
+        <tr>
+            <th class="kickoff">Kickoff</th>
+            <th class="teams">Away vs. Home</th>
+            <th class="tv">TV</th>
+        </tr>
+        {% for field in form %}
+        <tr class="{% cycle 'odd' 'even' %}">
+            <td class="kickoff">
+                {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
+                <a href="{% url 'picker-manage-game' league.lower field.field.game.id  %}">
+                    <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
+                    <span class="date-weekday">{{ dt|date:"D, P" }}</span></a>
+                {% endwith %}{% else %}{{ field.label }}
+                {% endif %}
+            </td>
+            <td>
+                {% if field.errors %}
+                {{ field.errors }}
+                {% endif %}
+                <div class="teams {{ field.field.is_correct }}">
+                    {{ field }}
+                </div>
+            </td>
+            <td>{{ field.help_text }}</td>
+        </tr>    
+        {% endfor %}
+        <tr>
+            <td colspan="3">
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    </table>
+    </form>
+{% endblock %}

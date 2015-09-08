@@ -1,0 +1,9 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Management{% endblock %}
+{% block main_content %}
+    <h3>Site Management</h3>
+    <h5>Weekly Results</h5>
+    {% season_nav week "manage" %}
+    <hr>
+    <a href="{% url 'picker-manage-playoff-builder' league.lower %}">Playoff Builder</a>
+{% endblock %}

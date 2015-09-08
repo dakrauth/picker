@@ -1,0 +1,25 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Account Profile{% endblock %}
+{% block main_content %}
+<h3>User Profile for {{ profile.user }}</h3>
+<h4>Account Avatar</h4>
+<p class="clearfix">
+    <div id="avatar">
+        <img class="top" src="{{ profile.user|picker_user_image }}" />
+    </div>
+    <a href="http://en.gravatar.com/"><em>Click here</em></a> to learn about changing your avatar
+</p>
+<h4>Account Details</h4>
+<form method="post" action="">
+<table>
+    <tbody>
+        {{ form }}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" class="center"><input type="submit" value="Save" /></td>
+        </tr>
+    </tfoot>
+</table>
+</form>
+{% endblock %}

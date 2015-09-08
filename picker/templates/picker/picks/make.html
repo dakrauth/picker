@@ -1,0 +1,57 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Game picks{% endblock %}
+{% block extra_head %}
+    <style type="text/css" media="screen">
+        .picks {  }
+        .picks .kickoff, .picks .teams, .picks .tv { text-align: center; }
+        .picks .kickoff { width: 150px; }
+        .picks .kickoff .date-weekday { font-size: 1.25em; }
+    </style>
+{% endblock extra_head %}
+{% block main_content %}
+    <h3>Week #{{ week.week }} &middot;
+        <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></h3>
+    {% with week.byes.all as byes %} {% if byes %}
+    <p>
+        <strong style="display: inline-block; width: 4em">Byes:</strong> {{ byes|join:", " }}
+    </p>
+    {% endif %} {% endwith %}
+    {% season_nav week "picks" %}
+    {% if form.errors %}
+    <p class="errorlist">Please fix the errors below:</p>
+    {% endif %}
+    <form method="post" action="">
+    <table class="picks">
+        <tbody>
+        <tr>
+            <th class="kickoff">Kickoff</th>
+            <th class="teams">Away vs. Home</th>
+            <th class="tv">TV</th>
+        </tr> {% for field in form %}
+        <tr> 
+            <td class="kickoff">
+                {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
+                <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
+                <span class="date-weekday">{{ dt|date:"D, P" }}</span>
+                {% endwith %}{% else %}
+                <span style="font-size: 1.35em">Points Total</span><br/>
+                ({{ field.label }})
+                {% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </td>
+            <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">{{ field }}</td>
+            <td class="tv">{{ field.help_text|default:"" }}</td>
+        </tr>{% endfor %}
+        </tbody>
+        {% if week.is_open %}<tfoot>
+        <tr>
+            <td></td>
+            <td class="center">
+                <input type="submit" value="Submit" />
+            </td>
+            <td></td>
+        </tr>
+        </tfoot>{% endif %}
+    </table>
+    </form>
+{% endblock %}

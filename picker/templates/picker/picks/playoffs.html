@@ -1,0 +1,82 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Game picks{% endblock %}
+{% block extra_head %}
+    <script type="text/javascript" src="/static/picker/js/playoffs.js"></script>
+    <style type="text/css" media="screen">
+        img.helmut { vertical-align: middle; width: 82px; height: 55px; }
+        .away { text-align: right; }
+        form table td { width :50%; }
+    </style>
+{% endblock %}
+{% block main_content %}
+    <div class="span-20  last">
+    <h3>Playoffs, {{ week.season }}</h3>
+    <h4>Kickoff: {{ week.kickoff|date:"D, F jS, P" }}</h4>
+    {% season_nav week "picks" %}
+
+    {% if form.errors %}
+    <p class="errorlist">Please fix the errors below:</p>    
+    {% endif %}
+    <form method="post" action="">
+        <table id="wk1">
+        <thead>
+            <tr>
+                <th colspan="2">Wildcard Games</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        </table>
+        
+        <table id="wk2">
+        <thead>
+            <tr>
+                <th colspan="2">Divisional Games</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        </table>
+        
+        <table id="wk3">
+        <thead>
+            <tr>
+                <th colspan="2">Conference Championships</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        </table>
+        
+        <table id="wk4">
+        <thead>
+            <tr>
+                <th colspan="2">Super Bowl</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="center">
+                    Total Points in Super Bowl:
+                    <input name="points" id="points" />
+                </td>
+            </tr>
+        </tfoot>
+        </table>
+        <p style="text-align: center">
+            <input value="Save" type="submit" id="submit" />
+        </p>
+        
+    </form>
+    
+    </div>
+{% endblock %}
+{% block extra_body %}{{ block.super }}
+    <script>
+        Playoffs.init(
+            {{ teams|safe }},
+            {{ NFC|safe }},
+            {{ AFC|safe }},
+            {{ picks|safe }}
+        );
+    </script>
+
+{% endblock extra_body %}

@@ -1,0 +1,44 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Teams{% endblock %}
+{% block main_content %}
+    <h3>{{ league }} Teams</h3>
+    <table class="team-info-listing">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Record</th>
+                <th>Conference</th>
+                <th>Division</th>
+                <th>Team Colors</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in league.team_set.all  %}
+            <tr>
+                <td>
+                    <img src="{{ team.image_url }}" />
+                    <a href="{% url 'picker-teams' pk=team.id league='nfl' %}">{{ team }}</a>
+                </td>
+                <td class="center">{{ team.record_as_string }}</td>
+                <td class="center">{{ team.conference }}</td>
+                <td class="center">{{ team.division }}</td>
+                <td>{% for color in team.color_options %}
+                    <div style="background-color: {{ color }}"></div>
+                {% endfor %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- iframe 
+        width="575" 
+        height="600" 
+        frameborder="0" 
+        scrolling="no" 
+        marginheight="0" 
+        marginwidth="0" 
+        src="http://maps.google.com/maps/ms?msa=0&amp;msid=114429792255420430066.00043c2b893cc8a2b43a4&amp;ie=UTF8&amp;s=AARTsJr7Lk46Ss59FDUoesUboCoCE0MtXA&amp;ll=59.623325,-75.058594&amp;spn=56.202277,101.074219&amp;z=3&amp;output=embed">
+    </iframe>
+    <br />
+    <a href="http://maps.google.com/maps/ms?msa=0&amp;msid=114429792255420430066.00043c2b893cc8a2b43a4&amp;ie=UTF8&amp;ll=59.623325,-75.058594&amp;spn=56.202277,101.074219&amp;z=3&amp;source=embed" 
+       style="font-size: smaller; color:#0000FF;text-align:left">View Larger Map</a -->
+{% endblock %}

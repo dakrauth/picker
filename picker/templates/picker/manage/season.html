@@ -1,0 +1,15 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Manage Weekly Results - {{ season }}
+    
+{% endblock %}
+{% block main_content %}
+    <h3>Manage {{ season }} &ndash; Select a week</h3>
+    <ul>
+    {% for week in weeks %}
+        <li>
+            <a href="./{{ week.week }}/">Week {{ week.week }}</a>
+            {% if week.points %}&ndash; complete{% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

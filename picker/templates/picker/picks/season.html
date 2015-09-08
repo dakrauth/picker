@@ -1,0 +1,19 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Weekly picks - {{ season }}{% endblock %}
+{% block main_content %}
+    {% all_seasons_nav season league "picks" %}
+
+    <h3>{{ season }} &ndash; Select a week</h3>
+    <ul>
+    {% for week, pick in weeks %}
+        <li>
+            <a href="{{ week.picks_url }}">Week {{ week.week }}</a> 
+            {% if week.is_open %}
+            {% if pick %}&ndash; 
+            {{ pick.is_complete|yesno:"complete,pending" }}{% else %}
+            {% endif %}
+            {% else %}&ndash; {{ pick|yesno:"played,missed"}}{% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

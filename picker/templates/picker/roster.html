@@ -1,0 +1,94 @@
+{% extends "picker/nfl/base.html" %}{% load staticfiles %}
+{% block title %}Roster{% endblock %}
+{% block extra_head %}
+    <style type="text/css" media="screen">
+        td, th { text-align: center; }
+        .roster { text-align: left; font-size: smaller;  }
+        .player img { float: left; width: 34px; }
+        .player div { float: left; margin-left: 8px; text-align: left; }
+        .player div strong { font-size: 1.1em; }
+        .player div em { color: #777; }
+        .double { border-left-width: 3px; }
+        td.hilite { font-weight: bold; color: #070; background-color: #dfd !important; }
+        .fav_team { font-style: italic; font-size: smaller; }
+        .atplace-1, .atplace-2, .atplace-3 { font-weight: bold; font-size: larger; color: #a00; }
+        .tooltip {
+            display:none;
+            background: transparent url(/media/nfl/img/black_arrow.png) no-repeat;
+            font-size:12px;
+            height:40px;
+            width:160px;
+            padding: 12px 25px;
+            color:#fff;
+        }
+    </style>
+    <script type="text/javascript" src="{% static 'js/nfl.js' %}"></script>
+    <!-- script type="text/javascript" src="{% static 'js/jquery/jquery.tools.min.js' %}"></script -->
+    <script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+{% endblock %}
+{% block main_content %}
+    <h3>Roster and Season Standings &mdash; {{ season }}</h3>
+    {% all_seasons_nav season league "roster" %}
+    <table id="roster" class="roster">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th><strong><abbr title="{{ season }} ranking">{{ season }}</abbr></strong></th>
+                <th><abbr title="{{ season }} Weeks played and won">Wks / Won</abbr></th>
+                <th><abbr title="{{ season }} Correct">+</abbr></th>
+                <th><abbr title="{{ season }} Incorrect">-</abbr></th>
+                <th><abbr title="{{ season }} Percentage correct">%</abbr></th>
+                <th><abbr title="{{ season }} Total difference in final points">&plusmn; Pts</abbr></th>
+                <th><abbr title="{{ season }} Average difference in final points">&plusmn;avg</abbr></th>
+                <th class="double"><abbr title="All time correct picks">+</abbr></th>
+                <th><abbr title="All time incorrect picks">-</abbr></th>
+                <th><abbr title="All time percentage correct">%</abbr></th>
+                <th><abbr title="All time total difference in final points">&plusmn; Pts</abbr></th>
+                <th><abbr title="All time average difference in final points">&plusmn;avg</abbr></th>
+                <th><abbr title="All time weeks played and won">Wks / Won</abbr></th>
+                <th><strong><abbr title="All time ranking">All</abbr></strong></th>
+            </tr>
+        </thead>
+        
+        <tbody> {% for place,entry,all_time_place,all_time_stats in roster %}{% if entry.is_active %}
+            <tr class="{% cycle 'odd' 'even' %} {{ entry.user.picker_preferences.is_active|yesno:"active,inactive" }}">
+                <td class="player">
+                    <img src="{{ entry.user|picker_user_image:"32" }}" />
+                    <div>
+                        <strong>
+                            <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
+                                {{ entry.user.username }}</a></strong> <br />
+                        {% with entry.user.picker_preferences.favorite_team as team %}
+                        {% if team %}
+                        <a class="fav_team" href="{{ team.get_absolute_url }}">{{ team }}</a>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </td>
+                <td>{{ place }}</td>
+                <td>{{ entry.weeks_played }} / {{ entry.weeks_won|length }}</td>
+                <td class="hilite">{{ entry.correct }}</td>
+                <td>{{ entry.wrong }}</td>
+                <td>{{ entry.pct|floatformat:"1" }}%</td>
+                <td>{{ entry.points_delta}}</td>
+                <td>{{ entry.avg_points_delta|floatformat }}</td>
+
+                <td class="double"><strong>{{ all_time_stats.correct }}</strong></td>
+                <td>{{ all_time_stats.wrong }}</td>
+                <td>{{ all_time_stats.pct|floatformat:"1" }}%</td>
+                <td>{{ all_time_stats.points_delta}}</td>
+                <td>{{ all_time_stats.avg_points_delta|floatformat }}</td>
+                <td>{{ all_time_stats.weeks_played }} / {{ all_time_stats.weeks_won|length }}</td>
+                <td class="atplace-{{ all_time_place }}">{{ all_time_place }}</td>
+            </tr>{% endif %}{% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block extra_body %}{{ block.super }}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $("#roster").tablesorter();
+            // $("abbr[title]").tooltip();
+        });
+    </script>
+{% endblock extra_body %}

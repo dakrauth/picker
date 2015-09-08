@@ -1,0 +1,82 @@
+{% extends "picker/nfl/base.html" %}{% load staticfiles %}
+{% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
+{% block extra_head %}
+    <style type="text/css" media="screen">
+        .metasmack { padding: .25em; font-style: italic; font-size: 1.1em; font-weight: normal; }
+        .metasmack img { vertical-align: middle; }
+        .results-table td { text-align: center; }
+        .results-table td.team-cell { width: 50px; position: relative; }
+        .results-table td.team-cell span { position: absolute; right: 0; bottom: 0; font-size: smaller; color: #999; }
+        .results-table td.team-cell img { width: 50px; height: 38px; }
+        .results-table td.team-cell img.incorrect, 
+            .results-table td.team-cell img.tbd { filter:alpha(opacity=50); opacity: 0.5; }
+        .results-table td.team-cell img.incorrect { 
+            {# width: 25px; height: 19px;  #}
+            -webkit-transform: rotate(180deg);
+            -moz-transform:    rotate(180deg);
+        }
+        .results-table th { font-size: .9em; text-align: center; }
+        .username { display: block; }
+        .userpick { font-weight: bold; }
+        .autopick { font-style: italic; color: #800; }
+    </style>
+{% endblock extra_head %}
+{% block main_content %}
+    <h3>Results for {{ season }} Playoffs</h3>
+    {% season_nav week "results" %}
+    {% if playoff.has_started %}
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Place</th>
+                <th>Picker</th>
+                <th colspan="4">Wildcard</th>
+                <th colspan="4">Divisional</th>
+                <th colspan="2">Conference</th>
+                <th>Super Bowl</th>
+                <th>Points</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in playoff.scores %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <img src="{{ score.picks.user|picker_user_image:"32" }}" />
+                    <span class="username">{{ score.picks.user }}</span>
+                </td>
+                {% for result,team in score.results %}
+                <td class="team-cell">
+                    <img class="{{ result|yesno:"correct,incorrect,tbd" }}" src="{% if team %}{{ team.image_url }}{% else %}{% static 'img/nfl/cross.png' %}{% endif %}">
+                    {% if result >= 0 %}<span>{{ result }}</span>{% endif %}
+                </td>
+                {% endfor %}
+                <td>{{ score.picks.points }}</td>
+                <td>{{ score.score }}</td>
+            </tr>    
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Picker</th>
+                <th>Entry Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in playoff.picks %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>
+                    <img src="{{ p.user|picker_user_image:"32" }}" />
+                    <span class="username">{{ p.user }}</span>
+                </td>
+                <td>{{ p.created }}</td>
+            </tr>    
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Weekly Results - {{ season }}{% endblock %}
+{% block main_content %}
+    {% all_seasons_nav season league "results" %}
+    <h3>{{ season }} Results</h3>
+    <table>
+        <tr><th class="center">Week</th><th class="center">Winner(s)</th></tr>
+        {% for week in weeks %}
+        <tr>
+            <td class="center">
+                <a href="{{ week.get_absolute_url }}">Week {{ week.week }}</a>
+            </td>
+            <td class="center">{{ week.winners|join:", " }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock main_content %}

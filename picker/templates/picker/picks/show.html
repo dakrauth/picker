@@ -1,0 +1,55 @@
+{% extends "picker/nfl/base.html" %}
+{% block title %}Game picks{% endblock %}
+{% block main_content %}
+    <h3>My Weekly Picks</h3>
+    <h4> Week #{{ week.week }} {{ week.season }}</h4>
+    {% season_nav week "picks" %}
+
+    {% if picks %}
+    
+    <table class="past-picks-summary">
+        <tbody>
+            <tr>
+                <th>Correct Picks:</th>
+                <td>{{ picks.correct }}</td>
+            </tr>
+            <tr>
+                <th>Your Points:</th>
+                <td><span class="{% if picks.points == week.points %}correct{% else %}incorrenct{% endif %}">{{ picks.points }}</span></td>
+            </tr>
+            <tr>
+                <th>Actual Points:</th>
+                <td>{{ week.points }}</td>
+            </tr>
+            <tr>
+                <th>Differential:</th>
+                <td>&plusmn;{{ picks.points_delta }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="past-picks">
+        <tbody>
+        <tr>
+            <th>Kickoff</th>
+            <th>Away</th>
+            <th>Home</th>
+        </tr>    
+        {% for pick in picks.gamepick_set.all %}
+        <tr class="{% cycle 'odd' 'even' %}">
+            <td class="when">{{ pick.game.kickoff|date:"D P, M jS" }}</td>
+            <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% ifequal pick.game.away pick.winner %} selected{% endifequal %}">
+                <a href="{{ pick.game.away.get_absolute_url }}">{{ pick.game.away }}</a>
+            </td>
+            <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% ifequal pick.game.home pick.winner %} selected{% endifequal %}">
+                <a href="{{ pick.game.home.get_absolute_url }}">{{ pick.game.home }}</a>
+            </td>
+        </tr>    
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>You have not registered picks for this week.</p>
+    {% endif %}
+    
+{% endblock %}

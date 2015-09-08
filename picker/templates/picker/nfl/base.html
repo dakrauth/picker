@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% load staticfiles %}
+{% if messages %}{% block messages %}
+    <div class="messages">
+        <div class="container">
+            <ul> {% for msg in messages %}
+                <li>{{ msg }}</li> {% endfor %}
+            </ul>
+        </div>
+    </div>{% endblock %}
+{% endif %}
+{% block extra_body %}
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() { $('.messages').slideUp(); }, 5000);
+            Picks.scores('/api/v1/scores/');
+            Picks.teams();
+        });
+    </script>
+{% endblock extra_body %}
