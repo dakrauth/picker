@@ -139,6 +139,13 @@ def update_status(league, **options):
 
 
 #-------------------------------------------------------------------------------
+def update_results(league, **options):
+    week = league.current_week
+    if week:
+        week.update_results()
+
+
+#-------------------------------------------------------------------------------
 @register
 def reset_gameweek(league, **options):
     week = league.current_week
