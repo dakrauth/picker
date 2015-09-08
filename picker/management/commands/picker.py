@@ -40,7 +40,7 @@ def check(league, **options):
     pprint(score_strip_games)
 
     current_week = {}
-    gw = league.current_week
+    gw = league.current_gameset
     for g in gw.games:
         ko = g.kickoff
         key = '%s @ %s' % (g.away.abbr, g.home.abbr)
@@ -113,7 +113,7 @@ def reminder(league, **options):
     else:
         today = datetime.now().date()
         
-    gw = league.current_week
+    gw = league.current_gameset
     first_game = gw.first_game
     
     if first_game.kickoff.date() == today:
@@ -126,7 +126,7 @@ def reminder(league, **options):
 #-------------------------------------------------------------------------------
 @register
 def reset_pick_results(league, **options):
-    for wp in league.current_week.pick_set.all():
+    for wp in league.current_gameset.pick_set.all():
         wp.correct = 0
         wp.wrong = 0
         wp.save()
@@ -135,12 +135,12 @@ def reset_pick_results(league, **options):
 #-------------------------------------------------------------------------------
 @register
 def update_status(league, **options):
-    league.current_week.update_pick_status()
+    league.current_gameset.update_pick_status()
 
 
 #-------------------------------------------------------------------------------
 def update_results(league, **options):
-    week = league.current_week
+    week = league.current_gameset
     if week:
         week.update_results()
 
@@ -148,7 +148,7 @@ def update_results(league, **options):
 #-------------------------------------------------------------------------------
 @register
 def reset_gameweek(league, **options):
-    week = league.current_week
+    week = league.current_gameset
     for g in week.game_set.exclude(status='U'):
         print g, g.status
         g.status = 'U'
@@ -169,7 +169,7 @@ def nfl_standings(league, **options):
     if wk:
         week = league.game_set.get(week=wk, season=league.current_season)
     else:
-        week = league.current_week
+        week = league.current_gameset
         
     print 'NFL', week
     for place, pick in picker.sorted_standings(

@@ -11,6 +11,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.contrib.auth.models import User
+from django.utils.module_loading import import_string
 
 from choice_enum import ChoiceEnumeration
 from django_extensions.db.fields.json import JSONField
@@ -88,6 +89,21 @@ class Preference(models.Model):
         return '"{}" <{}>'.format(self.username, self.email)
 
 
+#-------------------------------------------------------------------------------
+def new_preferences(sender, instance, created=False, **kws):
+    if created:
+        return
+        
+    if instance.is_active:
+        Preference.objects.get_or_create(user=instance)
+        return
+
+    Preference.objects.filter(user=instance).update(status=Preference.Status.INACTIVE)
+
+
+models.signals.post_save.connect(new_preferences, sender=User)
+
+
 #===============================================================================
 class League(models.Model):
     name   = models.CharField(max_length=50, unique=True)
@@ -137,7 +153,7 @@ class League(models.Model):
 
     #---------------------------------------------------------------------------
     @cached_property
-    def current_week(self):
+    def current_gameset(self):
         rel = datetime_now()
         try:
             return self.game_set.get(opens__lte=rel, closes__gte=rel)
@@ -176,8 +192,8 @@ class League(models.Model):
 
     #---------------------------------------------------------------------------
     def send_reminder_email(self):
-        week = self.current_week
-        signals.picker_reminder.send(sender=GameSet, week=week)
+        gs = self.current_gameset
+        signals.picker_reminder.send(sender=GameSet, week=gs)
 
     #---------------------------------------------------------------------------
     def create_season(self, season, schedule, byes=None):
@@ -1040,23 +1056,17 @@ def sorted_standings(items):
     return weighted
 
 
-#-------------------------------------------------------------------------------
-def new_preferences(sender, instance, created=False, **kws):
-    if created:
-        return
-        
-    if instance.is_active:
-        Preference.objects.get_or_create(user=instance)
-        return
-
-    Preference.objects.filter(user=instance).update(status=Preference.Status.INACTIVE)
-
-
-models.signals.post_save.connect(new_preferences, sender=User)
-
+_participation_hooks = None
 
 #-------------------------------------------------------------------------------
-def can_user_participate(prof, week):
-    from weeklypicker.models import ActivityStatus
-    activity_status = ActivityStatus(prof)
-    return activity_status.can_participate(week)
+def can_user_participate(pref, week):
+    global _participation_hooks
+    if _participation_hooks is None:
+        hooks = picker_setting('PARTICIPATION_HOOKS', [])
+        _participation_hooks = [import_string(hook) for hook in hooks]
+    
+    for hook in _participation_hooks:
+        if not hook(pref, week):
+            return False
+    
+    return True

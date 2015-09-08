@@ -120,14 +120,14 @@ def _conference_playoff_context(playoff, user):
 #-------------------------------------------------------------------------------
 @picker_adapter
 def home(request, league):
-    return '@home.html', {'week': league.current_week, 'feed': utils.parse_feed()}
+    return '@home.html', {'week': league.current_gameset, 'feed': utils.parse_feed()}
 
 
 #-------------------------------------------------------------------------------
 def api_v1(request, action):
     league = League.get('nfl')
     if action == 'scores':
-        return utils.JsonResponse(scores.score_strip(not league.current_week))
+        return utils.JsonResponse(scores.score_strip(not league.current_gameset))
         
     raise http.Http404
 
@@ -188,7 +188,7 @@ def _week_results(request, week, **extras):
 @login_required
 @picker_adapter
 def results(request, league):
-    week = league.current_week
+    week = league.current_gameset
     if not week:
         return utils.redirect_reverse('picker-playoffs-results', league.current_season)
 
@@ -265,7 +265,7 @@ def picks_by_season(request, league, season):
 @login_required
 @picker_adapter
 def picks(request, league):
-    week = league.current_week
+    week = league.current_gameset
     if week:
         return _weekly_picks(request, league, week)
 
@@ -308,8 +308,8 @@ def picks_for_playoffs(request, league, season):
 @management_user_required
 @picker_adapter
 def management_home(request, league):
-    week = league.current_week or _playoff_week(league.playoff)
-    return '@manage/home.html', {'week': week, 'management': True,}
+    gs = league.current_gameset or _playoff_week(league.playoff)
+    return '@manage/home.html', {'week': gs, 'management': True,}
 
 
 #-------------------------------------------------------------------------------
@@ -324,12 +324,12 @@ def manage_season(request, league, season):
 @management_user_required
 @picker_adapter
 def manage_week(request, league, season, week):
-    week = get_object_or_404(league.game_set, season=season, week=week)
+    gs = get_object_or_404(league.game_set, season=season, week=week)
     if request.method == 'POST':
-        go_to = reverse('picker-game-week', args=(league.lower, week.season, week.week))
+        go_to = reverse('picker-game-week', args=(league.lower, gs.season, gs.week))
         if 'kickoff' in request.POST:
-            week.picks_kickoff()
-            week.update_results()
+            gs.picks_kickoff()
+            gs.update_results()
             messages.success(request, 'Week kickoff successful')
             return http.HttpResponseRedirect(go_to)
             
@@ -339,7 +339,7 @@ def manage_week(request, league, season, week):
             return http.HttpResponseRedirect(go_to)
             
         if 'update' in request.POST:
-            res = week.update_results()
+            res = gs.update_results()
             if res is None:
                 messages.warning(request, 'No completed games!')
             elif res is False:
@@ -348,18 +348,18 @@ def manage_week(request, league, season, week):
                 messages.success(request, '%s game(s) update' % res)
             return http.HttpResponseRedirect(go_to)
         
-        form = ManagementPickForm(week, request.POST)
+        form = ManagementPickForm(gs, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Results saved')
             return http.HttpResponseRedirect(go_to)
     else:
-        week.update_results()
+        gs.update_results()
         messages.success(request, 'Scores automatically updated!')
-        form = ManagementPickForm(week)
+        form = ManagementPickForm(gs)
         
     
-    return '@manage/weekly_results.html', {'form': form, 'week': week, 'management': True}
+    return '@manage/weekly_results.html', {'form': form, 'week': gs, 'management': True}
 
 
 #-------------------------------------------------------------------------------
