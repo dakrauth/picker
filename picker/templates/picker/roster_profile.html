@@ -12,14 +12,14 @@
 {% block main_content %}
 <h3 class="clearfix">
     <img class="top" src="{{ profile.user|picker_user_image }}" />
-    <em>{{ profile }}</em><br />
-    <span>Since {{ profile.date_joined|date:"M j, Y" }}</span>
+    {{ profile }}<br>
+    <span>Since {{ profile.user.date_joined|date:"M j, Y" }}</span>
 </h3>
 <p class="home-team-choice">
-    {% with profile.picker_preferences.favorite_team as team %}
+    {% with profile.favorite_team as team %}{% if team %}
     <img style="width: 62px; height: 47px" src="{{ team.image_url }}" />
     <a href="{{ team.get_absolute_url }}">{{ team }}</a>
-    {% endwith %}
+    {% endif %}{% endwith %}
 </p>
 
 <table class="roster">
@@ -37,8 +37,8 @@
         </tr>
     </thead>
     
-    <tbody> {% for entry in stats %}
-        <tr class="{% cycle 'odd' 'even' %}{% if forloop.last %} last{% endif %}">
+    <tbody>{% for entry in stats %}{% if entry.weeks_played %}
+        <tr>
             <td>{{ entry.season|default:"Totals" }}</td>
             <td></td>
             <td>{{ entry.weeks_played }}</td>
@@ -57,7 +57,7 @@
             <td>{{ entry.pct|floatformat:"1" }}%</td>
             <td>{{ entry.points_delta}}</td>
             <td>{{ entry.avg_points_delta|floatformat }}</td>
-        </tr> {% endfor %}
+        </tr>{% endif %}{% endfor %}
     </tbody>
 </table>
 {% endblock %}

@@ -376,8 +376,7 @@ class Team(models.Model):
     def season_record(self, season=None):
         season = season or self.league.current_season
         wins, losses, ties = (0, 0, 0)
-        # TODO Game.UNPLAYED_STATUS
-        for game in Game.objects.exclude(status='U').filter(
+        for game in Game.objects.exclude(status=Game.Status.UNPLAYED).filter(
             models.Q(home=self) | models.Q(away=self),
             week__season=season,
         ):

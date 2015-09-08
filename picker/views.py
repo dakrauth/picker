@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.template.base import add_to_builtins
 
-from .models import League, Game, RosterStats
+from .models import League, Game, RosterStats, Preference
 from .forms import UserPickForm, ManagementPickForm, PlayoffBuilderForm
 from . import utils
 from .league.nfl import scores
@@ -158,10 +158,10 @@ def schedule(request, league, season=None):
 @login_required
 @picker_adapter
 def roster_profile(request, league, username):
-    user = get_object_or_404(User, username=username)
+    pref = get_object_or_404(Preference, user__username=username)
     seasons = list(league.available_seasons) + [None]
-    stats = [RosterStats(user, league, s) for s in seasons]
-    return '@roster_profile.html', {'profile': user, 'stats': stats}
+    stats = [RosterStats(pref, league, s) for s in seasons]
+    return '@roster_profile.html', {'profile': pref, 'stats': stats}
 
 
 #-------------------------------------------------------------------------------
