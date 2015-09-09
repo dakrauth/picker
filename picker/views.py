@@ -27,10 +27,8 @@ def picker_adapter(view):
         result = view(request, league, *args, **kws)
         if isinstance(result, http.HttpResponse):
             return result
-        elif isinstance(result, basestring):
-            return render(request, utils.get_templates(league, result))
         
-        tmpl, ctx = result
+        tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
         tmpls = utils.get_templates(league, tmpl)
         data = {'league': league, 'season': league.current_season}
         if ctx:
