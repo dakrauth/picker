@@ -24,7 +24,7 @@ class GameManager(models.Manager):
 
     #---------------------------------------------------------------------------
     def incomplete(self, **kws):
-        kws['status'] = self.models.Status.UNPLAYED
+        kws['status'] = self.model.Status.UNPLAYED
         return self.filter(**kws)
 
 
