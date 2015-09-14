@@ -57,17 +57,6 @@
         scores: score_strip,
         
         //----------------------------------------------------------------------
-        teams: function() {
-            var teams = 'ari atl bal buf car chi cin cle dal den det gb hou ind jac kc mia min ne no nyg nyj oak phi pit sd sf sea stl tb ten was'.split(' ');
-            $('#teams-img').click(function(e) {
-                var el = document.getElementById('fav-team');
-                if(el) {
-                    el.className = 'team-' + teams[Math.floor(e.offsetX / 30)];
-                }
-            });
-        },
-        
-        //----------------------------------------------------------------------
         ie_sucks: function() {
             var text = [
                 'Your browser <strong>sucks</strong>. Please consider switching to ',

@@ -8,12 +8,20 @@
         </div>
     </div>{% endblock %}
 {% endif %}
-{% block extra_body %}
+{% block extra_body %}{{ block.super }}
     <script>
         $(document).ready(function() {
             setTimeout(function() { $('.messages').slideUp(); }, 5000);
             Picks.scores('/api/v1/scores/');
-            Picks.teams();
+            (function() {
+                var teams = 'ari atl bal buf car chi cin cle dal den det gb hou ind jac kc mia min ne no nyg nyj oak phi pit sd sf sea stl tb ten was'.split(' ');
+                $('#teams-img').click(function(e) {
+                    var el = document.getElementById('fav-team');
+                    if(el) {
+                        el.className = 'team-' + teams[Math.floor(e.offsetX / 30)];
+                    }
+                });
+            })();
         });
     </script>
 {% endblock extra_body %}
