@@ -3,39 +3,45 @@
     var score_calls = 0;
     
     //--------------------------------------------------------------------------
-    var score_strip = function(scores_api_url) {
-        $.get(scores_api_url, function(scores_data) {
-            var $scorestrip = $('.scorestrip').attr('data-load', ++score_calls);
-            var html = [];
-            var game, away_class, home_class, bit;
-            console.log(scores_data);
-            if(scores_data && scores_data.games) {
-                for(var i = 0; i < scores_data.games.length; i++) {
-                    game = scores_data.games[i];
-                    away_class = game.winner == null ? '' : game.away == game.winner ? 'sc_win' : 'sc_loss';
-                    home_class = game.winner == null ? '' : game.home == game.winner ? 'sc_win' : 'sc_loss';
-                    html.push('<div>');
-                    html.push('<div class="' + away_class + '">' + game.away + (game.pos == game.home ? ' &bull;' : '') + ' <span>' + game.away_score + '</span></div>');
-                    html.push('<div class="' + home_class + '">' + game.home + (game.pos == game.away ? ' &bull;' : '') + ' <span>' + game.home_score + '</span></div>');
-                    html.push('<div class="time">');
-                    
-                    if(game.status == 'Pending') {
-                        bit = game.day + ' ' + game.time;
-                    }
-                    else {
-                        bit = game.status + (game.clock ? ' ' + game.clock: '');
-                    }
-                    
-                    html.push('<a href="' + game.url + '" target="_blank">' + bit + '</a></div></div>');
+    var score_strip_handler = function(scores_data) {
+        var $scorestrip = $('.scorestrip').attr('data-load', ++score_calls);
+        var html = [];
+        var gm, away_class, home_class, bit;
+        console.log(scores_data);
+        if(scores_data && scores_data.games) {
+            for(var i = 0; i < scores_data.games.length; i++) {
+                gm = scores_data.games[i];
+                away_class = gm.winner == null ? '' : gm.away == gm.winner ? 'sc_win' : 'sc_loss';
+                home_class = gm.winner == null ? '' : gm.home == gm.winner ? 'sc_win' : 'sc_loss';
+                html.push('<div>');
+                html.push('<div class="' + away_class + '">' + gm.away + (gm.pos == gm.home ? ' &bull;' : '') + ' <span>' + gm.away_score + '</span></div>');
+                html.push('<div class="' + home_class + '">' + gm.home + (gm.pos == gm.away ? ' &bull;' : '') + ' <span>' + gm.home_score + '</span></div>');
+                html.push('<div class="time">');
+                
+                if(gm.status == 'Pending') {
+                    bit = gm.day + ' ' + gm.time;
                 }
+                else {
+                    bit = gm.status + (gm.clock ? ' ' + gm.clock: '');
+                }
+                
+                html.push('<a href="' + gm.url + '" target="_blank">' + bit + '</a></div></div>');
             }
-            else {
-                html.push('<p>Unable to load score strip</p>')
-            }
-            $scorestrip.html(html.join('\n'));
-            
-        });
-        setTimeout(score_strip, 1000 * 60 * 5 + 10)
+        }
+        else {
+            html.push('<p>Unable to load score strip</p>')
+        }
+        $scorestrip.html(html.join('\n'));
+        
+    };
+    
+    //--------------------------------------------------------------------------
+    var score_strip = function(scores_api_url) {
+        var inner_func = function() {
+            $.get(scores_api_url, score_strip_handler);
+            setTimeout(inner_func, 1000 * 30 * 1);
+        };
+        inner_func();
     };
     
     var make_row = function(team, score, has_pos, is_winner) {
