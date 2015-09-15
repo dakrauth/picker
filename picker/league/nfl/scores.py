@@ -148,7 +148,7 @@ class ScoreStrip(object):
 
 
 #-------------------------------------------------------------------------------
-def score_strip(playoffs=False, cache_ttl=120, no_cache=False):
+def scores(playoffs=False, cache_ttl=120, no_cache=False, completed=False):
     if no_cache:
         data = None
     else:
@@ -163,26 +163,19 @@ def score_strip(playoffs=False, cache_ttl=120, no_cache=False):
         if data:
             cache.set('nfl_score_strip', data, cache_ttl)
 
+    if data and completed:
+        data = [
+            g for g in data['games']
+            if g['status'].startswith(('Final', 'F/OT'))
+        ]
+        
     return data
-
-
-#-------------------------------------------------------------------------------
-def complete_scores(*args, **kws):
-    scores = score_strip(*args, **kws)
-    if not scores:
-        return None
-
-    return [
-        g for g in scores['games']
-        if g['status'].startswith(('Final', 'F/OT'))
-    ]
-    
 
 
 ################################################################################
 if __name__ == '__main__':
     import sys
-    pprint(score_strip(len(sys.argv) > 1, no_cache=True))
+    pprint(scores(len(sys.argv) > 1, no_cache=True))
 
 
 

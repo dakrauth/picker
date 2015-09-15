@@ -1,10 +1,10 @@
-    <div class="season-nav all-season-nav span-17 last">
-        <ul> 
-            <li><strong>{{ label }}</strong></li>
-            {% for season in seasons %}
-            <li{% if season == current %} id="active"{% endif %}>
-                <a href="/nfl/{{ relative_to }}/{{ season }}/">{{ season }}</a>
-            </li> {% endfor %}
-        </ul>
-    </div>
-    <br class="clear" />
+<div class="season-nav all-season-nav span-17 last">
+    <ul> 
+        <li><strong>{{ label }}</strong></li>
+        {% for season in league.available_seasons %}
+        <li{% if season == current %} id="active"{% endif %}>
+            <a href="/{{ league.lower }}/{{ relative_to }}/{{ season }}/">{{ season }}</a>
+        </li> {% endfor %}
+    </ul>
+</div>
+<br>

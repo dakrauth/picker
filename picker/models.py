@@ -2,6 +2,7 @@
 import re
 import json
 import random
+from importlib import import_module
 from decimal import Decimal
 from datetime import datetime, timedelta, time
 from dateutil import relativedelta as rd
@@ -17,7 +18,6 @@ from choice_enum import ChoiceEnumeration
 from django_extensions.db.fields.json import JSONField
 
 from . import utils
-from .league.nfl import scores
 from . import signals
 from .conf import get_setting as picker_setting
 from . import managers
@@ -117,7 +117,20 @@ class League(models.Model):
     @cached_property
     def lower(self):
         return self.abbr.lower()
-        
+    
+    #---------------------------------------------------------------------------
+    @cached_property
+    def scores_module(self):
+        try:
+            return import_module('picker.league.{}.scores'.format(self.lower))
+        except ImportError:
+            return None
+    
+    #---------------------------------------------------------------------------
+    def scores(self, *args, **kws):
+        mod = self.scores_module
+        return mod.scores(*args, **kws) if mod else None
+    
     #---------------------------------------------------------------------------
     def teams_by_conf(self):
         abbrs = self.conference_set.values('abbr', flat=True)
@@ -267,7 +280,8 @@ class League(models.Model):
     
     #---------------------------------------------------------------------------
     @classmethod
-    def get(cls, abbr):
+    def get(cls, abbr=None):
+        abbr = abbr or picker_setting('DEFAULT_LEAGUE', 'nfl')
         if abbr not in cls._league_cache:
             cls._league_cache[abbr] = League.objects.get(abbr=abbr)
         return cls._league_cache[abbr]
@@ -338,10 +352,11 @@ class Team(models.Model):
     #---------------------------------------------------------------------------
     @property
     def image_url(self):
-        if self.league.lower == 'nfl':
-            return '{}img/nfl/logos/{}'.format(settings.STATIC_URL, self.image)
-        else:
-            return '{}img/ncaaf/%s '.format(settings.STATIC_URL, self.image)
+        return '{}img/{}/logos/{}'.format(
+            settings.STATIC_URL,
+            self.league.lower,
+            self.image
+        )
         
     #---------------------------------------------------------------------------
     def ranking(self, week):
@@ -526,14 +541,12 @@ class GameSet(models.Model):
     #---------------------------------------------------------------------------
     @property
     def winners(self):
-        if not self.points:
-            return None
-        
         winners = []
-        for place, item in self.weekly_results():
-            if place > 1:
-                break
-            winners.append(item.user)
+        if self.points:
+            for place, item in self.weekly_results():
+                if place > 1:
+                    break
+                winners.append(item.user)
         return winners
         
     #---------------------------------------------------------------------------
@@ -569,7 +582,7 @@ class GameSet(models.Model):
     
     #---------------------------------------------------------------------------
     def update_results(self):
-        results = scores.complete_scores()
+        results = self.league.scores(completed=True)
         if not results:
             return False
 

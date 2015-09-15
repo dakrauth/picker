@@ -12,7 +12,6 @@ from django.template.base import add_to_builtins
 from .models import League, Game, RosterStats, Preference
 from .forms import UserPickForm, ManagementPickForm, PlayoffBuilderForm
 from . import utils
-from .league.nfl import scores
 from .decorators import management_user_required
 
 
@@ -92,10 +91,10 @@ def home(request, league):
 
 
 #-------------------------------------------------------------------------------
-def api_v1(request, action):
-    league = League.get('nfl')
+def api_v1(request, action, league=None):
+    league = League.get(league)
     if action == 'scores':
-        return utils.JsonResponse(scores.score_strip(not league.current_gameset))
+        return utils.JsonResponse(league.scores(not league.current_gameset))
         
     raise http.Http404
 

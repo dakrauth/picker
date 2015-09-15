@@ -4,7 +4,6 @@ from datetime import datetime
 from optparse import make_option
 from django.core.management.base import BaseCommand
 from picker import models as picker
-from picker.league.nfl import scores
 
 
 #===============================================================================
@@ -18,7 +17,7 @@ class Callbacks(object):
         def pretty(e):
             return '%s %d:%02d' % (DOW[e[0]], e[1], e[2])
         
-        data = scores.score_strip()
+        data = league.scores()
         if not data:
             print '*** Unable to retrieve data'
             return

@@ -100,24 +100,24 @@ def verbose(value, arg):
 #-------------------------------------------------------------------------------
 @register.inclusion_tag('picker/season_nav.html', takes_context=True)
 def season_nav(context, week, relative_to):
-    return dict(
-        week=week,
-        relative_to=relative_to,
-        user=context['user'],
-        nfl_current_season=context['league'].current_season
-    )
+    return {
+        'week': week,
+        'relative_to': relative_to,
+        'user': context['user'],
+        'league': context['league']
+    }
 
 
 #-------------------------------------------------------------------------------
 @register.inclusion_tag('picker/all_seasons_nav.html', takes_context=True)
 def all_seasons_nav(context, current, league, relative_to):
-    return dict(
-        label="All seasons:",
-        current=int(current),
-        seasons=league.available_seasons,
-        relative_to=relative_to,
-        user=context['user']
-    )
+    return {
+        'label': 'All seasons',
+        'current' :int(current),
+        'relative_to': relative_to,
+        'user': context['user'],
+        'league': context['league']
+    }
 
 
 #-------------------------------------------------------------------------------
