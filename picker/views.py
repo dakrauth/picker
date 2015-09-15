@@ -1,3 +1,4 @@
+import functools
 from dateutil.parser import parse as dt_parse
 
 from django import http
@@ -16,8 +17,27 @@ from .decorators import management_user_required
 
 
 datetime_now = utils.datetime_now
-picker_adapter = utils.picker_adapter
 add_to_builtins('picker.templatetags.picker_tags')
+
+
+#-------------------------------------------------------------------------------
+def picker_adapter(view):
+    @functools.wraps(view)
+    def view_wrapper(request, *args, **kws):
+        league = League.get(kws.pop('league'))
+        result = view(request, league, *args, **kws)
+        if isinstance(result, http.HttpResponse):
+            return result
+        
+        tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
+        tmpls = utils.get_templates(league, tmpl)
+        data = {'league': league, 'season': league.current_season}
+        if ctx:
+            data.update(**ctx)
+            
+        return render(request, tmpls, data)
+        
+    return view_wrapper
 
 
 #-------------------------------------------------------------------------------

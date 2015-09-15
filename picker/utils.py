@@ -40,26 +40,6 @@ def get_templates(league, component):
 
 
 #-------------------------------------------------------------------------------
-def picker_adapter(view):
-    @functools.wraps(view)
-    def view_wrapper(request, *args, **kws):
-        league = League.get(kws.pop('league'))
-        result = view(request, league, *args, **kws)
-        if isinstance(result, http.HttpResponse):
-            return result
-        
-        tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
-        tmpls = get_templates(league, tmpl)
-        data = {'league': league, 'season': league.current_season}
-        if ctx:
-            data.update(**ctx)
-            
-        return render(request, tmpls, data)
-        
-    return view_wrapper
-
-
-#-------------------------------------------------------------------------------
 def basic_form_view(
     request,
     tmpl,

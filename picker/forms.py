@@ -179,14 +179,14 @@ class ManagementPickForm(BasePickForm):
     def __init__(self, week, *args, **kws):
         kws.setdefault('initial', get_initial_picks(week))
         super(ManagementPickForm, self).__init__(week, *args, **kws)
+        self.fields['send_mail'] = forms.BooleanField(required=False)
     
     #---------------------------------------------------------------------------
     def save(self):
-        data = self.cleaned_data.copy()
         week = self.week
-        points = data.pop('points', 0)
-        
-        week.points = points
+        data = self.cleaned_data.copy()
+        send_mail = data.pop('send_mail', False)
+        week.points = data.pop('points', 0)
         week.save()
         
         for key, winner in data.items():
@@ -197,10 +197,7 @@ class ManagementPickForm(BasePickForm):
                 game.save()
         
         week.update_pick_status()
-        if points:
-            summary = picker.WeekSummary.objects.summarize_for_week(week)
-            if summary and data.pop('send_mail', False):
-                picker_weekly_results.send(sender=picker.WeekSummary, summary=summary)
+        picker_weekly_results.send(sender=week.__class__, week=week, send_mail=send_mail)
 
 
 #===============================================================================

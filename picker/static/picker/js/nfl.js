@@ -161,7 +161,7 @@
         scores: function(scores_api_url) {
             var inner_func = function() {
                 $.get(scores_api_url, score_strip_handler);
-                setTimeout(inner_func, 1000 * 30 * 1);
+                setTimeout(inner_func, 1000 * 60 * 5);
             };
             inner_func();
         },
