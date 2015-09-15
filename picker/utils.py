@@ -6,7 +6,9 @@ from datetime import datetime
 from django import http
 from django.db import models, connection
 from django.conf import settings
-from django.template import loader, Context, Template
+from django.contrib import messages
+from django.template import loader
+from django.shortcuts import render
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from .contrib import feedparser
@@ -23,6 +25,69 @@ else:
     datetime_now = datetime.now
 
 json_dumps = functools.partial(json.dumps, indent=4)
+
+
+#-------------------------------------------------------------------------------
+def get_templates(league, component):
+    league_dir = 'picker/{}/'.format(league.lower)
+    if component.startswith('@'):
+        return [
+            component.replace('@', 'picker/'),
+            component.replace('@', league_dir)
+        ]
+    
+    return component
+
+
+#-------------------------------------------------------------------------------
+def picker_adapter(view):
+    @functools.wraps(view)
+    def view_wrapper(request, *args, **kws):
+        league = League.get(kws.pop('league'))
+        result = view(request, league, *args, **kws)
+        if isinstance(result, http.HttpResponse):
+            return result
+        
+        tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
+        tmpls = get_templates(league, tmpl)
+        data = {'league': league, 'season': league.current_season}
+        if ctx:
+            data.update(**ctx)
+            
+        return render(request, tmpls, data)
+        
+    return view_wrapper
+
+
+#-------------------------------------------------------------------------------
+def basic_form_view(
+    request,
+    tmpl,
+    form_class,
+    context=None,
+    instance=None,
+    redirect_path=None,
+    form_kws=None,
+    success_msg=None
+):
+    form_kws = form_kws or {}
+    if instance:
+        form_kws['instance'] = instance
+        
+    if request.method == 'POST':
+        form = form_class(data=request.POST, **form_kws)
+        if form.is_valid():
+            form.save()
+            if success_msg:
+                messages.success(request, success_msg)
+                
+            return http.HttpResponseRedirect(redirect_path or request.path)
+    else:
+        form = form_class(**form_kws)
+
+    context = context or {}
+    context['form'] = form
+    return tmpl, context
 
 
 #===============================================================================
@@ -51,17 +116,6 @@ def parse_feed():
 
     return sorted(entries, reverse=True)
 
-
-#-------------------------------------------------------------------------------
-def get_templates(league, component):
-    league_dir = 'picker/{}/'.format(league.lower)
-    if component.startswith('@'):
-        return [
-            component.replace('@', 'picker/'),
-            component.replace('@', league_dir)
-        ]
-    
-    return component
 
 #-------------------------------------------------------------------------------
 def redirect_reverse(name, *args, **kwargs):

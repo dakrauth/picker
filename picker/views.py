@@ -1,4 +1,3 @@
-from functools import wraps
 from dateutil.parser import parse as dt_parse
 
 from django import http
@@ -17,57 +16,8 @@ from .decorators import management_user_required
 
 
 datetime_now = utils.datetime_now
+picker_adapter = utils.picker_adapter
 add_to_builtins('picker.templatetags.picker_tags')
-
-#-------------------------------------------------------------------------------
-def picker_adapter(view):
-    @wraps(view)
-    def view_wrapper(request, *args, **kws):
-        league = League.get(kws.pop('league'))
-        result = view(request, league, *args, **kws)
-        if isinstance(result, http.HttpResponse):
-            return result
-        
-        tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
-        tmpls = utils.get_templates(league, tmpl)
-        data = {'league': league, 'season': league.current_season}
-        if ctx:
-            data.update(**ctx)
-            
-        return render(request, tmpls, data)
-        
-    return view_wrapper
-
-
-#-------------------------------------------------------------------------------
-def _basic_form_view(
-    request,
-    tmpl,
-    form_class,
-    context=None,
-    instance=None,
-    redirect_path=None,
-    form_kws=None,
-    success_msg=None
-):
-    form_kws = form_kws or {}
-    if instance:
-        form_kws['instance'] = instance
-        
-    if request.method == 'POST':
-        form = form_class(data=request.POST, **form_kws)
-        if form.is_valid():
-            form.save()
-            if success_msg:
-                messages.success(request, success_msg)
-                
-            return http.HttpResponseRedirect(redirect_path or request.path)
-    else:
-        form = form_class(**form_kws)
-
-    context = context or {}
-    context['form'] = form
-    return tmpl, context
 
 
 #-------------------------------------------------------------------------------
@@ -227,7 +177,7 @@ def results_for_playoffs(request, league, season):
 #-------------------------------------------------------------------------------
 def _weekly_picks(request, league, week):
     if week.is_open:
-        return _basic_form_view(
+        return utils.basic_form_view(
             request,
             '@picks/make.html',
             UserPickForm,
@@ -404,7 +354,7 @@ def manage_game(request, league, pk):
 @management_user_required
 @picker_adapter
 def manage_playoff_builder(request, league):
-    return _basic_form_view(
+    return utils.basic_form_view(
         request,
         '@manage/playoff_builder.html',
         PlayoffBuilderForm,
