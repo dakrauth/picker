@@ -47,8 +47,7 @@
                     <span class="username">{{ score.picks.user }}</span>
                 </td>
                 {% for result,team in score.results %}
-                <td class="team-cell">
-                    <img class="{{ result|yesno:"correct,incorrect,tbd" }}" src="{% if team %}{{ team.image_url }}{% else %}{% static 'img/nfl/cross.png' %}{% endif %}">
+                <td class="team-cell result-{{ result|yesno:"correct,incorrect,tbd" }}" style="background-image: {{ team.image_url }}">
                     {% if result >= 0 %}<span>{{ result }}</span>{% endif %}
                 </td>
                 {% endfor %}

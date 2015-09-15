@@ -5,6 +5,39 @@ from optparse import make_option
 from django.core.management.base import BaseCommand
 from picker import models as picker
 
+Status = picker.Game.Status
+
+#-------------------------------------------------------------------------------
+def get_team_record(tm):
+    home_games = [0,0,0]
+    away_games = [0,0,0]
+
+    for game_set, accum, status in (
+        (tm.away_game_set, away_games, Status.AWAY_WIN),
+        (tm.home_game_set, home_games, Status.HOME_WIN),
+    ):
+        for res in game_set.exclude(status=Status.UNPLAYED).values_list(
+            'status',
+            flat=True
+        ):
+            if res == status:
+                accum[0] += 1
+            elif res == Status.TIE:
+                accum[2] += 1
+            else:
+                accum[1] += 1
+
+    return [tm] + home_games + away_games + [
+        away_games[0] + home_games[0],
+        away_games[1] + home_games[1],
+        away_games[2] + home_games[2]
+    ]
+
+
+#-------------------------------------------------------------------------------
+def concat(items):
+    return '-'.join([str(i) for i in items])
+
 
 #===============================================================================
 class Callbacks(object):
@@ -63,37 +96,8 @@ class Callbacks(object):
     #---------------------------------------------------------------------------
     @staticmethod
     def show_records(league, **options):
-
-        def get_record(t):
-            home_games = [0,0,0]
-            away_games = [0,0,0]
-
-            for game_set, accum, status in (
-                (t.away_game_set, away_games, picker.Game.Status.AWAY_WIN),
-                (t.home_game_set, home_games, picker.Game.Status.HOME_WIN),
-            ):
-                for game in game_set.exclude(status=picker.Game.Status.UNPLAYED):
-                    if game.status == status:
-                        accum[0] += 1
-                    elif game.status == picker.Game.Status.TIE:
-                        accum[2] += 1
-                    else:
-                        accum[1] += 1
-
-            return [t] + home_games + away_games + [
-                away_games[0] + home_games[0],
-                away_games[1] + home_games[1],
-                away_games[2] + home_games[2]
-            ]
-
-        def concat(items):
-            return '-'.join([str(i) for i in items])
-
-        records = sorted(
-            [get_record(team) for team in league.team_set.all()],
-            key=lambda r: r[-3],
-            reverse=True
-        )
+        records = [get_team_record(team) for team in league.team_set.all()]
+        records = sorted(records, key=lambda r: r[-3], reverse=True)
     
         mx = max([len(unicode(r[0])) for r in records])
         hdr = '%*s %8s %8s %8s' % (mx, 'Team', 'Home', 'Away', 'All')
@@ -173,7 +177,7 @@ class Callbacks(object):
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--date', default='', dest='date', help='define a relative date'),
-        make_option('--league', default='nfl', dest='league', help='specify which league'),
+        make_option('--league', default=None, dest='league', help='specify which league'),
         make_option('--week', default=0, type='int', dest='week', help='define a week'),
     )
     help = 'Operations: {}'.format(', '.join(sorted([d for d in dir(Callbacks) if not d[0] == '_'])))
@@ -184,7 +188,7 @@ class Command(BaseCommand):
             print self.help
             return
         
-        league = picker.League.objects.get(abbr=options.pop('league', 'nfl'))
+        league = picker.League.get(options.pop('league', None))
         for arg in args:
             func = getattr(Callbacks, arg, None)
             if not func:

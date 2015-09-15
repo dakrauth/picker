@@ -908,14 +908,13 @@ class Playoff(models.Model):
         for pck in self.playoffpicks_set.filter(user__isnul=False):
             points, pck_res = 0, []
             for i, (a_tm, p_tm) in enumerate(zip(adm_tms, pck.teams), 1):
-                good = (
-                    pts_dct.get(i, 1)
-                    if (a_tm and p_tm) and (a_tm == p_tm)
-                    else 0
-                )
+                if (a_tm and p_tm) and (a_tm == p_tm):
+                    good = pts_dct.get(i, 1)
+                else:
+                    good = 0
+
                 points += good
                 pck_res.append((good, teams[pck_tm] if pck_tm else None))
-
             results.append((points, -abs(adm.points - p.points), pck, pck_res))
 
         return [
