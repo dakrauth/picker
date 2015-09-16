@@ -1,19 +1,5 @@
 {% extends "picker/nfl/base.html" %}{% load staticfiles %}
 {% block title %}Roster{% endblock %}
-{% block extra_head %}
-    <style type="text/css" media="screen">
-        td, th { text-align: center; }
-        .roster { text-align: left; font-size: smaller;  }
-        .player img { float: left; width: 34px; }
-        .player div { float: left; margin-left: 8px; text-align: left; }
-        .player div strong { font-size: 1.1em; }
-        .player div em { color: #777; }
-        .double { border-left-width: 3px; }
-        td.hilite { font-weight: bold; color: #070; background-color: #dfd !important; }
-        .fav_team { font-style: italic; font-size: smaller; }
-        .atplace-1, .atplace-2, .atplace-3 { font-weight: bold; font-size: larger; color: #a00; }
-    </style>
-{% endblock %}
 {% block main_content %}
     <h3>Roster and Season Standings &mdash; {{ season }}</h3>
     {% all_seasons_nav season league "roster" %}

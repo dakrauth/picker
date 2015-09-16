@@ -1,16 +1,7 @@
 {% extends "picker/nfl/base.html" %}
-{% block extra_head %}
-    <style type="text/css" media="screen">
-        h1.main { font-size: 1.75em; }
-        h1.main span { font-size: 12px; }
-        h1.main img { display: block; float: left; margin-right: .5em; }
-        h2 { font-size: 1.25em; }
-        .table-striped tbody tr:nth-child(even) { background-color: #eee; }
-    </style>
-{% endblock %}
 {% block title %}{{ team }}{% endblock %}
 {% block main_content %}
-    <h1 class="main">
+    <h1 class="team-header">
         <img src="{{ team.image_url }}">
         {{ team }}<br>
         <span>{{ team.conference }} {{ team.division }}</span>

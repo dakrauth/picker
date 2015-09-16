@@ -1,13 +1,5 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Game picks{% endblock %}
-{% block extra_head %}
-    <script type="text/javascript" src="/static/picker/js/playoffs.js"></script>
-    <style type="text/css" media="screen">
-        img.helmut { vertical-align: middle; width: 82px; height: 55px; }
-        .away { text-align: right; }
-        form table td { width :50%; }
-    </style>
-{% endblock %}
 {% block main_content %}
     <div class="span-20  last">
     <h3>Playoffs, {{ week.season }}</h3>
@@ -61,7 +53,7 @@
             </tr>
         </tfoot>
         </table>
-        <p style="text-align: center">
+        <p class="text-center">
             <input value="Save" type="submit" id="submit" />
         </p>
         

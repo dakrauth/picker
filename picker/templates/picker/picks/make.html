@@ -1,19 +1,11 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Game picks{% endblock %}
-{% block extra_head %}
-    <style type="text/css" media="screen">
-        .picks {  }
-        .picks .kickoff, .picks .teams, .picks .tv { text-align: center; }
-        .picks .kickoff { width: 150px; }
-        .picks .kickoff .date-weekday { font-size: 1.25em; }
-    </style>
-{% endblock extra_head %}
 {% block main_content %}
     <h3>Week #{{ week.week }} &middot;
         <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></h3>
     {% with week.byes.all as byes %} {% if byes %}
     <p>
-        <strong style="display: inline-block; width: 4em">Byes:</strong> {{ byes|join:", " }}
+        <strong>Byes:</strong> {{ byes|join:", " }}
     </p>
     {% endif %} {% endwith %}
     {% season_nav week "picks" %}
@@ -34,7 +26,7 @@
                 <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
                 <span class="date-weekday">{{ dt|date:"D, P" }}</span>
                 {% endwith %}{% else %}
-                <span style="font-size: 1.35em">Points Total</span><br/>
+                <strong>Points Total</strong><br/>
                 ({{ field.label }})
                 {% endif %}
                 {% if field.errors %}{{ field.errors }}{% endif %}

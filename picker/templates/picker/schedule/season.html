@@ -10,11 +10,8 @@
         </li> {% endfor %}
     </ul>
 </div>
-<style type="text/css" media="screen">
-    .winner { font-weight: bold; font-size: 1.125em; }
-</style>
 <div>
-<table>
+<table class="season-listing">
     <tbody>
     {% for week in weeks %}
     <tr>
@@ -27,7 +24,7 @@
         <th>TV</th>
     </tr>
     {% for game in week.game_set.all %}
-    <tr class="{% cycle 'odd' 'even' %}">
+    <tr>
         <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
         <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
         <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
@@ -36,7 +33,7 @@
     {% endfor %}
     {% if week.byes.count %}
     <tr>
-        <td colspan="4" style="background-color: #eee;">
+        <td colspan="4" class="team-byes">
             Byes: {{ week.byes.all|join:", "}}
         </td>
     </tr>

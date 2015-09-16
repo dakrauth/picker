@@ -1,16 +1,8 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Roster Profile{% endblock %}
-{% block extra_head %}
-    <style type="text/css" media="screen">
-        h3 img { vertical-align: middle; float: left; margin-right: .5em; }
-        h3 span { font-size: .75em; }
-        .roster td, .roster th { text-align: center; }
-        .roster tr.last td { font-weight: bold; }
-    </style>
-{% endblock extra_head %}
 {% block fav_team %}team-{{ profile.picker_preferences.favorite_team.abbr|default:"ne"|lower }}{% endblock fav_team %}
 {% block main_content %}
-<h3 class="clearfix">
+<h3 class="profile-header clearfix">
     <img class="top" src="{{ profile.user|picker_user_image }}" />
     {{ profile }}<br>
     <span>Since {{ profile.user.date_joined|date:"M j, Y" }}</span>

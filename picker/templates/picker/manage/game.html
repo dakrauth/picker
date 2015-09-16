@@ -1,10 +1,5 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Manage Game Management{% endblock %}
-{% block extra_head %}
-    {{ block.super }}
-    <style media="screen">
-        input.error { border: 1px solid #800; }
-    </style>
 {% endblock extra_head %}
 {% block main_content %}
     <h3>{{ game.away }} @ {{ game.home }}</h3>

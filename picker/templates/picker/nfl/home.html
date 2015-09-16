@@ -4,7 +4,7 @@
     <div{% if poll %} class="span-16"{% endif %}>
     <h3>Latest NFL News </h3>
     <ul class="fa-ul"> {% for dt,title,link,summary in feed %}
-         <li><i class="fa-li fa fa-rss" style="color: orangered"></i>
+         <li><i class="fa-li fa fa-rss"></i>
              <a target="_blank" href="{{ link }}"><strong>{{ title }}</strong></a> &ndash;
              <em>{{ dt|date:"M jS"}}</em>
              <p>{{ summary }}</p>
@@ -31,7 +31,6 @@
                 <li class="{% cycle 'odd' 'even' %}">
                     {{ choice }} <em>({{ choice.votes }}, {{ choice.percent }}%)</em><br />
                     <div class="poll-pct" style="height: 8px;width:{{ choice.percent }}px"></div>
-                    
                 </li>    
                 {% endfor %}
             </ul>
