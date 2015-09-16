@@ -27,9 +27,9 @@
         </thead>
         <tbody>
             {% for place,result in weekly_results %}
-            <tr class="{% cycle 'odd' 'even' %}">
+            <tr>
                 <td>
-                    <img src="{{ result.user|picker_user_image:"32" }}" />
+                    <img src="{{ result.user|picker_user_image:"32" }}">
                     <span class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</span>
                 </td>
                 <td>{{ result.progress }}</td>

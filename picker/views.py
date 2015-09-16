@@ -116,7 +116,7 @@ def teams(request, league, pk=None):
 #-------------------------------------------------------------------------------
 @picker_adapter
 def schedule(request, league, season=None):
-    weeks = get_list_or_404(league.game_set, season=league.current_season)
+    weeks = get_list_or_404(league.game_set.select_related(), season=league.current_season)
     return '@schedule/season.html', {'weeks': weeks}
 
 
