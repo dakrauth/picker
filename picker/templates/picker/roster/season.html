@@ -25,7 +25,7 @@
         </thead>
         
         <tbody> {% for place,entry,all_time_place,all_time_stats in roster %}{% if entry.is_active %}
-            <tr class="{% cycle 'odd' 'even' %} {{ entry.user.picker_preferences.is_active|yesno:"active,inactive" }}">
+            <tr class="{{ entry.user.picker_preferences.is_active|yesno:"active,inactive" }}">
                 <td class="player">
                     <img src="{{ entry.user|picker_user_image:"32" }}" />
                     <div>

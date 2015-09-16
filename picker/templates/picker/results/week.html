@@ -55,9 +55,8 @@
                 {% endif %}
             </tr>
         </thead>
-        <tbody>
-            {% for place,wp in weekly_results %}
-            <tr class="{% cycle 'odd' 'even' %}">
+        <tbody>{% for place,wp in weekly_results %}
+            <tr>
                 <td>{{ place }}</td>
                 <td>
                     <img src="{{ wp.user|picker_user_image:"32" }}" />
@@ -73,8 +72,7 @@
                 <td>{{ wp.points }}</td>
                 <td>&plusmn;{{ wp.points_delta }}</td>
                 {% endif %}   
-            </tr>    
-            {% endfor %}
+            </tr>{% endfor %}
         </tbody>
         {% endwith %}
     {% endif %}

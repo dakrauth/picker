@@ -36,7 +36,7 @@
             <th>Home</th>
         </tr>    
         {% for pick in picks.gamepick_set.all %}
-        <tr class="{% cycle 'odd' 'even' %}">
+        <tr>
             <td class="when">{{ pick.game.kickoff|date:"D P, M jS" }}</td>
             <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% ifequal pick.game.away pick.winner %} selected{% endifequal %}">
                 <a href="{{ pick.game.away.get_absolute_url }}">{{ pick.game.away }}</a>

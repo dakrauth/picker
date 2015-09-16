@@ -17,9 +17,8 @@
                 <th>Score</th>
             </tr>
         </thead>
-        <tbody>
-            {% for score in playoff.scores %}
-            <tr class="{% cycle 'odd' 'even' %}">
+        <tbody>{% for score in playoff.scores %}
+            <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>
                     <img src="{{ score.picks.user|picker_user_image:"32" }}" />
@@ -32,8 +31,7 @@
                 {% endfor %}
                 <td>{{ score.picks.points }}</td>
                 <td>{{ score.score }}</td>
-            </tr>    
-            {% endfor %}
+            </tr>{% endfor %}
         </tbody>
     </table>
     {% else %}
@@ -44,16 +42,14 @@
                 <th>Entry Date</th>
             </tr>
         </thead>
-        <tbody>
-            {% for p in playoff.picks %}
-            <tr class="{% cycle 'odd' 'even' %}">
+        <tbody>{% for p in playoff.picks %}
+            <tr>
                 <td>
                     <img src="{{ p.user|picker_user_image:"32" }}" />
                     <span class="username">{{ p.user }}</span>
                 </td>
                 <td>{{ p.created }}</td>
-            </tr>    
-            {% endfor %}
+            </tr>{% endfor %}
         </tbody>
     </table>
     {% endif %}

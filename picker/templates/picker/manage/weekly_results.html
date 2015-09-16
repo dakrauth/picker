@@ -20,7 +20,7 @@
             <th class="tv">TV</th>
         </tr>
         {% for field in form %}
-        <tr class="{% cycle 'odd' 'even' %}">
+        <tr>
             <td class="kickoff">
                 {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
                 <a href="{% url 'picker-manage-game' league.lower field.field.game.id  %}">
