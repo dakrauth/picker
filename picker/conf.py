@@ -16,6 +16,7 @@ DEFAULT_PICKER_SETTINGS = {
     'NAIA_CURRENT_SEASON': season,
     'DEFAULT_LEAGUE': 'nfl',
     'LEAGUE_MODULE_BASE': 'picker.league',
+    'LOGOS_UPLOAD_DIR': 'picker/logos',
     'PARTICIPATION_HOOKS': []
 }
 

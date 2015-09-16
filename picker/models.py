@@ -23,9 +23,9 @@ from .conf import get_setting as picker_setting
 from . import managers
 
 
-GAME_DURATION  = timedelta(hours=4.5)
-
-datetime_now = utils.datetime_now
+GAME_DURATION = timedelta(hours=4.5)
+LOGOS_DIR     = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos')
+datetime_now  = utils.datetime_now
 
 #===============================================================================
 class EnumField(models.CharField):
@@ -116,7 +116,7 @@ models.signals.post_save.connect(new_preferences, sender=User)
 class League(models.Model):
     name        = models.CharField(max_length=50, unique=True)
     abbr        = models.CharField(max_length=8)
-    logo        = models.ImageField(blank=True, null=True)
+    logo        = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
     is_pickable = models.BooleanField(default=False)
 
     objects = managers.LeagueManager()
@@ -344,7 +344,7 @@ class Team(models.Model):
     conference = models.ForeignKey(Conference)
     division   = models.ForeignKey(Division, blank=True, null=True)
     colors     = models.CharField(max_length=40, blank=True)
-    logo       = models.ImageField(blank=True, null=True)
+    logo       = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
     
     #===========================================================================
     class Meta:
@@ -374,11 +374,8 @@ class Team(models.Model):
     #---------------------------------------------------------------------------
     @property
     def image_url(self):
-        return '{}img/{}/logos/{}'.format(
-            settings.STATIC_URL,
-            self.league.lower,
-            self.image
-        )
+        if self.logo:
+            return self.logo.url
         
     #---------------------------------------------------------------------------
     def ranking(self, week):
