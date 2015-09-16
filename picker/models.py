@@ -27,6 +27,14 @@ GAME_DURATION  = timedelta(hours=4.5)
 
 datetime_now = utils.datetime_now
 
+#===============================================================================
+class EnumField(models.CharField):
+    
+    #---------------------------------------------------------------------------
+    def __init__(self, enum, *args, **kws):
+        kws.update(choices=enum.CHOICES, default=enum.DEFAULT)
+        super(EnumField, self).__init__(*args, **kws)
+
 
 #===============================================================================
 class Preference(models.Model):
@@ -42,15 +50,11 @@ class Preference(models.Model):
         NONE        = ChoiceEnumeration.Option('NONE', 'None')
         RANDOM      = ChoiceEnumeration.Option('RAND', 'Random', default=True)
         
+    league        = models.ForeignKey('League')
     favorite_team = models.ForeignKey('Team', null=True, blank=True)
-    user = models.OneToOneField(User, related_name='picker_preferences')
-    status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
-    
-    autopick = models.CharField(
-        max_length=4, 
-        choices=Autopick.CHOICES,
-        default=Autopick.DEFAULT
-    )
+    user          = models.OneToOneField(User, related_name='picker_preferences')
+    status        = EnumField(Status, max_length=4)
+    autopick      = EnumField(Autopick, max_length=4)
 
     objects = managers.PreferenceManager()
     
@@ -106,8 +110,10 @@ models.signals.post_save.connect(new_preferences, sender=User)
 
 #===============================================================================
 class League(models.Model):
-    name   = models.CharField(max_length=50, unique=True)
-    abbr   = models.CharField(max_length=8)
+    name        = models.CharField(max_length=50, unique=True)
+    abbr        = models.CharField(max_length=8)
+    logo        = models.ImageField(blank=True, null=True)
+    is_pickable = models.BooleanField(default=False)
 
     #---------------------------------------------------------------------------
     def __unicode__(self):
@@ -323,6 +329,7 @@ class Team(models.Model):
     conference = models.ForeignKey(Conference)
     division   = models.ForeignKey(Division, blank=True, null=True)
     colors     = models.CharField(max_length=40, blank=True)
+    logo       = models.ImageField(blank=True, null=True)
     
     #===========================================================================
     class Meta:
@@ -637,20 +644,16 @@ class Game(models.Model):
         HOME_WIN = ChoiceEnumeration.Option('H', 'Home Win')
         AWAY_WIN = ChoiceEnumeration.Option('A', 'Away Win')
     
-    home = models.ForeignKey(Team, related_name='home_game_set')
-    away = models.ForeignKey(Team, related_name='away_game_set')
-    week = models.ForeignKey(GameSet, related_name='game_set')
-    kickoff = models.DateTimeField()
-    tv = models.CharField('TV', max_length=8, blank=True)
-    notes = models.TextField(blank=True)
-    category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
-    status = models.CharField(
-        max_length=1, 
-        choices=Status.CHOICES, 
-        default=Status.DEFAULT
-    )
+    home     = models.ForeignKey(Team, related_name='home_game_set')
+    away     = models.ForeignKey(Team, related_name='away_game_set')
+    week     = models.ForeignKey(GameSet, related_name='game_set')
+    kickoff  = models.DateTimeField()
+    tv       = models.CharField('TV', max_length=8, blank=True)
+    notes    = models.TextField(blank=True)
+    category = EnumField(Category, max_length=4)
+    status   = EnumField(Status, max_length=1)
     location = models.CharField(blank=True, max_length=50)
-    objects = managers.GameManager()
+    objects  = managers.GameManager()
     
     #===========================================================================
     class Meta:
@@ -749,11 +752,7 @@ class PickSet(models.Model):
     wrong = models.PositiveSmallIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    strategy = models.CharField(
-        max_length=4,
-        choices=Strategy.CHOICES,
-        default=Strategy.DEFAULT
-    )
+    strategy = EnumField(Strategy, max_length=4)
     
     #===========================================================================
     class Meta:
