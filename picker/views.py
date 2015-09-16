@@ -30,7 +30,11 @@ def picker_adapter(view):
         
         tmpl, ctx = (result, {}) if isinstance(result, basestring) else result
         tmpls = utils.get_templates(league, tmpl)
-        data = {'league': league, 'season': league.current_season}
+        data = {
+            'league': league,
+            'season': league.current_season,
+            'league_base': 'picker/{}/base.html'.format(league.lower)
+        }
         if ctx:
             data.update(**ctx)
             

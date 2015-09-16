@@ -1,4 +1,4 @@
-{% extends "picker/nfl/base.html" %}
+{% extends league_base %}
 {% block title %}Roster Profile{% endblock %}
 {% block fav_team %}team-{{ profile.picker_preferences.favorite_team.abbr|default:"ne"|lower }}{% endblock fav_team %}
 {% block main_content %}
