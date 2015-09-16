@@ -109,7 +109,7 @@ def season_nav(context, week, relative_to):
 
 
 #-------------------------------------------------------------------------------
-@register.inclusion_tag('picker/all_seasons_nav.html', takes_context=True)
+@register.inclusion_tag('picker/season_nav_all.html', takes_context=True)
 def all_seasons_nav(context, current, league, relative_to):
     return {
         'label': 'All seasons',

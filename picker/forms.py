@@ -312,7 +312,7 @@ class PreferenceForm(forms.ModelForm):
     #===========================================================================
     class Meta:
         model = picker.Preference
-        exclude = ('user', 'status', 'autopick')
+        exclude = ('user', 'status', 'autopick', 'league')
     
     #---------------------------------------------------------------------------
     def __init__(self, instance, *args, **kws):

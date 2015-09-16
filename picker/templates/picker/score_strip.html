@@ -1,0 +1,12 @@
+{% for game in scores.games %}
+<div>
+    <div>{{ game.away }}{% if game.pos == game.away %}&bull;{% endif %}<span> {{ game.away_score }}</span></div>
+    <div>{{ game.home }}{% if game.pos == game.home %}&bull;{% endif %}<span> {{ game.home_score }}</span></div>
+    <div class="time">
+        <a href="{{ game.url }}" target="_blank">
+            {% if game.status == 'Pending' %}{{ game.day }} {{ game.time }}{% else %}
+            {{ game.status }}{% if game.clock %} {{ game.clock }}{% endif %} {% endif %}
+        </a>
+    </div>
+</div>
+{% endfor %}

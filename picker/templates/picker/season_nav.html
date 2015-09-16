@@ -1,13 +1,13 @@
-    <div class="season-nav clearfix x{{ league.current_season }}">
-        <ul> {% for sw in week.season_weeks %}
-            <li{% ifequal sw week %} id="active"{% endifequal %}>
-                <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
-            </li> {% endfor %}
-            <li{% ifequal week.week "playoffs" %} id="active"{% endifequal %}>
-                <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
-            </li>
-            {% if user|is_management %}
-            <li><a href="{% url 'picker-manage-week' week.league.lower week.season week.week %}">Manage</a></li>
-            {% endif %}
-        </ul>
-    </div>
+<div class="season-nav clearfix x{{ league.current_season }}">
+    <ul> {% for sw in week.season_weeks %}
+        <li{% ifequal sw week %} id="active"{% endifequal %}>
+            <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
+        </li> {% endfor %}
+        <li{% ifequal week.week "playoffs" %} id="active"{% endifequal %}>
+            <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
+        </li>
+        {% if user|is_management %}
+        <li><a href="{% url 'picker-manage-week' week.league.lower week.season week.week %}">Manage</a></li>
+        {% endif %}
+    </ul>
+</div>
