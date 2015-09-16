@@ -1,0 +1,8 @@
+<label class="team-choice {{ home_away }}" for="{{ choice_id }}">
+    <input type="radio" id="{{ choice_id }}" {{ readonly }} {{ disabled }} value="{{ value }}" name="{{ name }}" {{ checked }}>
+    <div class="team-info team-{{ team.abbr.lower }}"  style="background-image: url({{ team.logo.url }});">
+        <span class="market">{{ team.market }}</span>
+        <span class="nickname">{{ team.nickname }}</span>
+        <span class="record">{{ team.record_as_string }}</span>
+    </div>
+</label>

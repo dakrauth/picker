@@ -1,9 +1,9 @@
-<div class="season-nav clearfix x{{ league.current_season }}">
+<div class="season-nav">
     <ul> {% for sw in week.season_weeks %}
-        <li{% ifequal sw week %} id="active"{% endifequal %}>
+        <li{% ifequal sw week %} class="active"{% endifequal %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
-        <li{% ifequal week.week "playoffs" %} id="active"{% endifequal %}>
+        <li{% ifequal week.week "playoffs" %} class="active"{% endifequal %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
         </li>
         {% if user|is_management %}

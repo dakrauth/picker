@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.template import loader
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from .contrib import feedparser
@@ -26,6 +27,15 @@ else:
 
 json_dumps = functools.partial(json.dumps, indent=4)
 
+
+#-------------------------------------------------------------------------------
+def user_email_exists(email):
+    try:
+        User.objects.get(email=email)
+    except User.DoesNotExist:
+        False
+    else:
+        return True
 
 #-------------------------------------------------------------------------------
 def get_templates(league, component):

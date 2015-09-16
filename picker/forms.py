@@ -1,71 +1,15 @@
 from datetime import datetime
-
 from django import forms
-from django.template import Template, Context
+from django.template import Template, Context, loader, TemplateDoesNotExist
 from django.utils.safestring import mark_safe
-from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 from django.contrib import messages
-
 from . import models as picker
 from . import utils
 from .signals import picker_weekly_results
 import markdown2
 
-
 game_key_format = 'game_{}'.format
-team_choice_label_format = u'''<label class="team-choice {home_away}" for="{choice_id}">
-    <input type="radio" id="{choice_id}" {readonly} {disabled} value="{value}" name="{name}" {checked}>
-    <div class="team-info team-{team.abbr_lower}">
-        <span class="market">{team.market}</span>
-        <span class="nickname">{team.nickname}</span>
-        <span class="record">{team.record_as_string}</span>
-    </div>
-</label>'''.format
-
-team_choice_template = u'''<label class="team-choice {{ home_away }}" for="{{ choice_id }}">
-    <input type="radio" id="{{ choice_id }}" {{ readonly }} {{ disabled }} value="{{ value }}" name="{{ name }}" {{ checked }}>
-    <div class="team-info team-{{ team.abbr.lower }}">
-        <span class="market">{{ team.market }}</span>
-        <span class="nickname">{{ team.nickname }}</span>
-        <span class="record">{{ team.record_as_string }}</span>
-    </div>
-</label>'''
-
-
-#-------------------------------------------------------------------------------
-def user_email_exists(email):
-    try:
-        User.objects.get(email=email)
-    except User.DoesNotExist:
-        False
-    else:
-        return True
-
-
-#===============================================================================
-class TeamChoiceRadioSelect(forms.RadioSelect):
-    
-    #---------------------------------------------------------------------------
-    def render(self, name, value, attrs=None):
-        str_value = force_unicode(value if value is not None else '')
-        final_attrs = self.build_attrs(attrs)
-
-        labels = ''
-        for i, (game_id, team) in enumerate(self.choices):
-            readonly = bool('readonly' in final_attrs)
-            labels += team_choice_label_format(
-                home_away='home' if i else 'away',
-                choice_id='%s_%s' % (attrs['id'], game_id),
-                name=name,
-                team=team,
-                checked='checked="checked"' if game_id == str_value else '',
-                value=game_id,
-                readonly='readonly="readonly"' if readonly else '',
-                disabled='disabled="disabled"' if readonly else ''
-            )
-            
-        return mark_safe(labels)
 
 
 #===============================================================================
@@ -74,21 +18,20 @@ class TemplateTeamChoice(forms.RadioSelect):
     #---------------------------------------------------------------------------
     def __init__(self, *args, **kws):
         super(TemplateTeamChoice, self).__init__(*args, **kws)
-        self.template = self.load_template()
-    
-    #---------------------------------------------------------------------------
-    @staticmethod
-    def load_template():
-        return Template(team_choice_template)
     
     #---------------------------------------------------------------------------
     def render(self, name, value, attrs=None):
+        try:
+            tmpl = loader.get_template('picker/team_pick_field.html')
+        except TemplateDoesNotExist:
+            return super(TemplateTeamChoice, self).render(name, value, attrs)
+            
+        labels = ''
         str_value = force_unicode(value if value is not None else '')
         final_attrs = self.build_attrs(attrs)
-        labels = ''
         for i, (game_id, team) in enumerate(self.choices):
             readonly = bool('readonly' in final_attrs)
-            labels += self.template.render(Context(dict(
+            labels += tmpl.render(Context(dict(
                 home_away='home' if i else 'away',
                 choice_id='%s_%s' % (attrs['id'], game_id),
                 name=name,
@@ -100,7 +43,6 @@ class TemplateTeamChoice(forms.RadioSelect):
             )))
             
         return mark_safe(labels)
-
 
 
 #===============================================================================
@@ -324,7 +266,7 @@ class PreferenceForm(forms.ModelForm):
     #---------------------------------------------------------------------------
     def clean_email(self):
         email = self.cleaned_data['email'].lower().strip()
-        if email != self.current_email and user_email_exists(email):
+        if email != self.current_email and utils.user_email_exists(email):
             raise forms.ValidationError('That email is already in use')
             
         return email

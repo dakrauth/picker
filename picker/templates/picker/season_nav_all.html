@@ -1,8 +1,8 @@
-<div class="season-nav all-season-nav span-17 last">
+<div class="season-nav all-season-nav">
     <ul> 
         <li><strong>{{ label }}</strong></li>
         {% for season in league.available_seasons %}
-        <li{% if season == current %} id="active"{% endif %}>
+        <li{% if season == current %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ season }}/">{{ season }}</a>
         </li> {% endfor %}
     </ul>
