@@ -15,6 +15,7 @@ DEFAULT_PICKER_SETTINGS = {
     'FCS_CURRENT_SEASON': season,
     'NAIA_CURRENT_SEASON': season,
     'DEFAULT_LEAGUE': 'nfl',
+    'LEAGUE_MODULE_BASE': 'picker.league',
     'PARTICIPATION_HOOKS': []
 }
 

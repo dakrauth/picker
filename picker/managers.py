@@ -4,6 +4,16 @@ from .utils import datetime_now
 
 
 #===============================================================================
+class LeagueManager(models.Manager):
+    
+    use_for_related_fields = True
+    
+    #---------------------------------------------------------------------------
+    def pickable(self, **kws):
+        return self.filter(is_pickable=True, **kws)
+
+
+#===============================================================================
 class GamePickManager(models.Manager):
 
     use_for_related_fields = True

@@ -99,7 +99,11 @@ def new_preferences(sender, instance, created=False, **kws):
         return
         
     if instance.is_active:
-        Preference.objects.get_or_create(user=instance)
+        # TODO temp default league for preference
+        Preference.objects.get_or_create(
+            user=instance,
+            league=League.get(picker_setting('DEFAULT_LEAGUE', 'nfl'))
+        )
         return
 
     Preference.objects.filter(user=instance).update(status=Preference.Status.INACTIVE)
@@ -115,6 +119,8 @@ class League(models.Model):
     logo        = models.ImageField(blank=True, null=True)
     is_pickable = models.BooleanField(default=False)
 
+    objects = managers.LeagueManager()
+    
     #---------------------------------------------------------------------------
     def __unicode__(self):
         return self.name
@@ -125,12 +131,19 @@ class League(models.Model):
         return self.abbr.lower()
     
     #---------------------------------------------------------------------------
+    def _load_league_module(self, mod_name):
+        base = picker_setting('LEAGUE_MODULE_BASE', 'picker.league')
+        if base:
+            try:
+                return import_module('{}.{}.{}'.format(base, self.lower, mod_name))
+            except ImportError:
+                pass
+        return None
+        
+    #---------------------------------------------------------------------------
     @cached_property
     def scores_module(self):
-        try:
-            return import_module('picker.league.{}.scores'.format(self.lower))
-        except ImportError:
-            return None
+        return self._load_league_module('scores')
     
     #---------------------------------------------------------------------------
     def scores(self, *args, **kws):
@@ -147,16 +160,18 @@ class League(models.Model):
         return confs
         
     #---------------------------------------------------------------------------
-    def get_team_name_dict(self, team=None):
+    def get_team_name_dict(self, team=None, aliases=True):
         names = {}
         teams = [team] if team else self.team_set.all()
         for team in teams:
             names[team.abbr] = team
             names[team.name] = team
-            names[team.nickname] = team
+            if team.nickname:
+                names[team.nickname] = team
             
-            for a in Alias.objects.filter(team=team):
-                names[a.name] = team
+            if aliases:
+                for a in Alias.objects.filter(team=team):
+                    names[a.name] = team
             
         return names
     
@@ -217,28 +232,28 @@ class League(models.Model):
     #---------------------------------------------------------------------------
     def create_season(self, season, schedule, byes=None):
         '''
-            Create all GameSet and Game entries for a season, where:
-
-            *   `season` is an int (2009)
-            *   `schedule` is an iterable of 6-tuples of the following format:
-                (week #, away, home, datetime or datetime-tuple, TV, location)
-
-                Away and home teams are referenced by abbreviation.
-
-                Example:
-
-                    (1, u'STL', u'SEA', (2009, 9, 13, 16, 15), 'FOX', 'Qwest Field')
-
-            *   `byes` is a dictionary keyed by week number with the value being a
-                list of team abbreviations
-
-                Example:
-
-                    byes = {
-                     4: [u'ATL', u'PHI', u'ARI', u'CAR'],
-                     5: [u'CHI', u'GB', u'NO', u'SD'],
-                     ...
-                    }
+        Create all GameSet and Game entries for a season, where:
+        
+        *   `season` is an int (2009)
+        *   `schedule` is an iterable of 6-tuples of the following format:
+            (week #, away, home, datetime or datetime-tuple, TV, location)
+            
+            Away and home teams are referenced by abbreviation.
+            
+            Example:
+            
+                (1, u'STL', u'SEA', (2009, 9, 13, 16, 15), 'FOX', 'Qwest Field')
+                
+        *   `byes` is a dictionary keyed by week number with the value being a
+            list of team abbreviations
+            
+            Example:
+            
+                byes = {
+                 4: [u'ATL', u'PHI', u'ARI', u'CAR'],
+                 5: [u'CHI', u'GB', u'NO', u'SD'],
+                 ...
+                }
         '''
         current_week = None
         game_week = None
