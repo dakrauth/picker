@@ -15,6 +15,8 @@ game_key_format = 'game_{}'.format
 #===============================================================================
 class TemplateTeamChoice(forms.RadioSelect):
     
+    template_name = 'picker/team_pick_field.html'
+    
     #---------------------------------------------------------------------------
     def __init__(self, *args, **kws):
         super(TemplateTeamChoice, self).__init__(*args, **kws)
@@ -22,7 +24,7 @@ class TemplateTeamChoice(forms.RadioSelect):
     #---------------------------------------------------------------------------
     def render(self, name, value, attrs=None):
         try:
-            tmpl = loader.get_template('picker/team_pick_field.html')
+            tmpl = loader.get_template(self.template_name)
         except TemplateDoesNotExist:
             return super(TemplateTeamChoice, self).render(name, value, attrs)
             
@@ -48,10 +50,8 @@ class TemplateTeamChoice(forms.RadioSelect):
 #===============================================================================
 class GameField(forms.ChoiceField):
 
-    widget = TemplateTeamChoice
-
     #---------------------------------------------------------------------------
-    def __init__(self, game, manage=False):
+    def __init__(self, game, manage=False, widget=TemplateTeamChoice):
         choices = ((str(game.away.id), game.away), (str(game.home.id), game.home))
         self.game = game
         self.manage = manage
@@ -62,38 +62,16 @@ class GameField(forms.ChoiceField):
             choices=choices,
             label=game.kickoff.strftime('%a, %b %d %I:%M %p'),
             required=False,
-            help_text=game.tv
+            help_text=game.tv,
+            widget=widget
         )
 
     #---------------------------------------------------------------------------
     def widget_attrs(self, widget):
-        if self.disabled:
-            return {'readonly': 'readonly', 'disabled': 'disabled'}
-        
-        return {}
-
-
-#-------------------------------------------------------------------------------
-def get_initial_picks(week):
-    results = {
-        game_key_format(game.id): game.winner.id
-        for game in week.game_set.all()
-        if game.winner
-    }
-    results['points'] = week.points
-    return results
-
-
-#-------------------------------------------------------------------------------
-def get_initial_user_picks(week, user):
-    wp = week.pick_for_user(user)
-    if not wp:
-        return {}
-    
-    return dict({
-        game_key_format(gp.game.id): gp.winner.id
-        for gp in wp.gamepick_set.filter(winner__isnull=False)
-    }, points=wp.points)
+        return {
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        } if self.disabled else {}
 
 
 #===============================================================================
@@ -109,7 +87,10 @@ class BasePickForm(forms.Form):
             key = game_key_format(gm.id)
             self.fields[key] = GameField(gm, self.management)
 
-        self.fields['points'] = forms.IntegerField(label=gm.vs_description, required=False)
+        self.fields['points'] = forms.IntegerField(
+            label=gm.vs_description,
+            required=False
+        )
 
 
 #===============================================================================
@@ -119,7 +100,7 @@ class ManagementPickForm(BasePickForm):
     
     #---------------------------------------------------------------------------
     def __init__(self, week, *args, **kws):
-        kws.setdefault('initial', get_initial_picks(week))
+        kws.setdefault('initial', self.get_initial_picks(week))
         super(ManagementPickForm, self).__init__(week, *args, **kws)
         self.fields['send_mail'] = forms.BooleanField(required=False)
     
@@ -141,13 +122,22 @@ class ManagementPickForm(BasePickForm):
         week.update_pick_status()
         picker_weekly_results.send(sender=week.__class__, week=week, send_mail=send_mail)
 
+    #---------------------------------------------------------------------------
+    @staticmethod
+    def get_initial_picks(week):
+        return dict({
+            game_key_format(game.id): game.winner.id
+            for game in week.game_set.all()
+            if game.winner
+        }, points=week.points)
+
 
 #===============================================================================
 class UserPickForm(BasePickForm):
     
     #---------------------------------------------------------------------------
     def __init__(self, user, week, *args, **kws):
-        kws.setdefault('initial', get_initial_user_picks(week, user))
+        kws.setdefault('initial', self.get_initial_user_picks(week, user))
         self.user = user
         super(UserPickForm, self).__init__(week, *args, **kws)
     
@@ -178,6 +168,19 @@ class UserPickForm(BasePickForm):
         picks.send_confirmation()
         picks.complete_picks(False, games_dict.values())
         return week
+    
+    #---------------------------------------------------------------------------
+    @staticmethod
+    def get_initial_user_picks(week, user):
+        wp = week.pick_for_user(user)
+        if not wp:
+            return {}
+
+        return dict({
+            game_key_format(gp.game.id): gp.winner.id
+            for gp in wp.gamepick_set.filter(winner__isnull=False)
+        }, points=wp.points)
+    
 
 
 #===============================================================================

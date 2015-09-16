@@ -325,8 +325,9 @@ def manage_week(request, league, season, week):
             messages.success(request, 'Results saved')
             return http.HttpResponseRedirect(go_to)
     else:
-        gs.update_results()
-        messages.success(request, 'Scores automatically updated!')
+        if gs.has_started and gs.update_results():
+            messages.success(request, 'Scores automatically updated!')
+
         form = ManagementPickForm(gs)
         
     

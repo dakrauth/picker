@@ -19,21 +19,22 @@
             <th class="kickoff">Kickoff</th>
             <th class="teams">Away vs. Home</th>
             <th class="tv">TV</th>
-        </tr> {% for field in form %}
+        </tr> {% for field in form %}{% with field.field.game as gm %}
         <tr> 
             <td class="kickoff">
-                {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
-                <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
-                <span class="date-weekday">{{ dt|date:"D, P" }}</span>
-                {% endwith %}{% else %}
+                {% if field.field.is_game %}
+                <span class="date-day">{{ gm.kickoff|date:"M jS, Y"}}</span>
+                <span class="date-weekday">{{ gm.kickoff|date:"D, P" }}</span>
+                {% else %}
                 <strong>Points Total</strong><br/>
                 ({{ field.label }})
                 {% endif %}
                 {% if field.errors %}{{ field.errors }}{% endif %}
             </td>
-            <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">{{ field }}</td>
+            <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">{{ field }}
+                {% if gm.location %}<span class="location">{{ gm.location }}</span>{% endif %}</td>
             <td class="tv">{{ field.help_text|default:"" }}</td>
-        </tr>{% endfor %}
+        </tr>{% endwith %}{% endfor %}
         </tbody>
         {% if week.is_open %}<tfoot>
         <tr>
