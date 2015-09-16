@@ -132,7 +132,7 @@ def roster_profile(request, league, username):
     pref = get_object_or_404(Preference, user__username=username)
     seasons = list(league.available_seasons) + [None]
     stats = [RosterStats(pref, league, s) for s in seasons]
-    return '@roster_profile.html', {'profile': pref, 'stats': stats}
+    return '@roster/picker.html', {'profile': pref, 'stats': stats}
 
 
 #-------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ def roster_profile(request, league, username):
 def roster(request, league, season=None):
     season = int(season) if season else league.current_season
     roster = RosterStats.get_details(league, season)
-    return '@roster.html', {'season':  season, 'roster':  roster}
+    return '@roster/season.html', {'season':  season, 'roster':  roster}
 
 
 #===============================================================================
