@@ -108,9 +108,9 @@ def api_v1(request, action, league=None):
 def teams(request, league, pk=None):
     if pk:
         team =  get_object_or_404(league.team_set, pk=pk)
-        return '@team_info.html', {'team': team}
+        return '@teams/detail.html', {'team': team}
     
-    return '@teams.html'
+    return '@teams/listing.html'
 
 
 #-------------------------------------------------------------------------------

@@ -485,13 +485,13 @@ class Alias(models.Model):
 
 #===============================================================================
 class GameSet(models.Model):
-    league  = models.ForeignKey(League, related_name='game_set')
-    season  = models.PositiveSmallIntegerField()
-    week    = models.PositiveSmallIntegerField()
-    points  = models.PositiveSmallIntegerField(default=0)
-    byes    = models.ManyToManyField(Team, verbose_name='Bye Teams', related_name='bye_set')
-    opens   = models.DateTimeField()
-    closes  = models.DateTimeField()
+    league = models.ForeignKey(League, related_name='game_set')
+    season = models.PositiveSmallIntegerField()
+    week   = models.PositiveSmallIntegerField()
+    points = models.PositiveSmallIntegerField(default=0)
+    opens  = models.DateTimeField()
+    closes = models.DateTimeField()
+    byes   = models.ManyToManyField(Team, verbose_name='Bye Teams', related_name='bye_set')
 
     #===========================================================================
     class Meta:
