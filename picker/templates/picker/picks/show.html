@@ -1,8 +1,8 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
-    <h3>My Weekly Picks</h3>
-    <h4> Week #{{ week.week }} {{ week.season }}</h4>
+    <h1>My Weekly Picks</h1>
+    <h2> Week #{{ week.week }} {{ week.season }}</h2>
     {% season_nav week "picks" %}
 
     {% if picks %}

@@ -2,8 +2,8 @@
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
     <div class="span-20  last">
-    <h3>Playoffs, {{ week.season }}</h3>
-    <h4>Kickoff: {{ week.kickoff|date:"D, F jS, P" }}</h4>
+    <h1>Playoffs, {{ week.season }}</h1>
+    <h2>Kickoff: {{ week.kickoff|date:"D, F jS, P" }}</h2>
     {% season_nav week "picks" %}
 
     {% if form.errors %}

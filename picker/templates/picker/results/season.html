@@ -2,7 +2,7 @@
 {% block title %}Weekly Results - {{ season }}{% endblock %}
 {% block main_content %}
     {% all_seasons_nav season league "results" %}
-    <h3>{{ season }} Results</h3>
+    <h1>{{ season }} Results</h1>
     <table>
         <tr><th class="center">Week</th><th class="center">Winner(s)</th></tr>
         {% for week in weeks %}

@@ -2,7 +2,7 @@
 {% block title %}NFL Weekly Picker Home{% endblock %}
 {% block main_content %}
     <div{% if poll %} class="span-16"{% endif %}>
-    <h3>Latest NFL News </h3>
+    <h1>Latest NFL News </h1>
     <ul class="fa-ul"> {% for dt,title,link,summary in feed %}
          <li><i class="fa-li fa fa-rss"></i>
              <a target="_blank" href="{{ link }}"><strong>{{ title }}</strong></a> &ndash;
@@ -15,8 +15,8 @@
     {% if poll %}
     <div class="span-8 last">
         <div class="poll">
-            <h4>Poll</h4>
-            <h5>{{ poll.question }}</h5>
+            <h2>Poll</h2>
+            <h3>{{ poll.question }}</h3>
             {% if form %}
             <form action="" method="post" accept-charset="utf-8">
                 <ul class="form-list">

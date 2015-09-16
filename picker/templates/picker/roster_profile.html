@@ -6,7 +6,7 @@
     <img class="top" src="{{ profile.user|picker_user_image }}" />
     {{ profile }}<br>
     <span>Since {{ profile.user.date_joined|date:"M j, Y" }}</span>
-</h3>
+</h1>
 <p class="home-team-choice">
     {% with profile.favorite_team as team %}{% if team %}
     <img style="width: 62px; height: 47px" src="{{ team.image_url }}" />

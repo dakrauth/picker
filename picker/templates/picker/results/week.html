@@ -1,10 +1,10 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
 {% block main_content %}
-    <h3>
+    <h1>
         Results for week {{ week.week }}, 
         <a href="{% url 'picker-season-results' week.league.lower week.season %}">{{ week.season }}</a>
-    </h3>
+    </h1>
     {% season_nav week "results" %}
     <p>
         <strong>{{ week.game_set.count }}</strong> games &ndash; 

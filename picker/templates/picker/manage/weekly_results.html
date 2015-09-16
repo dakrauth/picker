@@ -1,7 +1,7 @@
 {% extends "picker/nfl/base.html" %}
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
-    <h3>Manage Picks: Week {{ week.week }}, {{ week.season }}</h3>
+    <h1>Manage Picks: Week {{ week.week }}, {{ week.season }}</h1>
     {% season_nav week "results" %}
     <form action="" method="post" class="actions">
         <input type="submit" name="reminder" value="Reminder Email" />

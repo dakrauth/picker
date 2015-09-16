@@ -1,7 +1,7 @@
 {% extends "picker/nfl/base.html" %}{% load staticfiles %}
 {% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
 {% block main_content %}
-    <h3>Results for {{ season }} Playoffs</h3>
+    <h1>Results for {{ season }} Playoffs</h1>
     {% season_nav week "results" %}
     {% if playoff.has_started %}
     <table class="results-table">
