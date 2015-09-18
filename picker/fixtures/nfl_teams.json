@@ -1,0 +1,662 @@
+[
+    {
+        "fields": {
+            "logo": "",
+            "is_pickable": true,
+            "name": "National Football League",
+            "abbr": "nfl"
+        },
+        "model": "picker.league",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "league": 6,
+            "name": "AFC",
+            "abbr": "AFC"
+        },
+        "model": "picker.conference",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "league": 6,
+            "name": "NFC",
+            "abbr": "NFC"
+        },
+        "model": "picker.conference",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "name": "North"
+        },
+        "model": "picker.division",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "name": "South"
+        },
+        "model": "picker.division",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "name": "East"
+        },
+        "model": "picker.division",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "name": "West"
+        },
+        "model": "picker.division",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "name": "North"
+        },
+        "model": "picker.division",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "name": "South"
+        },
+        "model": "picker.division",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "name": "East"
+        },
+        "model": "picker.division",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "name": "West"
+        },
+        "model": "picker.division",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Arizona",
+            "division": 8,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Cardinals",
+            "abbr": "ARI"
+        },
+        "model": "picker.team",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Atlanta",
+            "division": 6,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Falcons",
+            "abbr": "ATL"
+        },
+        "model": "picker.team",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Baltimore",
+            "division": 1,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Ravens",
+            "abbr": "BAL"
+        },
+        "model": "picker.team",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Buffalo",
+            "division": 3,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Bills",
+            "abbr": "BUF"
+        },
+        "model": "picker.team",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Carolina",
+            "division": 6,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Panthers",
+            "abbr": "CAR"
+        },
+        "model": "picker.team",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Chicago",
+            "division": 5,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Bears",
+            "abbr": "CHI"
+        },
+        "model": "picker.team",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Cincinnati",
+            "division": 1,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Bengals",
+            "abbr": "CIN"
+        },
+        "model": "picker.team",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Cleveland",
+            "division": 1,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Browns",
+            "abbr": "CLE"
+        },
+        "model": "picker.team",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Dallas",
+            "division": 7,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Cowboys",
+            "abbr": "DAL"
+        },
+        "model": "picker.team",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Denver",
+            "division": 4,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Broncos",
+            "abbr": "DEN"
+        },
+        "model": "picker.team",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Detroit",
+            "division": 5,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Lions",
+            "abbr": "DET"
+        },
+        "model": "picker.team",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Green Bay",
+            "division": 5,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Packers",
+            "abbr": "GB"
+        },
+        "model": "picker.team",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Houston",
+            "division": 2,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Texans",
+            "abbr": "HOU"
+        },
+        "model": "picker.team",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Indianapolis",
+            "division": 2,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Colts",
+            "abbr": "IND"
+        },
+        "model": "picker.team",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Jacksonville",
+            "division": 2,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Jaguars",
+            "abbr": "JAC"
+        },
+        "model": "picker.team",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Kansas City",
+            "division": 4,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Chiefs",
+            "abbr": "KC"
+        },
+        "model": "picker.team",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Miami",
+            "division": 3,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Dolphins",
+            "abbr": "MIA"
+        },
+        "model": "picker.team",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Minnesota",
+            "division": 5,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Vikings",
+            "abbr": "MIN"
+        },
+        "model": "picker.team",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "New England",
+            "division": 3,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Patriots",
+            "abbr": "NE"
+        },
+        "model": "picker.team",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "New Orleans",
+            "division": 6,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Saints",
+            "abbr": "NO"
+        },
+        "model": "picker.team",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "New York",
+            "division": 7,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Giants",
+            "abbr": "NYG"
+        },
+        "model": "picker.team",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "New York",
+            "division": 3,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Jets",
+            "abbr": "NYJ"
+        },
+        "model": "picker.team",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Oakland",
+            "division": 4,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Raiders",
+            "abbr": "OAK"
+        },
+        "model": "picker.team",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Philadelphia",
+            "division": 7,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Eagles",
+            "abbr": "PHI"
+        },
+        "model": "picker.team",
+        "pk": 24
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Pittsburgh",
+            "division": 1,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Steelers",
+            "abbr": "PIT"
+        },
+        "model": "picker.team",
+        "pk": 25
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "San Diego",
+            "division": 4,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Chargers",
+            "abbr": "SD"
+        },
+        "model": "picker.team",
+        "pk": 26
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "San Francisco",
+            "division": 8,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "49ers",
+            "abbr": "SF"
+        },
+        "model": "picker.team",
+        "pk": 27
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Seattle",
+            "division": 8,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Seahawks",
+            "abbr": "SEA"
+        },
+        "model": "picker.team",
+        "pk": 28
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "St. Louis",
+            "division": 8,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Rams",
+            "abbr": "STL"
+        },
+        "model": "picker.team",
+        "pk": 29
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Tampa Bay",
+            "division": 6,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Buccaneers",
+            "abbr": "TB"
+        },
+        "model": "picker.team",
+        "pk": 30
+    },
+    {
+        "fields": {
+            "conference": 29,
+            "league": 6,
+            "name": "Tennessee",
+            "division": 2,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Titans",
+            "abbr": "TEN"
+        },
+        "model": "picker.team",
+        "pk": 31
+    },
+    {
+        "fields": {
+            "conference": 30,
+            "league": 6,
+            "name": "Washington",
+            "division": 7,
+            "image": "",
+            "colors": "",
+            "location": "",
+            "logo": "",
+            "nickname": "Redskins",
+            "abbr": "WAS"
+        },
+        "model": "picker.team",
+        "pk": 32
+    },
+    {
+        "fields": {
+            "name": "NY Jets",
+            "team": 22
+        },
+        "model": "picker.alias",
+        "pk": 131
+    },
+    {
+        "fields": {
+            "name": "NY Giants",
+            "team": 21
+        },
+        "model": "picker.alias",
+        "pk": 132
+    },
+    {
+        "fields": {
+            "name": "Saint Louis",
+            "team": 29
+        },
+        "model": "picker.alias",
+        "pk": 133
+    },
+    {
+        "fields": {
+            "name": "St Louis",
+            "team": 29
+        },
+        "model": "picker.alias",
+        "pk": 134
+    },
+    {
+        "fields": {
+            "name": "WSH",
+            "team": 32
+        },
+        "model": "picker.alias",
+        "pk": 135
+    },
+    {
+        "fields": {
+            "name": "JAX",
+            "team": 15
+        },
+        "model": "picker.alias",
+        "pk": 136
+    },
+    {
+        "fields": {
+            "name": "Skins",
+            "team": 32
+        },
+        "model": "picker.alias",
+        "pk": 137
+    }
+]
