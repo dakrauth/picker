@@ -1,7 +1,12 @@
 from django.db import models
-from delivery.delivery import send_mail
+from django.utils.module_loading import import_string
+
+#from delivery.delivery import send_mail
+
+from .conf import get_setting
 from .utils import datetime_now
 
+send_mail = import_string(get_setting('EMAIL_HANDLER'))
 
 #===============================================================================
 class LeagueManager(models.Manager):

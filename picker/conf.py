@@ -17,6 +17,7 @@ DEFAULT_PICKER_SETTINGS = {
     'DEFAULT_LEAGUE': 'nfl',
     'LEAGUE_MODULE_BASE': 'picker.league',
     'LOGOS_UPLOAD_DIR': 'picker/logos',
+    'EMAIL_HANDLER': 'django.core.mail.send_mail',
     'PARTICIPATION_HOOKS': []
 }
 
