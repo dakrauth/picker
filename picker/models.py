@@ -92,10 +92,8 @@ def new_preferences(sender, instance, created=False, **kws):
         
     if instance.is_active:
         # TODO temp default league for preference
-        Preference.objects.get_or_create(
-            user=instance,
-            league=League.get(picker_setting('DEFAULT_LEAGUE', 'nfl'))
-        )
+        league = League.get(picker_setting('DEFAULT_LEAGUE', 'nfl'))
+        Preference.objects.get_or_create(user=instance, league=league)
         return
 
     Preference.objects.filter(user=instance).update(status=Preference.Status.INACTIVE)

@@ -1,8 +1,20 @@
 import os
 from datetime import datetime
 from django.test import TestCase
+from django.contrib.auth.models import User
 from django.utils.module_loading import import_string
 from picker.models import *
+
+#-------------------------------------------------------------------------------
+def create_users(n_users):
+    return [
+        User.objects.create_user(
+            username='user{}'.format(i),
+            email='user{}@example.com'.format(i)
+            password='password'
+        ) for i in range(1, n_users + 1)
+    ]
+
 
 #===============================================================================
 class PickerTestCase(TestCase):

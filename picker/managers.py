@@ -42,12 +42,6 @@ class GameManager(models.Manager):
 class PreferenceManager(models.Manager):
     
     #---------------------------------------------------------------------------
-    def get_queryset(self):
-        return super(PreferenceManager, self).get_queryset().exclude(
-            user__username='admin'
-        )
-    
-    #---------------------------------------------------------------------------
     def active(self, **kws):
         return self.filter(
             status=self.model.Status.ACTIVE,
@@ -57,11 +51,10 @@ class PreferenceManager(models.Manager):
         
     #---------------------------------------------------------------------------
     def email_active(self, subject, body, html=''):
-        send_mail(
+        self.email(
             subject,
             body, 
-            from_email=settings.SERVER_EMAIL,
-            recipient_list=[p.pretty_email for p in self.active()],
+            selected=self.active(),
             html=html,
         )
 
