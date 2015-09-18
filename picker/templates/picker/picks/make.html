@@ -1,13 +1,13 @@
 {% extends league_base %}
-{% block title %}Game picks{% endblock %}
+{% block title %}Picks{% endblock %}
 {% block main_content %}
-    <h1>Week #{{ week.week }} &middot;
-        <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></h1>
-    {% with week.byes.all as byes %} {% if byes %}
-    <p>
-        <strong>Byes:</strong> {{ byes|join:", " }}
-    </p>
-    {% endif %} {% endwith %}
+    <h1>
+        Week #{{ week.week }} &middot;
+        <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a>
+    </h1>
+    {% having week.byes.all as byes %}
+    <p><strong>Byes:</strong> {{ byes|join:", " }}</p>
+    {% endhaving %}
     {% season_nav week "picks" %}
     {% if form.errors %}
     <p class="errorlist">Please fix the errors below:</p>
@@ -19,32 +19,31 @@
             <th class="kickoff">Kickoff</th>
             <th class="teams">Away vs. Home</th>
             <th class="tv">TV</th>
-        </tr> {% for field in form %}{% with field.field.game as gm %}
+        </tr> {% for field in form.game_fields %}{% with field.field.game as gm %}
         <tr> 
             <td class="kickoff">
-                {% if field.field.is_game %}
                 <span class="date-day">{{ gm.kickoff|date:"M jS, Y"}}</span>
                 <span class="date-weekday">{{ gm.kickoff|date:"D, P" }}</span>
-                {% else %}
-                <strong>Points Total</strong><br/>
-                ({{ field.label }})
-                {% endif %}
-                {% if field.errors %}{{ field.errors }}{% endif %}
             </td>
-            <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">{{ field }}
-                {% if gm.location %}<span class="location">{{ gm.location }}</span>{% endif %}</td>
-            <td class="tv">{{ field.help_text|default:"" }}</td>
+            <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">
+                {{ field }}{% if gm.location %}
+                <span class="location">{{ gm.location }}</span>{% endif %}
+            </td>
+            <td class="tv">{{ gm.tv|default:"" }}</td>
         </tr>{% endwith %}{% endfor %}
-        </tbody>
-        {% if week.is_open %}<tfoot>
-        <tr>
-            <td></td>
-            <td class="center">
-                <input type="submit" value="Submit" />
+        <tr>{% with form.points as field %}
+            <td>
+                <strong>Points Total</strong><br>
+                ({{ field.label }})
+            </td>
+            <td class="text-center">
+                {% if field.errors %}{{ field.errors }}<br>{% endif %}
+                {{ field }}
+                {% if week.is_open %}<input type="submit" value="Submit">{% endif %}
             </td>
             <td></td>
-        </tr>
-        </tfoot>{% endif %}
+        {% endwith %}</tr>
+        </tbody>
     </table>
     </form>
 {% endblock %}

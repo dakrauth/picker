@@ -32,11 +32,9 @@
                         <strong>
                             <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
                                 {{ entry.user.username }}</a></strong> <br />
-                        {% with entry.user.picker_preferences.favorite_team as team %}
-                        {% if team %}
+                        {% having entry.user.picker_preferences.favorite_team as team %}
                         <a class="fav_team" href="{{ team.get_absolute_url }}">{{ team }}</a>
-                        {% endif %}
-                        {% endwith %}
+                        {% endhaving %}
                     </div>
                 </td>
                 <td>{{ place }}</td>

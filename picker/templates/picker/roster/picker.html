@@ -8,10 +8,10 @@
     <span>Since {{ profile.user.date_joined|date:"M j, Y" }}</span>
 </h1>
 <p class="home-team-choice">
-    {% with profile.favorite_team as team %}{% if team %}
+    {% having profile.favorite_team as team %}
     <img style="width: 62px; height: 47px" src="{{ team.image_url }}" />
     <a href="{{ team.get_absolute_url }}">{{ team }}</a>
-    {% endif %}{% endwith %}
+    {% endhaving %}
 </p>
 
 <table class="roster">

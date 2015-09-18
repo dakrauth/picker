@@ -12,9 +12,9 @@
         <span class="autopick">Italicized user names indicate auto-picker selections</span><br />
         {% if week.points %}Final points total: {{ week.points }}{% endif %}
     </p>
-    {% with week.byes.all as byes %} {% if byes %}
+    {% having week.byes.all as byes %}
     <p><strong>Byes:</strong> <em>{{ byes|join:", " }}</em></p>
-    {% endif %} {% endwith %}
+    {% endhaving %}
     
     <table class="results-table">
     {% if not week.has_started %}

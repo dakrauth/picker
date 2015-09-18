@@ -74,6 +74,25 @@ class GameField(forms.ChoiceField):
         } if self.disabled else {}
 
 
+
+#===============================================================================
+class FieldIter(object):
+    
+    #---------------------------------------------------------------------------
+    def __init__(self, form):
+        self.fields = []
+        self.form = form
+        
+    #---------------------------------------------------------------------------
+    def append(self, name):
+        self.fields.append(name)
+    
+    #---------------------------------------------------------------------------
+    def __iter__(self):
+        for name in self.fields:
+            yield self.form[name]
+
+
 #===============================================================================
 class BasePickForm(forms.Form):
     
@@ -83,9 +102,11 @@ class BasePickForm(forms.Form):
     def __init__(self, week, *args, **kws):
         super(BasePickForm, self).__init__(*args, **kws)
         self.week = week
+        self.game_fields = FieldIter(self)
         for gm in week.game_set.all():
             key = game_key_format(gm.id)
             self.fields[key] = GameField(gm, self.management)
+            self.game_fields.append(key)
 
         self.fields['points'] = forms.IntegerField(
             label=gm.vs_description,

@@ -27,14 +27,6 @@ GAME_DURATION = timedelta(hours=4.5)
 LOGOS_DIR     = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos')
 datetime_now  = utils.datetime_now
 
-#===============================================================================
-class EnumField(models.CharField):
-    
-    #---------------------------------------------------------------------------
-    def __init__(self, enum, *args, **kws):
-        kws.update(choices=enum.CHOICES, default=enum.DEFAULT)
-        super(EnumField, self).__init__(*args, **kws)
-
 
 #===============================================================================
 class Preference(models.Model):
@@ -53,8 +45,8 @@ class Preference(models.Model):
     league        = models.ForeignKey('League')
     favorite_team = models.ForeignKey('Team', null=True, blank=True)
     user          = models.OneToOneField(User, related_name='picker_preferences')
-    status        = EnumField(Status, max_length=4)
-    autopick      = EnumField(Autopick, max_length=4)
+    status        = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
+    autopick      = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
 
     objects = managers.PreferenceManager()
     
@@ -256,7 +248,7 @@ class League(models.Model):
                 }
         '''
         current_week = None
-        game_week = None
+        game_set = None
         teams = self.get_team_name_dict()
         new_old = [0, 0]
         for week, away, home, dt, tv, where in schedule:
@@ -271,24 +263,24 @@ class League(models.Model):
                 opens = opens.replace(hour=12, minute=0)
                 closes = opens + timedelta(days=6, seconds=3600*24-1)
 
-                game_week, new_gw = self.game_set.get_or_create(
+                game_set, is_new = self.game_set.get_or_create(
                     season=season,
                     week=week,
                     defaults={'opens': opens, 'closes': closes}
                 )
-                if not new_gw:
-                    if game_week.opens != opens or game_week.closes != closes:
-                        game_week.opens = opens
-                        game_week.closes = closes
-                        game_week.save()
+                if not is_new:
+                    if game_set.opens != opens or game_set.closes != closes:
+                        game_set.opens = opens
+                        game_set.closes = closes
+                        game_set.save()
 
                 if byes and (week in byes):
-                    game_week.byes = [teams[t] for t in byes[week]]
+                    game_set.byes = [teams[t] for t in byes[week]]
 
             g, is_new = Game.objects.get_or_create(
                 home=home,
                 away=away,
-                week=game_week,
+                week=game_set,
                 kickoff=dt,
                 tv=tv,
                 notes='Location: ' + where,
@@ -392,8 +384,8 @@ class Team(models.Model):
     #---------------------------------------------------------------------------
     @cached_property
     def current_ranking(self):
-        week = league.game_set.latest('kickoff')
-        return self.ranking(week.week) or {'rank': 0, 'record': '?-?'}
+        gs = league.game_set.latest('kickoff')
+        return self.ranking(gs.week) or {'rank': 0, 'record': '?-?'}
         
     #---------------------------------------------------------------------------
     @property
@@ -662,8 +654,8 @@ class Game(models.Model):
     kickoff  = models.DateTimeField()
     tv       = models.CharField('TV', max_length=8, blank=True)
     notes    = models.TextField(blank=True)
-    category = EnumField(Category, max_length=4)
-    status   = EnumField(Status, max_length=1)
+    category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
+    status   = models.CharField(max_length=1, choices=Status.CHOICES, default=Status.DEFAULT)
     location = models.CharField(blank=True, max_length=50)
     objects  = managers.GameManager()
     
@@ -764,7 +756,7 @@ class PickSet(models.Model):
     wrong = models.PositiveSmallIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    strategy = EnumField(Strategy, max_length=4)
+    strategy = models.CharField(max_length=4, choices=Strategy.CHOICES, default=Strategy.DEFAULT)
     
     #===========================================================================
     class Meta:
