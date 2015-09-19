@@ -1,0 +1,9 @@
+{% extends "picker/base.html" %}
+{% block main_content %}
+    <p class="">Select a demo:</p>
+    <div class="list-group">
+        {% for league in leagues %}
+        <a href="{{ league.get_absolute_url }}" class="list-group-item">{{ league }} Demo</a>
+        {% endfor %}
+    </div>
+{% endblock main_content %}
