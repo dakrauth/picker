@@ -73,8 +73,6 @@ def picker_user_image(user, size=None):
     )
 
 
-
-
 #===============================================================================
 class MemoizeNode(Node):
     
@@ -150,11 +148,13 @@ def verbose(value, arg):
 #-------------------------------------------------------------------------------
 @register.inclusion_tag('picker/season_nav.html', takes_context=True)
 def season_nav(context, week, relative_to):
+    league = context['league']
     return {
         'week': week,
         'relative_to': relative_to,
         'user': context['user'],
-        'league': context['league']
+        'league': league,
+        'season_weeks': league.season_weeks(context.get('season', None))
     }
 
 

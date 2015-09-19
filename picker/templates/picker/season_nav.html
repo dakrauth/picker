@@ -1,13 +1,15 @@
 <div class="season-nav">
-    <ul> {% for sw in week.season_weeks %}
+    <ul>{% for sw in season_weeks %}
         <li{% ifequal sw week %} class="active"{% endifequal %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
-        <li{% ifequal week.week "playoffs" %} class="active"{% endifequal %}>
+        {% if week %}
+        <li{% if week.week == "playoffs" %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
         </li>
         {% if user|is_management %}
         <li><a href="{% url 'picker-manage-week' week.league.lower week.season week.week %}">Manage</a></li>
+        {% endif %}
         {% endif %}
     </ul>
 </div>
