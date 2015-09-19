@@ -240,7 +240,7 @@ def picks(request, league):
     if playoff:
         return _playoff_picks(request, league, playoff)
     
-    return '@picks/missing.html'
+    return '@unavailable.html', {'heading': 'Picks currently unavailable'}
 
 
 #-------------------------------------------------------------------------------
