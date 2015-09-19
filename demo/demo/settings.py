@@ -1,6 +1,7 @@
 import os, sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 sys.path.append(os.path.dirname(BASE_DIR))
 
 SECRET_KEY = '@$n=(b+ih211@e02_kup2i26e)o4ovt6ureh@xbkfz!&@b(hh*'
@@ -15,7 +16,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'picker'
+    'bootstrap3',
+    'picker',
+    'demo',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -32,7 +35,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'demo/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -53,6 +56,7 @@ DATABASES = {
     }
 }
 
+SITE_ID = 1
 ROOT_URLCONF = 'demo.urls'
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/New_York'
@@ -65,3 +69,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'static'),
+)
