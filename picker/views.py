@@ -43,44 +43,46 @@ def picker_adapter(view):
     return view_wrapper
 
 
-#-------------------------------------------------------------------------------
-def _playoff_week(playoff):
-    N = 1 + playoff.league.game_set.count()
-    weeks = [{'season': playoff.season, 'week': w} for w in range(1, N)]
-    return {'season_weeks': weeks, 'week': 'playoffs'}
-
-
-#-------------------------------------------------------------------------------
-def _conference_playoff_context(playoff, user):
+#===============================================================================
+class PlayoffContext(object):
     
-    teams = {}
-    confs = {
-        abbr: []
-        for abbr in playoff.league.conference_set.values_list('abbr', flat=True)
-    }
-    for seed, team in playoff.seeds:
-        conf = confs[team.conference.abbr]
-        conf.append(team.abbr)
-        teams[team.abbr] = {
-            'url': team.image_url,
-            'seed': seed,
-            'name': team.name,
-            'abbr': team.abbr,
-            'record': team.record_as_string,
-            'conf': team.conference.abbr
+    #---------------------------------------------------------------------------
+    @staticmethod
+    def week(playoff):
+        N = 1 + playoff.league.game_set.count()
+        weeks = [{'season': playoff.season, 'week': w} for w in range(1, N)]
+        return {'season_weeks': weeks, 'week': 'playoffs'}
+
+    #---------------------------------------------------------------------------
+    def conference(playoff, user, **kws):
+        teams = {}
+        confs = {
+            abbr: []
+            for abbr in playoff.league.conference_set.values_list('abbr', flat=True)
         }
+        for seed, team in playoff.seeds:
+            conf = confs[team.conference.abbr]
+            conf.append(team.abbr)
+            teams[team.abbr] = {
+                'url': team.image_url,
+                'seed': seed,
+                'name': team.name,
+                'abbr': team.abbr,
+                'record': team.record_as_string,
+                'conf': team.conference.abbr
+            }
 
-    try:
-        picks = playoff.playoffpicks_set.get(user=user)
-    except:
-        picks = None
+        try:
+            picks = playoff.playoffpicks_set.get(user=user)
+        except:
+            picks = None
     
-    data = {key: utils.json_dumps(confs[key]) for key in confs}
-    return dict(data,
-        teams=utils.json_dumps(teams),
-        picks=utils.json_dumps(picks.picks if picks else []),
-        week=_playoff_week(playoff)
-    )
+        return dict({key: utils.json_dumps(confs[key]) for key in confs},
+            teams=utils.json_dumps(teams),
+            picks=utils.json_dumps(picks.picks if picks else []),
+            week=PlayoffContext.week(playoff),
+            **kws
+        )
 
 
 #===============================================================================
@@ -150,12 +152,6 @@ def roster(request, league, season=None):
 
 
 #-------------------------------------------------------------------------------
-def _week_results(request, week, **extras):
-    extras.update(week=week, weekly_results=week.weekly_results())
-    return '@results/week.html', extras
-
-
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results(request, league):
@@ -166,7 +162,7 @@ def results(request, league):
     if week.has_started:
         week.update_results()
     
-    return _week_results(request, week)
+    return '@results/week.html', {'week': week}
 
 
 #-------------------------------------------------------------------------------
@@ -182,7 +178,7 @@ def results_by_season(request, league, season):
 @picker_adapter
 def results_by_week(request, league, season, week):
     week = get_object_or_404(league.game_set, season=season, week=week)
-    return _week_results(request, week)
+    return '@results/week.html', {'week': week}
 
 
 #-------------------------------------------------------------------------------
@@ -190,7 +186,7 @@ def results_by_week(request, league, season, week):
 @picker_adapter
 def results_for_playoffs(request, league, season):
     playoff = get_object_or_404(league.playoff_set, season=season)
-    return '@results/playoffs.html', {'week': _playoff_week(playoff), 'playoff': playoff}
+    return '@results/playoffs.html', {'week': PlayoffContext.week(playoff), 'playoff': playoff}
 
 
 #===============================================================================
@@ -240,7 +236,11 @@ def picks(request, league):
     if week:
         return _weekly_picks(request, league, week)
 
-    return utils.redirect_reverse('picker-playoffs-picks', league.current_season)
+    playoff = league.current_playoffs
+    if playoff:
+        return _playoff_picks(request, league, playoff)
+    
+    return '@picks/missing.html'
 
 
 #-------------------------------------------------------------------------------
@@ -256,18 +256,21 @@ def picks_by_week(request, league, season, week):
 @picker_adapter
 def picks_for_playoffs(request, league, season):
     playoff = get_object_or_404(league.playoff_set, season=season)
+    return _playoff_picks(request, league, playoff)
+
+
+#-------------------------------------------------------------------------------
+def _playoff_picks(request, league, playoff):
     if datetime_now() > playoff.kickoff:
         return utils.redirect_reverse('picker-playoffs-results', season)
 
     if request.method == 'POST':
-        picks, created = playoff.playoffpicks_set.objects.get_or_create(
-            user=request.user,
-        )
+        picks = playoff.user_picks(request.user)
         picks.picks = dict([(k, v) for k,v in request.POST.items()])
         picks.save()
         return utils.redirect_reverse('picker-playoffs-results', season)
     
-    data = _conference_playoff_context(playoff, request.user)
+    data = PlayoffContext.conference(playoff, request.user)
     return '@picks/playoffs.html', data
 
 
@@ -279,7 +282,7 @@ def picks_for_playoffs(request, league, season):
 @management_user_required
 @picker_adapter
 def management_home(request, league):
-    gs = league.current_gameset or _playoff_week(league.playoff)
+    gs = league.current_gameset or PlayoffContext.week(league.playoff)
     return '@manage/home.html', {'week': gs, 'management': True,}
 
 
@@ -348,7 +351,7 @@ def manage_playoffs(request, league, season, *args, **kws):
     return render(
         request, 
         '@picks/playoffs.html', 
-        dict(_conference_playoff_context(playoff, None), management=True)
+        PlayoffContext.conference(playoff, None, management=True)
     )
 
 #-------------------------------------------------------------------------------

@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^roster/(?P<season>20\d\d)/$',    views.roster, name='picker-season-roster'),
     url(r'^roster/p/(\w+)/$',               views.roster_profile, name='picker-roster-profile'),
     url(r'^teams/$',                        views.teams, {'pk': None}, name='picker-teams'),
-    url(r'^teams/(?P<pk>\d+)/$',            views.teams, name='picker-teams'),
+    url(r'^teams/(?P<pk>\d+)/$',            views.teams, name='picker-team'),
     url(r'^schedule/$',                     views.schedule, {'season': None}, name='picker-schedule'),
     url(r'^schedule/(?P<season>\d{4})$',    views.schedule, name='picker-schedule'),
     

@@ -116,6 +116,11 @@ class League(models.Model):
         return self.name
 
     #---------------------------------------------------------------------------
+    @models.permalink
+    def get_absolute_url(self):
+        return ('picker-home', [self.lower])
+    
+    #---------------------------------------------------------------------------
     @cached_property
     def lower(self):
         return self.abbr.lower()
@@ -181,7 +186,15 @@ class League(models.Model):
         rel = datetime_now()
         try:
             return self.game_set.get(opens__lte=rel, closes__gte=rel)
-        except:
+        except GameSet.DoesNotExist:
+            return None
+    
+    #---------------------------------------------------------------------------
+    @cached_property
+    def current_playoffs(self):
+        try:
+            return self.playoff_set.get(season=self.current_season)
+        except Playoff.DoesNotExist:
             return None
     
     #---------------------------------------------------------------------------
@@ -204,6 +217,10 @@ class League(models.Model):
             year
         )
 
+    #---------------------------------------------------------------------------
+    def season_weeks(self, season=None):
+        return self.game_set.filter(season=season or self.current_season)
+        
     #---------------------------------------------------------------------------
     def random_points(self):
         d = self.game_set.filter(points__gt=0).aggregate(
@@ -347,7 +364,7 @@ class Team(models.Model):
     #---------------------------------------------------------------------------
     @models.permalink
     def get_absolute_url(self):
-        return ('picker-teams', [self.league.lower, str(self.id)])
+        return ('picker-team', [self.league.lower, str(self.id)])
     
     #---------------------------------------------------------------------------
     def _get_aliases(self):
@@ -526,11 +543,6 @@ class GameSet(models.Model):
     def in_progress(self):
         now = datetime_now()
         return now >= self.kickoff and now <= self.end_time
-        
-    #---------------------------------------------------------------------------
-    @property
-    def season_weeks(self):
-        return self.league.game_set.filter(season=self.season)
         
     #---------------------------------------------------------------------------
     @property
@@ -889,7 +901,11 @@ class Playoff(models.Model):
     @property
     def picks(self):
         return PlayoffPicks.objects.filter(self.league, season=self.season)
-
+    
+    #---------------------------------------------------------------------------
+    def user_picks(self, user):
+        return self.playoffpicks_set.get_or_create(user=user)[0]
+    
     #---------------------------------------------------------------------------
     @property
     def admin(self):

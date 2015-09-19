@@ -39,11 +39,11 @@ def user_email_exists(email):
 
 #-------------------------------------------------------------------------------
 def get_templates(league, component):
-    league_dir = 'picker/{}/'.format(league.lower)
     if component.startswith('@'):
+        league_dir = 'picker/{}/'.format(league.lower)
         return [
+            component.replace('@', league_dir),
             component.replace('@', 'picker/'),
-            component.replace('@', league_dir)
         ]
     
     return component
@@ -179,7 +179,6 @@ def parse_schedule(league, text):
     for line in text.splitlines():
         if line.startswith('Week '):
             continue
-
         elif line.startswith(week_days):
             dt = line.split('\t')[0]
         elif ' at ' in line:
@@ -189,7 +188,5 @@ def parse_schedule(league, text):
             home = dct[home]
             when = parse('%s %s' % (dt, tm))
             items.append((away, home, when, tv or 'ESPN'))
-        else:
-            print '***', line
 
     return items

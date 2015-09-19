@@ -2,10 +2,11 @@
 {% block title %}{{ team }}{% endblock %}
 {% block main_content %}
     <h1 class="team-header">
-        <img src="{{ team.image_url }}">
-        {{ team }}<br>
-        <span>{{ team.conference }} {{ team.division }}</span>
-        <span>({{ team.record_as_string }})</span>
+        {% if team.logo %}<img src="{{ team.logo.url }}">{% endif %}
+        {{ team }}
+        <small>
+            {{ team.conference }} {{ team.division }} ({{ team.record_as_string }})
+        </small>
     </h1>
     <p>
         <strong>Bye Week:</strong>
@@ -33,7 +34,8 @@
                 {% endif %}
             </td>
             <td>
-                {% if game.status != game.Status.UNPLAYED  %}
+                {% if game.status == game.Status.UNPLAYED  %}TBD
+                {% else %}
                 {% if game.status == game.Status.TIE %}T
                 {% else %}
                 {% if team == game.winner %}W{% else %}L{% endif %}
