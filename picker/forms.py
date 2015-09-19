@@ -7,7 +7,6 @@ from django.contrib import messages
 from . import models as picker
 from . import utils
 from .signals import picker_weekly_results
-import markdown2
 
 game_key_format = 'game_{}'.format
 
