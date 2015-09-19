@@ -6,10 +6,11 @@ from django.utils.encoding import force_unicode
 from django.contrib import messages
 from . import models as picker
 from . import utils
+from . import conf
 from .signals import picker_weekly_results
 
 game_key_format = 'game_{}'.format
-
+picker_widget = conf.import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
 
 #===============================================================================
 class TemplateTeamChoice(forms.RadioSelect):
@@ -50,7 +51,7 @@ class TemplateTeamChoice(forms.RadioSelect):
 class GameField(forms.ChoiceField):
 
     #---------------------------------------------------------------------------
-    def __init__(self, game, manage=False, widget=TemplateTeamChoice):
+    def __init__(self, game, manage=False, widget=picker_widget):
         choices = ((str(game.away.id), game.away), (str(game.home.id), game.home))
         self.game = game
         self.manage = manage

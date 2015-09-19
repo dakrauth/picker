@@ -1,5 +1,6 @@
 from datetime import date
 from django.conf import settings
+from django.utils.module_loading import import_string
 
 today = date.today()
 season = today.year if today.month > 6 else today.year - 1
@@ -18,6 +19,7 @@ DEFAULT_PICKER_SETTINGS = {
     'LEAGUE_MODULE_BASE': 'picker.league',
     'LOGOS_UPLOAD_DIR': 'picker/logos',
     'EMAIL_HANDLER': 'django.core.mail.send_mail',
+    'TEAM_PICKER_WIDGET': 'picker.forms.TemplateTeamChoice',
     'PARTICIPATION_HOOKS': []
 }
 
@@ -25,3 +27,11 @@ get_setting = dict(
     DEFAULT_PICKER_SETTINGS,
     **getattr(settings, 'PICKER', {})
 ).get
+
+#-------------------------------------------------------------------------------
+def import_setting(key, default=None):
+    value = get_setting(key)
+    if not value:
+        return default
+    
+    return import_setting(value)
