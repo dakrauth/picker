@@ -5,27 +5,30 @@
 <h2> Week #{{ week.week }} {{ week.season }}</h2>
 {% season_nav week "picks" %}
 {% if picks %}
-<table class="table table-striped past-picks-summary">
-<tbody>
-    <tr>
-        <th>Correct Picks:</th>
-        <td>{{ picks.correct }}</td>
-    </tr>
-    <tr>
-        <th>Your Points:</th>
-        <td><span class="{% if picks.points == week.points %}correct{% else %}incorrenct{% endif %}">{{ picks.points }}</span></td>
-    </tr>
-    <tr>
-        <th>Actual Points:</th>
-        <td>{{ week.points }}</td>
-    </tr>
-    <tr>
-        <th>Differential:</th>
-        <td>&plusmn;{{ picks.points_delta }}</td>
-    </tr>
-</tbody>
-</table>
-<table class="table table-striped past-picks">
+<div class="panel panel-default">
+    <div class="panel-heading">Summary</div>
+    <div class="panel-body"></div>
+    <table class="table picks-summary">
+    <thead>
+        <tr>
+            <th>Correct Picks:</th>
+            <th>Your Points:</th>
+            <th>Actual Points:</th>
+            <th>Differential:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ picks.correct }}</td>
+            <td><span class="{% if picks.points == week.points %}correct{% else %}incorrenct{% endif %}">{{ picks.points }}</span></td>
+            <td>{{ week.points }}</td>
+            <td>&plusmn;{{ picks.points_delta }}</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+
+<table class="table table-striped table-bordered past-picks">
 <tbody>
 <tr>
     <th>Kickoff</th>

@@ -810,7 +810,7 @@ class PickSet(models.Model):
     @property
     def points_delta(self):
         if self.week.points == 0:
-            return 999
+            return 0
             
         return abs(self.points - self.week.points)
     
