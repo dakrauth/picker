@@ -1,7 +1,7 @@
 {% extends league_base %}
 {% block title %}NFL {{ season }}{% endblock %}
 {% block main_content %}
-<h1>NFL {{ season }} Schedule</h1>
+<h1>{{ league }} {{ season }} Schedule</h1>
 <div class="season-nav clearfix">
     <ul> 
         <li>Weeks</li>{% for sw in weeks %}
@@ -10,34 +10,32 @@
         </li> {% endfor %}
     </ul>
 </div>
-<div>
-    {% for week in weeks %}
-    <h2>Week {{ week.week}}</h2>
-    <table class="season-listing">
-    <tbody>
-        <tr>
-            <th>Kickoff</th>
-            <th>Away</th>
-            <th>Home</th>
-            <th>Location</th>
-            <th>TV</th>
-        </tr>
-        {% for game in week.game_set.all %}
-        <tr>
-            <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
-            <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
-            <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
-            <td>{{ game.location }}</td>
-            <td>{{ game.tv }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    </table>
-    {% if week.byes.count %}
-    <p class="team-byes">
-        <strong>Byes</strong>: {{ week.byes.all|join:", "}}
-    </p>
-    {% endif %}
+{% for week in weeks %}
+<h2>Week {{ week.week}}</h2>
+<table class="table table-striped season-listing">
+<tbody>
+    <tr>
+        <th>Kickoff</th>
+        <th>Away</th>
+        <th>Home</th>
+        <th>Location</th>
+        <th>TV</th>
+    </tr>
+    {% for game in week.game_set.all %}
+    <tr>
+        <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
+        <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
+        <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
+        <td>{{ game.location }}</td>
+        <td>{{ game.tv }}</td>
+    </tr>
     {% endfor %}
-</div>
+</tbody>
+</table>
+{% if week.byes.count %}
+<p class="team-byes">
+    <strong>Byes</strong>: {{ week.byes.all|join:", "}}
+</p>
+{% endif %}
+{% endfor %}
 {% endblock %}

@@ -3,57 +3,56 @@
 {% block main_content %}
     <h1>Roster and Season Standings &mdash; {{ season }}</h1>
     {% all_seasons_nav season league "roster" %}
-    <table class="roster">
-        <thead>
-            <tr>
-                <th>Player</th>
-                <th><strong><abbr title="{{ season }} ranking">{{ season }}</abbr></strong></th>
-                <th><abbr title="{{ season }} Weeks played and won">Wks / Won</abbr></th>
-                <th><abbr title="{{ season }} Correct">+</abbr></th>
-                <th><abbr title="{{ season }} Incorrect">-</abbr></th>
-                <th><abbr title="{{ season }} Percentage correct">%</abbr></th>
-                <th><abbr title="{{ season }} Total difference in final points">&plusmn; Pts</abbr></th>
-                <th><abbr title="{{ season }} Average difference in final points">&plusmn;avg</abbr></th>
-                <th class="double"><abbr title="All time correct picks">+</abbr></th>
-                <th><abbr title="All time incorrect picks">-</abbr></th>
-                <th><abbr title="All time percentage correct">%</abbr></th>
-                <th><abbr title="All time total difference in final points">&plusmn; Pts</abbr></th>
-                <th><abbr title="All time average difference in final points">&plusmn;avg</abbr></th>
-                <th><abbr title="All time weeks played and won">Wks / Won</abbr></th>
-                <th><strong><abbr title="All time ranking">All</abbr></strong></th>
-            </tr>
-        </thead>
-        
-        <tbody> {% for place,entry,all_time_place,all_time_stats in roster %}{% if entry.is_active %}
-            <tr class="{{ entry.user.picker_preferences.is_active|yesno:"active,inactive" }}">
-                <td class="player">
-                    <img src="{{ entry.user|picker_user_image:"32" }}" />
-                    <div>
-                        <strong>
-                            <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
-                                {{ entry.user.username }}</a></strong> <br />
-                        {% having entry.user.picker_preferences.favorite_team as team %}
-                        <a class="fav_team" href="{{ team.get_absolute_url }}">{{ team }}</a>
-                        {% endhaving %}
-                    </div>
-                </td>
-                <td>{{ place }}</td>
-                <td>{{ entry.weeks_played }} / {{ entry.weeks_won|length }}</td>
-                <td class="hilite">{{ entry.correct }}</td>
-                <td>{{ entry.wrong }}</td>
-                <td>{{ entry.pct|floatformat:"1" }}%</td>
-                <td>{{ entry.points_delta}}</td>
-                <td>{{ entry.avg_points_delta|floatformat }}</td>
+    <table class="table table-striped roster">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th><strong><abbr title="{{ season }} ranking">{{ season }}</abbr></strong></th>
+            <th><abbr title="{{ season }} Weeks played and won">Wks / Won</abbr></th>
+            <th><abbr title="{{ season }} Correct">+</abbr></th>
+            <th><abbr title="{{ season }} Incorrect">-</abbr></th>
+            <th><abbr title="{{ season }} Percentage correct">%</abbr></th>
+            <th><abbr title="{{ season }} Total difference in final points">&plusmn; Pts</abbr></th>
+            <th><abbr title="{{ season }} Average difference in final points">&plusmn;avg</abbr></th>
+            <th class="double"><abbr title="All time correct picks">+</abbr></th>
+            <th><abbr title="All time incorrect picks">-</abbr></th>
+            <th><abbr title="All time percentage correct">%</abbr></th>
+            <th><abbr title="All time total difference in final points">&plusmn; Pts</abbr></th>
+            <th><abbr title="All time average difference in final points">&plusmn;avg</abbr></th>
+            <th><abbr title="All time weeks played and won">Wks / Won</abbr></th>
+            <th><strong><abbr title="All time ranking">All</abbr></strong></th>
+        </tr>
+    </thead>
+    <tbody> {% for place,entry,all_time_place,all_time_stats in roster %}{% if entry.is_active %}
+        <tr class="{{ entry.user.picker_preferences.is_active|yesno:"active,inactive" }}">
+            <td class="player">
+                <img src="{{ entry.user|picker_user_image:"32" }}" />
+                <div>
+                    <strong>
+                        <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
+                            {{ entry.user.username }}</a></strong> <br />
+                    {% having entry.user.picker_preferences.favorite_team as team %}
+                    <a class="fav_team" href="{{ team.get_absolute_url }}">{{ team }}</a>
+                    {% endhaving %}
+                </div>
+            </td>
+            <td>{{ place }}</td>
+            <td>{{ entry.weeks_played }} / {{ entry.weeks_won|length }}</td>
+            <td class="hilite">{{ entry.correct }}</td>
+            <td>{{ entry.wrong }}</td>
+            <td>{{ entry.pct|floatformat:"1" }}%</td>
+            <td>{{ entry.points_delta}}</td>
+            <td>{{ entry.avg_points_delta|floatformat }}</td>
 
-                <td class="double"><strong>{{ all_time_stats.correct }}</strong></td>
-                <td>{{ all_time_stats.wrong }}</td>
-                <td>{{ all_time_stats.pct|floatformat:"1" }}%</td>
-                <td>{{ all_time_stats.points_delta}}</td>
-                <td>{{ all_time_stats.avg_points_delta|floatformat }}</td>
-                <td>{{ all_time_stats.weeks_played }} / {{ all_time_stats.weeks_won|length }}</td>
-                <td class="atplace-{{ all_time_place }}">{{ all_time_place }}</td>
-            </tr>{% endif %}{% endfor %}
-        </tbody>
+            <td class="double"><strong>{{ all_time_stats.correct }}</strong></td>
+            <td>{{ all_time_stats.wrong }}</td>
+            <td>{{ all_time_stats.pct|floatformat:"1" }}%</td>
+            <td>{{ all_time_stats.points_delta}}</td>
+            <td>{{ all_time_stats.avg_points_delta|floatformat }}</td>
+            <td>{{ all_time_stats.weeks_played }} / {{ all_time_stats.weeks_won|length }}</td>
+            <td class="atplace-{{ all_time_place }}">{{ all_time_place }}</td>
+        </tr>{% endif %}{% endfor %}
+    </tbody>
     </table>
 {% endblock %}
 {% block extra_body %}{{ block.super }}

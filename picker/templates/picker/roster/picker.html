@@ -2,10 +2,10 @@
 {% block title %}Roster Profile{% endblock %}
 {% block fav_team %}team-{{ profile.picker_preferences.favorite_team.abbr|default:"ne"|lower }}{% endblock fav_team %}
 {% block main_content %}
-<h3 class="profile-header clearfix">
-    <img class="top" src="{{ profile.user|picker_user_image }}" />
-    {{ profile }}<br>
-    <span>Since {{ profile.user.date_joined|date:"M j, Y" }}</span>
+<h1 class="profile-header clearfix">
+    <img class="top" src="{{ profile.user|picker_user_image }}">
+    {{ profile }}
+    <small>Since {{ profile.user.date_joined|date:"M j, Y" }}</small>
 </h1>
 <p class="home-team-choice">
     {% having profile.favorite_team as team %}
@@ -13,43 +13,41 @@
     <a href="{{ team.get_absolute_url }}">{{ team }}</a>
     {% endhaving %}
 </p>
-
-<table class="roster">
-    <thead>
-        <tr>
-            <th>Season</th>
-            <th>Place</th>
-            <th>Wks Played</th>
-            <th>Wks Won</th>
-            <th>Good</th>
-            <th>Bad</th>
-            <th>%</th>
-            <th>&plusmn;Pts</th>
-            <th>&plusmn;avg</th>
-        </tr>
-    </thead>
-    
-    <tbody>{% for entry in stats %}{% if entry.weeks_played %}
-        <tr>
-            <td>{{ entry.season|default:"Totals" }}</td>
-            <td></td>
-            <td>{{ entry.weeks_played }}</td>
-            <td>
-                {% with entry.weeks_won as weeks_won %}
-                {{ weeks_won|length }}{% if weeks_won and entry.season %} ( 
-                {% for w in weeks_won %}
-                <a href="{{ w.get_absolute_url }}">
-                    #{{ w.week }}</a>{% if not forloop.last  %}, {% endif %}
-                {% endfor %})
-                {% endif %}
-                {% endwith %} 
-            </td>
-            <td>{{ entry.correct }}</td>
-            <td>{{ entry.wrong }}</td>
-            <td>{{ entry.pct|floatformat:"1" }}%</td>
-            <td>{{ entry.points_delta}}</td>
-            <td>{{ entry.avg_points_delta|floatformat }}</td>
-        </tr>{% endif %}{% endfor %}
-    </tbody>
+<table class="table table-striped roster">
+<thead>
+    <tr>
+        <th>Season</th>
+        <th>Place</th>
+        <th>Wks Played</th>
+        <th>Wks Won</th>
+        <th>Good</th>
+        <th>Bad</th>
+        <th>%</th>
+        <th>&plusmn;Pts</th>
+        <th>&plusmn;avg</th>
+    </tr>
+</thead>
+<tbody>{% for entry in stats %}{% if entry.weeks_played %}
+    <tr>
+        <td>{{ entry.season|default:"Totals" }}</td>
+        <td></td>
+        <td>{{ entry.weeks_played }}</td>
+        <td>
+            {% with entry.weeks_won as weeks_won %}
+            {{ weeks_won|length }}{% if weeks_won and entry.season %} ( 
+            {% for w in weeks_won %}
+            <a href="{{ w.get_absolute_url }}">
+                #{{ w.week }}</a>{% if not forloop.last  %}, {% endif %}
+            {% endfor %})
+            {% endif %}
+            {% endwith %} 
+        </td>
+        <td>{{ entry.correct }}</td>
+        <td>{{ entry.wrong }}</td>
+        <td>{{ entry.pct|floatformat:"1" }}%</td>
+        <td>{{ entry.points_delta}}</td>
+        <td>{{ entry.avg_points_delta|floatformat }}</td>
+    </tr>{% endif %}{% endfor %}
+</tbody>
 </table>
 {% endblock %}

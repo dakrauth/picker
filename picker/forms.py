@@ -57,7 +57,7 @@ class GameField(forms.ChoiceField):
         self.manage = manage
         self.game_id = game.id
         self.is_game = True
-        self.disabled = not self.manage and (self.game.kickoff <= datetime.now())
+        self.disabled = not self.manage and (self.game.kickoff <= utils.datetime_now())
         super(GameField, self).__init__(
             choices=choices,
             label=game.kickoff.strftime('%a, %b %d %I:%M %p'),
@@ -235,7 +235,7 @@ class PlayoffBuilderForm(forms.ModelForm):
             kws['instance'], created = picker.Playoff.objects.get_or_create(
                 league=league,
                 season=league.current_season,
-                defaults={'kickoff': datetime.now()}
+                defaults={'kickoff': utils.datetime_now()}
             )
             
         super(PlayoffBuilderForm, self).__init__(*args, **kws)

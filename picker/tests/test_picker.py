@@ -1,9 +1,9 @@
 import os
-from datetime import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils.module_loading import import_string
 from picker.models import *
+from picker.utils import datetime_now
 
 #-------------------------------------------------------------------------------
 def create_users(n_users):
@@ -19,7 +19,7 @@ def create_users(n_users):
 #===============================================================================
 class PickerTestCase(TestCase):
 
-    CURRENT_SEASON = os.environ.get('CURRENT_SEASON', datetime.now().year)
+    CURRENT_SEASON = os.environ.get('CURRENT_SEASON', datetime_now().year)
     
     
 #===============================================================================

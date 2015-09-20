@@ -209,7 +209,7 @@ class League(models.Model):
     #---------------------------------------------------------------------------
     @cached_property
     def current_season(self):
-        year = datetime.now().year
+        year = datetime_now().year
         abbrs = 'NFL FBS FCS NAIA'.split()
         fmt = '{}_CURRENT_SEASON'.format
         return {abbr: picker_setting(fmt(abbr), year) for abbr in abbrs}.get(
@@ -1021,6 +1021,8 @@ class RosterStats(object):
     #---------------------------------------------------------------------------
     @property
     def weeks_won(self):
+        return 0
+        
         qs = GameSet.objects.filter(weeksummary__weekwinner__user=self.user)
         if self.season:
             qs = qs.filter(season=self.season)
