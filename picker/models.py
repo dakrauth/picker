@@ -364,7 +364,7 @@ class Team(models.Model):
     #---------------------------------------------------------------------------
     @models.permalink
     def get_absolute_url(self):
-        return ('picker-team', [self.league.lower, str(self.id)])
+        return ('picker-team', [self.league.lower, self.abbr])
     
     #---------------------------------------------------------------------------
     def _get_aliases(self):

@@ -54,6 +54,7 @@ class PlayoffContext(object):
         return {'season_weeks': weeks, 'week': 'playoffs'}
 
     #---------------------------------------------------------------------------
+    @staticmethod
     def conference(playoff, user, **kws):
         teams = {}
         confs = {
@@ -107,9 +108,9 @@ def api_v1(request, action, league=None):
 
 #-------------------------------------------------------------------------------
 @picker_adapter
-def teams(request, league, pk=None):
-    if pk:
-        team =  get_object_or_404(league.team_set, pk=pk)
+def teams(request, league, abbr=None):
+    if abbr:
+        team =  get_object_or_404(league.team_set, abbr=abbr)
         return '@teams/detail.html', {'team': team}
     
     return '@teams/listing.html'
@@ -131,7 +132,7 @@ def schedule(request, league, season=None):
 @login_required
 @picker_adapter
 def roster_profile(request, league, username):
-    pref = get_object_or_404(Preference, user__username=username)
+    pref = get_object_or_404(Preference, league=league, user__username=username)
     seasons = list(league.available_seasons) + [None]
     stats = [RosterStats(pref, league, s) for s in seasons]
     return '@roster/picker.html', {'profile': pref, 'stats': stats}
@@ -267,8 +268,11 @@ def picks_by_week(request, league, season, week):
 @login_required
 @picker_adapter
 def picks_for_playoffs(request, league, season):
-    playoff = get_object_or_404(league.playoff_set, season=season)
-    return _playoff_picks(request, league, playoff)
+    playoff = league.current_playoffs
+    if playoff:
+        return _playoff_picks(request, league, playoff)
+
+    return '@unavailable.html', {'heading': 'Playoff picks currently unavailable'}
 
 
 #-------------------------------------------------------------------------------
@@ -282,8 +286,7 @@ def _playoff_picks(request, league, playoff):
         picks.save()
         return utils.redirect_reverse('picker-playoffs-results', season)
     
-    data = PlayoffContext.conference(playoff, request.user)
-    return '@picks/playoffs.html', data
+    return '@picks/playoffs.html', PlayoffContext.conference(playoff, request.user)
 
 
 #===============================================================================
