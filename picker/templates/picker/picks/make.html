@@ -1,6 +1,7 @@
 {% extends league_base %}
 {% block title %}Picks{% endblock %}
 {% block main_content %}
+    {% load bootstrap3 %}
     <h1>
         Week #{{ week.week }} &middot;
         <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a>
@@ -12,7 +13,7 @@
     {% if form.errors %}
     <p class="errorlist">Please fix the errors below:</p>
     {% endif %}
-    <form method="post" action="">
+    <form method="post" action="">{% csrf_token %}
     <table class="table table-striped picks">
         <tbody>
         <tr>
@@ -32,14 +33,15 @@
             <td class="tv">{{ gm.tv|default:"" }}</td>
         </tr>{% endwith %}{% endfor %}
         <tr>{% with form.points as field %}
+            <td><strong>Points Total</strong><br></td>
             <td>
-                <strong>Points Total</strong><br>
-                ({{ field.label }})
-            </td>
-            <td class="text-center">
                 {% if field.errors %}{{ field.errors }}<br>{% endif %}
-                {{ field }}
-                {% if week.is_open %}<input type="submit" value="Submit">{% endif %}
+                {% bootstrap_field field %}
+                {% if week.is_open %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endbuttons %}
+                {% endif %}
             </td>
             <td></td>
         {% endwith %}</tr>

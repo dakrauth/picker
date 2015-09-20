@@ -150,19 +150,31 @@ def roster(request, league, season=None):
 #  Results
 #===============================================================================
 
+#-------------------------------------------------------------------------------
+def _playoff_results(request, playoff):
+    return '@results/playoffs.html', {
+        'week': PlayoffContext.week(playoff),
+        'playoff': playoff
+    }
+
 
 #-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results(request, league):
     week = league.current_gameset
-    if not week:
-        return utils.redirect_reverse('picker-playoffs-results', league.current_season)
+    if week:
+        if week.has_started:
+            week.update_results()
 
-    if week.has_started:
-        week.update_results()
+        return '@results/week.html', {'week': week}
     
-    return '@results/week.html', {'week': week}
+    
+    playoff = league.current_playoffs
+    if playoff:
+        return _playoff_results(request, playoff)
+    
+    return '@unavailable.html', {'heading': 'Results currently unavailable'}
 
 
 #-------------------------------------------------------------------------------
@@ -186,7 +198,7 @@ def results_by_week(request, league, season, week):
 @picker_adapter
 def results_for_playoffs(request, league, season):
     playoff = get_object_or_404(league.playoff_set, season=season)
-    return '@results/playoffs.html', {'week': PlayoffContext.week(playoff), 'playoff': playoff}
+    return _playoff_picks(request, playoff)
 
 
 #===============================================================================
