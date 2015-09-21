@@ -25,7 +25,7 @@
                     <span class="username">{{ score.picks.user }}</span>
                 </td>
                 {% for result,team in score.results %}
-                <td class="team-cell result-{{ result|yesno:"correct,incorrect,tbd" }}" style="background-image: {{ team.image_url }}">
+                <td class="team-cell result-{{ result|yesno:"correct,incorrect,tbd" }}"{% if team.logo %} style="background-image: {{ team.logo.url }}"{% endif %}>
                     {% if result >= 0 %}<span>{{ result }}</span>{% endif %}
                 </td>
                 {% endfor %}

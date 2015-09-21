@@ -3,17 +3,20 @@
 {% block main_content %}
     <h1>Manage Picks: Week {{ week.week }}, {{ week.season }}</h1>
     {% season_nav week "results" %}
+    {% load bootstrap3 %}
     <form action="" method="post" class="actions">
-        <input type="submit" name="reminder" value="Reminder Email" />
-        <input type="submit" name="kickoff" value="Kickoff Autopicks" />
-        <input type="submit" name="update" value="Auto Update" />
+        <p>
+            {% bootstrap_button "Reminder Email" button_type=submit name=reminder %}
+            {% bootstrap_button "Kickoff Autopicks" button_type=submit name=kickoff %}
+            {% bootstrap_button "Auto Update" button_type=submit name=update %}
+        </p>
     </form>
 
     {% if form.errors %}
     <p>Please fix the errors below:</p>    
     {% endif %}
     <form method="post" action="">
-    <table class="picks">
+    <table class="table table-striped picks">
         <tr>
             <th class="kickoff">Kickoff</th>
             <th class="teams">Away vs. Home</th>

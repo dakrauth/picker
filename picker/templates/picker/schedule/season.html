@@ -2,40 +2,47 @@
 {% block title %}NFL {{ season }}{% endblock %}
 {% block main_content %}
 <h1>{{ league }} {{ season }} Schedule</h1>
-<div class="season-nav clearfix">
-    <ul> 
-        <li>Weeks</li>{% for sw in weeks %}
+<nav class="season-nav">
+    <ul class="pagination">
+        <li class="disabled"><a href="#">Weeks:</a></li>{% for sw in weeks %}
         <li>
-            <a href="#week_{{ sw.week }}">{{ sw.week }}</a>
+            <a href="#week-{{ sw.week }}">{{ sw.week }}</a>
         </li> {% endfor %}
     </ul>
-</div>
+</nav>
 {% for week in weeks %}
-<h2>Week {{ week.week}}</h2>
-<table class="table table-striped season-listing">
-<tbody>
-    <tr>
-        <th>Kickoff</th>
-        <th>Away</th>
-        <th>Home</th>
-        <th>Location</th>
-        <th>TV</th>
-    </tr>
-    {% for game in week.game_set.all %}
-    <tr>
-        <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
-        <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
-        <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
-        <td>{{ game.location }}</td>
-        <td>{{ game.tv }}</td>
-    </tr>
-    {% endfor %}
-</tbody>
-</table>
-{% if week.byes.count %}
-<p class="team-byes">
-    <strong>Byes</strong>: {{ week.byes.all|join:", "}}
-</p>
-{% endif %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title" id="week-{{ week.week }}">Week {{ week.week }}</h2>
+    </div>
+    {% if week.byes.count %}
+    <div class="panel-body">
+        <p class="team-byes">
+            <span class="label label-default">Byes</span>
+            {{ week.byes.all|join:", "}}
+        </p>
+    </div>
+    {% endif %}
+    <table class="table table-striped season-listing">
+    <tbody>
+        <tr>
+            <th>Kickoff</th>
+            <th>Away</th>
+            <th>Home</th>
+            <th>Location</th>
+            <th class="text-right">TV</th>
+        </tr>
+        {% for game in week.game_set.all %}
+        <tr>
+            <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
+            <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
+            <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
+            <td>{{ game.location }}</td>
+            <td class="text-right">{{ game.tv }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
 {% endfor %}
 {% endblock %}

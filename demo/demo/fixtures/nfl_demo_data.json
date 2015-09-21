@@ -19,6 +19,850 @@
 },
 {
     "fields": {
+        "username": "user1",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$qK8DOXZ5RbpJ$2w0tRLPOQ8Wfzfb4BXAM/7QqVQhTC9OBbJmcJhlvkqU=",
+        "email": "user1@example.com",
+        "date_joined": "2015-09-21T15:08:12.416"
+    },
+    "model": "auth.user",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "user2",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$tbqp1dvKjEyB$//TDE8W0ptXhe+ldkmsP8craF4lqOG0rOj4bwrUVnRc=",
+        "email": "user2@example.com",
+        "date_joined": "2015-09-21T15:08:12.449"
+    },
+    "model": "auth.user",
+    "pk": 3
+},
+{
+    "fields": {
+        "username": "user3",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$jfD5vdMybkNc$XPekIDRLelmGt9MIAhK26xwWY3L5iF5k6uSPTtQZb6s=",
+        "email": "user3@example.com",
+        "date_joined": "2015-09-21T15:08:12.473"
+    },
+    "model": "auth.user",
+    "pk": 4
+},
+{
+    "fields": {
+        "username": "user4",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$JXTDCiTBgGGt$n2HQadfgBwXIhETQOtQdUe0WaPbfQWlF/AZEfYdM97w=",
+        "email": "user4@example.com",
+        "date_joined": "2015-09-21T15:08:12.497"
+    },
+    "model": "auth.user",
+    "pk": 5
+},
+{
+    "fields": {
+        "username": "user5",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$LCw26fYnQKbn$f+UQMq6CX/iBWV1wLicy/E3lwSyMuuVUnJXq1ULZvG4=",
+        "email": "user5@example.com",
+        "date_joined": "2015-09-21T15:08:12.520"
+    },
+    "model": "auth.user",
+    "pk": 6
+},
+{
+    "fields": {
+        "username": "user6",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$LeDPhmGqDbTT$qJqN/A81x/KCF8QpiTlRYIO07TK9w9nIsLPn/tp06sk=",
+        "email": "user6@example.com",
+        "date_joined": "2015-09-21T15:08:12.543"
+    },
+    "model": "auth.user",
+    "pk": 7
+},
+{
+    "fields": {
+        "username": "user7",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$xhlMbFp8Y7Bp$gI9VkRtZy2LMnRZpaKEhSGhofpoofIWLVCsNvprSEZ0=",
+        "email": "user7@example.com",
+        "date_joined": "2015-09-21T15:08:12.566"
+    },
+    "model": "auth.user",
+    "pk": 8
+},
+{
+    "fields": {
+        "username": "user8",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$WG1K7x5uFJo0$b1Q1zcu4u1AuPOq2chyeq16nxwgCmqpsNco4h+ll/Xk=",
+        "email": "user8@example.com",
+        "date_joined": "2015-09-21T15:08:12.589"
+    },
+    "model": "auth.user",
+    "pk": 9
+},
+{
+    "fields": {
+        "username": "user9",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": null,
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$Ua6zsdy6C65J$se3S7admBA6VITYZFccIexIKmQBrmRrL5MRXoL62JeU=",
+        "email": "user9@example.com",
+        "date_joined": "2015-09-21T15:08:12.615"
+    },
+    "model": "auth.user",
+    "pk": 10
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 1
+    },
+    "model": "picker.preference",
+    "pk": 1
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 2
+    },
+    "model": "picker.preference",
+    "pk": 2
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 3
+    },
+    "model": "picker.preference",
+    "pk": 3
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 4
+    },
+    "model": "picker.preference",
+    "pk": 4
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 5
+    },
+    "model": "picker.preference",
+    "pk": 5
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 6
+    },
+    "model": "picker.preference",
+    "pk": 6
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 7
+    },
+    "model": "picker.preference",
+    "pk": 7
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 8
+    },
+    "model": "picker.preference",
+    "pk": 8
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 9
+    },
+    "model": "picker.preference",
+    "pk": 9
+},
+{
+    "fields": {
+        "status": "ACTV",
+        "league": 6,
+        "favorite_team": null,
+        "autopick": "RAND",
+        "user": 10
+    },
+    "model": "picker.preference",
+    "pk": 10
+},
+{
+    "fields": {
+        "logo": "",
+        "is_pickable": true,
+        "name": "National Football League",
+        "abbr": "nfl"
+    },
+    "model": "picker.league",
+    "pk": 6
+},
+{
+    "fields": {
+        "league": 6,
+        "name": "AFC",
+        "abbr": "AFC"
+    },
+    "model": "picker.conference",
+    "pk": 29
+},
+{
+    "fields": {
+        "league": 6,
+        "name": "NFC",
+        "abbr": "NFC"
+    },
+    "model": "picker.conference",
+    "pk": 30
+},
+{
+    "fields": {
+        "conference": 29,
+        "name": "North"
+    },
+    "model": "picker.division",
+    "pk": 1
+},
+{
+    "fields": {
+        "conference": 29,
+        "name": "South"
+    },
+    "model": "picker.division",
+    "pk": 2
+},
+{
+    "fields": {
+        "conference": 29,
+        "name": "East"
+    },
+    "model": "picker.division",
+    "pk": 3
+},
+{
+    "fields": {
+        "conference": 29,
+        "name": "West"
+    },
+    "model": "picker.division",
+    "pk": 4
+},
+{
+    "fields": {
+        "conference": 30,
+        "name": "North"
+    },
+    "model": "picker.division",
+    "pk": 5
+},
+{
+    "fields": {
+        "conference": 30,
+        "name": "South"
+    },
+    "model": "picker.division",
+    "pk": 6
+},
+{
+    "fields": {
+        "conference": 30,
+        "name": "East"
+    },
+    "model": "picker.division",
+    "pk": 7
+},
+{
+    "fields": {
+        "conference": 30,
+        "name": "West"
+    },
+    "model": "picker.division",
+    "pk": 8
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Arizona",
+        "division": 8,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/ari.gif",
+        "nickname": "Cardinals",
+        "abbr": "ARI"
+    },
+    "model": "picker.team",
+    "pk": 1
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Atlanta",
+        "division": 6,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/atl.gif",
+        "nickname": "Falcons",
+        "abbr": "ATL"
+    },
+    "model": "picker.team",
+    "pk": 2
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Baltimore",
+        "division": 1,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/bal.gif",
+        "nickname": "Ravens",
+        "abbr": "BAL"
+    },
+    "model": "picker.team",
+    "pk": 3
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Buffalo",
+        "division": 3,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/buf.gif",
+        "nickname": "Bills",
+        "abbr": "BUF"
+    },
+    "model": "picker.team",
+    "pk": 4
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Carolina",
+        "division": 6,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/car.gif",
+        "nickname": "Panthers",
+        "abbr": "CAR"
+    },
+    "model": "picker.team",
+    "pk": 5
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Chicago",
+        "division": 5,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/chi.gif",
+        "nickname": "Bears",
+        "abbr": "CHI"
+    },
+    "model": "picker.team",
+    "pk": 6
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Cincinnati",
+        "division": 1,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/cin.gif",
+        "nickname": "Bengals",
+        "abbr": "CIN"
+    },
+    "model": "picker.team",
+    "pk": 7
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Cleveland",
+        "division": 1,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/cle.gif",
+        "nickname": "Browns",
+        "abbr": "CLE"
+    },
+    "model": "picker.team",
+    "pk": 8
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Dallas",
+        "division": 7,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/dal.gif",
+        "nickname": "Cowboys",
+        "abbr": "DAL"
+    },
+    "model": "picker.team",
+    "pk": 9
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Denver",
+        "division": 4,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/den.gif",
+        "nickname": "Broncos",
+        "abbr": "DEN"
+    },
+    "model": "picker.team",
+    "pk": 10
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Detroit",
+        "division": 5,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/det.gif",
+        "nickname": "Lions",
+        "abbr": "DET"
+    },
+    "model": "picker.team",
+    "pk": 11
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Green Bay",
+        "division": 5,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/gb.gif",
+        "nickname": "Packers",
+        "abbr": "GB"
+    },
+    "model": "picker.team",
+    "pk": 12
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Houston",
+        "division": 2,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/hou.gif",
+        "nickname": "Texans",
+        "abbr": "HOU"
+    },
+    "model": "picker.team",
+    "pk": 13
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Indianapolis",
+        "division": 2,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/ind.gif",
+        "nickname": "Colts",
+        "abbr": "IND"
+    },
+    "model": "picker.team",
+    "pk": 14
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Jacksonville",
+        "division": 2,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/jac.gif",
+        "nickname": "Jaguars",
+        "abbr": "JAC"
+    },
+    "model": "picker.team",
+    "pk": 15
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Kansas City",
+        "division": 4,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/kc.gif",
+        "nickname": "Chiefs",
+        "abbr": "KC"
+    },
+    "model": "picker.team",
+    "pk": 16
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Miami",
+        "division": 3,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/mia.gif",
+        "nickname": "Dolphins",
+        "abbr": "MIA"
+    },
+    "model": "picker.team",
+    "pk": 17
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Minnesota",
+        "division": 5,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/min.gif",
+        "nickname": "Vikings",
+        "abbr": "MIN"
+    },
+    "model": "picker.team",
+    "pk": 18
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "New England",
+        "division": 3,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/ne.gif",
+        "nickname": "Patriots",
+        "abbr": "NE"
+    },
+    "model": "picker.team",
+    "pk": 19
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "New Orleans",
+        "division": 6,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/no.gif",
+        "nickname": "Saints",
+        "abbr": "NO"
+    },
+    "model": "picker.team",
+    "pk": 20
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "New York",
+        "division": 7,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/nyg.gif",
+        "nickname": "Giants",
+        "abbr": "NYG"
+    },
+    "model": "picker.team",
+    "pk": 21
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "New York",
+        "division": 3,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/nyj.gif",
+        "nickname": "Jets",
+        "abbr": "NYJ"
+    },
+    "model": "picker.team",
+    "pk": 22
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Oakland",
+        "division": 4,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/oak.gif",
+        "nickname": "Raiders",
+        "abbr": "OAK"
+    },
+    "model": "picker.team",
+    "pk": 23
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Philadelphia",
+        "division": 7,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/phi.gif",
+        "nickname": "Eagles",
+        "abbr": "PHI"
+    },
+    "model": "picker.team",
+    "pk": 24
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Pittsburgh",
+        "division": 1,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/pit.gif",
+        "nickname": "Steelers",
+        "abbr": "PIT"
+    },
+    "model": "picker.team",
+    "pk": 25
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "San Diego",
+        "division": 4,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/sd.gif",
+        "nickname": "Chargers",
+        "abbr": "SD"
+    },
+    "model": "picker.team",
+    "pk": 26
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "San Francisco",
+        "division": 8,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/sf.gif",
+        "nickname": "49ers",
+        "abbr": "SF"
+    },
+    "model": "picker.team",
+    "pk": 27
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Seattle",
+        "division": 8,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/sea.gif",
+        "nickname": "Seahawks",
+        "abbr": "SEA"
+    },
+    "model": "picker.team",
+    "pk": 28
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "St. Louis",
+        "division": 8,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/stl.gif",
+        "nickname": "Rams",
+        "abbr": "STL"
+    },
+    "model": "picker.team",
+    "pk": 29
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Tampa Bay",
+        "division": 6,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/tb.gif",
+        "nickname": "Buccaneers",
+        "abbr": "TB"
+    },
+    "model": "picker.team",
+    "pk": 30
+},
+{
+    "fields": {
+        "conference": 29,
+        "league": 6,
+        "name": "Tennessee",
+        "division": 2,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/ten.gif",
+        "nickname": "Titans",
+        "abbr": "TEN"
+    },
+    "model": "picker.team",
+    "pk": 31
+},
+{
+    "fields": {
+        "conference": 30,
+        "league": 6,
+        "name": "Washington",
+        "division": 7,
+        "image": "",
+        "colors": "",
+        "logo": "picker/logos/was.gif",
+        "nickname": "Redskins",
+        "abbr": "WAS"
+    },
+    "model": "picker.team",
+    "pk": 32
+},
+{
+    "fields": {
         "name": "NY Jets",
         "team": 22
     },
@@ -334,9 +1178,8 @@
         "away": 25,
         "kickoff": "2015-09-10T20:30:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 1
@@ -349,9 +1192,8 @@
         "away": 12,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 2
@@ -364,9 +1206,8 @@
         "away": 16,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 3
@@ -379,9 +1220,8 @@
         "away": 8,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 4
@@ -394,9 +1234,8 @@
         "away": 14,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 5
@@ -409,9 +1248,8 @@
         "away": 17,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 6
@@ -424,9 +1262,8 @@
         "away": 5,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 7
@@ -439,9 +1276,8 @@
         "away": 28,
         "kickoff": "2015-09-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 8
@@ -454,9 +1290,8 @@
         "away": 20,
         "kickoff": "2015-09-13T16:05:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 9
@@ -469,9 +1304,8 @@
         "away": 11,
         "kickoff": "2015-09-13T16:05:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 10
@@ -484,9 +1318,8 @@
         "away": 31,
         "kickoff": "2015-09-13T16:25:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 11
@@ -499,9 +1332,8 @@
         "away": 7,
         "kickoff": "2015-09-13T16:25:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 12
@@ -514,9 +1346,8 @@
         "away": 3,
         "kickoff": "2015-09-13T16:25:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 13
@@ -529,9 +1360,8 @@
         "away": 21,
         "kickoff": "2015-09-13T20:30:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 14
@@ -544,9 +1374,8 @@
         "away": 24,
         "kickoff": "2015-09-14T19:10:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 15
@@ -559,9 +1388,8 @@
         "away": 18,
         "kickoff": "2015-09-14T22:20:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 16
@@ -574,9 +1402,8 @@
         "away": 10,
         "kickoff": "2015-09-17T20:25:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 17
@@ -589,9 +1416,8 @@
         "away": 13,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 18
@@ -604,9 +1430,8 @@
         "away": 27,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 19
@@ -619,9 +1444,8 @@
         "away": 30,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 20
@@ -634,9 +1458,8 @@
         "away": 11,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 21
@@ -649,9 +1472,8 @@
         "away": 1,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 22
@@ -664,9 +1486,8 @@
         "away": 19,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 23
@@ -679,9 +1500,8 @@
         "away": 26,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 24
@@ -694,9 +1514,8 @@
         "away": 31,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 25
@@ -709,9 +1528,8 @@
         "away": 2,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 26
@@ -724,9 +1542,8 @@
         "away": 29,
         "kickoff": "2015-09-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 27
@@ -739,9 +1556,8 @@
         "away": 17,
         "kickoff": "2015-09-20T16:05:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 28
@@ -754,9 +1570,8 @@
         "away": 3,
         "kickoff": "2015-09-20T16:05:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 29
@@ -769,9 +1584,8 @@
         "away": 9,
         "kickoff": "2015-09-20T16:25:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 30
@@ -784,9 +1598,8 @@
         "away": 28,
         "kickoff": "2015-09-20T20:30:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 31
@@ -799,9 +1612,8 @@
         "away": 22,
         "kickoff": "2015-09-21T20:30:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 32
@@ -814,9 +1626,8 @@
         "away": 32,
         "kickoff": "2015-09-24T20:25:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 33
@@ -829,9 +1640,8 @@
         "away": 2,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 34
@@ -844,9 +1654,8 @@
         "away": 14,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 35
@@ -859,9 +1668,8 @@
         "away": 23,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 36
@@ -874,9 +1682,8 @@
         "away": 7,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 37
@@ -889,9 +1696,8 @@
         "away": 15,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 38
@@ -904,9 +1710,8 @@
         "away": 20,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 39
@@ -919,9 +1724,8 @@
         "away": 24,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 40
@@ -934,9 +1738,8 @@
         "away": 30,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 41
@@ -949,9 +1752,8 @@
         "away": 26,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 42
@@ -964,9 +1766,8 @@
         "away": 25,
         "kickoff": "2015-09-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 43
@@ -979,9 +1780,8 @@
         "away": 27,
         "kickoff": "2015-09-27T16:05:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 44
@@ -994,9 +1794,8 @@
         "away": 4,
         "kickoff": "2015-09-27T16:25:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 45
@@ -1009,9 +1808,8 @@
         "away": 6,
         "kickoff": "2015-09-27T16:25:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 46
@@ -1024,9 +1822,8 @@
         "away": 10,
         "kickoff": "2015-09-27T20:30:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 47
@@ -1039,9 +1836,8 @@
         "away": 16,
         "kickoff": "2015-09-28T20:30:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 48
@@ -1054,9 +1850,8 @@
         "away": 3,
         "kickoff": "2015-10-01T20:25:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 49
@@ -1069,9 +1864,8 @@
         "away": 22,
         "kickoff": "2015-10-04T09:30:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Wembley Stadium, London,<a>Buy on StubHub"
+        "location": "Wembley Stadium, London"
     },
     "model": "picker.game",
     "pk": 50
@@ -1084,9 +1878,8 @@
         "away": 15,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 51
@@ -1099,9 +1892,8 @@
         "away": 21,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 52
@@ -1114,9 +1906,8 @@
         "away": 5,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 53
@@ -1129,9 +1920,8 @@
         "away": 24,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 54
@@ -1144,9 +1934,8 @@
         "away": 23,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 55
@@ -1159,9 +1948,8 @@
         "away": 13,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 56
@@ -1174,9 +1962,8 @@
         "away": 16,
         "kickoff": "2015-10-04T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 57
@@ -1189,9 +1976,8 @@
         "away": 8,
         "kickoff": "2015-10-04T16:05:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 58
@@ -1204,9 +1990,8 @@
         "away": 12,
         "kickoff": "2015-10-04T16:25:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 59
@@ -1219,9 +2004,8 @@
         "away": 29,
         "kickoff": "2015-10-04T16:25:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 60
@@ -1234,9 +2018,8 @@
         "away": 18,
         "kickoff": "2015-10-04T16:25:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 61
@@ -1249,9 +2032,8 @@
         "away": 9,
         "kickoff": "2015-10-04T20:30:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 62
@@ -1264,9 +2046,8 @@
         "away": 11,
         "kickoff": "2015-10-05T20:30:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 63
@@ -1279,9 +2060,8 @@
         "away": 14,
         "kickoff": "2015-10-08T20:25:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 64
@@ -1294,9 +2074,8 @@
         "away": 6,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 65
@@ -1309,9 +2088,8 @@
         "away": 28,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 66
@@ -1324,9 +2102,8 @@
         "away": 32,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 67
@@ -1339,9 +2116,8 @@
         "away": 15,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 68
@@ -1354,9 +2130,8 @@
         "away": 20,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 69
@@ -1369,9 +2144,8 @@
         "away": 8,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 70
@@ -1384,9 +2158,8 @@
         "away": 29,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 71
@@ -1399,9 +2172,8 @@
         "away": 4,
         "kickoff": "2015-10-11T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 72
@@ -1414,9 +2186,8 @@
         "away": 1,
         "kickoff": "2015-10-11T16:05:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 73
@@ -1429,9 +2200,8 @@
         "away": 19,
         "kickoff": "2015-10-11T16:25:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 74
@@ -1444,9 +2214,8 @@
         "away": 10,
         "kickoff": "2015-10-11T16:25:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 75
@@ -1459,9 +2228,8 @@
         "away": 27,
         "kickoff": "2015-10-11T20:30:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 76
@@ -1474,9 +2242,8 @@
         "away": 25,
         "kickoff": "2015-10-12T20:30:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 77
@@ -1489,9 +2256,8 @@
         "away": 2,
         "kickoff": "2015-10-15T20:25:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 78
@@ -1504,9 +2270,8 @@
         "away": 32,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 79
@@ -1519,9 +2284,8 @@
         "away": 1,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 80
@@ -1534,9 +2298,8 @@
         "away": 16,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 81
@@ -1549,9 +2312,8 @@
         "away": 7,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 82
@@ -1564,9 +2326,8 @@
         "away": 6,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 83
@@ -1579,9 +2340,8 @@
         "away": 10,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 84
@@ -1594,9 +2354,8 @@
         "away": 13,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 85
@@ -1609,9 +2368,8 @@
         "away": 17,
         "kickoff": "2015-10-18T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 86
@@ -1624,9 +2382,8 @@
         "away": 5,
         "kickoff": "2015-10-18T16:05:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 87
@@ -1639,9 +2396,8 @@
         "away": 26,
         "kickoff": "2015-10-18T16:25:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 88
@@ -1654,9 +2410,8 @@
         "away": 3,
         "kickoff": "2015-10-18T16:25:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 89
@@ -1669,9 +2424,8 @@
         "away": 19,
         "kickoff": "2015-10-18T20:30:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 90
@@ -1684,9 +2438,8 @@
         "away": 21,
         "kickoff": "2015-10-19T20:30:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 91
@@ -1699,9 +2452,8 @@
         "away": 28,
         "kickoff": "2015-10-22T20:25:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 92
@@ -1714,9 +2466,8 @@
         "away": 4,
         "kickoff": "2015-10-25T09:30:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: Wembley Stadium, London,<a>Buy on StubHub"
+        "location": "Wembley Stadium, London"
     },
     "model": "picker.game",
     "pk": 93
@@ -1729,9 +2480,8 @@
         "away": 30,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 94
@@ -1744,9 +2494,8 @@
         "away": 2,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 95
@@ -1759,9 +2508,8 @@
         "away": 20,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 96
@@ -1774,9 +2522,8 @@
         "away": 18,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 97
@@ -1789,9 +2536,8 @@
         "away": 25,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 98
@@ -1804,9 +2550,8 @@
         "away": 8,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 99
@@ -1819,9 +2564,8 @@
         "away": 13,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 100
@@ -1834,9 +2578,8 @@
         "away": 22,
         "kickoff": "2015-10-25T13:00:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 101
@@ -1849,9 +2592,8 @@
         "away": 23,
         "kickoff": "2015-10-25T16:05:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 102
@@ -1864,9 +2606,8 @@
         "away": 9,
         "kickoff": "2015-10-25T16:25:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 103
@@ -1879,9 +2620,8 @@
         "away": 24,
         "kickoff": "2015-10-25T20:30:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 104
@@ -1894,9 +2634,8 @@
         "away": 3,
         "kickoff": "2015-10-26T20:30:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 105
@@ -1909,9 +2648,8 @@
         "away": 17,
         "kickoff": "2015-10-29T20:25:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 106
@@ -1924,9 +2662,8 @@
         "away": 11,
         "kickoff": "2015-11-01T09:30:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Wembley Stadium, London,<a>Buy on StubHub"
+        "location": "Wembley Stadium, London"
     },
     "model": "picker.game",
     "pk": 107
@@ -1939,9 +2676,8 @@
         "away": 30,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 108
@@ -1954,9 +2690,8 @@
         "away": 1,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 109
@@ -1969,9 +2704,8 @@
         "away": 27,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 110
@@ -1984,9 +2718,8 @@
         "away": 21,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 111
@@ -1999,9 +2732,8 @@
         "away": 18,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 112
@@ -2014,9 +2746,8 @@
         "away": 26,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 113
@@ -2029,9 +2760,8 @@
         "away": 7,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 114
@@ -2044,9 +2774,8 @@
         "away": 31,
         "kickoff": "2015-11-01T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 115
@@ -2059,9 +2788,8 @@
         "away": 22,
         "kickoff": "2015-11-01T16:05:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 116
@@ -2074,9 +2802,8 @@
         "away": 28,
         "kickoff": "2015-11-01T16:25:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 117
@@ -2089,9 +2816,8 @@
         "away": 12,
         "kickoff": "2015-11-01T20:30:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 118
@@ -2104,9 +2830,8 @@
         "away": 14,
         "kickoff": "2015-11-02T20:30:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 119
@@ -2119,9 +2844,8 @@
         "away": 8,
         "kickoff": "2015-11-05T20:25:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 120
@@ -2134,9 +2858,8 @@
         "away": 12,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 121
@@ -2149,9 +2872,8 @@
         "away": 32,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 122
@@ -2164,9 +2886,8 @@
         "away": 31,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 123
@@ -2179,9 +2900,8 @@
         "away": 17,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 124
@@ -2194,9 +2914,8 @@
         "away": 29,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 125
@@ -2209,9 +2928,8 @@
         "away": 15,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 126
@@ -2224,9 +2942,8 @@
         "away": 23,
         "kickoff": "2015-11-08T13:00:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 127
@@ -2239,9 +2956,8 @@
         "away": 21,
         "kickoff": "2015-11-08T16:05:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 128
@@ -2254,9 +2970,8 @@
         "away": 2,
         "kickoff": "2015-11-08T16:05:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 129
@@ -2269,9 +2984,8 @@
         "away": 10,
         "kickoff": "2015-11-08T16:25:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 130
@@ -2284,9 +2998,8 @@
         "away": 24,
         "kickoff": "2015-11-08T20:30:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 131
@@ -2299,9 +3012,8 @@
         "away": 6,
         "kickoff": "2015-11-09T20:30:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 132
@@ -2314,9 +3026,8 @@
         "away": 4,
         "kickoff": "2015-11-12T20:25:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 133
@@ -2329,9 +3040,8 @@
         "away": 11,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 134
@@ -2344,9 +3054,8 @@
         "away": 9,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 135
@@ -2359,9 +3068,8 @@
         "away": 5,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 136
@@ -2374,9 +3082,8 @@
         "away": 6,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 137
@@ -2389,9 +3096,8 @@
         "away": 20,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 138
@@ -2404,9 +3110,8 @@
         "away": 17,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 139
@@ -2419,9 +3124,8 @@
         "away": 8,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 140
@@ -2434,9 +3138,8 @@
         "away": 15,
         "kickoff": "2015-11-15T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 141
@@ -2449,9 +3152,8 @@
         "away": 18,
         "kickoff": "2015-11-15T16:05:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 142
@@ -2464,9 +3166,8 @@
         "away": 19,
         "kickoff": "2015-11-15T16:25:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 143
@@ -2479,9 +3180,8 @@
         "away": 16,
         "kickoff": "2015-11-15T16:25:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 144
@@ -2494,9 +3194,8 @@
         "away": 1,
         "kickoff": "2015-11-15T20:30:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 145
@@ -2509,9 +3208,8 @@
         "away": 13,
         "kickoff": "2015-11-16T20:30:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 146
@@ -2524,9 +3222,8 @@
         "away": 31,
         "kickoff": "2015-11-19T20:25:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 147
@@ -2539,9 +3236,8 @@
         "away": 23,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 148
@@ -2554,9 +3250,8 @@
         "away": 14,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 149
@@ -2569,9 +3264,8 @@
         "away": 22,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 150
@@ -2584,9 +3278,8 @@
         "away": 30,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 151
@@ -2599,9 +3292,8 @@
         "away": 10,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 152
@@ -2614,9 +3306,8 @@
         "away": 12,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 153
@@ -2629,9 +3320,8 @@
         "away": 29,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 154
@@ -2644,9 +3334,8 @@
         "away": 9,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 155
@@ -2659,9 +3348,8 @@
         "away": 32,
         "kickoff": "2015-11-22T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 156
@@ -2674,9 +3362,8 @@
         "away": 7,
         "kickoff": "2015-11-22T16:05:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 157
@@ -2689,9 +3376,8 @@
         "away": 27,
         "kickoff": "2015-11-22T16:25:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 158
@@ -2704,9 +3390,8 @@
         "away": 16,
         "kickoff": "2015-11-22T20:30:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 159
@@ -2719,9 +3404,8 @@
         "away": 4,
         "kickoff": "2015-11-23T20:30:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 160
@@ -2734,9 +3418,8 @@
         "away": 24,
         "kickoff": "2015-11-26T12:30:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 161
@@ -2749,9 +3432,8 @@
         "away": 5,
         "kickoff": "2015-11-26T16:30:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 162
@@ -2764,9 +3446,8 @@
         "away": 6,
         "kickoff": "2015-11-26T20:30:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 163
@@ -2779,9 +3460,8 @@
         "away": 23,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 164
@@ -2794,9 +3474,8 @@
         "away": 4,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 165
@@ -2809,9 +3488,8 @@
         "away": 30,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 166
@@ -2824,9 +3502,8 @@
         "away": 21,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 167
@@ -2839,9 +3516,8 @@
         "away": 20,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 168
@@ -2854,9 +3530,8 @@
         "away": 18,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 169
@@ -2869,9 +3544,8 @@
         "away": 29,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 170
@@ -2884,9 +3558,8 @@
         "away": 26,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 171
@@ -2899,9 +3572,8 @@
         "away": 17,
         "kickoff": "2015-11-29T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 172
@@ -2914,9 +3586,8 @@
         "away": 1,
         "kickoff": "2015-11-29T16:05:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 173
@@ -2929,9 +3600,8 @@
         "away": 25,
         "kickoff": "2015-11-29T16:25:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 174
@@ -2944,9 +3614,8 @@
         "away": 19,
         "kickoff": "2015-11-29T20:30:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 175
@@ -2959,9 +3628,8 @@
         "away": 3,
         "kickoff": "2015-11-30T20:30:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 176
@@ -2974,9 +3642,8 @@
         "away": 12,
         "kickoff": "2015-12-03T20:25:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 177
@@ -2989,9 +3656,8 @@
         "away": 22,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 178
@@ -3004,9 +3670,8 @@
         "away": 1,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 179
@@ -3019,9 +3684,8 @@
         "away": 2,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 180
@@ -3034,9 +3698,8 @@
         "away": 5,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 181
@@ -3049,9 +3712,8 @@
         "away": 28,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 182
@@ -3064,9 +3726,8 @@
         "away": 13,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 183
@@ -3079,9 +3740,8 @@
         "away": 3,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 184
@@ -3094,9 +3754,8 @@
         "away": 7,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 185
@@ -3109,9 +3768,8 @@
         "away": 15,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 186
@@ -3124,9 +3782,8 @@
         "away": 27,
         "kickoff": "2015-12-06T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 187
@@ -3139,9 +3796,8 @@
         "away": 10,
         "kickoff": "2015-12-06T16:05:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 188
@@ -3154,9 +3810,8 @@
         "away": 16,
         "kickoff": "2015-12-06T16:05:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 189
@@ -3169,9 +3824,8 @@
         "away": 24,
         "kickoff": "2015-12-06T16:25:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 190
@@ -3184,9 +3838,8 @@
         "away": 14,
         "kickoff": "2015-12-06T20:30:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 191
@@ -3199,9 +3852,8 @@
         "away": 9,
         "kickoff": "2015-12-07T20:30:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 192
@@ -3214,9 +3866,8 @@
         "away": 18,
         "kickoff": "2015-12-10T20:25:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 193
@@ -3229,9 +3880,8 @@
         "away": 4,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 194
@@ -3244,9 +3894,8 @@
         "away": 27,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 195
@@ -3259,9 +3908,8 @@
         "away": 11,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 196
@@ -3274,9 +3922,8 @@
         "away": 20,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 197
@@ -3289,9 +3936,8 @@
         "away": 31,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 198
@@ -3304,9 +3950,8 @@
         "away": 25,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 199
@@ -3319,9 +3964,8 @@
         "away": 19,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 200
@@ -3334,9 +3978,8 @@
         "away": 14,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 201
@@ -3349,9 +3992,8 @@
         "away": 26,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 202
@@ -3364,9 +4006,8 @@
         "away": 32,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 203
@@ -3379,9 +4020,8 @@
         "away": 2,
         "kickoff": "2015-12-13T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 204
@@ -3394,9 +4034,8 @@
         "away": 23,
         "kickoff": "2015-12-13T16:05:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 205
@@ -3409,9 +4048,8 @@
         "away": 9,
         "kickoff": "2015-12-13T16:25:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 206
@@ -3424,9 +4062,8 @@
         "away": 28,
         "kickoff": "2015-12-13T20:30:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 207
@@ -3439,9 +4076,8 @@
         "away": 21,
         "kickoff": "2015-12-14T20:30:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 208
@@ -3454,9 +4090,8 @@
         "away": 30,
         "kickoff": "2015-12-17T20:25:00",
         "status": "U",
-        "location": "",
         "home": 29,
-        "notes": "Location: Edward Jones Dome, Saint Louis"
+        "location": "Edward Jones Dome, Saint Louis"
     },
     "model": "picker.game",
     "pk": 209
@@ -3469,9 +4104,8 @@
         "away": 22,
         "kickoff": "2015-12-19T20:25:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 210
@@ -3484,9 +4118,8 @@
         "away": 6,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 211
@@ -3499,9 +4132,8 @@
         "away": 2,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 15,
-        "notes": "Location: EverBank Field, Jacksonville"
+        "location": "EverBank Field, Jacksonville"
     },
     "model": "picker.game",
     "pk": 212
@@ -3514,9 +4146,8 @@
         "away": 13,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 213
@@ -3529,9 +4160,8 @@
         "away": 1,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 214
@@ -3544,9 +4174,8 @@
         "away": 5,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 215
@@ -3559,9 +4188,8 @@
         "away": 31,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 19,
-        "notes": "Location: Gillette Stadium, Foxboro"
+        "location": "Gillette Stadium, Foxboro"
     },
     "model": "picker.game",
     "pk": 216
@@ -3574,9 +4202,8 @@
         "away": 4,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 32,
-        "notes": "Location: FedEx Field, Landover"
+        "location": "FedEx Field, Landover"
     },
     "model": "picker.game",
     "pk": 217
@@ -3589,9 +4216,8 @@
         "away": 16,
         "kickoff": "2015-12-20T13:00:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 218
@@ -3604,9 +4230,8 @@
         "away": 8,
         "kickoff": "2015-12-20T16:05:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 219
@@ -3619,9 +4244,8 @@
         "away": 12,
         "kickoff": "2015-12-20T16:05:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 220
@@ -3634,9 +4258,8 @@
         "away": 10,
         "kickoff": "2015-12-20T16:25:00",
         "status": "U",
-        "location": "",
         "home": 25,
-        "notes": "Location: Heinz Field, Pittsburgh"
+        "location": "Heinz Field, Pittsburgh"
     },
     "model": "picker.game",
     "pk": 221
@@ -3649,9 +4272,8 @@
         "away": 17,
         "kickoff": "2015-12-20T16:25:00",
         "status": "U",
-        "location": "",
         "home": 26,
-        "notes": "Location: Qualcomm Stadium, San Diego"
+        "location": "Qualcomm Stadium, San Diego"
     },
     "model": "picker.game",
     "pk": 222
@@ -3664,9 +4286,8 @@
         "away": 7,
         "kickoff": "2015-12-20T20:30:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 223
@@ -3679,9 +4300,8 @@
         "away": 11,
         "kickoff": "2015-12-21T20:30:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 224
@@ -3694,9 +4314,8 @@
         "away": 26,
         "kickoff": "2015-12-24T20:25:00",
         "status": "U",
-        "location": "",
         "home": 23,
-        "notes": "Location: O.co Coliseum, Oakland"
+        "location": "O.co Coliseum, Oakland"
     },
     "model": "picker.game",
     "pk": 225
@@ -3709,9 +4328,8 @@
         "away": 32,
         "kickoff": "2015-12-26T20:25:00",
         "status": "U",
-        "location": "",
         "home": 24,
-        "notes": "Location: Lincoln Financial Field, Philadelphia"
+        "location": "Lincoln Financial Field, Philadelphia"
     },
     "model": "picker.game",
     "pk": 226
@@ -3724,9 +4342,8 @@
         "away": 19,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 22,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 227
@@ -3739,9 +4356,8 @@
         "away": 13,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 31,
-        "notes": "Location: LP Field, Nashville"
+        "location": "LP Field, Nashville"
     },
     "model": "picker.game",
     "pk": 228
@@ -3754,9 +4370,8 @@
         "away": 8,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 229
@@ -3769,9 +4384,8 @@
         "away": 14,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 230
@@ -3784,9 +4398,8 @@
         "away": 15,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 20,
-        "notes": "Location: Mercedes-Benz Superdome, New Orleans"
+        "location": "Mercedes-Benz Superdome, New Orleans"
     },
     "model": "picker.game",
     "pk": 231
@@ -3799,9 +4412,8 @@
         "away": 27,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 11,
-        "notes": "Location: Ford Field, Detroit"
+        "location": "Ford Field, Detroit"
     },
     "model": "picker.game",
     "pk": 232
@@ -3814,9 +4426,8 @@
         "away": 9,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 233
@@ -3829,9 +4440,8 @@
         "away": 6,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 30,
-        "notes": "Location: Raymond James Stadium, Tampa"
+        "location": "Raymond James Stadium, Tampa"
     },
     "model": "picker.game",
     "pk": 234
@@ -3844,9 +4454,8 @@
         "away": 5,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 235
@@ -3859,9 +4468,8 @@
         "away": 21,
         "kickoff": "2015-12-27T13:00:00",
         "status": "U",
-        "location": "",
         "home": 18,
-        "notes": "Location: TCF Bank Stadium, Minneapolis"
+        "location": "TCF Bank Stadium, Minneapolis"
     },
     "model": "picker.game",
     "pk": 236
@@ -3874,9 +4482,8 @@
         "away": 29,
         "kickoff": "2015-12-27T16:25:00",
         "status": "U",
-        "location": "",
         "home": 28,
-        "notes": "Location: CenturyLink Field, Seattle"
+        "location": "CenturyLink Field, Seattle"
     },
     "model": "picker.game",
     "pk": 237
@@ -3889,9 +4496,8 @@
         "away": 12,
         "kickoff": "2015-12-27T16:25:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 238
@@ -3904,9 +4510,8 @@
         "away": 25,
         "kickoff": "2015-12-27T20:30:00",
         "status": "U",
-        "location": "",
         "home": 3,
-        "notes": "Location: M&T Bank Stadium, Baltimore"
+        "location": "M&T Bank Stadium, Baltimore"
     },
     "model": "picker.game",
     "pk": 239
@@ -3919,9 +4524,8 @@
         "away": 7,
         "kickoff": "2015-12-28T20:30:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 240
@@ -3934,9 +4538,8 @@
         "away": 22,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 4,
-        "notes": "Location: Ralph Wilson Stadium, Buffalo"
+        "location": "Ralph Wilson Stadium, Buffalo"
     },
     "model": "picker.game",
     "pk": 241
@@ -3949,9 +4552,8 @@
         "away": 19,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 17,
-        "notes": "Location: Sun Life Stadium, Miami"
+        "location": "Sun Life Stadium, Miami"
     },
     "model": "picker.game",
     "pk": 242
@@ -3964,9 +4566,8 @@
         "away": 30,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 5,
-        "notes": "Location: Bank of America Stadium, Charlotte"
+        "location": "Bank of America Stadium, Charlotte"
     },
     "model": "picker.game",
     "pk": 243
@@ -3979,9 +4580,8 @@
         "away": 20,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 2,
-        "notes": "Location: Georgia Dome, Atlanta"
+        "location": "Georgia Dome, Atlanta"
     },
     "model": "picker.game",
     "pk": 244
@@ -3994,9 +4594,8 @@
         "away": 3,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 7,
-        "notes": "Location: Paul Brown Stadium, Cincinnati"
+        "location": "Paul Brown Stadium, Cincinnati"
     },
     "model": "picker.game",
     "pk": 245
@@ -4009,9 +4608,8 @@
         "away": 25,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 8,
-        "notes": "Location: FirstEnergy Stadium, Cleveland"
+        "location": "FirstEnergy Stadium, Cleveland"
     },
     "model": "picker.game",
     "pk": 246
@@ -4024,9 +4622,8 @@
         "away": 15,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 13,
-        "notes": "Location: NRG Stadium, Houston"
+        "location": "NRG Stadium, Houston"
     },
     "model": "picker.game",
     "pk": 247
@@ -4039,9 +4636,8 @@
         "away": 31,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 14,
-        "notes": "Location: Lucas Oil Stadium, Indianapolis"
+        "location": "Lucas Oil Stadium, Indianapolis"
     },
     "model": "picker.game",
     "pk": 248
@@ -4054,9 +4650,8 @@
         "away": 23,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 16,
-        "notes": "Location: Arrowhead Stadium, Kansas City"
+        "location": "Arrowhead Stadium, Kansas City"
     },
     "model": "picker.game",
     "pk": 249
@@ -4069,9 +4664,8 @@
         "away": 32,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 9,
-        "notes": "Location: AT&T Stadium, Arlington"
+        "location": "AT&T Stadium, Arlington"
     },
     "model": "picker.game",
     "pk": 250
@@ -4084,9 +4678,8 @@
         "away": 24,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 21,
-        "notes": "Location: MetLife Stadium, East Rutherford"
+        "location": "MetLife Stadium, East Rutherford"
     },
     "model": "picker.game",
     "pk": 251
@@ -4099,9 +4692,8 @@
         "away": 11,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 6,
-        "notes": "Location: Soldier Field, Chicago"
+        "location": "Soldier Field, Chicago"
     },
     "model": "picker.game",
     "pk": 252
@@ -4114,9 +4706,8 @@
         "away": 18,
         "kickoff": "2016-01-03T13:00:00",
         "status": "U",
-        "location": "",
         "home": 12,
-        "notes": "Location: Lambeau Field, Green Bay"
+        "location": "Lambeau Field, Green Bay"
     },
     "model": "picker.game",
     "pk": 253
@@ -4129,9 +4720,8 @@
         "away": 26,
         "kickoff": "2016-01-03T16:25:00",
         "status": "U",
-        "location": "",
         "home": 10,
-        "notes": "Location: Sports Authority Field at Mile High, Denver"
+        "location": "Sports Authority Field at Mile High, Denver"
     },
     "model": "picker.game",
     "pk": 254
@@ -4144,9 +4734,8 @@
         "away": 28,
         "kickoff": "2016-01-03T16:25:00",
         "status": "U",
-        "location": "",
         "home": 1,
-        "notes": "Location: U of Phoenix Stadium, Glendale"
+        "location": "U of Phoenix Stadium, Glendale"
     },
     "model": "picker.game",
     "pk": 255
@@ -4159,9 +4748,8 @@
         "away": 29,
         "kickoff": "2016-01-03T16:25:00",
         "status": "U",
-        "location": "",
         "home": 27,
-        "notes": "Location: Levi's Stadium, Santa Clara"
+        "location": "Levi's Stadium, Santa Clara"
     },
     "model": "picker.game",
     "pk": 256

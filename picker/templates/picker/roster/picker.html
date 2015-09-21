@@ -9,7 +9,7 @@
 </h1>
 <p class="home-team-choice">
     {% having profile.favorite_team as team %}
-    <img style="width: 62px; height: 47px" src="{{ team.image_url }}" />
+    {% if team.logo %}<img style="width: 62px; height: 47px" src="{{ team.logo.url }}">{% endif %}
     <a href="{{ team.get_absolute_url }}">{{ team }}</a>
     {% endhaving %}
 </p>

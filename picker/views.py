@@ -10,8 +10,8 @@ from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.template.base import add_to_builtins
 
 from .models import League, Game, RosterStats, Preference
-from .forms import UserPickForm, ManagementPickForm, PlayoffBuilderForm
 from . import utils
+from . import forms
 from .decorators import management_user_required
 
 
@@ -65,7 +65,7 @@ class PlayoffContext(object):
             conf = confs[team.conference.abbr]
             conf.append(team.abbr)
             teams[team.abbr] = {
-                'url': team.image_url,
+                'url': team.logo.url if team.logo else '',
                 'seed': seed,
                 'name': team.name,
                 'abbr': team.abbr,
@@ -212,7 +212,7 @@ def _weekly_picks(request, league, week):
         return utils.basic_form_view(
             request,
             '@picks/make.html',
-            UserPickForm,
+            forms.UserPickForm,
             context={'user': request.user, 'week': week},
             redirect_path=week.get_absolute_url(),
             form_kws={'user': request.user, 'week': week},
@@ -337,7 +337,7 @@ def manage_week(request, league, season, week):
                 messages.success(request, '%s game(s) update' % res)
             return http.HttpResponseRedirect(go_to)
         
-        form = ManagementPickForm(gs, request.POST)
+        form = forms.ManagementPickForm(gs, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Results saved')
@@ -346,7 +346,7 @@ def manage_week(request, league, season, week):
         if gs.has_started and gs.update_results():
             messages.success(request, 'Scores automatically updated!')
 
-        form = ManagementPickForm(gs)
+        form = forms.ManagementPickForm(gs)
         
     
     return '@manage/weekly_results.html', {'form': form, 'week': gs, 'management': True}
@@ -374,23 +374,14 @@ def manage_playoffs(request, league, season, *args, **kws):
 @picker_adapter
 def manage_game(request, league, pk):
     game = get_object_or_404(Game, pk=pk)
-    kickoff =  game.kickoff
-    data = {'game': game, 'error': None }
-    if request.method == 'POST':
-        kickoff = request.POST.get('kickoff')
-        try:
-            if not kickoff:
-                raise Exception('Invalid date')
-            
-            game.kickoff = kickoff = dt_parse(kickoff)
-            game.save()
-            
-        except Exception:
-            data['error'] = 'Invalid date'
-    
-    data['kickoff'] = kickoff
-    return '@manage/game.html', data
-
+    return utils.basic_form_view(
+        request,
+        '@manage/game.html',
+        forms.GameForm,
+        context={'game': game},
+        instance=game,
+        success_msg='Game saved'
+    )
 
 #-------------------------------------------------------------------------------
 @management_user_required
@@ -399,6 +390,6 @@ def manage_playoff_builder(request, league):
     return utils.basic_form_view(
         request,
         '@manage/playoff_builder.html',
-        PlayoffBuilderForm,
+        forms.PlayoffBuilderForm,
         form_kws={'league': league}
     )

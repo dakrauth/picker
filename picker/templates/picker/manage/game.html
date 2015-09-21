@@ -1,28 +1,15 @@
 {% extends league_base %}
 {% block title %}Manage Game Management{% endblock %}
-{% endblock extra_head %}
 {% block main_content %}
     <h1>{{ game.away }} @ {{ game.home }}</h1>
     <p>
         Week {{ game.week.week }} &middot; {{ game.kickoff }}
     </p>
-    <form method="post">
-        <table>
-            <tr>
-                <th>Kickoff</th>
-                <td>
-                    <input {% if error %}class="error"{% endif %} type="text" name="kickoff" value="{{ kickoff|date:"Y-m-d H:i" }}">
-                    {% if error %}
-                        {{ error }}
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" value="Save">
-                </td>
-            </tr>
-        </table>
+    {% load bootstrap3 %}
+    <form method="post">{% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
     </form>
 {% endblock %}

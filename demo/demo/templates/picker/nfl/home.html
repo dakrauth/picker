@@ -2,10 +2,11 @@
 {% block main_content %}
     <h1>{{ league }} Home</h1>
     <div class="list-group">
-        <a href="{% url 'picker-picks' league=league.lower %}" class="list-group-item">Picks</a>
-        <a href="{% url 'picker-results' league=league.lower %}" class="list-group-item">Results</a>
-        <a href="{% url 'picker-roster' league=league.lower %}" class="list-group-item">Standings</a>
-        <a href="{% url 'picker-teams' league=league.lower %}" class="list-group-item">Teams</a>
-        <a href="{% url 'picker-schedule' league=league.lower %}" class="list-group-item">Schedule</a>
+        <a class="list-group-item" href="{{ league.picks_url }}">Picks</a>
+        <a class="list-group-item" href="{{ league.results_url }}">Results</a>
+        <a class="list-group-item" href="{{ league.roster_url }}">Standings</a>
+        <a class="list-group-item" href="{{ league.teams_url }}">Teams</a>
+        <a class="list-group-item" href="{{ league.schedule_url }}">Schedule</a>
+        <a class="list-group-item" href="{{ league.manage_url }}">Manage</a>
     </div>
 {% endblock main_content %}

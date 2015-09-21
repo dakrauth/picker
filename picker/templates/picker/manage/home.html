@@ -1,9 +1,9 @@
 {% extends league_base %}
 {% block title %}Management{% endblock %}
 {% block main_content %}
-    <h1>Site Management</h1>
+    <h1>{{ league }} Management</h1>
     <h3>Weekly Results</h3>
     {% season_nav week "manage" %}
     <hr>
-    <a href="{% url 'picker-manage-playoff-builder' league.lower %}">Playoff Builder</a>
+    <a class="btn btn-default" href="{% url 'picker-manage-playoff-builder' league.lower %}">Playoff Builder</a>
 {% endblock %}

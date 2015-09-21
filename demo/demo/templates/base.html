@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Picker Demo{% endblock title %}</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-theme.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -20,12 +21,19 @@
         </div>
     </div>
     <div class="container">
+    {% block nav %}
         <div class="text-right">
             {% if user.is_authenticated %}<a href="{% url 'logout' %}?next=/">Logout</a>
             {% else %}<a href="{% url 'login' %}">Login</a>
             {% endif %}
-            
         </div>
+    {% endblock nav %}
+    </div>
+    <div class="container">
+        {% load bootstrap3 %}
+        {% bootstrap_messages %}
+    </div>
+    <div class="container">
         {% block main_content %}{% endblock main_content %}
     </div>
     <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script -->

@@ -201,7 +201,15 @@ class UserPickForm(BasePickForm):
             game_key_format(gp.game.id): gp.winner.id
             for gp in wp.gamepick_set.filter(winner__isnull=False)
         }, points=wp.points)
-    
+
+
+#===============================================================================
+class GameForm(forms.ModelForm):
+
+    #===========================================================================
+    class Meta:
+        model = picker.Game
+        fields = ('kickoff',)
 
 
 #===============================================================================

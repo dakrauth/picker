@@ -17,6 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_extensions',
     'picker',
     'demo',
 )
@@ -74,7 +75,11 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+
 
 PICKER = {
-    'TEAM_PICKER_WIDGET': None
+    'TEAM_PICKER_WIDGET': None,
+    'FAKE_DATETIME_NOW': (2015, 9, 22, 15)
 }

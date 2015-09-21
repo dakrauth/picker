@@ -121,6 +121,36 @@ class League(models.Model):
         return ('picker-home', [self.lower])
     
     #---------------------------------------------------------------------------
+    @models.permalink
+    def picks_url(self):
+        return ('picker-picks', [self.lower])
+
+    #---------------------------------------------------------------------------
+    @models.permalink
+    def results_url(self):
+        return ('picker-results', [self.lower])
+
+    #---------------------------------------------------------------------------
+    @models.permalink
+    def roster_url(self):
+        return ('picker-roster', [self.lower])
+
+    #---------------------------------------------------------------------------
+    @models.permalink
+    def teams_url(self):
+        return ('picker-teams', [self.lower])
+
+    #---------------------------------------------------------------------------
+    @models.permalink
+    def schedule_url(self):
+        return ('picker-schedule', [self.lower])
+
+    #---------------------------------------------------------------------------
+    @models.permalink
+    def manage_url(self):
+        return ('picker-manage', [self.lower])
+    
+    #---------------------------------------------------------------------------
     @cached_property
     def lower(self):
         return self.abbr.lower()
@@ -367,23 +397,17 @@ class Team(models.Model):
         return ('picker-team', [self.league.lower, self.abbr])
     
     #---------------------------------------------------------------------------
-    def _get_aliases(self):
+    @property
+    def aliases(self):
         return ','.join(self.alias_set.values_list('name', flat=True))
 
     #---------------------------------------------------------------------------
-    def _set_aliases(self, values):
+    @aliases.setter
+    def aliases(self, values):
         self.alias_set.all().delete()
         for value in values.split(','):
             self.alias_set.create(name=value.strip())
-        
-    aliases = property(_get_aliases, _set_aliases)
 
-    #---------------------------------------------------------------------------
-    @property
-    def image_url(self):
-        if self.logo:
-            return self.logo.url
-        
     #---------------------------------------------------------------------------
     def ranking(self, week):
         try:
@@ -393,7 +417,7 @@ class Team(models.Model):
     
     #---------------------------------------------------------------------------
     @property
-    def abbr_lower(self):
+    def lower(self):
         return self.abbr.lower()
     
     #---------------------------------------------------------------------------
