@@ -1,19 +1,17 @@
 {% extends league_base %}
 {% block title %}Weekly picks - {{ season }}{% endblock %}
 {% block main_content %}
+    <h1>{{ season }} Picks &ndash; Select a week</h1>
     {% all_seasons_nav season league "picks" %}
-
-    <h1>{{ season }} &ndash; Select a week</h1>
-    <ul>
+    <div class="list-group">
     {% for week, pick in weeks %}
-        <li>
-            <a href="{{ week.picks_url }}">Week {{ week.week }}</a> 
-            {% if week.is_open %}
-            {% if pick %}&ndash; 
-            {{ pick.is_complete|yesno:"complete,pending" }}{% else %}
-            {% endif %}
-            {% else %}&ndash; {{ pick|yesno:"played,missed"}}{% endif %}
-        </li>
+        <a class="list-group-item" href="{{ week.picks_url }}">Week {{ week.week }}
+        {% if week.is_open %}
+        {% if pick %}&ndash; 
+        {{ pick.is_complete|yesno:"complete,pending" }}{% else %}
+        {% endif %}
+        {% else %}&ndash; {{ pick|yesno:"played,missed"}}{% endif %}
+        </a>
     {% endfor %}
-    </ul>
+</div>
 {% endblock %}
