@@ -481,11 +481,6 @@ class Team(models.Model):
     
     #---------------------------------------------------------------------------
     @property
-    def market(self):
-        return self.name
-    
-    #---------------------------------------------------------------------------
-    @property
     def playoff(self):
         try:
             return self.playoff_set.get(season=self.current_season)

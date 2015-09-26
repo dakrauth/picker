@@ -34,6 +34,7 @@ class DivisionAdmin(admin.ModelAdmin):
     def league(self, obj):
         return obj.conference.league
 
+
 #===============================================================================
 class GameSetForm(forms.ModelForm):
     
@@ -41,7 +42,7 @@ class GameSetForm(forms.ModelForm):
     class Meta:
         model = picker.GameSet
         fields = '__all__'
-
+        
     #---------------------------------------------------------------------------
     def __init__(self, *args, **kws):
         super(GameSetForm, self).__init__(*args, **kws)
@@ -50,11 +51,40 @@ class GameSetForm(forms.ModelForm):
 
 
 #===============================================================================
+class InlineGameForm(forms.ModelForm):
+    
+    #===========================================================================
+    class Meta:
+        model = picker.Game
+        fields = '__all__'
+    
+    #---------------------------------------------------------------------------
+    def has_add_permission(self):
+        return False
+
+    #---------------------------------------------------------------------------
+    def has_change_permission(self):
+        return False
+
+
+#===============================================================================
+class GameInline(admin.TabularInline):
+    model = picker.Game
+    form = InlineGameForm
+
+    #---------------------------------------------------------------------------
+    def has_add_permission(self, request):
+        return False
+
+
+#===============================================================================
 class GameSetAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'league', 'points', 'opens', 'closes')
     list_filter = ('league', 'season')
     filter_horizontal = ['byes']
+    inlines = [GameInline]
     form = GameSetForm
+
 
 #===============================================================================
 class PreferenceAdmin(admin.ModelAdmin):

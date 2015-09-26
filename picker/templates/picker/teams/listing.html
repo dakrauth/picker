@@ -2,31 +2,31 @@
 {% block title %}Teams{% endblock %}
 {% block main_content %}
     <h1>{{ league }} Teams</h1>
-    <table class="table table-striped team-listing">
-    <thead>
-        <tr>
-            <th>Team</th>
-            <th>Record</th>
-            <th>Conference</th>
-            <th>Division</th>
-            <th>Team Colors</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for team in league.team_set.all  %}
-        <tr>
-            <td>
-                {% if team.logo %}<img src="{{ team.logo.url }}">{% endif %}
-                <a href="{{ team.get_absolute_url }}">{{ team }}</a>
-            </td>
-            <td class="center">{{ team.record_as_string }}</td>
-            <td class="center">{{ team.conference }}</td>
-            <td class="center">{{ team.division }}</td>
-            <td>{% for color in team.color_options %}
-                <div style="background-color: {{ color }}"></div>
-            {% endfor %}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+    <div class="panel panel-default">
+        <table class="table table-striped team-listing">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Record</th>
+                <th>Conference</th>
+                <th>Division</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in league.team_set.all  %}
+            <tr>
+                <td>
+                    {% if team.logo %}<img src="{{ team.logo.url }}">{% endif %}
+                    <a href="{{ team.get_absolute_url }}">{{ team }}</a>
+                </td>
+                <td class="center">{{ team.record_as_string }}</td>
+                <td class="center">{{ team.conference }}</td>
+                <td class="center">{{ team.division }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    
+
 {% endblock %}

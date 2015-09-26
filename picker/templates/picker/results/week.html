@@ -2,81 +2,87 @@
 {% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
 {% block main_content %}
     <h1>
-        Results for week {{ week.week }}, 
-        <a href="{% url 'picker-season-results' week.league.lower week.season %}">{{ week.season }}</a>
+        Results for week {{ week.week }}
+        <small><a href="{% url 'picker-season-results' week.league.lower week.season %}">{{ week.season }}</a></small>
     </h1>
     {% season_nav week "results" %}
     {% with week.weekly_results as weekly_results %}
-    <p>
-        <strong>{{ week.game_set.count }}</strong> games,
-        <strong>{{ weekly_results|length }}</strong> entries &ndash; 
-        <span class="autopick">Italicized user names indicate auto-picker selections</span><br />
-        {% if week.points %}Final points total: {{ week.points }}{% endif %}
-    </p>
-    {% having week.byes.all as byes %}
-    <p><strong>Byes:</strong> <em>{{ byes|join:", " }}</em></p>
-    {% endhaving %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ week.game_set.count }} games,
+            {{ weekly_results|length }} entries
+        </div>
+        <div class="panel-body">
+            <p>
+                <span class="autopick">Italicized user names indicate auto-picker selections</span><br />
+                {% if week.points %}Final points total: {{ week.points }}{% endif %}
+            </p>
+            {% having week.byes.all as byes %}
+            <p><strong>Byes:</strong> <em>{{ byes|join:", " }}</em></p>
+            {% endhaving %}
+        </div>
+        <table class="table table-striped results">
+        {% if not week.has_started %}
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Games picked</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for place,result in weekly_results %}
+            <tr>
+                <td>
+                    <img src="{{ result.user|picker_user_image:"32" }}">
+                    <span class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</span>
+                </td>
+                <td>{{ result.progress }}</td>
+                <td>{{ result.points|yesno:"set,pending" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+        {% with week.last_game.has_started as has_started  %}
+        <thead>
+            <tr>
+                <th>Place</th>
+                <th>Picker</th>
+                <th>Score</th>
+                {% for item in week.game_set.games_started %}
+                <th data-game_id="{{ item.id }}">
+                    {{ item.home.abbr }}<br />@<br />{{ item.away.abbr }}
+                </th>
+                {% endfor %}
+                {% if has_started %}
+                <th>Pts</th>
+                <th>Pts diff</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>{% for place,wp in weekly_results %}
+            <tr>
+                <td>{{ place }}</td>
+                <td>
+                    <img src="{{ wp.user|picker_user_image:"32" }}" />
+                    <span class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</span>
+                </td>
+                <td>{{ wp.correct }}</td>
+                {% for item in wp.gamepick_set.games_started %}
+                <td class="{{ item.is_correct|yesno:"correct,incorrect,unknown" }}">
+                    {{ item.winner_abbr }}
+                </td>    
+                {% endfor %}
+                {% if has_started %}
+                <td>{{ wp.points }}</td>
+                <td>&plusmn;{{ wp.points_delta }}</td>
+                {% endif %}   
+            </tr>{% endfor %}
+        </tbody>
+        {% endwith %}
+        {% endif %}
+        </table>
+        {% endwith %}
+    </div>
     
-    <table class="table table-striped results">
-    {% if not week.has_started %}
-    <thead>
-        <tr>
-            <th>Player</th>
-            <th>Games picked</th>
-            <th>Points</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for place,result in weekly_results %}
-        <tr>
-            <td>
-                <img src="{{ result.user|picker_user_image:"32" }}">
-                <span class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</span>
-            </td>
-            <td>{{ result.progress }}</td>
-            <td>{{ result.points|yesno:"set,pending" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    {% else %}
-    {% with week.last_game.has_started as has_started  %}
-    <thead>
-        <tr>
-            <th>Place</th>
-            <th>Picker</th>
-            <th>Score</th>
-            {% for item in week.game_set.games_started %}
-            <th data-game_id="{{ item.id }}">
-                {{ item.home.abbr }}<br />@<br />{{ item.away.abbr }}
-            </th>
-            {% endfor %}
-            {% if has_started %}
-            <th>Pts</th>
-            <th>Pts diff</th>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>{% for place,wp in weekly_results %}
-        <tr>
-            <td>{{ place }}</td>
-            <td>
-                <img src="{{ wp.user|picker_user_image:"32" }}" />
-                <span class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</span>
-            </td>
-            <td>{{ wp.correct }}</td>
-            {% for item in wp.gamepick_set.games_started %}
-            <td class="{{ item.is_correct|yesno:"correct,incorrect,unknown" }}">
-                {{ item.winner_abbr }}
-            </td>    
-            {% endfor %}
-            {% if has_started %}
-            <td>{{ wp.points }}</td>
-            <td>&plusmn;{{ wp.points_delta }}</td>
-            {% endif %}   
-        </tr>{% endfor %}
-    </tbody>
-    {% endwith %}
-    {% endif %}
-    </table>
-    {% endwith %}
 {% endblock %}

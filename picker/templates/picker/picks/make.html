@@ -1,14 +1,10 @@
 {% extends league_base %}
 {% block title %}Picks{% endblock %}
-{% block extra_head %}
-<style media="screen">
-</style>
-{% endblock extra_head %}
 {% block main_content %}
     {% load bootstrap3 %}
     <h1>
-        Week #{{ week.week }} &middot;
-        <a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a>
+        Week #{{ week.week }}
+        <small><a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></small>
     </h1>
     {% having week.byes.all as byes %}
     <p><strong>Byes:</strong> {{ byes|join:", " }}</p>

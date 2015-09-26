@@ -8,42 +8,41 @@
             {{ team.conference }} {{ team.division }} ({{ team.record_as_string }})
         </small>
     </h1>
-    <p>
-        <strong>Bye Week:</strong>
-        Week {{ team.bye_week.week }}
-    </p>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Week</th>
-            <th>Kickoff</th>
-            <th>Opponent</th>
-            <th>Result</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for game in team.schedule %}
-        <tr>
-            <td>{{ game.week.week }}</td>
-            <td>{{ game.kickoff|date:"D, M j - P" }}</td>
-            <td>
-                {% if team == game.away %}
-                    @ <a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a>
-                {% else %}
-                    <a href="{{ game.away.get_absolute_url}}">{{ game.away }}</a>
-                {% endif %}
-            </td>
-            <td>
-                {% if game.status == game.Status.UNPLAYED  %}TBD
-                {% else %}
-                {% if game.status == game.Status.TIE %}T
-                {% else %}
-                {% if team == game.winner %}W{% else %}L{% endif %}
-                {% endif %}
-                {% endif %}
-            </td>
-        </tr>    
-        {% endfor %}
-        </tbody>
-    </table>
+    <p><strong>Bye Week:</strong> Week {{ team.bye_week.week }}</p>
+    <div class="panel panel-default">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Week</th>
+                <th>Kickoff</th>
+                <th>Opponent</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in team.schedule %}
+            <tr>
+                <td>{{ game.week.week }}</td>
+                <td>{{ game.kickoff|date:"D, M j - P" }}</td>
+                <td>
+                    {% if team == game.away %}
+                        @ <a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a>
+                    {% else %}
+                        <a href="{{ game.away.get_absolute_url}}">{{ game.away }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if game.status == game.Status.UNPLAYED  %}TBD
+                    {% else %}
+                    {% if game.status == game.Status.TIE %}T
+                    {% else %}
+                    {% if team == game.winner %}W{% else %}L{% endif %}
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
