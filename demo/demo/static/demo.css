@@ -1,0 +1,3 @@
+.picks ul { list-style-type: none; padding: 0; margin: 0; }
+.picks .location { font-style: italic; }
+.picks { margin-bottom: 0; }

@@ -56,10 +56,15 @@ class GameSetAdmin(admin.ModelAdmin):
     filter_horizontal = ['byes']
     form = GameSetForm
 
+#===============================================================================
+class PreferenceAdmin(admin.ModelAdmin):
+    list_display = ('user', 'league', 'status')
+    list_filter = ('league', 'user')
+
 
 admin.site.register(picker.Team, TeamAdmin)
 admin.site.register(picker.League, LeagueAdmin)
 admin.site.register(picker.Conference, ConferenceAdmin)
 admin.site.register(picker.Division, DivisionAdmin)
 admin.site.register(picker.GameSet, GameSetAdmin)
-#admin.site.register(picker., )
+admin.site.register(picker.Preference, PreferenceAdmin)
