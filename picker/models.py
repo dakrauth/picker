@@ -611,7 +611,7 @@ class GameSet(models.Model):
             wp = self.pick_for_user(p.user)
             if wp:
                 wp.complete_picks(auto, games)
-            elif can_user_participate(p, week):
+            elif can_user_participate(p, self):
                 wp = self.pick_set.create(
                     user=p.user,
                     points=self.league.random_points() if auto else 0,

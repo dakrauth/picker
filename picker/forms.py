@@ -10,7 +10,17 @@ from . import conf
 from .signals import picker_weekly_results
 
 game_key_format = 'game_{}'.format
-picker_widget = conf.import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
+
+_picker_widget = None
+
+#-------------------------------------------------------------------------------
+def get_picker_widget():
+    global _picker_widget
+    if not _picker_widget:
+        _picker_widget = conf.import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
+
+    return _picker_widget
+
 
 #===============================================================================
 class TemplateTeamChoice(forms.RadioSelect):
@@ -51,13 +61,14 @@ class TemplateTeamChoice(forms.RadioSelect):
 class GameField(forms.ChoiceField):
 
     #---------------------------------------------------------------------------
-    def __init__(self, game, manage=False, widget=picker_widget):
+    def __init__(self, game, manage=False, widget=None):
         choices = ((str(game.away.id), game.away), (str(game.home.id), game.home))
         self.game = game
         self.manage = manage
         self.game_id = game.id
         self.is_game = True
         self.disabled = not self.manage and (self.game.kickoff <= utils.datetime_now())
+        widget = widget or get_picker_widget()
         super(GameField, self).__init__(
             choices=choices,
             label=game.kickoff.strftime('%a, %b %d %I:%M %p'),

@@ -21,11 +21,12 @@ DEFAULT_PICKER_SETTINGS = {
     'TEAM_PICKER_WIDGET': 'picker.forms.TemplateTeamChoice',
     'PARTICIPATION_HOOKS': []
 }
-
-get_setting = dict(
+picker_settings = dict(
     DEFAULT_PICKER_SETTINGS,
     **getattr(settings, 'PICKER', {})
-).get
+)
+
+get_setting = picker_settings.get
 
 #-------------------------------------------------------------------------------
 def import_setting(key, default=None):
@@ -33,4 +34,4 @@ def import_setting(key, default=None):
     if not value:
         return default
     
-    return import_setting(value)
+    return import_string(value)
