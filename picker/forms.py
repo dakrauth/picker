@@ -220,7 +220,7 @@ class GameForm(forms.ModelForm):
     #===========================================================================
     class Meta:
         model = picker.Game
-        fields = ('kickoff',)
+        fields = ('kickoff', 'location')
 
 
 #===============================================================================
