@@ -334,15 +334,11 @@ class League(models.Model):
             new_old[0 if is_new else 1] += 1
         return new_old
 
-    _league_cache = {}
-    
     #---------------------------------------------------------------------------
     @classmethod
     def get(cls, abbr=None):
         abbr = abbr or picker_setting('DEFAULT_LEAGUE', 'nfl')
-        if abbr not in cls._league_cache:
-            cls._league_cache[abbr] = League.objects.get(abbr=abbr)
-        return cls._league_cache[abbr]
+        return League.objects.get(abbr=abbr)
 
 
 #===============================================================================
