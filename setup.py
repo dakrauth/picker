@@ -9,7 +9,7 @@ if sys.argv[-1] == 'publish':
 with open('README.rst', 'r') as f:
     long_description = f.read()
 
-# Dynamically calculate the version based on swingtime.VERSION.
+# Dynamically calculate the version based on picker.VERSION.
 version=__import__('picker').get_version()
 
 setup(

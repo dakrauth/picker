@@ -494,6 +494,32 @@ class Team(models.Model):
     def bye_week(self, season=None):
         return self.bye_set.get(season=season or self.league.current_season)
 
+    #---------------------------------------------------------------------------
+    def complete_record(self):
+        home_games = [0,0,0]
+        away_games = [0,0,0]
+
+        for game_set, accum, status in (
+            (self.away_game_set, away_games, Game.Status.AWAY_WIN),
+            (self.home_game_set, home_games, Game.Status.HOME_WIN),
+        ):
+            for res in game_set.exclude(status=Game.Status.UNPLAYED).values_list(
+                'status',
+                flat=True
+            ):
+                if res == status:
+                    accum[0] += 1
+                elif res == Game.Status.TIE:
+                    accum[2] += 1
+                else:
+                    accum[1] += 1
+
+        return [home_games, away_games, [
+            away_games[0] + home_games[0],
+            away_games[1] + home_games[1],
+            away_games[2] + home_games[2]
+        ]]
+    
 
 #===============================================================================
 class Alias(models.Model):

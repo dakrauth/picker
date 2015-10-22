@@ -8,30 +8,18 @@ from picker import models as picker
 Status = picker.Game.Status
 
 #-------------------------------------------------------------------------------
+def get_date(dt):
+    if dt:
+        dt = datetime(*[int(i) for i in dt.split('-')])
+    else:
+        dt = picker.datetime_now()
+
+    return dt.date()
+
+
+#-------------------------------------------------------------------------------
 def get_team_record(tm):
-    home_games = [0,0,0]
-    away_games = [0,0,0]
-
-    for game_set, accum, status in (
-        (tm.away_game_set, away_games, Status.AWAY_WIN),
-        (tm.home_game_set, home_games, Status.HOME_WIN),
-    ):
-        for res in game_set.exclude(status=Status.UNPLAYED).values_list(
-            'status',
-            flat=True
-        ):
-            if res == status:
-                accum[0] += 1
-            elif res == Status.TIE:
-                accum[2] += 1
-            else:
-                accum[1] += 1
-
-    return [tm] + home_games + away_games + [
-        away_games[0] + home_games[0],
-        away_games[1] + home_games[1],
-        away_games[2] + home_games[2]
-    ]
+    return [tm] + tm.complete_record()
 
 
 #-------------------------------------------------------------------------------
@@ -44,7 +32,7 @@ class Callbacks(object):
     
     #---------------------------------------------------------------------------
     @staticmethod
-    def check(league, **options):
+    def check_schedule(league, **options):
         DOW = {'Mon': 0, 0: 'Mon', 'Thu': 3, 3: 'Thu', 'Sat': 5, 5: 'Sat', 'Sun': 6, 6: 'Sun'}
 
         def pretty(e):
@@ -70,9 +58,9 @@ class Callbacks(object):
         pprint(score_strip_games)
 
         current_week = {}
-        gw = league.current_gameset
+        gs = league.current_gameset
         bad = 0
-        for g in gw.games:
+        for g in gs.games:
             ko = g.kickoff
             key = '%s @ %s' % (g.away.abbr, g.home.abbr)
             actual = score_strip_games[key]
@@ -98,30 +86,27 @@ class Callbacks(object):
     def show_records(league, **options):
         records = [get_team_record(team) for team in league.team_set.all()]
         records = sorted(records, key=lambda r: r[-3], reverse=True)
-    
+        
         mx = max([len(unicode(r[0])) for r in records])
-        hdr = '%*s %8s %8s %8s' % (mx, 'Team', 'Home', 'Away', 'All')
+        hdr = '%*s %8s %8s %8s %6s' % (mx, 'Team', 'Home', 'Away', 'All', league.current_season)
         print '%s\n%s' % (hdr, '-' * len(hdr))
         for record in records:
             team = record[0]
             results = record[1:]
-            print '%*s %8s %8s %8s' % (
-                 mx, team, concat(results[:3]), concat(results[3:6]), concat(results[6:])
+            print '%*s %8s %8s %8s %6s' % (
+                 mx,
+                 team,
+                 concat(results[0]),
+                 concat(results[1]),
+                 concat(results[2]),
+                 concat(team.season_record())
             )
 
     #---------------------------------------------------------------------------
     @staticmethod
-    def reminder(league, **options):
-        dt = options.get('date', None)
-        if dt:
-            arg = [int(i) for i in dt.split('-')]
-            today = datetime(*arg).date()
-        else:
-            today = datetime.now().date()
-        
-        gw = league.current_gameset
-        first_game = gw.first_game
-    
+    def send_reminder(league, **options):
+        dt = get_date(options.get('date', None))
+        first_game = league.current_gameset.first_game
         if first_game.kickoff.date() == today:
             league.send_reminder_email()
             print '%s:%s' % (today, first_game)
