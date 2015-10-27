@@ -11,7 +11,7 @@ The default, included templates are all `Bootstrap 3 <http://getbootstrap.com/>`
 Demo
 ----
 
-For Linux/Mac OS X::
+For Linux/Mac OS X:
 
 .. code-block:: bash
 
