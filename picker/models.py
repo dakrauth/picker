@@ -19,6 +19,7 @@ from django_extensions.db.fields.json import JSONField
 
 from . import utils
 from . import signals
+from .exceptions import PickerException, PickerResultException
 from .conf import get_setting as picker_setting
 from . import managers
 
@@ -185,10 +186,9 @@ class League(models.Model):
         return confs
         
     #---------------------------------------------------------------------------
-    def get_team_name_dict(self, team=None, aliases=True):
+    def get_team_name_dict(self, aliases=True):
         names = {}
-        teams = [team] if team else self.team_set.all()
-        for team in teams:
+        for team in self.team_set.all():
             names[team.abbr] = team
             names[team.name] = team
             if team.nickname:
@@ -200,16 +200,6 @@ class League(models.Model):
             
         return names
     
-    #---------------------------------------------------------------------------
-    def find_team(self, name):
-        names = self.get_team_name_dict()
-        return names.get(name, None)
-        
-    #---------------------------------------------------------------------------
-    def missing_team(self, items):
-        teams = self.team_names_dict()
-        return set([item for item in items if item not in teams])
-
     #---------------------------------------------------------------------------
     @cached_property
     def current_gameset(self):
@@ -625,7 +615,7 @@ class GameSet(models.Model):
     
     #---------------------------------------------------------------------------
     def picks_kickoff(self):
-        games = set(self.game_set.all())
+        games = list(self.game_set.all())
         force_autopick = picker_setting('FOOTBALL_FORCE_AUTOPICK', True)
         Strategy = PickSet.Strategy
         for p in Preference.objects.active():
@@ -634,25 +624,26 @@ class GameSet(models.Model):
             if wp:
                 wp.complete_picks(auto, games)
             elif can_user_participate(p, self):
-                wp = self.pick_set.create(
-                    user=p.user,
-                    points=self.league.random_points() if auto else 0,
-                    strategy=Strategy.RANDOM if auto else Strategy.USER
+                PickSet.objects.create_for_user(
+                    p.user,
+                    gs,
+                    Strategy.RANDOM if auto else Strategy.USER,
+                    games,
+                    True
                 )
-                wp.complete_picks(auto, games)
-                wp.send_confirmation(auto)
     
     #---------------------------------------------------------------------------
     def update_results(self):
         results = self.league.scores(completed=True)
         if not results:
-            return False
+            raise PickerResultException('Results unavailable')
 
         completed = {g['home']: g for g in results}
         if not completed:
-            return None
+            raise PickerResultException('No completed results')
 
         count = 0
+        points = 0
         for game in self.game_set.incomplete(home__abbr__in=completed.keys()):
             result = completed.get(game.home.abbr, None)
             if result:
@@ -662,11 +653,20 @@ class GameSet(models.Model):
                     else game.away if game.away.abbr == winner else None
                 )
                 count += 1
-
+        
+        last_game = self.last_game
+        if not self.points and last_game.winner:
+            now = datetime_now()
+            if now > last_game.end_time:
+                result = completed.get(last_game.home.abbr, None)
+                if result:
+                    points = self.points = result['home_score'] + result['away_score']
+                    self.save()
+            
         if count:
             self.update_pick_status()
 
-        return count
+        return (count, points)
     
     #---------------------------------------------------------------------------
     def set_default_open_and_close(self):

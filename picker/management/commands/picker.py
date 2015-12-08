@@ -125,9 +125,12 @@ class Callbacks(object):
 
     #---------------------------------------------------------------------------
     def update_results(league, **options):
-        week = league.current_gameset
-        if week:
-            week.update_results()
+        gs = league.current_gameset
+        if gs:
+            try:
+                gs.update_results()
+            except picker.PickerResultException, why:
+                print why
 
     #---------------------------------------------------------------------------
     @staticmethod

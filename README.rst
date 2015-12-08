@@ -1,7 +1,7 @@
 Picker
 ======
 
-A sports picker app for various leagues.
+A Django-based sports picker app for various leagues.
 
 Templates
 ---------

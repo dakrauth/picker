@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.template.base import add_to_builtins
 
-from .models import League, Game, RosterStats, Preference
+from .models import League, Game, RosterStats, Preference, PickerResultException
 from . import utils
 from . import forms
 from .decorators import management_user_required
@@ -153,23 +153,23 @@ def roster(request, league, season=None):
 
 #-------------------------------------------------------------------------------
 def _playoff_results(request, playoff):
-    return '@results/playoffs.html', {
-        'week': PlayoffContext.week(playoff),
-        'playoff': playoff
-    }
+    ctx = PlayoffContext.week(playoff)
+    return '@results/playoffs.html', {'week': ctx, 'playoff': playoff}
 
 
 #-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results(request, league):
-    week = league.current_gameset
-    if week:
-        if week.has_started:
-            week.update_results()
+    gs = league.current_gameset
+    if gs:
+        if gs.has_started:
+            try:
+                gs.update_results()
+            except PickerResultException:
+                pass
 
-        return '@results/week.html', {'week': week}
-    
+        return '@results/week.html', {'week': gs}
     
     playoff = league.current_playoffs
     if playoff:
@@ -190,8 +190,8 @@ def results_by_season(request, league, season):
 @login_required
 @picker_adapter
 def results_by_week(request, league, season, week):
-    week = get_object_or_404(league.game_set, season=season, week=week)
-    return '@results/week.html', {'week': week}
+    gs = get_object_or_404(league.game_set, season=season, week=week)
+    return '@results/week.html', {'week': gs}
 
 
 #-------------------------------------------------------------------------------
@@ -318,7 +318,11 @@ def manage_week(request, league, season, week):
         go_to = reverse('picker-game-week', args=(league.lower, gs.season, gs.week))
         if 'kickoff' in request.POST:
             gs.picks_kickoff()
-            gs.update_results()
+            try:
+                gs.update_results()
+            except PickerResultException:
+                pass
+                
             messages.success(request, 'Week kickoff successful')
             return http.HttpResponseRedirect(go_to)
             
@@ -328,11 +332,10 @@ def manage_week(request, league, season, week):
             return http.HttpResponseRedirect(go_to)
             
         if 'update' in request.POST:
-            res = gs.update_results()
-            if res is None:
-                messages.warning(request, 'No completed games!')
-            elif res is False:
-                messages.error(request, 'Could not update (service unavailable)')
+            try:
+                res = gs.update_results()
+            except PickerResultException as exc:
+                messages.warning(request, unicode(exc))
             else:
                 messages.success(request, '%s game(s) update' % res)
             return http.HttpResponseRedirect(go_to)
@@ -343,8 +346,13 @@ def manage_week(request, league, season, week):
             messages.success(request, 'Results saved')
             return http.HttpResponseRedirect(go_to)
     else:
-        if gs.has_started and gs.update_results():
-            messages.success(request, 'Scores automatically updated!')
+        if gs.has_started:
+            try:
+                gs.update_results()
+            except PickerResultException as exc:
+                messages.warning(request, unicode(exc))
+            else:
+                messages.success(request, 'Scores automatically updated!')
 
         form = forms.ManagementPickForm(gs)
         

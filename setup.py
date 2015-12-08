@@ -17,7 +17,7 @@ setup(
     url='https://github.com/dakrauth/picker',
     author='David A Krauth',
     author_email='dakrauth@gmail.com',
-    description='A sports picker app',
+    description='A Django sports picker app',
     version=version,
     long_description=long_description,
     platforms=['any'],

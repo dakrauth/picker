@@ -73,3 +73,22 @@ class PreferenceManager(models.Manager):
             html=html,
         )
 
+
+#===============================================================================
+class PickSetManager(models.Manager):
+    
+    #---------------------------------------------------------------------------
+    def create_for_user(self, user, gs, strategy, games=None, send_confirmation=True):
+        Strategy = self.model.Strategy
+        is_auto = (strategy == Strategy.RANDOM)
+        wp = gs.pick_set.create(
+            user=user,
+            points=gs.league.random_points() if is_auto else 0,
+            strategy=strategy
+        )
+        wp.complete_picks(is_auto, games or gs.game_set.all())
+        if send_confirmation:
+            wp.send_confirmation(is_auto)
+
+        return wp
+

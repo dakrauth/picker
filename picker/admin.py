@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from . import models as picker
 
+
 #===============================================================================
 class LeagueAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'is_pickable')
@@ -92,6 +93,49 @@ class PreferenceAdmin(admin.ModelAdmin):
     list_filter = ('league', 'user')
 
 
+#===============================================================================
+class GamePickInlineForm(forms.ModelForm):
+    winner = forms.ModelChoiceField(queryset=picker.Team.objects.none())
+    model = picker.GamePick
+    fields = ('winner',)
+    
+    #---------------------------------------------------------------------------
+    def __init__(self, *args, **kws):
+        super(GamePickInlineForm, self).__init__(*args, **kws)
+        instance = kws.get('instance', None)
+        if instance:
+            game = instance.game
+            self.fields['winner'].queryset = picker.Team.objects.filter(
+                id__in=[game.away.id, game.home.id]
+            )
+
+
+#===============================================================================
+class GamePickInline(admin.TabularInline):
+    model = picker.GamePick
+    form = GamePickInlineForm
+    fields = ('game_info', 'winner',)
+    readonly_fields = ('game_info', )
+    
+    #---------------------------------------------------------------------------
+    def game_info(self, obj):
+        return '{}'.format(obj.game)
+        
+
+
+#===============================================================================
+class PickSetAdmin(admin.ModelAdmin):
+    list_display = ('user', 'week', 'league')
+    list_filter = ('user', 'week')
+    fields = ('points', 'strategy')
+    inlines = [GamePickInline]
+    
+    #---------------------------------------------------------------------------
+    def league(self, obj):
+        return obj.week.league
+
+
+admin.site.register(picker.PickSet, PickSetAdmin)
 admin.site.register(picker.Team, TeamAdmin)
 admin.site.register(picker.League, LeagueAdmin)
 admin.site.register(picker.Conference, ConferenceAdmin)
