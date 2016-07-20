@@ -45,15 +45,18 @@ class Preference(models.Model):
         
     league        = models.ForeignKey('League')
     favorite_team = models.ForeignKey('Team', null=True, blank=True)
-    user          = models.OneToOneField(User, related_name='picker_preferences')
+    user          = models.ForeignKey(User, related_name='picker_preferences')
     status        = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
     autopick      = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
 
     objects = managers.PreferenceManager()
     
+    class Meta:
+        unique_together = ('league', 'user')
+
     #---------------------------------------------------------------------------
     def __unicode__(self):
-        return self.user.username
+        return u'{}:{}'.format(self.user.username, self.league)
     
     #---------------------------------------------------------------------------
     @cached_property
@@ -689,15 +692,18 @@ class Game(models.Model):
 
     #===========================================================================
     class Category(ChoiceEnumeration):
-        REGULAR = ChoiceEnumeration.Option('REG', 'Regular Season', default=True)
-        POST    = ChoiceEnumeration.Option('POST', 'Post Season')
+        REGULAR  = ChoiceEnumeration.Option('REG',  'Regular Season', default=True)
+        POST     = ChoiceEnumeration.Option('POST', 'Post Season')
+        PRE      = ChoiceEnumeration.Option('PRE',  'Pre Season')
+        FRIENDLY = ChoiceEnumeration.Option('FRND', 'Friendly')
 
     #===========================================================================
     class Status(ChoiceEnumeration):
-        UNPLAYED = ChoiceEnumeration.Option('U', 'Unplayed', default=True)
-        TIE      = ChoiceEnumeration.Option('T', 'Tie')
-        HOME_WIN = ChoiceEnumeration.Option('H', 'Home Win')
-        AWAY_WIN = ChoiceEnumeration.Option('A', 'Away Win')
+        UNPLAYED  = ChoiceEnumeration.Option('U', 'Unplayed', default=True)
+        TIE       = ChoiceEnumeration.Option('T', 'Tie')
+        HOME_WIN  = ChoiceEnumeration.Option('H', 'Home Win')
+        AWAY_WIN  = ChoiceEnumeration.Option('A', 'Away Win')
+        CANCELLED = ChoiceEnumeration.Option('X', 'Cancelled')
     
     home     = models.ForeignKey(Team, related_name='home_game_set')
     away     = models.ForeignKey(Team, related_name='away_game_set')
