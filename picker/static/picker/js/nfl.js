@@ -130,11 +130,13 @@
         var gm, away_class, home_class, bit;
         console.log(scores_data);
         if(scores_data && scores_data.games) {
-            for(var i = 0; i < scores_data.games.length; i++) {
-                gm = scores_data.games[i];
+            scores_data.games.sort(function(a, b) {
+                return a.eid > b.eid ? 1 : -1;
+            });
+            scores_data.games.forEach(function(gm) {
                 away_class = gm.winner == null ? '' : gm.away == gm.winner ? 'sc_win' : 'sc_loss';
                 home_class = gm.winner == null ? '' : gm.home == gm.winner ? 'sc_win' : 'sc_loss';
-                html.push('<div>');
+                html.push('<div data-eid="' + gm.eid + '">');
                 html.push('<div class="' + away_class + '">' + gm.away + (gm.pos == gm.home ? ' &bull;' : '') + ' <span>' + gm.away_score + '</span></div>');
                 html.push('<div class="' + home_class + '">' + gm.home + (gm.pos == gm.away ? ' &bull;' : '') + ' <span>' + gm.home_score + '</span></div>');
                 html.push('<div class="time">');
@@ -147,7 +149,7 @@
                 }
                 
                 html.push('<a href="' + gm.url + '" target="_blank">' + bit + '</a></div></div>');
-            }
+            });
         }
         else {
             html.push('<p>Unable to load score strip</p>')
