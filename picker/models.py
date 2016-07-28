@@ -1052,7 +1052,7 @@ class RosterStats(object):
         self.wrong = 0
         self.points_delta = 0
 
-        qs = self.user.pick_set.select_related().filter(
+        qs = self.user.pick_set.filter(week__league=league).select_related().filter(
             models.Q(correct__gt=0) | models.Q(wrong__gt=0)
         )
         
@@ -1107,7 +1107,9 @@ class RosterStats(object):
     @staticmethod
     def get_details(league, season=None):
         season = season or league.current_season
-        prefs = Preference.objects.select_related().order_by('user__username')
+        prefs = Preference.objects.filter(
+            league=league
+        ).select_related().order_by('user__username')
         
         by_user = {
             entry[1].user: entry
