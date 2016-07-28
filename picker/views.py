@@ -320,7 +320,7 @@ def manage_season(request, league, season):
 def manage_week(request, league, season, week):
     gs = get_object_or_404(league.game_set, season=season, week=week)
     if request.method == 'POST':
-        go_to = reverse('picker-game-week', args=(league.lower, gs.season, gs.week))
+        go_to = reverse('picker-game-sequence', args=(league.lower, gs.season, gs.week))
         if 'kickoff' in request.POST:
             gs.picks_kickoff()
             try:

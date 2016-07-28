@@ -266,7 +266,7 @@ class League(models.Model):
         
         *   `season` is an int (2009)
         *   `schedule` is an iterable of 6-tuples of the following format:
-            (week #, away, home, datetime or datetime-tuple, TV, location)
+            (sequence #, away, home, datetime or datetime-tuple, TV, location)
             
             Away and home teams are referenced by abbreviation.
             
@@ -274,7 +274,7 @@ class League(models.Model):
             
                 (1, u'STL', u'SEA', (2009, 9, 13, 16, 15), 'FOX', 'Qwest Field')
                 
-        *   `byes` is a dictionary keyed by week number with the value being a
+        *   `byes` is a dictionary keyed by sequence number with the value being a
             list of team abbreviations
             
             Example:
@@ -285,17 +285,17 @@ class League(models.Model):
                  ...
                 }
         '''
-        current_week = None
+        current_sequence = None
         game_set = None
         teams = self.get_team_name_dict()
         new_old = [0, 0]
-        for week, away, home, dt, tv, where in schedule:
+        for sequence, away, home, dt, tv, where in schedule:
             away = teams[away]
             home = teams[home]
             dt = dt if isinstance(dt, datetime) else datetime(*dt)
 
-            if week != current_week:
-                current_week = week
+            if sequence != current_sequence:
+                current_sequence = sequence
 
                 opens = dt - timedelta(days=dt.weekday() - 1)
                 opens = opens.replace(hour=12, minute=0)
@@ -303,7 +303,7 @@ class League(models.Model):
 
                 game_set, is_new = self.game_set.get_or_create(
                     season=season,
-                    week=week,
+                    week=sequence,
                     defaults={'opens': opens, 'closes': closes}
                 )
                 if not is_new:
@@ -312,8 +312,8 @@ class League(models.Model):
                         game_set.closes = closes
                         game_set.save()
 
-                if byes and (week in byes):
-                    game_set.byes = [teams[t] for t in byes[week]]
+                if byes and (sequence in byes):
+                    game_set.byes = [teams[t] for t in byes[sequence]]
 
             g, is_new = Game.objects.get_or_create(
                 home=home,
@@ -398,23 +398,10 @@ class Team(models.Model):
             self.alias_set.create(name=value.strip())
 
     #---------------------------------------------------------------------------
-    def ranking(self, week):
-        try:
-            return Ranking.objects.get(team=self, week__week=week)
-        except:
-            return None
-    
-    #---------------------------------------------------------------------------
     @property
     def lower(self):
         return self.abbr.lower()
     
-    #---------------------------------------------------------------------------
-    @cached_property
-    def current_ranking(self):
-        gs = league.game_set.latest('kickoff')
-        return self.ranking(gs.week) or {'rank': 0, 'record': '?-?'}
-        
     #---------------------------------------------------------------------------
     @property
     def schedule(self):
@@ -540,17 +527,22 @@ class GameSet(models.Model):
     
     #---------------------------------------------------------------------------
     def __unicode__(self):
-        return u'{}:{}'.format(self.week, self.season)
+        return u'{}:{}'.format(self.sequence, self.season)
 
+    #---------------------------------------------------------------------------
+    @property
+    def sequence(self):
+        return self.week
+    
     #---------------------------------------------------------------------------
     @models.permalink
     def get_absolute_url(self):
-        return ('picker-game-week', [self.league.lower, str(self.season), str(self.week)])
+        return ('picker-game-sequence', [self.league.lower, str(self.season), str(self.sequence)])
         
     #---------------------------------------------------------------------------
     @models.permalink
     def picks_url(self):
-        return ('picker-picks-week', [self.league.lower, str(self.season), str(self.week)])
+        return ('picker-picks-sequence', [self.league.lower, str(self.season), str(self.sequence)])
 
     #---------------------------------------------------------------------------
     @property
@@ -722,8 +714,13 @@ class Game(models.Model):
     
     #---------------------------------------------------------------------------
     def __unicode__(self):
-        return '{} {}'.format(self.tiny_description, self.week)
+        return '{} {}'.format(self.tiny_description, self.game_set)
         
+    #---------------------------------------------------------------------------
+    @property
+    def game_set(self):
+        return self.week
+
     #---------------------------------------------------------------------------
     @property
     def has_started(self):
@@ -747,7 +744,7 @@ class Game(models.Model):
     #---------------------------------------------------------------------------
     @property
     def long_description(self):
-        return '%s %s %s' % (self.short_description, self.week, self.kickoff)
+        return '%s %s %s' % (self.short_description, self.game_set, self.kickoff)
         
     #---------------------------------------------------------------------------
     @property
@@ -821,11 +818,16 @@ class PickSet(models.Model):
     
     #---------------------------------------------------------------------------
     def __unicode__(self):
-        return u'%s %s %d' % (self.week, self.user, self.correct)
+        return u'%s %s %d' % (self.game_set, self.user, self.correct)
         
     #---------------------------------------------------------------------------
     def __cmp__(self, o):
         return -cmp(self.correct, o.correct) or cmp(self.points_delta, o.points_delta)
+    
+    #---------------------------------------------------------------------------
+    @property
+    def game_set(self):
+        return self.week
         
     #---------------------------------------------------------------------------
     @property
@@ -837,7 +839,7 @@ class PickSet(models.Model):
     def is_complete(self):
         return (
             False if self.points is None
-            else (self.progress == len(self.week.games))
+            else (self.progress == len(self.game_set.games))
         )
         
     #---------------------------------------------------------------------------
@@ -856,10 +858,10 @@ class PickSet(models.Model):
     #---------------------------------------------------------------------------
     @property
     def points_delta(self):
-        if self.week.points == 0:
+        if self.game_set.points == 0:
             return 0
             
-        return abs(self.points - self.week.points)
+        return abs(self.points - self.game_set.points)
     
     #---------------------------------------------------------------------------
     def send_confirmation(self, auto_pick=False):
@@ -871,7 +873,7 @@ class PickSet(models.Model):
 
     #---------------------------------------------------------------------------
     def complete_picks(self, is_random=True, games=None):
-        games = games or self.week.game_set.all()
+        games = games or self.game_set.all()
         picked_games = set((gp.game for gp in self.gamepick_set.all()))
         for g in games:
             if g not in picked_games:

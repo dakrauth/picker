@@ -14,12 +14,12 @@ urlpatterns = [
     
     url(r'^results/$',                      views.results, name='picker-results'),
     url(r'^results/(\d{4})/$',              views.results_by_season, name='picker-season-results'),
-    url(r'^results/(\d{4})/(-?\d+)/$',      views.results_by_week, name='picker-game-week'),
+    url(r'^results/(\d{4})/(-?\d+)/$',      views.results_by_week, name='picker-game-sequence'),
     url(r'^results/(\d{4})/playoffs/$',     views.results_for_playoffs, name='picker-playoffs-results'),
     
     url(r'^picks/$',                        views.picks, name='picker-picks'),
     url(r'^picks/(\d{4})/$',                views.picks_by_season, name='picker-season-picks'),
-    url(r'^picks/(\d{4})/(-?\d+)/$',        views.picks_by_week, name='picker-picks-week'),
+    url(r'^picks/(\d{4})/(-?\d+)/$',        views.picks_by_week, name='picker-picks-sequence'),
     url(r'^picks/(\d{4})/playoffs/$',       views.picks_for_playoffs, name='picker-playoffs-picks'),
     url(r'^picks/history/$',                views.picks_history),
     
