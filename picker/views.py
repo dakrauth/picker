@@ -3,7 +3,6 @@ from dateutil.parser import parse as dt_parse
 
 from django import http
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, get_list_or_404, render
@@ -35,6 +34,12 @@ def picker_adapter(view):
             'season': league.current_season,
             'league_base': 'picker/{}/base.html'.format(league.lower)
         }
+        if request.user.is_authenticated():
+            try:
+                data['preferences'] = Preference.objects.get(league=league, user=request.user)
+            except Preference.DoesNotExist:
+                pass
+                
         if ctx:
             data.update(**ctx)
             
