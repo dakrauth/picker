@@ -1,4 +1,5 @@
 {% extends league_base %}
+{% load picker_tags %}
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
 <h1>My Weekly Picks</h1>
@@ -38,10 +39,10 @@
 {% for pick in picks.gamepick_set.all %}
 <tr>
     <td class="when">{{ pick.game.kickoff|date:"D P, M jS" }}</td>
-    <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% ifequal pick.game.away pick.winner %} selected{% endifequal %}">
+    <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% if pick.game.away == pick.winner %} selected{% endif %}">
         <a href="{{ pick.game.away.get_absolute_url }}">{{ pick.game.away }}</a>
     </td>
-    <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% ifequal pick.game.home pick.winner %} selected{% endifequal %}">
+    <td class="{{ pick.is_correct|yesno:"correct,incorrect,unknown"}}{% if pick.game.home == pick.winner %} selected{% endif %}">
         <a href="{{ pick.game.home.get_absolute_url }}">{{ pick.game.home }}</a>
     </td>
 </tr>    

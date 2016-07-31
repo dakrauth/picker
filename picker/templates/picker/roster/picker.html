@@ -1,4 +1,5 @@
 {% extends league_base %}
+{% load picker_tags %}
 {% block title %}Roster Profile{% endblock %}
 {% block fav_team %}team-{{ profile.favorite_team.abbr|default:"ne"|lower }}{% endblock fav_team %}
 {% block main_content %}

@@ -1,6 +1,6 @@
 <nav class="season-nav">
     <ul class="pagination">{% for sw in season_weeks %}
-        <li{% ifequal sw week %} class="active"{% endifequal %}>
+        <li{% if sw == week %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
         {% if week %}

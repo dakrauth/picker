@@ -1,7 +1,7 @@
 ;var Picker = (function($, undefined) {
     var score_calls = 0;
     var playoff_teams = null;
-    
+
     //--------------------------------------------------------------------------
     var counter = (function() {
         var i = 0;
@@ -10,7 +10,7 @@
             reduce:  function(n) { i -= n; }
         };
     })();
-    
+
     //--------------------------------------------------------------------------
     function isOldIE() {
         var rv = false; // Return value assumes failure.
@@ -24,7 +24,7 @@
         }
         return false;
     }
-    
+
     //--------------------------------------------------------------------------
     function joinKeyValuePairs(items) {
         var result = '';
@@ -35,7 +35,7 @@
         }
         return result;
     }
-    
+
     //--------------------------------------------------------------------------
     function showTeam(game, team, away) {
         var $parent = $('<td></td>'), 
@@ -49,12 +49,12 @@
                 name: game,
                 'data-conf': team.conf
             });
-            
+
         if(!away) {
             $label.append(input + img);
             $parent.append($label);
         }
-        
+
         $label.append('#' + team.seed + ' ' + team.name + ' (' + team.record + ')');
         if(away) {
             $label.append(img + input);
@@ -62,7 +62,7 @@
         }
         return $parent;
     }
-    
+
     //------------------------------------------------------------------
     function showGame(home, away) {
         var c = 'game_' + counter.next();
@@ -70,10 +70,10 @@
             .append(away ? showTeam(c, away, true) : $('<td></td>'))
             .append(show_team(c, home));
     }
-    
+
     //------------------------------------------------------------------
     function sortTeam(a, b) { return playoff_teams[a].seed - playoff_teams[b].seed; }
-    
+
     //--------------------------------------------------------------------------
     var scoreStripHandler = function(scores_data) {
         var $scorestrip = $('.scorestrip').attr('data-load', ++score_calls);
@@ -91,14 +91,14 @@
                 html.push('<div class="' + away_class + '">' + gm.away + (gm.pos == gm.home ? ' &bull;' : '') + ' <span>' + gm.away_score + '</span></div>');
                 html.push('<div class="' + home_class + '">' + gm.home + (gm.pos == gm.away ? ' &bull;' : '') + ' <span>' + gm.home_score + '</span></div>');
                 html.push('<div class="time">');
-                
+
                 if(gm.status == 'Pending') {
                     bit = gm.day + ' ' + gm.time;
                 }
                 else {
                     bit = gm.status + (gm.clock ? ' ' + gm.clock: '');
                 }
-                
+
                 html.push('<a href="' + gm.url + '" target="_blank">' + bit + '</a></div></div>');
             });
         }
@@ -106,9 +106,9 @@
             html.push('<p>Unable to load score strip</p>')
         }
         $scorestrip.html(html.join('\n'));
-        
+
     };
-    
+
     var numbersOnly = function(e) {
         // Allow only backspace and delete
         if ( e.keyCode == 46 || e.keyCode == 8 ) {
@@ -136,22 +136,22 @@
             nfc_seeds = [], 
             afc_seeds = [],
             i, j;
-            
+
         if($wk.length !== count) {
             return;
         }
-        
+
         for(i = next_week; i <= 4; i++) {
             var $temp = $('#wk' + i + ' tbody');
             counter.reduce($temp.find('tr').length);
             $temp.empty();
         }
-        
+
         if(wk == 1) {
             nfc_seeds = [this.NFC[0], this.NFC[1]];
             afc_seeds = [this.AFC[0], this.AFC[1]];
         }
-        
+
         $wk.each(function() {
             if($(this).attr('data-conf') == 'NFC') {
                 nfc_seeds.push($(this).val());
@@ -160,17 +160,17 @@
                 afc_seeds.push($(this).val());
             }
         });
-        
+
         $tbody = $('#' + next + ' tbody');
         if(nfc_seeds.length > 1) {
             nfc_seeds.sort(sortTeam);
             afc_seeds.sort(sortTeam);
-            
+
             for(i = 0, j = nfc_seeds.length - 1; i < j; i++, j--) {
                 $tbody
                     .append(showGame(this.teams[nfc_seeds[i]], this.teams[nfc_seeds[j]]))
                     .append(showGame(this.teams[afc_seeds[i]], this.teams[afc_seeds[j]]));
-            };
+            }
         }
         else {
             $tbody.append(showGame(this.teams[nfc_seeds[0]], this.teams[afc_seeds[0]]));
@@ -209,7 +209,7 @@
             };
             inner_func();
         },
-        
+
         //----------------------------------------------------------------------
         playoffs: function(teams, NFC, AFC, picks) {
             var po;
@@ -221,4 +221,4 @@
             po.render();
         }
     };
-})(jQuery)
+})(jQuery);

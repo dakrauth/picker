@@ -10,7 +10,12 @@ with open('README.rst', 'r') as f:
     long_description = f.read()
 
 # Dynamically calculate the version based on picker.VERSION.
-version=__import__('picker').get_version()
+version = __import__('picker').get_version()
+
+REQUIREMENTS = [
+    'django',
+    'dateutil',
+]
 
 setup(
     name='picker',
@@ -30,6 +35,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
     ),
+    requirements=REQUIREMENTS,
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

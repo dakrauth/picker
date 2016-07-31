@@ -15,14 +15,14 @@ GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
 
 #===============================================================================
 class HavingNode(template.Node):
-    
+
     #---------------------------------------------------------------------------
     def __init__(self, having_var, context_var, nodelist, nodelist_else):
         self.having_var = having_var
         self.context_var = context_var
         self.nodelist = nodelist
         self.nodelist_else = nodelist_else
-    
+
     #---------------------------------------------------------------------------
     def render(self, context):
         value = self.having_var.resolve(context)
@@ -32,7 +32,7 @@ class HavingNode(template.Node):
 
         if self.nodelist_else:
             return self.nodelist_else.render(context)
-            
+
         return ''
 
 
@@ -56,7 +56,7 @@ def do_having(parser, token):
         parser.delete_first_token()
     else:
         nodelist_else = None
-        
+
     return HavingNode(having_var, context_var, nodelist, nodelist_else)
 
 

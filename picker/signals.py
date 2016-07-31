@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.dispatch import Signal
 
 picker_weekly_results = Signal(providing_args=['week', 'send_mail'])

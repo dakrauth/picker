@@ -1,5 +1,4 @@
-import re
-import json
+
 import urllib
 from time import time
 from xml.etree import cElementTree
@@ -11,16 +10,16 @@ except ImportError:
     class Cache(object):
         def get(*args, **kws): return None
         def set(*args, **kws): pass
-            
+
     cache = Cache()
 
 TEAM_ABBRS = dict(
-    ARZ = 'ARI', ATL = 'ATL', BLT = 'BAL', BUF = 'BUF', CAR = 'CAR', CHI = 'CHI',
-    CIN = 'CIN', CLV = 'CLE', DAL = 'DAL', DEN = 'DEN', DET = 'DET', GB  = 'GB',
-    HST = 'HOU', IND = 'IND', JAX = 'JAC', KC  = 'KC',  MIA = 'MIA', MIN = 'MIN',
-    NE  = 'NE',  NO  = 'NO',  NYG = 'NYG', NYJ = 'NYJ', OAK = 'OAK', PHI = 'PHI',
-    PIT = 'PIT', SD  = 'SD',  SF  = 'SF',  SEA = 'SEA', SL  = 'STL', TB  = 'TB',
-    TEN = 'TEN', WAS = 'WAS'
+    ARZ='ARI', ATL='ATL', BLT='BAL', BUF='BUF', CAR='CAR', CHI='CHI',
+    CIN='CIN', CLV='CLE', DAL='DAL', DEN='DEN', DET='DET', GB ='GB',
+    HST='HOU', IND='IND', JAX='JAC', KC ='KC',  MIA='MIA', MIN='MIN',
+    NE ='NE',  NO ='NO',  NYG='NYG', NYJ='NYJ', OAK='OAK', PHI='PHI',
+    PIT='PIT', SD ='SD',  SF ='SF',  SEA='SEA', SL ='STL', TB ='TB',
+    TEN='TEN', WAS='WAS'
 )
 
 TEAM_NICKNAMES = {
@@ -34,7 +33,8 @@ TEAM_NICKNAMES = {
     'GB':  'packers',    'PHI': 'eagles',  'HOU': 'texans',  'SD':  'chargers',
 }
 
-#-------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 def fetch(url):
     return urllib.urlopen(url).read()
 
@@ -47,7 +47,7 @@ except:
     pass
 
 
-#===============================================================================
+# =============================================================================
 class ScoreStrip(object):
     # <?xml version="1.0" encoding="UTF-8"?>
     # <ss>
@@ -81,16 +81,16 @@ class ScoreStrip(object):
         '3'  : '3Q',
         '4'  : '4Q',
     }
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, url=None):
         self.url = url or self.URL
-        
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def get_url(self):
         return '{}?random={}'.format(self.url, time())
-        
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def read_data(self):
         tree = cElementTree.fromstring(fetch(self.get_url()))
         games = []
@@ -102,12 +102,12 @@ class ScoreStrip(object):
             season=int(attrs['y']),
             type=self.TYPE_CODE.get(attrs['t'])
         )
-        
+
         for e in tree.findall('gms/g'):
             attrs = e.attrib
             if 'TBD' == attrs['h'] or 'TBD' == attrs['v']:
                 continue
-                
+
             q = attrs['q']
             home_score = int(attrs['hs'])
             away_score = int(attrs['vs'])
@@ -117,7 +117,7 @@ class ScoreStrip(object):
                     attrs['h'] if home_score > away_score 
                     else (None if home_score == away_score else attrs['v'])
                 )
-            
+
             # <g eid="2013090500" gsis="55837" d="Thu" t="8:30" q="F" h="DEN" hnn="broncos" hs="49" v="BAL" vnn="ravens" vs="27" rz="0" ga="" gt="REG"/>
             # http://www.nfl.com/gamecenter/2013090804/2013/REG1/vikings@lions
             game = dict(
@@ -143,17 +143,17 @@ class ScoreStrip(object):
             )
 
             games.append(game)
-            
+
         return week
 
 
-#-------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 def scores(playoffs=False, cache_ttl=120, no_cache=False, completed=False):
     if no_cache:
         data = None
     else:
         data = cache.get('nfl_score_strip')
-        
+
     if not data:
         try:
             data = ScoreStrip(ScoreStrip.POSTSEASON if playoffs else None).read_data()
@@ -168,15 +168,11 @@ def scores(playoffs=False, cache_ttl=120, no_cache=False, completed=False):
             g for g in data['games']
             if g['status'].startswith(('Final', 'F/OT'))
         ]
-        
+
     return data
 
 
-################################################################################
+# #############################################################################
 if __name__ == '__main__':
     import sys
     pprint(scores(len(sys.argv) > 1, no_cache=True))
-
-
-
-

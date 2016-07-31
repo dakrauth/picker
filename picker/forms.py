@@ -1,19 +1,21 @@
-from datetime import datetime
+# -*- coding: utf-8 -*-
+
 from django import forms
-from django.template import Template, Context, loader, TemplateDoesNotExist
-from django.utils.safestring import mark_safe
+from django.template import Context, loader, TemplateDoesNotExist
 from django.utils.encoding import force_unicode
-from django.contrib import messages
+from django.utils.safestring import mark_safe
+
+from . import conf
 from . import models as picker
 from . import utils
-from . import conf
 from .signals import picker_weekly_results
 
 game_key_format = 'game_{}'.format
 
 _picker_widget = None
 
-#-------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 def get_picker_widget():
     global _picker_widget
     if not _picker_widget:
@@ -22,22 +24,22 @@ def get_picker_widget():
     return _picker_widget
 
 
-#===============================================================================
+# =============================================================================
 class TemplateTeamChoice(forms.RadioSelect):
-    
+
     template_name = 'picker/team_pick_field.html'
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, *args, **kws):
         super(TemplateTeamChoice, self).__init__(*args, **kws)
-    
-    #---------------------------------------------------------------------------
-    def render(self, name, value, attrs=None):
+
+    # -------------------------------------------------------------------------
+    def render(self, name, value, attrs=None, choices=()):
         try:
             tmpl = loader.get_template(self.template_name)
         except TemplateDoesNotExist:
             return super(TemplateTeamChoice, self).render(name, value, attrs)
-            
+
         labels = ''
         str_value = force_unicode(value if value is not None else '')
         final_attrs = self.build_attrs(attrs)
@@ -53,14 +55,14 @@ class TemplateTeamChoice(forms.RadioSelect):
                 readonly='readonly="readonly"' if readonly else '',
                 disabled='disabled="disabled"' if readonly else ''
             )))
-            
+
         return mark_safe(labels)
 
 
-#===============================================================================
+# =============================================================================
 class GameField(forms.ChoiceField):
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def __init__(self, game, manage=False, widget=None):
         choices = ((str(game.away.id), game.away), (str(game.home.id), game.home))
         self.game = game
@@ -77,7 +79,7 @@ class GameField(forms.ChoiceField):
             widget=widget
         )
 
-    #---------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     def widget_attrs(self, widget):
         return {
             'readonly': 'readonly',
@@ -85,76 +87,78 @@ class GameField(forms.ChoiceField):
         } if self.disabled else {}
 
 
-
-#===============================================================================
+# =============================================================================
 class FieldIter(object):
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, form):
         self.fields = []
         self.form = form
-        
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def append(self, name):
         self.fields.append(name)
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __iter__(self):
         for name in self.fields:
             yield self.form[name]
 
 
-#===============================================================================
+# =============================================================================
 class BasePickForm(forms.Form):
-    
+
     management = False
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, week, *args, **kws):
         super(BasePickForm, self).__init__(*args, **kws)
         self.week = week
         self.game_fields = FieldIter(self)
+        vs_description = None
         for gm in week.game_set.all():
             key = game_key_format(gm.id)
             self.fields[key] = GameField(gm, self.management)
             self.game_fields.append(key)
+            vs_description = gm.vs_description
 
-        self.fields['points'] = forms.IntegerField(
-            label=gm.vs_description,
-            required=False
-        )
+        if vs_description:
+            self.fields['points'] = forms.IntegerField(
+                label=vs_description,
+                required=False
+            )
 
 
-#===============================================================================
+# =============================================================================
 class ManagementPickForm(BasePickForm):
 
     management = True
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, week, *args, **kws):
         kws.setdefault('initial', self.get_initial_picks(week))
         super(ManagementPickForm, self).__init__(week, *args, **kws)
         self.fields['send_mail'] = forms.BooleanField(required=False)
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def save(self):
         week = self.week
         data = self.cleaned_data.copy()
         send_mail = data.pop('send_mail', False)
         week.points = data.pop('points', 0)
         week.save()
-        
+
         for key, winner in data.items():
             if winner:
                 key = key.split('_')[1]
                 game = week.game_set.get(pk=key)
                 game.winner_id = winner
                 game.save()
-        
+
         week.update_pick_status()
         picker_weekly_results.send(sender=week.__class__, week=week, send_mail=send_mail)
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     @staticmethod
     def get_initial_picks(week):
         return dict({
@@ -164,16 +168,16 @@ class ManagementPickForm(BasePickForm):
         }, points=week.points)
 
 
-#===============================================================================
+# =============================================================================
 class UserPickForm(BasePickForm):
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, user, week, *args, **kws):
         kws.setdefault('initial', self.get_initial_user_picks(week, user))
         self.user = user
         super(UserPickForm, self).__init__(week, *args, **kws)
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def save(self):
         data = self.cleaned_data.copy()
         week = self.week
@@ -183,7 +187,7 @@ class UserPickForm(BasePickForm):
         picks.save()
 
         games_dict = dict([(game_key_format(g.id), g) for g in week.games])
-        game_picks = [(k, v) for k,v in data.items() if v]
+        game_picks = [(k, v) for k, v in data.items() if v]
         for game, winner in game_picks:
             game = games_dict.get(game, None)
             if not game:
@@ -200,8 +204,8 @@ class UserPickForm(BasePickForm):
         picks.send_confirmation()
         picks.complete_picks(False, games_dict.values())
         return week
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     @staticmethod
     def get_initial_user_picks(week, user):
         wp = week.pick_for_user(user)
@@ -214,40 +218,40 @@ class UserPickForm(BasePickForm):
         }, points=wp.points)
 
 
-#===============================================================================
+# =============================================================================
 class GameForm(forms.ModelForm):
 
-    #===========================================================================
+    # =========================================================================
     class Meta:
         model = picker.Game
         fields = ('kickoff', 'location')
 
 
-#===============================================================================
+# =============================================================================
 class PlayoffField(forms.ModelChoiceField):
-    
-    #---------------------------------------------------------------------------
-    def __init__(self, conf, seed):
+
+    # -------------------------------------------------------------------------
+    def __init__(self, config, seed):
         super(PlayoffField, self).__init__(
-            label='%s %d Seed' % (conf, seed),
-            queryset=conf.team_set.all(),
+            label='%s %d Seed' % (config, seed),
+            queryset=config.team_set.all(),
             required=False
         )
-        self.conf = conf
+        self.conf = config
         self.seed = seed
 
 
-#===============================================================================
+# =============================================================================
 class PlayoffBuilderForm(forms.ModelForm):
-   
+
     NUM_TEAMS = 6
-    
-    #===========================================================================
+
+    # =========================================================================
     class Meta:
         model = picker.Playoff
         fields = ('kickoff', )
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, league, *args, **kws):
         self.league = league
         if 'instance' not in kws:
@@ -256,36 +260,35 @@ class PlayoffBuilderForm(forms.ModelForm):
                 season=league.current_season,
                 defaults={'kickoff': utils.datetime_now()}
             )
-            
+
         super(PlayoffBuilderForm, self).__init__(*args, **kws)
-        for conf in league.conference_set.all():
+        for config in league.conference_set.all():
             for seed in range(1, self.NUM_TEAMS + 1):
-                field_name = '{}_{}'.format(conf.abbr, seed)
-                self.fields[field_name] = PlayoffField(conf, seed)
-            
+                field_name = '{}_{}'.format(config.abbr, seed)
+                self.fields[field_name] = PlayoffField(config, seed)
+
         if self.instance.id:
             for playoff_team in self.instance.playoffteam_set.all():
                 key = '%s_%s' % (playoff_team.team.conference, playoff_team.seed)
                 self.fields[key].initial = playoff_team.team
-        
-    #---------------------------------------------------------------------------
-    def save(self):
+
+    # -------------------------------------------------------------------------
+    def save(self, **kwargs):
         super(PlayoffBuilderForm, self).save()
         playoff = self.instance
         data = self.cleaned_data
         data.pop('kickoff')
-        
+
         picker.PlayoffTeam.objects.filter(playoff=playoff).delete()
-        afc, nfc = [], []
         for key, team in data.items():
             if team:
-                conf, seed = key.split('_')
+                _, seed = key.split('_')
                 playoff.playoffteam_set.create(team=team, seed=seed)
 
         return playoff
 
 
-#===============================================================================
+# =============================================================================
 class PreferenceForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(size='50')))
     favorite_team = forms.ModelChoiceField(
@@ -293,28 +296,28 @@ class PreferenceForm(forms.ModelForm):
         empty_label='-- Select --',
         required=False
     )
-    
-    #===========================================================================
+
+    # =========================================================================
     class Meta:
         model = picker.Preference
         exclude = ('user', 'status', 'autopick', 'league')
-    
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def __init__(self, instance, *args, **kws):
         kws['instance'] = instance
         self.current_email = instance.user.email.lower()
         kws.setdefault('initial', {})['email'] = self.current_email
         super(PreferenceForm, self).__init__(*args, **kws)
-        
-    #---------------------------------------------------------------------------
+
+    # -------------------------------------------------------------------------
     def clean_email(self):
         email = self.cleaned_data['email'].lower().strip()
         if email != self.current_email and utils.user_email_exists(email):
             raise forms.ValidationError('That email is already in use')
-            
+
         return email
 
-    #---------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     def save(self, commit=True):
         super(PreferenceForm, self).save(commit)
         if commit:
