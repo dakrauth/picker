@@ -175,7 +175,7 @@ def parse_schedule(league, text):
 
     week_days = tuple([d + ',' for d in 'MON TUE WED THU FRI SAT SUN'.split()])
     items = []
-    dct = league.get_team_name_dict()
+    dct = league.team_dict()
     for line in text.splitlines():
         if line.startswith('Week '):
             continue

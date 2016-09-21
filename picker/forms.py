@@ -143,13 +143,13 @@ class ManagementPickForm(BasePickForm):
         send_mail = data.pop('send_mail', False)
         week.points = data.pop('points', 0)
         week.save()
-        
+        team_dict = week.league.team_dict()
+
         for key, winner in data.items():
             if winner:
                 key = key.split('_')[1]
                 game = week.game_set.get(pk=key)
-                game.winner_id = winner
-                game.save()
+                game.winner = team_dict[int(winner)]
         
         week.update_pick_status()
         picker_weekly_results.send(sender=week.__class__, week=week, send_mail=send_mail)

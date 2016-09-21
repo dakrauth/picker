@@ -189,7 +189,7 @@ class League(models.Model):
         return confs
         
     #---------------------------------------------------------------------------
-    def get_team_name_dict(self, aliases=True):
+    def team_dict(self, aliases=True):
         names = {}
         for team in self.team_set.all():
             names[team.abbr] = team
@@ -200,6 +200,8 @@ class League(models.Model):
             if aliases:
                 for a in Alias.objects.filter(team=team):
                     names[a.name] = team
+
+            names[team.id] = team
             
         return names
     
@@ -287,7 +289,7 @@ class League(models.Model):
         '''
         current_sequence = None
         game_set = None
-        teams = self.get_team_name_dict()
+        teams = self.team_dict()
         new_old = [0, 0]
         for sequence, away, home, dt, tv, where in schedule:
             away = teams[away]
