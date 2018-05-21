@@ -8,45 +8,36 @@ from .utils import datetime_now
 
 send_mail = import_string(get_setting('EMAIL_HANDLER'))
 
-#===============================================================================
 class LeagueManager(models.Manager):
     
     use_for_related_fields = True
     
-    #---------------------------------------------------------------------------
     def pickable(self, **kws):
         return self.filter(is_pickable=True, **kws)
 
 
-#===============================================================================
 class GamePickManager(models.Manager):
 
     use_for_related_fields = True
     
-    #---------------------------------------------------------------------------
     def games_started(self):
         return self.filter(game__kickoff__lte=datetime_now())
 
 
-#===============================================================================
 class GameManager(models.Manager):
 
     use_for_related_fields = True
     
-    #---------------------------------------------------------------------------
     def games_started(self):
         return self.filter(kickoff__lte=datetime_now())
 
-    #---------------------------------------------------------------------------
     def incomplete(self, **kws):
         kws['status'] = self.model.Status.UNPLAYED
         return self.filter(**kws)
 
 
-#===============================================================================
 class PreferenceManager(models.Manager):
     
-    #---------------------------------------------------------------------------
     def active(self, **kws):
         return self.filter(
             status=self.model.Status.ACTIVE,
@@ -54,7 +45,6 @@ class PreferenceManager(models.Manager):
             **kws
         )
         
-    #---------------------------------------------------------------------------
     def email_active(self, subject, body, html=''):
         self.email(
             subject,
@@ -63,7 +53,6 @@ class PreferenceManager(models.Manager):
             html=html,
         )
 
-    #---------------------------------------------------------------------------
     def email(self, subject, body, selected, html=''):
         send_mail(
             subject, 
@@ -74,10 +63,8 @@ class PreferenceManager(models.Manager):
         )
 
 
-#===============================================================================
 class PickSetManager(models.Manager):
     
-    #---------------------------------------------------------------------------
     def create_for_user(self, user, gs, strategy, games=None, send_confirmation=True):
         Strategy = self.model.Strategy
         is_auto = (strategy == Strategy.RANDOM)

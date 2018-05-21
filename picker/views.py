@@ -18,7 +18,6 @@ datetime_now = utils.datetime_now
 add_to_builtins('picker.templatetags.picker_tags')
 
 
-#-------------------------------------------------------------------------------
 def picker_adapter(view):
     @functools.wraps(view)
     def view_wrapper(request, *args, **kws):
@@ -48,17 +47,14 @@ def picker_adapter(view):
     return view_wrapper
 
 
-#===============================================================================
 class PlayoffContext(object):
     
-    #---------------------------------------------------------------------------
     @staticmethod
     def week(playoff):
         N = 1 + playoff.league.game_set.count()
         weeks = [{'season': playoff.season, 'week': w} for w in range(1, N)]
         return {'season_weeks': weeks, 'week': 'playoffs'}
 
-    #---------------------------------------------------------------------------
     @staticmethod
     def conference(playoff, user, **kws):
         teams = {}
@@ -91,18 +87,14 @@ class PlayoffContext(object):
         )
 
 
-#===============================================================================
 # Public views
-#===============================================================================
 
 
-#-------------------------------------------------------------------------------
 @picker_adapter
 def home(request, league):
     return '@home.html', {'week': league.current_gameset, 'feed': utils.parse_feed()}
 
 
-#-------------------------------------------------------------------------------
 def api_v1(request, action, league=None):
     league = League.get(league)
     if action == 'scores':
@@ -111,7 +103,6 @@ def api_v1(request, action, league=None):
     raise http.Http404
 
 
-#-------------------------------------------------------------------------------
 @picker_adapter
 def teams(request, league, abbr=None):
     if abbr:
@@ -121,19 +112,15 @@ def teams(request, league, abbr=None):
     return '@teams/listing.html'
 
 
-#-------------------------------------------------------------------------------
 @picker_adapter
 def schedule(request, league, season=None):
     weeks = get_list_or_404(league.game_set.select_related(), season=league.current_season)
     return '@schedule/season.html', {'weeks': weeks}
 
 
-#===============================================================================
 # Views requiring login
-#===============================================================================
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def roster_profile(request, league, username):
@@ -143,7 +130,6 @@ def roster_profile(request, league, username):
     return '@roster/picker.html', {'profile': pref, 'stats': stats}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def roster(request, league, season=None):
@@ -152,17 +138,13 @@ def roster(request, league, season=None):
     return '@roster/season.html', {'season':  season, 'roster':  roster}
 
 
-#===============================================================================
 #  Results
-#===============================================================================
 
-#-------------------------------------------------------------------------------
 def _playoff_results(request, playoff):
     ctx = PlayoffContext.week(playoff)
     return '@results/playoffs.html', {'week': ctx, 'playoff': playoff}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results(request, league):
@@ -183,7 +165,6 @@ def results(request, league):
     return '@unavailable.html', {'heading': 'Results currently unavailable'}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results_by_season(request, league, season):
@@ -191,7 +172,6 @@ def results_by_season(request, league, season):
     return '@results/season.html', {'season': season, 'weeks': weeks}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results_by_week(request, league, season, week):
@@ -199,7 +179,6 @@ def results_by_week(request, league, season, week):
     return '@results/week.html', {'week': gs}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def results_for_playoffs(request, league, season):
@@ -207,11 +186,8 @@ def results_for_playoffs(request, league, season):
     return _playoff_picks(request, playoff)
 
 
-#===============================================================================
 #  Picks
-#===============================================================================
 
-#-------------------------------------------------------------------------------
 def _weekly_picks(request, league, week):
     if week.is_open:
         return utils.basic_form_view(
@@ -228,14 +204,12 @@ def _weekly_picks(request, league, week):
     return '@picks/show.html', {'week': week, 'picks': picks}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def picks_history(request, league):
     return '@picks/history.html', {'seasons': league.available_seasons}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def picks_by_season(request, league, season):
@@ -246,7 +220,6 @@ def picks_by_season(request, league, season):
     return '@picks/season.html', {'weeks': weeks}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def picks(request, league):
@@ -261,7 +234,6 @@ def picks(request, league):
     return '@unavailable.html', {'heading': 'Picks currently unavailable'}
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def picks_by_week(request, league, season, week):
@@ -269,7 +241,6 @@ def picks_by_week(request, league, season, week):
     return _weekly_picks(request, league, week)
 
 
-#-------------------------------------------------------------------------------
 @login_required
 @picker_adapter
 def picks_for_playoffs(request, league, season):
@@ -280,7 +251,6 @@ def picks_for_playoffs(request, league, season):
     return '@unavailable.html', {'heading': 'Playoff picks currently unavailable'}
 
 
-#-------------------------------------------------------------------------------
 def _playoff_picks(request, league, playoff):
     if datetime_now() > playoff.kickoff:
         return utils.redirect_reverse('picker-playoffs-results', season)
@@ -294,11 +264,8 @@ def _playoff_picks(request, league, playoff):
     return '@picks/playoffs.html', PlayoffContext.conference(playoff, request.user)
 
 
-#===============================================================================
 # Views requiring management user
-#===============================================================================
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def management_home(request, league):
@@ -306,7 +273,6 @@ def management_home(request, league):
     return '@manage/home.html', {'week': gs, 'management': True,}
 
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def manage_season(request, league, season):
@@ -314,7 +280,6 @@ def manage_season(request, league, season):
     return '@manage/season.html', {'weeks': weeks, 'management': True}
 
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def manage_week(request, league, season, week):
@@ -365,7 +330,6 @@ def manage_week(request, league, season, week):
     return '@manage/weekly_results.html', {'form': form, 'week': gs, 'management': True}
 
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def manage_playoffs(request, league, season, *args, **kws):
@@ -382,7 +346,6 @@ def manage_playoffs(request, league, season, *args, **kws):
         PlayoffContext.conference(playoff, None, management=True)
     )
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def manage_game(request, league, pk):
@@ -396,7 +359,6 @@ def manage_game(request, league, pk):
         success_msg='Game saved'
     )
 
-#-------------------------------------------------------------------------------
 @management_user_required
 @picker_adapter
 def manage_playoff_builder(request, league):

@@ -19,7 +19,6 @@ _fake_datetime_now = get_setting('FAKE_DATETIME_NOW')
 if _fake_datetime_now:
     _fake_datetime_now = datetime(*_fake_datetime_now)
     
-    #---------------------------------------------------------------------------
     def datetime_now():
         return _fake_datetime_now
 else:
@@ -28,7 +27,6 @@ else:
 json_dumps = functools.partial(json.dumps, indent=4)
 
 
-#-------------------------------------------------------------------------------
 def user_email_exists(email):
     try:
         User.objects.get(email=email)
@@ -37,7 +35,6 @@ def user_email_exists(email):
     else:
         return True
 
-#-------------------------------------------------------------------------------
 def get_templates(league, component):
     if component.startswith('@'):
         league_dir = 'picker/{}/'.format(league.lower)
@@ -49,7 +46,6 @@ def get_templates(league, component):
     return component
 
 
-#-------------------------------------------------------------------------------
 def basic_form_view(
     request,
     tmpl,
@@ -80,17 +76,14 @@ def basic_form_view(
     return tmpl, context
 
 
-#===============================================================================
 class JsonResponse(http.HttpResponse):
     
-    #---------------------------------------------------------------------------
     def __init__(self, data):
         super(JsonResponse, self).__init__(
             json_dumps(data),
             content_type='application/json'
         )
 
-#-------------------------------------------------------------------------------
 def parse_feed():
     feed = feedparser.parse(get_setting('NFL_FEED_URL'))
     entries = []
@@ -107,24 +100,20 @@ def parse_feed():
     return sorted(entries, reverse=True)
 
 
-#-------------------------------------------------------------------------------
 def redirect_reverse(name, *args, **kwargs):
     return http.HttpResponseRedirect(reverse(name, args=args, kwargs=kwargs))
 
 
-#-------------------------------------------------------------------------------
 def db_execute(sql, args):
     cursor = connection.cursor()
     cursor.execute(sql, args)
     return cursor.fetchall()
 
 
-#-------------------------------------------------------------------------------
 def percent(num, denom):
     return 0.0 if denom == 0 else (float(num) / denom) * 100.0
 
 
-#-------------------------------------------------------------------------------
 def render_to_string(request, template, data=None):
     data = data or {}
     data.update(site=Site.objects.get_current())
@@ -145,24 +134,19 @@ email_re = re.compile(r'''
     re.IGNORECASE | re.VERBOSE  
 )
 
-#-------------------------------------------------------------------------------
 def is_valid_email(value):
     return bool(email_re.search(value))
 
 
-#===============================================================================
 class Attr(object):
 
-    #---------------------------------------------------------------------------
     def __init__(self, **kws):
         self.__dict__.update(kws)
 
-    #---------------------------------------------------------------------------
     def __getitem__(self, key):
         return getattr(self, key)
 
 
-#-------------------------------------------------------------------------------
 def parse_schedule(league, text):
     # Week 9 ...
     # THU, NOV 1    HI PASSING  HI RUSHING  HI RECEIVING

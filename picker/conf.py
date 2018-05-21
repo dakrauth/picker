@@ -28,7 +28,6 @@ picker_settings = dict(
 
 get_setting = picker_settings.get
 
-#-------------------------------------------------------------------------------
 def import_setting(key, default=None):
     value = get_setting(key)
     if not value:
