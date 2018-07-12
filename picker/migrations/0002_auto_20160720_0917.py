@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='preference',
             name='user',
-            field=models.ForeignKey(related_name='picker_preferences', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='picker_preferences', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterUniqueTogether(
             name='preference',

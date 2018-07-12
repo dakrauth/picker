@@ -1,4 +1,4 @@
-{% extends league_base %}
+{% extends league_base %} {% load picker_tags %}
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
     <div class="span-20  last">
@@ -7,7 +7,7 @@
     {% season_nav week "picks" %}
 
     {% if form.errors %}
-    <p class="errorlist">Please fix the errors below:</p>    
+    <p class="errorlist">Please fix the errors below:</p>
     {% endif %}
     <form method="post" action="">
         <table id="wk1">
@@ -18,7 +18,7 @@
         </thead>
         <tbody></tbody>
         </table>
-        
+
         <table id="wk2">
         <thead>
             <tr>
@@ -27,7 +27,7 @@
         </thead>
         <tbody></tbody>
         </table>
-        
+
         <table id="wk3">
         <thead>
             <tr>
@@ -36,7 +36,7 @@
         </thead>
         <tbody></tbody>
         </table>
-        
+
         <table id="wk4">
         <thead>
             <tr>
@@ -56,9 +56,9 @@
         <p class="text-center">
             <input value="Save" type="submit" id="submit" />
         </p>
-        
+
     </form>
-    
+
     </div>
 {% endblock %}
 {% block extra_body %}{{ block.super }}

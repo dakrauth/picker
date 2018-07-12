@@ -1,4 +1,5 @@
 {% extends league_base %}
+{% load picker_tags %}
 {% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
 {% block main_content %}
     <h1>
@@ -71,12 +72,12 @@
                 {% for item in wp.gamepick_set.games_started %}
                 <td class="{{ item.is_correct|yesno:"correct,incorrect,unknown" }}">
                     {{ item.winner_abbr }}
-                </td>    
+                </td>
                 {% endfor %}
                 {% if has_started %}
                 <td>{{ wp.points }}</td>
                 <td>&plusmn;{{ wp.points_delta }}</td>
-                {% endif %}   
+                {% endif %}
             </tr>{% endfor %}
         </tbody>
         {% endwith %}
@@ -84,5 +85,5 @@
         </table>
         {% endwith %}
     </div>
-    
+
 {% endblock %}

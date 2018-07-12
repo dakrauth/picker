@@ -1,12 +1,12 @@
 {% extends league_base %}
 {% block main_content %}
     <h1>{{ league }} Home</h1>
-    <div class="list-group">
-        <a class="list-group-item" href="{{ league.picks_url }}">Picks</a>
-        <a class="list-group-item" href="{{ league.results_url }}">Results</a>
-        <a class="list-group-item" href="{{ league.roster_url }}">Standings</a>
-        <a class="list-group-item" href="{{ league.teams_url }}">Teams</a>
-        <a class="list-group-item" href="{{ league.schedule_url }}">Schedule</a>
-        <a class="list-group-item" href="{{ league.manage_url }}">Manage</a>
-    </div>
+    <p>
+        Select an option from the menu above.
+    </p>
+    <p>
+        You can sign in as an admin using <code>demo</code> as both username and password,
+        or as standard user using <code>user1</code>, <code>user2</code>, ...
+        <code>user9</code> as username and password.
+    </p>
 {% endblock main_content %}

@@ -2,8 +2,8 @@
 {% block title %}Picks Management{% endblock %}
 {% block main_content %}
     <h1>Manage Picks: Week {{ week.week }}, {{ week.season }}</h1>
-    {% season_nav week "results" %}
-    {% load bootstrap3 %}
+    {% load bootstrap3 picker_tags %}
+    {% season_nav week "manage" %}
     <form action="" method="post" class="actions">
         <p>
             {% bootstrap_button "Reminder Email" button_type=submit name=reminder %}
@@ -14,9 +14,9 @@
     {% if form.errors %}
     <p>Please fix the errors below:</p>
     {% endif %}
-    <div class="panel panel-primary">
+    <div class="panel panel-danger">
         <div class="panel-heading">Weekly Results</div>
-        <form method="post" action="">
+        <form method="post">{% csrf_token %}
         <table class="table table-striped picks">
             <tr>
                 <th class="kickoff">Kickoff</th>
@@ -42,7 +42,7 @@
                     </div>
                 </td>
                 <td>{{ field.help_text }}</td>
-            </tr>    
+            </tr>
             {% endwith %}{% endfor %}
             <tr>
                 <td><strong>Points Total</strong><br></td>
@@ -59,7 +59,7 @@
                     {% buttons %}
                     <button type="submit" class="btn btn-primary">Submit</button>
                     {% endbuttons %}
-                    
+
                 </td>
                 <td></td>
             </tr>

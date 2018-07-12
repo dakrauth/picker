@@ -5,7 +5,6 @@ from django.utils.module_loading import import_string
 from picker.models import *
 from picker.utils import datetime_now
 
-#-------------------------------------------------------------------------------
 def create_users(n_users):
     return [
         User.objects.create_user(
@@ -16,18 +15,15 @@ def create_users(n_users):
     ]
 
 
-#===============================================================================
 class PickerTestCase(TestCase):
 
     CURRENT_SEASON = os.environ.get('CURRENT_SEASON', datetime_now().year)
-    
-    
-#===============================================================================
+
+
 class SeasonCreationTestCase(PickerTestCase):
 
     fixtures = ['nfl_teams.json']
 
-    #---------------------------------------------------------------------------
     def test_create_season(self):
         season = import_string('picker.tests.games{}.season'.format(self.CURRENT_SEASON))
         lg = League.get()

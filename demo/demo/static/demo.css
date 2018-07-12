@@ -2,3 +2,8 @@
 .picks .location { font-style: italic; }
 .picks { margin-bottom: 0; }
 .roster-separator { border-left: 2px solid #ddd;}
+
+.pagination.manage > .active > a {
+    background: #d9534f;
+    color: #fff;
+}

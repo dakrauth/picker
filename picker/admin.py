@@ -31,11 +31,11 @@ class DivisionAdmin(admin.ModelAdmin):
 
 
 class GameSetForm(forms.ModelForm):
-    
+
     class Meta:
         model = picker.GameSet
         fields = '__all__'
-        
+
     def __init__(self, *args, **kws):
         super(GameSetForm, self).__init__(*args, **kws)
         if self.instance and self.instance.id:
@@ -43,11 +43,11 @@ class GameSetForm(forms.ModelForm):
 
 
 class InlineGameForm(forms.ModelForm):
-    
+
     class Meta:
         model = picker.Game
         fields = '__all__'
-    
+
     def has_add_permission(self):
         return False
 
@@ -64,7 +64,7 @@ class GameInline(admin.TabularInline):
 
 
 class GameSetAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'league', 'points', 'opens', 'closes')
+    list_display = ('__str__', 'league', 'points', 'opens', 'closes')
     list_filter = ('league', 'season')
     filter_horizontal = ['byes']
     inlines = [GameInline]
@@ -80,7 +80,7 @@ class GamePickInlineForm(forms.ModelForm):
     winner = forms.ModelChoiceField(queryset=picker.Team.objects.none())
     model = picker.GamePick
     fields = ('winner',)
-    
+
     def __init__(self, *args, **kws):
         super(GamePickInlineForm, self).__init__(*args, **kws)
         instance = kws.get('instance', None)
@@ -96,10 +96,9 @@ class GamePickInline(admin.TabularInline):
     form = GamePickInlineForm
     fields = ('game_info', 'winner',)
     readonly_fields = ('game_info', )
-    
+
     def game_info(self, obj):
         return '{}'.format(obj.game)
-        
 
 
 class PickSetAdmin(admin.ModelAdmin):
@@ -107,7 +106,7 @@ class PickSetAdmin(admin.ModelAdmin):
     list_filter = ('user', 'week')
     fields = ('points', 'strategy')
     inlines = [GamePickInline]
-    
+
     def league(self, obj):
         return obj.week.league
 

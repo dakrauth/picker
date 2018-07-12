@@ -1,4 +1,5 @@
 {% extends league_base %}
+{% load picker_tags %}
 {% block title %}Picks{% endblock %}
 {% block main_content %}
     {% load bootstrap3 %}
@@ -23,7 +24,7 @@
                 <th class="teams">Away vs. Home</th>
                 <th class="tv">TV</th>
             </tr> {% for field in form.game_fields %}{% with field.field.game as gm %}
-            <tr> 
+            <tr>
                 <td class="kickoff">
                     <span class="date-day">{{ gm.kickoff|date:"M jS, Y"}}</span>
                     <span class="date-weekday">{{ gm.kickoff|date:"D, P" }}</span>
@@ -52,5 +53,5 @@
         </table>
         </form>
     </div>
-    
+
 {% endblock %}

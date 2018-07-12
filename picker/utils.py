@@ -3,26 +3,30 @@ import sys
 import json
 import functools
 from datetime import datetime
-from django import http
 from django.db import models, connection
+from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.template import loader
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
-from .contrib import feedparser
+import dateutil.tz
+import feedparser
 from .conf import get_setting
 
 _fake_datetime_now = get_setting('FAKE_DATETIME_NOW')
 if _fake_datetime_now:
-    _fake_datetime_now = datetime(*_fake_datetime_now)
-    
+    _fake_datetime_now = datetime(
+        *_fake_datetime_now,
+        tzinfo=dateutil.tz.gettz(settings.TIME_ZONE)
+    ).astimezone(dateutil.tz.UTC)
+
     def datetime_now():
         return _fake_datetime_now
 else:
-    datetime_now = datetime.now
+    def datetime_now():
+        return datetime.utcnow().replace(tzinfo=dateutil.tz.UTC)
 
 json_dumps = functools.partial(json.dumps, indent=4)
 
@@ -35,6 +39,7 @@ def user_email_exists(email):
     else:
         return True
 
+
 def get_templates(league, component):
     if component.startswith('@'):
         league_dir = 'picker/{}/'.format(league.lower)
@@ -42,50 +47,12 @@ def get_templates(league, component):
             component.replace('@', league_dir),
             component.replace('@', 'picker/'),
         ]
-    
+
     return component
 
 
-def basic_form_view(
-    request,
-    tmpl,
-    form_class,
-    context=None,
-    instance=None,
-    redirect_path=None,
-    form_kws=None,
-    success_msg=None
-):
-    form_kws = form_kws or {}
-    if instance:
-        form_kws['instance'] = instance
-        
-    if request.method == 'POST':
-        form = form_class(data=request.POST, **form_kws)
-        if form.is_valid():
-            form.save()
-            if success_msg:
-                messages.success(request, success_msg)
-                
-            return http.HttpResponseRedirect(redirect_path or request.path)
-    else:
-        form = form_class(**form_kws)
-
-    context = context or {}
-    context['form'] = form
-    return tmpl, context
-
-
-class JsonResponse(http.HttpResponse):
-    
-    def __init__(self, data):
-        super(JsonResponse, self).__init__(
-            json_dumps(data),
-            content_type='application/json'
-        )
-
-def parse_feed():
-    feed = feedparser.parse(get_setting('NFL_FEED_URL'))
+def parse_feed(url):
+    feed = feedparser.parse(url)
     entries = []
     for e in feed.get('entries', []):
         dt = e.get('published_parsed')
@@ -98,10 +65,6 @@ def parse_feed():
         ))
 
     return sorted(entries, reverse=True)
-
-
-def redirect_reverse(name, *args, **kwargs):
-    return http.HttpResponseRedirect(reverse(name, args=args, kwargs=kwargs))
 
 
 def db_execute(sql, args):
@@ -120,7 +83,7 @@ def render_to_string(request, template, data=None):
     return loader.render_to_string(template, data, request=request)
 
 
-email_re = re.compile(r'''
+EMAIL_PATTERN = r'''
     (
         ^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+
         (\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*  |                     # dot-atom
@@ -130,9 +93,9 @@ email_re = re.compile(r'''
         )*"                                                      # quoted-string
     )
     @(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$                                # domain
-    ''', 
-    re.IGNORECASE | re.VERBOSE  
-)
+'''
+email_re = re.compile(EMAIL_PATTERN, re.IGNORECASE | re.VERBOSE)
+
 
 def is_valid_email(value):
     return bool(email_re.search(value))
@@ -150,7 +113,7 @@ class Attr(object):
 def parse_schedule(league, text):
     # Week 9 ...
     # THU, NOV 1    HI PASSING  HI RUSHING  HI RECEIVING
-    # San Diego 31, Kansas City 13  Rivers 220  Mathews 67  Bowe 79 
+    # San Diego 31, Kansas City 13  Rivers 220  Mathews 67  Bowe 79
     # SUN, NOV 4    TIME (ET)   TV  TICKETS LOCATION
     # Minnesota at Seattle  4:05 PM FOX 539 Available   CenturyLink Field
     # Denver at Cincinnati  1:00 PM CBS 1,132 Available Paul Brown Stadium

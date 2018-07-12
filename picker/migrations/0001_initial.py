@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
-                ('conference', models.ForeignKey(to='picker.Conference')),
+                ('conference', models.ForeignKey(on_delete=models.CASCADE, to='picker.Conference')),
             ],
         ),
         migrations.CreateModel(
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             name='GamePick',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('game', models.ForeignKey(related_name='gamepick_set', to='picker.Game')),
+                ('game', models.ForeignKey(on_delete=models.CASCADE, related_name='gamepick_set', to='picker.Game')),
             ],
             options={
                 'ordering': ('game__kickoff', 'game__away'),
@@ -95,8 +95,8 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('strategy', models.CharField(default='USER', max_length=4, choices=[('USER', b'User'), ('RAND', b'Random'), ('HOME', b'Home Team'), ('BEST', b'Best Record')])),
-                ('user', models.ForeignKey(related_name='pick_set', to=settings.AUTH_USER_MODEL)),
-                ('week', models.ForeignKey(related_name='pick_set', to='picker.GameSet')),
+                ('user', models.ForeignKey(on_delete=models.CASCADE, related_name='pick_set', to=settings.AUTH_USER_MODEL)),
+                ('week', models.ForeignKey(on_delete=models.CASCADE, related_name='pick_set', to='picker.GameSet')),
             ],
         ),
         migrations.CreateModel(
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('season', models.PositiveSmallIntegerField()),
                 ('kickoff', models.DateTimeField()),
-                ('league', models.ForeignKey(to='picker.League')),
+                ('league', models.ForeignKey(on_delete=models.CASCADE, to='picker.League')),
             ],
         ),
         migrations.CreateModel(
@@ -115,8 +115,8 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('picks', django_extensions.db.fields.json.JSONField()),
-                ('playoff', models.ForeignKey(to='picker.Playoff')),
-                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('playoff', models.ForeignKey(on_delete=models.CASCADE, to='picker.Playoff')),
+                ('user', models.ForeignKey(on_delete=models.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -124,7 +124,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('seed', models.PositiveSmallIntegerField()),
-                ('playoff', models.ForeignKey(to='picker.Playoff')),
+                ('playoff', models.ForeignKey(on_delete=models.CASCADE, to='picker.Playoff')),
             ],
             options={
                 'ordering': ('seed',),
@@ -149,9 +149,9 @@ class Migration(migrations.Migration):
                 ('image', models.CharField(max_length=50, blank=True)),
                 ('colors', models.CharField(max_length=40, blank=True)),
                 ('logo', models.ImageField(null=True, upload_to=b'picker/logos', blank=True)),
-                ('conference', models.ForeignKey(to='picker.Conference')),
-                ('division', models.ForeignKey(blank=True, to='picker.Division', null=True)),
-                ('league', models.ForeignKey(to='picker.League')),
+                ('conference', models.ForeignKey(on_delete=models.CASCADE, to='picker.Conference')),
+                ('division', models.ForeignKey(on_delete=models.SET_NULL, blank=True, to='picker.Division', null=True)),
+                ('league', models.ForeignKey(on_delete=models.CASCADE, to='picker.League')),
             ],
             options={
                 'ordering': ('name',),
@@ -160,22 +160,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='preference',
             name='favorite_team',
-            field=models.ForeignKey(blank=True, to='picker.Team', null=True),
+            field=models.ForeignKey(on_delete=models.SET_NULL, blank=True, to='picker.Team', null=True),
         ),
         migrations.AddField(
             model_name='preference',
             name='league',
-            field=models.ForeignKey(to='picker.League'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='picker.League'),
         ),
         migrations.AddField(
             model_name='preference',
             name='user',
-            field=models.OneToOneField(related_name='picker_preferences', to=settings.AUTH_USER_MODEL),
+            field=models.OneToOneField(on_delete=models.CASCADE, related_name='picker_preferences', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='playoffteam',
             name='team',
-            field=models.ForeignKey(to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='picker.Team'),
         ),
         migrations.AddField(
             model_name='gameset',
@@ -185,42 +185,42 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='gameset',
             name='league',
-            field=models.ForeignKey(related_name='game_set', to='picker.League'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='game_set', to='picker.League'),
         ),
         migrations.AddField(
             model_name='gamepick',
             name='pick',
-            field=models.ForeignKey(to='picker.PickSet'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='picker.PickSet'),
         ),
         migrations.AddField(
             model_name='gamepick',
             name='winner',
-            field=models.ForeignKey(blank=True, to='picker.Team', null=True),
+            field=models.ForeignKey(on_delete=models.SET_NULL, blank=True, to='picker.Team', null=True),
         ),
         migrations.AddField(
             model_name='game',
             name='away',
-            field=models.ForeignKey(related_name='away_game_set', to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='away_game_set', to='picker.Team'),
         ),
         migrations.AddField(
             model_name='game',
             name='home',
-            field=models.ForeignKey(related_name='home_game_set', to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='home_game_set', to='picker.Team'),
         ),
         migrations.AddField(
             model_name='game',
             name='week',
-            field=models.ForeignKey(related_name='game_set', to='picker.GameSet'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='game_set', to='picker.GameSet'),
         ),
         migrations.AddField(
             model_name='conference',
             name='league',
-            field=models.ForeignKey(to='picker.League'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='picker.League'),
         ),
         migrations.AddField(
             model_name='alias',
             name='team',
-            field=models.ForeignKey(to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='picker.Team'),
         ),
         migrations.AlterUniqueTogether(
             name='pickset',

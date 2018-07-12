@@ -13,17 +13,14 @@ register = Library()
 GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
 
 
-#===============================================================================
 class HavingNode(template.Node):
-    
-    #---------------------------------------------------------------------------
+
     def __init__(self, having_var, context_var, nodelist, nodelist_else):
         self.having_var = having_var
         self.context_var = context_var
         self.nodelist = nodelist
         self.nodelist_else = nodelist_else
-    
-    #---------------------------------------------------------------------------
+
     def render(self, context):
         value = self.having_var.resolve(context)
         if value:
@@ -32,11 +29,10 @@ class HavingNode(template.Node):
 
         if self.nodelist_else:
             return self.nodelist_else.render(context)
-            
+
         return ''
 
 
-#-------------------------------------------------------------------------------
 @register.tag('having')
 def do_having(parser, token):
     having_err_msg = "'having' statements should use the format 'having x as y': '{}'"
@@ -56,60 +52,53 @@ def do_having(parser, token):
         parser.delete_first_token()
     else:
         nodelist_else = None
-        
+
     return HavingNode(having_var, context_var, nodelist, nodelist_else)
 
 
-#-------------------------------------------------------------------------------
 @register.filter
 def picker_user_image(user, size=None):
     if not is_valid_email(user.email):
         return ''
-        
-    return '%s%s.jpg?d=wavatar%s' % (
+
+    return '{}{}.jpg?d=wavatar{}'.format(
         GRAVATAR_BASE_URL,
-        md5(user.email.strip().lower()).hexdigest(),
+        md5(user.email.strip().lower().encode()).hexdigest(),
         '&s={}'.format(size) if size else ''
     )
 
 
-#===============================================================================
 class MemoizeNode(Node):
-    
-    #---------------------------------------------------------------------------
+
     def __init__(self, variable, nodelist):
         self.variable = variable
         self.nodelist = nodelist
-        
-    #---------------------------------------------------------------------------
+
     def __repr__(self):
         return "<Memoize node>"
 
-    #---------------------------------------------------------------------------
     def render(self, context):
         memo = self.nodelist.render(context)
         context[self.variable] = memo
         return memo
 
 
-#-------------------------------------------------------------------------------
 @register.tag
 def memoize(parser, token):
     bits = token.contents.split()
     if len(bits) != 2:
         raise TemplateSyntaxError("Invalid 'memoize' statement")
-        
+
     nodelist = parser.parse(('endmemoize',))
     parser.delete_first_token()
     return MemoizeNode(bits[1], nodelist)
 
 
-#-------------------------------------------------------------------------------
 @register.simple_tag(name='pdb')
-def pdb_debug(*args, **kws):
+def set_trace(*args, **kws):
     """Tag that inspects template context.
 
-    Usage: 
+    Usage:
     {% pdb %}
 
     You can then access your context variables directly at the prompt.
@@ -118,12 +107,11 @@ def pdb_debug(*args, **kws):
     return ''
 
 
-#-------------------------------------------------------------------------------
 @register.filter
 def verbose(value, arg):
     '''
     From http://www.djangosnippets.org/snippets/795/
-    
+
     Replace this::
 
         {% if name %} Hello {{ name }}, this is a dummy text {% endif %}
@@ -138,14 +126,13 @@ def verbose(value, arg):
     '''
     if not value:
         return ''
-        
-    try:    
+
+    try:
         return arg % value
     except Exception:
         return str(value)
 
 
-#-------------------------------------------------------------------------------
 @register.inclusion_tag('picker/season_nav.html', takes_context=True)
 def season_nav(context, week, relative_to):
     league = context['league']
@@ -158,21 +145,14 @@ def season_nav(context, week, relative_to):
     }
 
 
-#-------------------------------------------------------------------------------
 @register.inclusion_tag('picker/season_nav_all.html', takes_context=True)
 def all_seasons_nav(context, current, league, relative_to):
+    user = context['user']
     return {
         'label': 'All seasons',
-        'current' :int(current),
+        'current': int(current),
         'relative_to': relative_to,
-        'user': context['user'],
+        'user': user,
+        'is_manager': user.is_superuser,
         'league': context['league']
     }
-
-
-#-------------------------------------------------------------------------------
-@register.filter
-def is_management(user):
-    return user.is_superuser
-
-

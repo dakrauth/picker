@@ -1,14 +1,15 @@
+{% load picker_tags %}
 <nav class="season-nav">
-    <ul class="pagination">{% for sw in season_weeks %}
-        <li{% ifequal sw week %} class="active"{% endifequal %}>
+    <ul class="pagination {{ relative_to }}">{% for sw in season_weeks %}
+        <li{% if sw == week %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
         {% if week %}
         <li{% if week.week == "playoffs" %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
         </li>
-        {% if user|is_management %}
-        <li><a href="{% url 'picker-manage-week' week.league.lower week.season week.week %}">Manage</a></li>
+        {% if is_manager %}
+        <li><a href="{% url 'picker-manage-week' league.lower week.season week.week %}">Manage</a></li>
         {% endif %}
         {% endif %}
     </ul>
