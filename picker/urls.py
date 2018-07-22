@@ -30,9 +30,9 @@ results_urls = [
 ]
 
 roster_urls = [
-    url(r'^roster/$', views.Roster.as_view(), name='picker-roster'),
-    url(r'^roster/(?P<season>20\d\d)/$', views.Roster.as_view(), name='picker-season-roster'),
-    url(r'^roster/p/(\w+)/$', views.RosterProfile.as_view(), name='picker-roster-profile'),
+    url(r'^$', views.Roster.as_view(), name='picker-roster'),
+    url(r'^(?P<season>20\d\d)/$', views.Roster.as_view(), name='picker-season-roster'),
+    url(r'^p/(\w+)/$', views.RosterProfile.as_view(), name='picker-roster-profile'),
 ]
 
 teams_urls = [

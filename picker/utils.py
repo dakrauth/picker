@@ -1,17 +1,14 @@
 import re
-import sys
 import json
 import functools
 from datetime import datetime
-from django.db import models, connection
-from django.urls import reverse
+from django.db import connection
 from django.conf import settings
-from django.contrib import messages
 from django.template import loader
-from django.shortcuts import render
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 import dateutil.tz
+from dateutil.parser import parse as dt_parse
 import feedparser
 from .conf import get_setting
 
@@ -32,21 +29,23 @@ json_dumps = functools.partial(json.dumps, indent=4)
 
 
 def user_email_exists(email):
+    UserModel = get_user_model()
     try:
-        User.objects.get(email=email)
-    except User.DoesNotExist:
+        UserModel.objects.get(email=email)
+    except UserModel.DoesNotExist:
         False
     else:
         return True
 
 
-def get_templates(league, component):
+def get_templates(component, league=None):
     if component.startswith('@'):
-        league_dir = 'picker/{}/'.format(league.lower)
-        return [
-            component.replace('@', league_dir),
+        dirs = [component.replace('@', 'picker/{}/'.format(league.lower))] if league else []
+        dirs.extend([
             component.replace('@', 'picker/'),
-        ]
+            component.replace('@', 'picker/_base/'),
+        ])
+        return dirs
 
     return component
 
@@ -101,7 +100,7 @@ def is_valid_email(value):
     return bool(email_re.search(value))
 
 
-class Attr(object):
+class Attr:
 
     def __init__(self, **kws):
         self.__dict__.update(kws)
@@ -133,7 +132,7 @@ def parse_schedule(league, text):
             away, home = teams.split(' at ')
             away = dct[away]
             home = dct[home]
-            when = parse('%s %s' % (dt, tm))
+            when = dt_parse('%s %s' % (dt, tm))
             items.append((away, home, when, tv or 'ESPN'))
 
     return items

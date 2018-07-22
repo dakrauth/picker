@@ -16,7 +16,7 @@
         {% for team in league.team_set.all  %}
             <tr>
                 <td>
-                    {% if team.logo %}<img src="{{ team.logo.url }}">{% endif %}
+                    {% if team.logo %}<img class="team-logo" src="{{ team.logo.url }}">{% endif %}
                     <a href="{{ team.get_absolute_url }}">{{ team }}</a>
                 </td>
                 <td class="center">{{ team.record_as_string }}</td>

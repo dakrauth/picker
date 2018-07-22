@@ -12,7 +12,7 @@ class AliasInline(admin.TabularInline):
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'nickname', 'league', 'conference', 'division')
+    list_display = ('name', 'abbr', 'nickname', 'league', 'conference', 'division')
     list_filter = ('league',)
     inlines = [AliasInline]
 

@@ -1,6 +1,4 @@
-import re
-import json
-import urllib
+import urllib.request
 from time import time
 from xml.etree import cElementTree
 from pprint import pprint
@@ -9,23 +7,23 @@ try:
     from django.core.cache import cache
 except ImportError:
 
-    class Cache(object):
+    class Cache:
 
-        def get(*args, **kws):
+        def get(self, *args, **kws):
             return None
 
-        def set(*args, **kws):
-            pass
+        def set(self, *args, **kws):
+            return
 
     cache = Cache()
 
 TEAM_ABBRS = {
     'ARZ': 'ARI', 'ATL': 'ATL', 'BLT': 'BAL', 'BUF': 'BUF', 'CAR': 'CAR', 'CHI': 'CHI',
-    'CIN': 'CIN', 'CLV': 'CLE', 'DAL': 'DAL', 'DEN': 'DEN', 'DET': 'DET', 'GB': 'GB',
-    'HST': 'HOU', 'IND': 'IND', 'JAX': 'JAC', 'KC':  'KC',  'MIA': 'MIA', 'MIN': 'MIN',
-    'NE':  'NE',  'NO': 'NO',   'NYG': 'NYG', 'NYJ': 'NYJ', 'OAK': 'OAK', 'PHI': 'PHI',
-    'PIT': 'PIT', 'LAC': 'LAC', 'SF':  'SF',  'SEA': 'SEA', 'LAR': 'LAR', 'TB': 'TB',
-    'TEN': 'TEN', 'WAS': 'WAS'
+    'CIN': 'CIN', 'CLV': 'CLE', 'DAL': 'DAL', 'DEN': 'DEN', 'DET': 'DET', 'HST': 'HOU',
+    'IND': 'IND', 'JAX': 'JAC', 'MIA': 'MIA', 'MIN': 'MIN', 'NYG': 'NYG', 'NYJ': 'NYJ',
+    'OAK': 'OAK', 'PHI': 'PHI', 'PIT': 'PIT', 'LAC': 'LAC', 'SEA': 'SEA', 'LAR': 'LAR',
+    'TEN': 'TEN', 'WAS': 'WAS',
+    'GB': 'GB', 'KC': 'KC', 'NE': 'NE', 'NO': 'NO', 'SF': 'SF', 'TB': 'TB',
 }
 
 TEAM_NICKNAMES = {
@@ -41,20 +39,21 @@ TEAM_NICKNAMES = {
 
 
 def fetch(url):
-    return urllib.urlopen(url).read()
+    return urllib.request.urlopen(url).read()
 
 
 try:
     from django.conf import settings
-    fake = getattr(settings, 'NFL_FAKE_SCORES', None)
-    if fake:
+    FAKE_SCORES = getattr(settings, 'NFL_FAKE_SCORES', None)
+    if FAKE_SCORES:
+        del fetch
         def fetch(url):
-            return open(fake).read()
+            return open(FAKE_SCORES).read()
 except ImportError:
     pass
 
 
-class ScoreStrip(object):
+class ScoreStrip:
     # <?xml version="1.0" encoding="UTF-8"?>
     # <ss>
     #   <gms w="1" y="2013" t="R" gd="1" bph="119">
@@ -108,16 +107,16 @@ class ScoreStrip(object):
             type=self.TYPE_CODE.get(attrs['t'])
         )
 
-        for e in tree.findall('gms/g'):
-            attrs = e.attrib
-            if 'TBD' == attrs['h'] or 'TBD' == attrs['v']:
+        for elem in tree.findall('gms/g'):
+            attrs = elem.attrib
+            if attrs['h'] == 'TBD' or attrs['v'] == 'TBD':
                 continue
 
-            q = attrs['q']
             home_score = int(attrs['hs'])
             away_score = int(attrs['vs'])
             winner = None
-            if q.startswith('F'):
+            qtr = attrs['q']
+            if qtr.startswith('F'):
                 winner = (
                     attrs['h'] if home_score > away_score
                     else (None if home_score == away_score else attrs['v'])
@@ -132,7 +131,7 @@ class ScoreStrip(object):
                 eid=attrs['eid'],
                 home_score=home_score,
                 away_score=away_score,
-                status=self.STATUS_CODES.get(q, q),
+                status=self.STATUS_CODES.get(qtr, qtr),
                 winner=winner,
                 day=attrs['d'],
                 time=attrs['t'],
@@ -162,7 +161,7 @@ def scores(playoffs=False, cache_ttl=120, no_cache=False, completed=False):
     if not data:
         try:
             data = ScoreStrip(ScoreStrip.POSTSEASON if playoffs else None).read_data()
-        except Exception as why:
+        except Exception:
             data = None
 
         if data:

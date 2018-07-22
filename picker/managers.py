@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.module_loading import import_string
 
@@ -46,7 +47,8 @@ class PreferenceManager(models.Manager):
             html=html,
         )
 
-    def email(self, subject, body, selected, html=''):
+    @staticmethod
+    def email(subject, body, selected, html=''):
         send_mail(
             subject,
             body,
@@ -54,20 +56,3 @@ class PreferenceManager(models.Manager):
             recipient_list=[p.pretty_email for p in selected],
             html=html,
         )
-
-
-class PickSetManager(models.Manager):
-
-    def create_for_user(self, user, gs, strategy, games=None, send_confirmation=True):
-        Strategy = self.model.Strategy
-        is_auto = (strategy == Strategy.RANDOM)
-        wp = gs.pick_set.create(
-            user=user,
-            points=gs.league.random_points() if is_auto else 0,
-            strategy=strategy
-        )
-        wp.complete_picks(is_auto, games or gs.game_set.all())
-        if send_confirmation:
-            wp.send_confirmation(is_auto)
-
-        return wp

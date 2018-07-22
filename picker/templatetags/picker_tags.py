@@ -1,8 +1,5 @@
 from hashlib import md5
-import django
-from django import template
-from django.template import Library, Node, VariableDoesNotExist
-from picker import models as picker
+from django.template import Library, Node, TemplateSyntaxError
 from ..utils import is_valid_email, get_templates
 try:
     import ipdb as pdb
@@ -11,9 +8,12 @@ except ImportError:
 
 register = Library()
 GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
+GRAVATAR_KINDS = [
+    'identicon', 'monsterid', 'wavatar', 'retro', 'robohash',
+    'identicon', 'monsterid', 'wavatar', 'retro', 'robohash'
+]
 
-
-class HavingNode(template.Node):
+class HavingNode(Node):
 
     def __init__(self, having_var, context_var, nodelist, nodelist_else):
         self.having_var = having_var
@@ -38,12 +38,12 @@ def do_having(parser, token):
     having_err_msg = "'having' statements should use the format 'having x as y': '{}'"
     bits = token.split_contents()
     if len(bits) < 4:
-        raise template.TemplateSyntaxError(having_err_msg.format(token.contents))
+        raise TemplateSyntaxError(having_err_msg.format(token.contents))
 
-    tag_name, having_var, _as, context_var = bits
+    _, having_var, _as, context_var = bits
     having_var = parser.compile_filter(having_var)
     if _as != 'as':
-        raise template.TemplateSyntaxError(having_err_msg.format(token.contents))
+        raise TemplateSyntaxError(having_err_msg.format(token.contents))
 
     nodelist = parser.parse(('else', 'endhaving',))
     token = parser.next_token()
@@ -61,9 +61,10 @@ def picker_user_image(user, size=None):
     if not is_valid_email(user.email):
         return ''
 
-    return '{}{}.jpg?d=wavatar{}'.format(
+    return '{}{}.jpg?d={}{}'.format(
         GRAVATAR_BASE_URL,
         md5(user.email.strip().lower().encode()).hexdigest(),
+        GRAVATAR_KINDS[user.id % 10],
         '&s={}'.format(size) if size else ''
     )
 
@@ -94,8 +95,8 @@ def memoize(parser, token):
     return MemoizeNode(bits[1], nodelist)
 
 
-@register.simple_tag(name='pdb')
-def set_trace(*args, **kws):
+@register.simple_tag
+def set_trace():
     """Tag that inspects template context.
 
     Usage:
@@ -108,7 +109,7 @@ def set_trace(*args, **kws):
 
 
 @register.filter
-def verbose(value, arg):
+def verbose(value, formatter):
     '''
     From http://www.djangosnippets.org/snippets/795/
 
@@ -127,13 +128,10 @@ def verbose(value, arg):
     if not value:
         return ''
 
-    try:
-        return arg % value
-    except Exception:
-        return str(value)
+    return formatter % value
 
 
-@register.inclusion_tag('picker/season_nav.html', takes_context=True)
+@register.inclusion_tag(get_templates('@season_nav.html'), takes_context=True)
 def season_nav(context, week, relative_to):
     league = context['league']
     return {
@@ -145,7 +143,7 @@ def season_nav(context, week, relative_to):
     }
 
 
-@register.inclusion_tag('picker/season_nav_all.html', takes_context=True)
+@register.inclusion_tag(get_templates('season_nav_all.html'), takes_context=True)
 def all_seasons_nav(context, current, league, relative_to):
     user = context['user']
     return {
@@ -154,5 +152,5 @@ def all_seasons_nav(context, current, league, relative_to):
         'relative_to': relative_to,
         'user': user,
         'is_manager': user.is_superuser,
-        'league': context['league']
+        'league': league
     }

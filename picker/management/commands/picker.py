@@ -4,6 +4,7 @@ from datetime import datetime
 from optparse import make_option
 from django.core.management.base import BaseCommand
 from picker import models as picker
+from picker.utils import datetime_now
 
 Status = picker.Game.Status
 
@@ -12,7 +13,7 @@ def get_date(dt):
     if dt:
         dt = datetime(*[int(i) for i in dt.split('-')])
     else:
-        dt = picker.datetime_now()
+        dt = datetime_now()
 
     return dt.date()
 
@@ -25,7 +26,7 @@ def concat(items):
     return '-'.join([str(i) for i in items])
 
 
-class Callbacks(object):
+class Callbacks:
 
     @staticmethod
     def check_schedule(league, **options):
@@ -36,7 +37,7 @@ class Callbacks(object):
 
         data = league.scores()
         if not data:
-            print '*** Unable to retrieve data'
+            print('*** Unable to retrieve data')
             return
 
         score_strip_games = {}
@@ -50,10 +51,9 @@ class Callbacks(object):
             score_strip_games[key] = [DOW[game['day']]] + tm
             eids[key] = game['eid']
 
-        print 'Score strip'
+        print('Score strip')
         pprint(score_strip_games)
 
-        current_week = {}
         gs = league.current_gameset
         bad = 0
         for g in gs.games:
@@ -62,7 +62,7 @@ class Callbacks(object):
             actual = score_strip_games[key]
             old = [ko.weekday(), ko.hour, ko.minute]
             if actual != old:
-                print '***', key, pretty(actual), '<--', pretty(old)
+                print('***', key, pretty(actual), '<--', pretty(old))
                 bad += 1
                 eid = eids[key]
                 new_ko = datetime(
@@ -74,37 +74,37 @@ class Callbacks(object):
                 )
                 g.kickoff = new_ko
                 g.save()
-        print '{} incorrect'.format(bad)
+        print('{} incorrect'.format(bad))
 
     @staticmethod
     def show_records(league, **options):
         records = [get_team_record(team) for team in league.team_set.all()]
         records = sorted(records, key=lambda r: r[-3], reverse=True)
 
-        mx = max([len(unicode(r[0])) for r in records])
+        mx = max([len(str(r[0])) for r in records])
         hdr = '%*s %8s %8s %8s %6s' % (mx, 'Team', 'Home', 'Away', 'All', league.current_season)
-        print '%s\n%s' % (hdr, '-' * len(hdr))
+        print('%s\n%s' % (hdr, '-' * len(hdr)))
         for record in records:
             team = record[0]
             results = record[1:]
-            print '%*s %8s %8s %8s %6s' % (
+            print('%*s %8s %8s %8s %6s' % (
                  mx,
                  team,
                  concat(results[0]),
                  concat(results[1]),
                  concat(results[2]),
                  concat(team.season_record())
-            )
+            ))
 
     @staticmethod
     def send_reminder(league, **options):
-        dt = get_date(options.get('date', None))
+        today = datetime_now().date()
         first_game = league.current_gameset.first_game
         if first_game.kickoff.date() == today:
             league.send_reminder_email()
-            print '%s:%s' % (today, first_game)
+            print('%s:%s' % (today, first_game))
         else:
-            print '%s:N/A' % today
+            print('%s:N/A' % today)
 
     @staticmethod
     def reset_pick_results(league, **options):
@@ -119,18 +119,13 @@ class Callbacks(object):
         if gs:
             try:
                 gs.update_results()
-            except picker.PickerResultException, why:
-                print why
+            except picker.PickerResultException as why:
+                print(why)
 
     @staticmethod
     def reset_gameweek(league, **options):
         UNPLAYED = picker.Game.Status.UNPLAYED
         league.current_gameset.exclude(status=UNPLAYED).update(status=UNPLAYED)
-
-    @staticmethod
-    def reset_week(league, **options):
-        fix_games()
-        reset_pick_results()
 
     @staticmethod
     def standings(league, **options):
@@ -140,12 +135,12 @@ class Callbacks(object):
         else:
             week = league.current_gameset
 
-        print '{}, Week {}, {}'.format(week.league, week.week, week.season)
-        print '%5s %4s %3s %s' % ('Place', 'Correct', 'Points', 'Picker')
+        print('{}, Week {}, {}'.format(week.league, week.week, week.season))
+        print('%5s %4s %3s %s' % ('Place', 'Correct', 'Points', 'Picker'))
         for place, pick in picker.sorted_standings(
             list(week.pick_set.select_related())
         ):
-            print '%5d %7d %6d %s' % (place, pick.correct, pick.points, pick.user)
+            print('%5d %7d %6d %s' % (place, pick.correct, pick.points, pick.user))
 
 
 class Command(BaseCommand):
@@ -160,13 +155,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not args:
-            print self.help
+            print(self.help)
             return
 
         league = picker.League.get(options.pop('league', None))
         for arg in args:
             func = getattr(Callbacks, arg, None)
             if not func:
-                print 'Skipping unknown op:', arg
+                print('Skipping unknown op:', arg)
             else:
                 func(league, **options)

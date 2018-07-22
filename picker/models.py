@@ -1,35 +1,29 @@
 # -*- coding:utf8 -*-
-import re
-import json
 import random
+import functools
 from importlib import import_module
-from decimal import Decimal
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta
 
 from dateutil.tz import UTC
-from dateutil.parser import parse
 from dateutil import relativedelta as rd
 
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.utils.functional import cached_property
-from django.contrib.auth.models import User
 from django.utils.module_loading import import_string
 
 from choice_enum import ChoiceEnumeration
 from django_extensions.db.fields.json import JSONField
 
-from . import utils
+from .utils import Attr, datetime_now, parse_feed, percent
 from . import signals
-from .exceptions import PickerException, PickerResultException
+from .exceptions import PickerResultException
 from .conf import get_setting as picker_setting
 from . import managers
 
-
 GAME_DURATION = timedelta(hours=4.5)
-LOGOS_DIR = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos')
-datetime_now = utils.datetime_now
+LOGOS_DIR = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
 
 
 class Preference(models.Model):
@@ -45,7 +39,11 @@ class Preference(models.Model):
 
     league = models.ForeignKey('League', on_delete=models.CASCADE)
     favorite_team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='picker_preferences')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='picker_preferences'
+    )
     status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
     autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
 
@@ -80,6 +78,58 @@ class Preference(models.Model):
     @cached_property
     def pretty_email(self):
         return '"{}" <{}>'.format(self.username, self.email)
+
+
+class PickerGrouping(models.Model):
+    class Status(ChoiceEnumeration):
+        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
+        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
+
+    name = models.CharField(max_length=75, unique=True)
+    leagues = models.ManyToManyField('picker.League', blank=True)
+    members = models.ManyToManyField('picker.PickerMembership', blank=True)
+    status = models.CharField(
+        max_length=4,
+        choices=Status.CHOICES,
+        default=Status.DEFAULT
+    )
+
+
+class PickerFavorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    league = models.ForeignKey('picker.League', on_delete=models.CASCADE)
+    team = models.ForeignKey('picker.Team', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{}: {} ({})'.format(self.user, self.team, self.league)
+
+    def save(self, *args, **kws):
+        if self.team.league != self.league:
+            raise ValueError('Team {} not in league {}'.format(self.team, self.league))
+
+        return super().save(*args, **kws)
+
+
+class PickerMembership(models.Model):
+
+    class Autopick(ChoiceEnumeration):
+        NONE = ChoiceEnumeration.Option('NONE', 'None')
+        RANDOM = ChoiceEnumeration.Option('RAND', 'Random', default=True)
+
+    class Status(ChoiceEnumeration):
+        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
+        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
+        SUSPENDED = ChoiceEnumeration.Option('SUSP', 'Suspended')
+        MANAGER = ChoiceEnumeration.Option('MNGT', 'Manager')
+
+    group = models.ForeignKey(PickerGrouping, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='picker_memberships'
+    )
+    status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
+    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
 
 
 class League(models.Model):
@@ -129,8 +179,8 @@ class League(models.Model):
 
     @cached_property
     def feed(self):
-        url = picker_setting('NFL_FEED_URL')
-        return utils.parse_feed(url)
+        url = self.config('FEED_URL')
+        return parse_feed(url) if url else None
 
     @cached_property
     def scores_module(self):
@@ -164,6 +214,14 @@ class League(models.Model):
 
         return names
 
+    @property
+    def latest_gameset(self):
+        rel = datetime_now()
+        try:
+            return self.game_set.filter(closes__lte=rel).latest('closes')
+        except GameSet.DoesNotExist:
+            return None
+
     @cached_property
     def current_gameset(self):
         rel = datetime_now()
@@ -188,13 +246,7 @@ class League(models.Model):
 
     @cached_property
     def current_season(self):
-        year = datetime_now().year
-        abbrs = 'NFL FBS FCS NAIA'.split()
-        fmt = '{}_CURRENT_SEASON'.format
-        return {abbr: picker_setting(fmt(abbr), year) for abbr in abbrs}.get(
-            self.abbr.upper(),
-            year
-        )
+        return self.config('CURRENT_SEASON', datetime_now().year)
 
     def season_weeks(self, season=None):
         return self.game_set.filter(season=season or self.current_season)
@@ -211,6 +263,9 @@ class League(models.Model):
     def send_reminder_email(self):
         gs = self.current_gameset
         signals.picker_reminder.send(sender=GameSet, week=gs)
+
+    def config(self, key, default=None):
+        return picker_setting('{}_{}'.format(self.abbr.upper(), key), default)
 
     def create_season(self, season, schedule, byes=None):
         '''
@@ -268,14 +323,14 @@ class League(models.Model):
                 if byes and (sequence in byes):
                     game_set.byes.add(*[teams[t] for t in byes[sequence]])
 
-            g, is_new = Game.objects.get_or_create(
+            is_new = Game.objects.get_or_create(
                 home=home,
                 away=away,
                 week=game_set,
                 kickoff=dt,
                 tv=tv,
                 location=where,
-            )
+            )[1]
 
             new_old[0 if is_new else 1] += 1
         return new_old
@@ -342,16 +397,6 @@ class Team(models.Model):
     def lower(self):
         return self.abbr.lower()
 
-    @property
-    def schedule(self):
-        games = []
-        for game in Game.objects.filter(
-            models.Q(home=self) | models.Q(away=self)
-        ).order_by('dt'):
-            games.append((game.home if game.away.id == self.id else game.away, game))
-
-        return games
-
     def season_record(self, season=None):
         season = season or self.league.current_season
         wins, losses, ties = (0, 0, 0)
@@ -359,7 +404,7 @@ class Team(models.Model):
             models.Q(home=self) | models.Q(away=self),
             week__season=season,
         ):
-            if game.winner == self:
+            if game.winner.id == self.id:
                 wins += 1
             elif game.status == Game.Status.TIE:
                 ties += 1
@@ -372,9 +417,6 @@ class Team(models.Model):
         season = season or self.league.current_season
         w, l, t = self.season_record(season)
         return ((w - l) * 2) + t
-
-    def __cmp__(self, other):
-        return cmp(self.season_points(), other.season_points())
 
     @property
     def record(self):
@@ -492,8 +534,7 @@ class GameSet(models.Model):
 
     @property
     def in_progress(self):
-        now = datetime_now()
-        return now >= self.kickoff and now <= self.end_time
+        return self.end_time >= datetime_now() >= self.kickoff
 
     @property
     def has_started(self):
@@ -527,23 +568,31 @@ class GameSet(models.Model):
         except PickSet.DoesNotExist:
             return None
 
+    def create_picks_for_user(self, user, strategy, send_confirmation=True):
+        Strategy = self.model.Strategy
+        is_auto = (strategy == Strategy.RANDOM)
+        picks = self.pick_set.create(
+            user=user,
+            points=self.league.random_points() if is_auto else 0,
+            strategy=strategy
+        )
+        picks.complete_picks(is_auto, self.game_set.all())
+        if send_confirmation:
+            picks.send_confirmation(is_auto)
+
+        return picks
+
     def picks_kickoff(self):
-        games = list(self.game_set.all())
-        force_autopick = picker_setting('FOOTBALL_FORCE_AUTOPICK', True)
+        force_autopick = self.league.config('FORCE_AUTOPICK', True)
         Strategy = PickSet.Strategy
-        for p in Preference.objects.active():
-            auto = True if force_autopick else p.should_autopick
-            wp = self.pick_for_user(p.user)
+        for pref in Preference.objects.active():
+            auto = True if force_autopick else pref.should_autopick
+            wp = self.pick_for_user(pref.user)
             if wp:
-                wp.complete_picks(auto, games)
-            elif can_user_participate(p, self):
-                PickSet.objects.create_for_user(
-                    p.user,
-                    gs,
-                    Strategy.RANDOM if auto else Strategy.USER,
-                    games,
-                    True
-                )
+                wp.complete_picks(auto, list(self.game_set.all()))
+            elif can_user_participate(pref, self):
+                strategy = Strategy.RANDOM if auto else Strategy.USER
+                self.create_picks_for_user(pref.user, strategy, True)
 
     def update_results(self):
         results = self.league.scores(completed=True)
@@ -555,7 +604,6 @@ class GameSet(models.Model):
             raise PickerResultException('No completed results')
 
         count = 0
-        points = 0
         for game in self.game_set.incomplete(home__abbr__in=completed.keys()):
             result = completed.get(game.home.abbr, None)
             if result:
@@ -572,22 +620,22 @@ class GameSet(models.Model):
             if now > last_game.end_time:
                 result = completed.get(last_game.home.abbr, None)
                 if result:
-                    points = self.points = result['home_score'] + result['away_score']
+                    self.points = result['home_score'] + result['away_score']
                     self.save()
 
         if count:
             self.update_pick_status()
 
-        return (count, points)
+        return (count, self.points)
 
     def set_default_open_and_close(self):
         prv = rd.relativedelta(weekday=rd.TU(-1))
         nxt = rd.relativedelta(weekday=rd.TU)
-        for week in self.game_set.all():
-            ko = week.kickoff
-            week.opens = (ko + prv).replace(hour=12, minute=0)
-            week.closes = (ko + nxt).replace(hour=11, minute=59, second=59)
-            week.save()
+        for gs in self.game_set.all():
+            ko = gs.kickoff
+            gs.opens = (ko + prv).replace(hour=12, minute=0)
+            gs.closes = (ko + nxt).replace(hour=11, minute=59, second=59)
+            gs.save()
 
     def weekly_results(self):
         picks = list(self.pick_set.select_related())
@@ -597,9 +645,9 @@ class GameSet(models.Model):
 class Game(models.Model):
 
     class Category(ChoiceEnumeration):
-        REGULAR = ChoiceEnumeration.Option('REG',  'Regular Season', default=True)
+        REGULAR = ChoiceEnumeration.Option('REG', 'Regular Season', default=True)
         POST = ChoiceEnumeration.Option('POST', 'Post Season')
-        PRE = ChoiceEnumeration.Option('PRE',  'Pre Season')
+        PRE = ChoiceEnumeration.Option('PRE', 'Pre Season')
         FRIENDLY = ChoiceEnumeration.Option('FRND', 'Friendly')
 
     class Status(ChoiceEnumeration):
@@ -655,7 +703,7 @@ class Game(models.Model):
         if self.status == self.Status.HOME_WIN:
             return self.home
 
-        elif self.status == self.Status.AWAY_WIN:
+        if self.status == self.Status.AWAY_WIN:
             return self.away
 
         return None
@@ -676,7 +724,8 @@ class Game(models.Model):
     def auto_pick_winner(self, pick_strategy=None):
         if pick_strategy == PickSet.Strategy.HOME:
             return self.home
-        elif pick_strategy == PickSet.Strategy.BEST:
+
+        if pick_strategy == PickSet.Strategy.BEST:
             a, b = self.home.season_points(), self.away.season_points()
             return self.home if a >= b else self.away
 
@@ -689,9 +738,10 @@ class Game(models.Model):
     @property
     def in_progress(self):
         now = datetime_now()
-        return now >= self.kickoff and now <= self.end_time
+        return self.end_time >= now >= self.kickoff
 
 
+@functools.total_ordering
 class PickSet(models.Model):
 
     class Strategy(ChoiceEnumeration):
@@ -700,7 +750,12 @@ class PickSet(models.Model):
         HOME = ChoiceEnumeration.Option('HOME', 'Home Team')
         BEST = ChoiceEnumeration.Option('BEST', 'Best Record')
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pick_set')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='pick_set'
+    )
+
     week = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='pick_set')
     points = models.PositiveSmallIntegerField(default=0)
     correct = models.PositiveSmallIntegerField(default=0)
@@ -708,6 +763,7 @@ class PickSet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     strategy = models.CharField(max_length=4, choices=Strategy.CHOICES, default=Strategy.DEFAULT)
+    is_winner = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (('user', 'week'),)
@@ -715,8 +771,11 @@ class PickSet(models.Model):
     def __str__(self):
         return '%s %s %d' % (self.game_set, self.user, self.correct)
 
-    def __cmp__(self, o):
-        return -cmp(self.correct, o.correct) or cmp(self.points_delta, o.points_delta)
+    def __eq__(self, o):
+        return self.correct == o.correct and self.points_delta == o.points_delta
+
+    def __lt__(self, o):
+        return self.correct < o.correct or self.points_delta < o.points_delta
 
     @property
     def game_set(self):
@@ -805,7 +864,7 @@ class GamePick(models.Model):
         return None
 
 
-class PlayoffResult(utils.Attr):
+class PlayoffResult(Attr):
 
     def __repr__(self):
         return '%d,%d,%s' % (self.score, self.delta, self.picks)
@@ -829,29 +888,28 @@ class Playoff(models.Model):
 
     @property
     def admin(self):
-        adm, created = self.playoffpicks_set.get_or_create(
+        return self.playoffpicks_set.get_or_create(
             user__isnull=True,
             defaults={'picks': {}}
-        )
-        return adm
+        )[0]
 
     @property
     def scores(self):
         results = []
-        teams = dict([(t.abbr, t) for t in self.playoffteam_set.all()])
-        adm_tms = self.admin.teams
-        pts_dct = picker_setting('NFL_PLAYOFF_SCORE')
-        for pck in self.playoffpicks_set.filter(user__isnul=False):
+        teams = {t.abbr: t for t in self.playoffteam_set.all()}
+        admin = self.admin
+        pts_dct = self.league.config('PLAYOFF_SCORE')
+        for pck in self.playoffpicks_set.filter(user__isnull=False):
             points, pck_res = 0, []
-            for i, (a_tm, p_tm) in enumerate(zip(adm_tms, pck.teams), 1):
+            for i, (a_tm, p_tm) in enumerate(zip(admin.teams, pck.teams), 1):
                 if (a_tm and p_tm) and (a_tm == p_tm):
                     good = pts_dct.get(i, 1)
                 else:
                     good = 0
 
                 points += good
-                pck_res.append((good, teams[pck_tm] if pck_tm else None))
-            results.append((points, -abs(adm.points - p.points), pck, pck_res))
+                pck_res.append((good, teams[p_tm] if p_tm else None))
+            results.append((points, -abs(admin.points - pck.points), pck, pck_res))
 
         return [
             PlayoffResult(score=score, delta=delta, picks=picks, results=res)
@@ -874,13 +932,18 @@ class PlayoffTeam(models.Model):
 
 class PlayoffPicks(models.Model):
     playoff = models.ForeignKey(Playoff, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     picks = JSONField()
 
     def __str__(self):
-        return unicode(self.user) if self.user else '<admin>'
+        return str(self.user) if self.user else '<admin>'
 
     @cached_property
     def season(self):
@@ -901,14 +964,14 @@ class PlayoffPicks(models.Model):
         return int(pts) if pts.isdigit() else 0
 
 
-class RosterStats(object):
+@functools.total_ordering
+class RosterStats:
 
     def __init__(self, preference, league, season=None):
         self.preference = preference
         self.user = preference.user
         self.season = season
         self.league = league
-        self.is_active = preference.is_active
         self.correct = 0
         self.wrong = 0
         self.points_delta = 0
@@ -927,23 +990,28 @@ class RosterStats(object):
             self.points_delta += wp.points_delta if wp.week.points else 0
 
     @property
+    def is_active(self):
+        return self.preference.is_active
+
+    @property
     def weeks_won(self):
-        return 0
-
-        qs = GameSet.objects.filter(weeksummary__weekwinner__user=self.user)
+        query = GameSet.objects.filter(pick_set__is_winner=True, pick_set__user=self.user)
         if self.season:
-            qs = qs.filter(season=self.season)
+            query = query.filter(season=self.season)
 
-        return list(qs.select_related())
+        return list(query.select_related())
 
     def __str__(self):
-        return '%s' % self.user
+        return '{}{}'.format(
+            self.user,
+            ' ({})'.format(self.season) if self.season else ''
+        )
 
     __repr__ = __str__
 
     @property
     def pct(self):
-        return utils.percent(self.correct, self.correct + self.wrong)
+        return percent(self.correct, self.correct + self.wrong)
 
     @property
     def avg_points_delta(self):
@@ -951,6 +1019,13 @@ class RosterStats(object):
             return 0
 
         return float(self.points_delta) / self.weeks_played
+
+    def __eq__(self, other):
+        return (
+            self.correct == other.correct and
+            self.points_delta == other.points_delta and
+            self.weeks_played == other.weeks_played
+        )
 
     def __lt__(self, other):
         return (
@@ -967,12 +1042,12 @@ class RosterStats(object):
         ).select_related().order_by('user__username')
 
         by_user = {
-            entry[1].user: entry
+            entry.user: entry
             for entry in sorted_standings([RosterStats(p, league) for p in prefs])
         }
 
         return [
-            entry + by_user[entry[1].user]
+            (entry, by_user[entry.user])
             for entry in sorted_standings([RosterStats(p, league, season) for p in prefs])
         ]
 
@@ -980,25 +1055,25 @@ class RosterStats(object):
 def sorted_standings(items):
     weighted = []
     prev_place, prev_results = 1, (0, 0)
-    for i, item in enumerate(sorted(items), 1):
+    for i, item in enumerate(sorted(items, reverse=True), 1):
         results = (item.correct, item.points_delta)
-        place = prev_place if results == prev_results else i
-        prev_place, prev_results = place, results
-        weighted.append((place, item))
+        item.place = prev_place if results == prev_results else i
+        prev_place, prev_results = item.place, results
+        weighted.append(item)
 
     return weighted
 
 
-_participation_hooks = None
+__participation_hooks = None
 
 
 def can_user_participate(pref, week):
-    global _participation_hooks
-    if _participation_hooks is None:
+    global __participation_hooks
+    if __participation_hooks is None:
         hooks = picker_setting('PARTICIPATION_HOOKS', [])
-        _participation_hooks = [import_string(hook) for hook in hooks]
+        __participation_hooks = [import_string(hook) for hook in hooks]
 
-    for hook in _participation_hooks:
+    for hook in __participation_hooks:
         if not hook(pref, week):
             return False
 

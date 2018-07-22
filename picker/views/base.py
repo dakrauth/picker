@@ -3,24 +3,21 @@ from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.functional import cached_property
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ImproperlyConfigured
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .. import utils
 from .. import forms
-from ..models import League, Game, RosterStats, Preference, PickerResultException
-
-
-def redirect_reverse(name, *args, **kwargs):
-    return http.HttpResponseRedirect(reverse(name, args=args, kwargs=kwargs))
+from ..models import League, Preference
 
 
 class PlayoffContext:
 
     @staticmethod
     def week(playoff):
-        N = 1 + playoff.league.game_set.count()
-        weeks = [{'season': playoff.season, 'week': w} for w in range(1, N)]
+        count = 1 + playoff.league.game_set.count()
+        weeks = [{'season': playoff.season, 'week': w} for w in range(1, count)]
         return {'season_weeks': weeks, 'week': 'playoffs'}
 
     @staticmethod
@@ -44,7 +41,7 @@ class PlayoffContext:
 
         try:
             picks = playoff.playoffpicks_set.get(user=user)
-        except Exception:
+        except ObjectDoesNotExist:
             picks = None
 
         return dict(
@@ -59,15 +56,15 @@ class PlayoffContext:
 class PlayoffPicksMixin:
 
     def playoff_picks(self, request, playoff):
-        season = self.args[0]
+        season = self.season
         if utils.datetime_now() > playoff.kickoff:
-            return redirect_reverse('picker-playoffs-results', season)
+            return self.redirect('picker-playoffs-results', self.league.lower, season)
 
         if request.method == 'POST':
             picks = playoff.user_picks(request.user)
-            picks.picks = dict([(k, v) for k, v in request.POST.items()])
+            picks.picks = {k: v for k, v in request.POST.items()}
             picks.save()
-            return redirect_reverse('picker-playoffs-results', season)
+            return self.redirect('picker-playoffs-results', self.league.lower, season)
 
         self.template_name = '@picks/playoffs.html'
         return self.render_to_response(PlayoffContext.conference(playoff, request.user))
@@ -111,6 +108,18 @@ class SimpleFormMixin:
 
 class SimplePickerViewBase(TemplateView):
 
+    @staticmethod
+    def redirect(name, *args, **kwargs):
+        return http.HttpResponseRedirect(reverse(name, args=args, kwargs=kwargs))
+
+    @property
+    def season(self):
+        season = self.kwargs.get('season')
+        if season and season.isdigit():
+            return int(season)
+
+        return season if season else self.league.current_season
+
     @cached_property
     def league(self):
         return League.get(self.kwargs['league'])
@@ -122,7 +131,7 @@ class SimplePickerViewBase(TemplateView):
                 "'template_name' or an implementation of 'get_template_names()'"
             )
 
-        return utils.get_templates(self.league, self.template_name)
+        return utils.get_templates(self.template_name, self.league)
 
     def extra_data(self, data):
         pass
@@ -142,11 +151,24 @@ class SimplePickerViewBase(TemplateView):
         data.update({
             'now': utils.datetime_now(),
             'league': league,
-            'season': league.current_season,
+            'season': self.season or league.current_season,
             'league_base': 'picker/{}/base.html'.format(league.lower)
         })
         self.extra_data(data)
         return data
+
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        template_names = self.get_template_names()
+        context['template_names'] = template_names
+        return self.response_class(
+            request=self.request,
+            template=template_names,
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+        )
+
 
 
 class WeeklyPicksMixin(PlayoffPicksMixin, SimpleFormMixin):

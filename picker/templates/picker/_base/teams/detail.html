@@ -25,7 +25,7 @@
                 <td>{{ game.week.week }}</td>
                 <td>{{ game.kickoff|date:"D, M j - P" }}</td>
                 <td>
-                    {% if team == game.away %}
+                    {% if team.id == game.away.id %}
                         @ <a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a>
                     {% else %}
                         <a href="{{ game.away.get_absolute_url}}">{{ game.away }}</a>
@@ -40,7 +40,7 @@
                     {% endif %}
                     {% endif %}
                 </td>
-            </tr>    
+            </tr>
             {% endfor %}
             </tbody>
         </table>

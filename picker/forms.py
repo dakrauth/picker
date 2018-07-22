@@ -1,12 +1,10 @@
-from datetime import datetime
 from django import forms
-from django.template import Template, Context, loader, TemplateDoesNotExist
+from django.template import Context, loader, TemplateDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.encoding import force_text
-from django.contrib import messages
 from . import models as picker
 from . import utils
-from . import conf
+from .conf import import_setting
 from .signals import picker_weekly_results
 
 _picker_widget = None
@@ -16,7 +14,7 @@ game_key_format = 'game_{}'.format
 def get_picker_widget():
     global _picker_widget
     if not _picker_widget:
-        _picker_widget = conf.import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
+        _picker_widget = import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
 
     return _picker_widget
 
@@ -28,7 +26,7 @@ class TemplateTeamChoice(forms.RadioSelect):
     def __init__(self, *args, **kws):
         super(TemplateTeamChoice, self).__init__(*args, **kws)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         try:
             tmpl = loader.get_template(self.template_name)
         except TemplateDoesNotExist:
@@ -78,7 +76,7 @@ class GameField(forms.ChoiceField):
         } if self.disabled else {}
 
 
-class FieldIter(object):
+class FieldIter:
 
     def __init__(self, form):
         self.fields = []
@@ -100,15 +98,17 @@ class BasePickForm(forms.Form):
         super(BasePickForm, self).__init__(*args, **kws)
         self.week = week
         self.game_fields = FieldIter(self)
-        for gm in week.game_set.all():
+        games = list(week.game_set.all())
+        for gm in games:
             key = game_key_format(gm.id)
             self.fields[key] = GameField(gm, self.management)
             self.game_fields.append(key)
 
-        self.fields['points'] = forms.IntegerField(
-            label=gm.vs_description,
-            required=False
-        )
+        if games:
+            self.fields['points'] = forms.IntegerField(
+                label=games[-1].vs_description,
+                required=False
+            )
 
 
 class ManagementPickForm(BasePickForm):
@@ -156,12 +156,12 @@ class UserPickForm(BasePickForm):
     def save(self):
         data = self.cleaned_data.copy()
         week = self.week
-        picks, created = week.pick_set.get_or_create(user=self.user)
+        picks = week.pick_set.get_or_create(user=self.user)[0]
         picks.points = data.pop('points', 0) or 0
         picks.strategy = picker.PickSet.Strategy.USER
         picks.save()
 
-        games_dict = dict([(game_key_format(g.id), g) for g in week.games])
+        games_dict = {game_key_format(g.id): g for g in week.games}
         game_picks = [(k, v) for k, v in data.items() if v]
         for game, winner in game_picks:
             game = games_dict.get(game, None)
@@ -222,11 +222,11 @@ class PlayoffBuilderForm(forms.ModelForm):
     def __init__(self, league, *args, **kws):
         self.league = league
         if 'instance' not in kws:
-            kws['instance'], created = picker.Playoff.objects.get_or_create(
+            kws['instance'] = picker.Playoff.objects.get_or_create(
                 league=league,
                 season=league.current_season,
                 defaults={'kickoff': utils.datetime_now()}
-            )
+            )[0]
 
         super(PlayoffBuilderForm, self).__init__(*args, **kws)
         for conf in league.conference_set.all():
@@ -239,17 +239,16 @@ class PlayoffBuilderForm(forms.ModelForm):
                 key = '%s_%s' % (playoff_team.team.conference, playoff_team.seed)
                 self.fields[key].initial = playoff_team.team
 
-    def save(self):
+    def save(self, commit=True):
         super(PlayoffBuilderForm, self).save()
         playoff = self.instance
         data = self.cleaned_data
         data.pop('kickoff')
 
         picker.PlayoffTeam.objects.filter(playoff=playoff).delete()
-        afc, nfc = [], []
         for key, team in data.items():
             if team:
-                conf, seed = key.split('_')
+                seed = key.split('_')[-1]
                 playoff.playoffteam_set.create(team=team, seed=seed)
 
         return playoff

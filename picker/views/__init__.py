@@ -1,2 +1,2 @@
-from .picks import *
-from .manage import *
+from .picks import *  # NOQA
+from .manage import *  # NOQA

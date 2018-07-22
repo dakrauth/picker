@@ -1,11 +1,11 @@
-from django import http, forms
+from django import http
 from django.urls import reverse
 from django.contrib import messages
 from django.utils.functional import cached_property
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from .base import PickerViewBase, SimpleFormMixin
+from .base import PickerViewBase, SimpleFormMixin, PlayoffContext
 from .. import forms
 from ..models import Game, PickerResultException
 
@@ -14,11 +14,12 @@ __all__ = [
     'ManagePlayoffBuilder', 'ManagePlayoffs'
 ]
 
+
 class ManagementMixin(UserPassesTestMixin):
 
     def test_func(self):
-        u = self.request.user
-        return u.is_authenticated and u.is_active and u.is_superuser
+        user = self.request.user
+        return user.is_authenticated and user.is_active and user.is_superuser
 
 
 class ManagementViewBase(ManagementMixin, PickerViewBase):
@@ -50,7 +51,7 @@ class ManageWeek(ManagementViewBase):
         season, week = self.args
         return get_object_or_404(self.league.game_set, season=season, week=week)
 
-    def redirect(self, gs):
+    def redirect_game_set(self, gs):
         return http.HttpResponseRedirect(
             reverse('picker-game-sequence', args=(self.league.lower, gs.season, gs.week))
         )
@@ -66,12 +67,12 @@ class ManageWeek(ManagementViewBase):
                 pass
 
             messages.success(request, 'Week kickoff successful')
-            return self.redirect(gs)
+            return self.redirect_game_set(gs)
 
         if 'reminder' in request.POST:
-            league.send_reminder_email()
+            self.league.send_reminder_email()
             messages.success(request, 'User email sent')
-            return self.redirect(gs)
+            return self.redirect_game_set(gs)
 
         if 'update' in request.POST:
             try:
@@ -80,13 +81,13 @@ class ManageWeek(ManagementViewBase):
                 messages.warning(request, str(exc))
             else:
                 messages.success(request, '{} game(s) update'.format(res))
-            return self.redirect(gs)
+            return self.redirect_game_set(gs)
 
         form = forms.ManagementPickForm(gs, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Results saved')
-            return self.redirect(gs)
+            return self.redirect_game_set(gs)
 
         return self.render_to_response(self.get_context_data(
             form=form,
@@ -141,13 +142,13 @@ class ManagePlayoffs(ManagementViewBase):
     def playoff(self):
         return get_object_or_404(self.league.playoff_set, season=self.args[0])
 
-    def post(self, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         picks = self.playoff.admin
-        picks.picks = dict([item for item in self.request.POST.items()])
+        picks.picks = {k: v for k, v in self.request.POST.items()}
         picks.save()
-        return redirect_reverse('picker-playoffs-results', self.args[0])
+        return self.redirect('picker-playoffs-results', self.args[0])
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         return self.render_to_response(
             PlayoffContext.conference(self.playoff, None, management=True)
         )

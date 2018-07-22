@@ -24,10 +24,10 @@
                 <th><strong><abbr data-toggle="tooltip" title="All time ranking">All</abbr></strong></th>
             </tr>
         </thead>
-        <tbody> {% for place,entry,all_time_place,all_time_stats in roster %}{% if entry.is_active %}
+        <tbody> {% for entry,all_time_stats in roster %}{% if entry.is_active %}
             <tr>
                 <td class="player">
-                    <img src="{{ entry.user|picker_user_image:"32" }}" />
+                    <img src="{{ entry.user|picker_user_image:"32" }}">
                     <div>
                         <strong>
                             <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
@@ -37,7 +37,7 @@
                         {% endhaving %}
                     </div>
                 </td>
-                <td class="success">{{ place }}</td>
+                <td>{{ entry.place }}</td>
                 <td>{{ entry.weeks_played }} / {{ entry.weeks_won|length }}</td>
                 <td>{{ entry.correct }}</td>
                 <td>{{ entry.wrong }}</td>
@@ -51,7 +51,7 @@
                 <td>{{ all_time_stats.points_delta}}</td>
                 <td>{{ all_time_stats.avg_points_delta|floatformat }}</td>
                 <td>{{ all_time_stats.weeks_played }} / {{ all_time_stats.weeks_won|length }}</td>
-                <td class="success">{{ all_time_place }}</td>
+                <td>{{ all_time_stats.place }}</td>
             </tr>{% endif %}{% endfor %}
         </tbody>
         </table>
