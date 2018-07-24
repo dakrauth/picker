@@ -143,26 +143,14 @@ class League(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('picker-home', args=[self.lower])
-
-    def picks_url(self):
-        return reverse('picker-picks', args=[self.lower])
-
-    def results_url(self):
-        return reverse('picker-results', args=[self.lower])
-
-    def roster_url(self):
-        return reverse('picker-roster', args=[self.lower])
-
-    def teams_url(self):
-        return reverse('picker-teams', args=[self.lower])
-
-    def schedule_url(self):
-        return reverse('picker-schedule', args=[self.lower])
-
-    def manage_url(self):
-        return reverse('picker-manage', args=[self.lower])
+    def _reverse(self, name): return reverse(name, args=[self.lower])
+    def get_absolute_url(self): return self._reverse('picker-home')
+    def picks_url(self): return self._reverse('picker-picks')
+    def results_url(self): return self._reverse('picker-results')
+    def roster_url(self): return self._reverse('picker-roster')
+    def teams_url(self): return self._reverse('picker-teams')
+    def schedule_url(self): return self._reverse('picker-schedule')
+    def manage_url(self): return self._reverse('picker-manage')
 
     @cached_property
     def lower(self):
@@ -222,6 +210,11 @@ class League(models.Model):
         except GameSet.DoesNotExist:
             return None
 
+    @property
+    def latest_season(self):
+        gs = self.latest_gameset
+        return gs.season if gs else None
+
     @cached_property
     def current_gameset(self):
         rel = datetime_now()
@@ -249,7 +242,8 @@ class League(models.Model):
         return self.config('CURRENT_SEASON', datetime_now().year)
 
     def season_weeks(self, season=None):
-        return self.game_set.filter(season=season or self.current_season)
+        season = season or self.current_season or self.latest_season
+        return self.game_set.filter(season=season)
 
     def random_points(self):
         d = self.game_set.filter(points__gt=0).aggregate(
@@ -639,7 +633,11 @@ class GameSet(models.Model):
 
     def weekly_results(self):
         picks = list(self.pick_set.select_related())
-        return sorted_standings(picks)
+        return sorted_standings(
+            picks,
+            key=lambda ps: (ps.correct, -ps.points_delta),
+            reverse=True
+        )
 
 
 class Game(models.Model):
@@ -741,7 +739,6 @@ class Game(models.Model):
         return self.end_time >= now >= self.kickoff
 
 
-@functools.total_ordering
 class PickSet(models.Model):
 
     class Strategy(ChoiceEnumeration):
@@ -770,12 +767,6 @@ class PickSet(models.Model):
 
     def __str__(self):
         return '%s %s %d' % (self.game_set, self.user, self.correct)
-
-    def __eq__(self, o):
-        return self.correct == o.correct and self.points_delta == o.points_delta
-
-    def __lt__(self, o):
-        return self.correct < o.correct or self.points_delta < o.points_delta
 
     @property
     def game_set(self):
@@ -964,7 +955,6 @@ class PlayoffPicks(models.Model):
         return int(pts) if pts.isdigit() else 0
 
 
-@functools.total_ordering
 class RosterStats:
 
     def __init__(self, preference, league, season=None):
@@ -983,15 +973,20 @@ class RosterStats:
         if season:
             qs = qs.filter(week__season=season)
 
-        self.weeks_played = len(qs)
+        self.weeks_played = 0
         for wp in qs:
+            self.weeks_played += 1
             self.correct += wp.correct
             self.wrong += wp.wrong
             self.points_delta += wp.points_delta if wp.week.points else 0
 
-    @property
-    def is_active(self):
-        return self.preference.is_active
+        self.is_active = self.preference.is_active
+        self.pct = percent(self.correct, self.correct + self.wrong)
+        self.avg_points_delta = (
+            float(self.points_delta) / self.weeks_played
+            if self.weeks_played
+            else 0
+        )
 
     @property
     def weeks_won(self):
@@ -1002,37 +997,9 @@ class RosterStats:
         return list(query.select_related())
 
     def __str__(self):
-        return '{}{}'.format(
-            self.user,
-            ' ({})'.format(self.season) if self.season else ''
-        )
+        return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
 
     __repr__ = __str__
-
-    @property
-    def pct(self):
-        return percent(self.correct, self.correct + self.wrong)
-
-    @property
-    def avg_points_delta(self):
-        if not self.weeks_played:
-            return 0
-
-        return float(self.points_delta) / self.weeks_played
-
-    def __eq__(self, other):
-        return (
-            self.correct == other.correct and
-            self.points_delta == other.points_delta and
-            self.weeks_played == other.weeks_played
-        )
-
-    def __lt__(self, other):
-        return (
-            self.correct < other.correct or
-            self.points_delta < other.points_delta or
-            self.weeks_played < other.weeks_played
-        )
 
     @staticmethod
     def get_details(league, season=None):
@@ -1041,21 +1008,24 @@ class RosterStats:
             league=league
         ).select_related().order_by('user__username')
 
+        def keyfn(rs):
+            return (rs.correct, -rs.points_delta, rs.weeks_played)
+
+        stats = [RosterStats(p, league) for p in prefs]
         by_user = {
-            entry.user: entry
-            for entry in sorted_standings([RosterStats(p, league) for p in prefs])
+            entry.user: entry for entry in sorted_standings(stats, key=keyfn)
         }
 
+        stats = [RosterStats(p, league, season) for p in prefs]
         return [
-            (entry, by_user[entry.user])
-            for entry in sorted_standings([RosterStats(p, league, season) for p in prefs])
+            (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
         ]
 
 
-def sorted_standings(items):
+def sorted_standings(items, key=None, reverse=True):
     weighted = []
     prev_place, prev_results = 1, (0, 0)
-    for i, item in enumerate(sorted(items, reverse=True), 1):
+    for i, item in enumerate(sorted(items, reverse=reverse, key=key), 1):
         results = (item.correct, item.points_delta)
         item.place = prev_place if results == prev_results else i
         prev_place, prev_results = item.place, results

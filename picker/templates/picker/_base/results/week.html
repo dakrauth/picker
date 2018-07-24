@@ -32,11 +32,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for place,result in weekly_results %}
+            {% for result in weekly_results %}
             <tr>
                 <td>
                     <img src="{{ result.user|picker_user_image:"32" }}">
-                    <span class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</span>
+                    <br>
+                    <strong class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</strong>
                 </td>
                 <td>{{ result.progress }}</td>
                 <td>{{ result.points|yesno:"set,pending" }}</td>
@@ -61,12 +62,13 @@
                 {% endif %}
             </tr>
         </thead>
-        <tbody>{% for place,wp in weekly_results %}
+        <tbody>{% for wp in weekly_results %}
             <tr>
-                <td>{{ place }}</td>
+                <td>{{ wp.place }}</td>
                 <td>
-                    <img src="{{ wp.user|picker_user_image:"32" }}" />
-                    <span class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</span>
+                    <img src="{{ wp.user|picker_user_image:"32" }}">
+                    <br>
+                    <strong class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</strong>
                 </td>
                 <td>{{ wp.correct }}</td>
                 {% for item in wp.gamepick_set.games_started %}

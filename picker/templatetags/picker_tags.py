@@ -136,14 +136,15 @@ def season_nav(context, week, relative_to):
     league = context['league']
     return {
         'week': week,
+        'show_playoffs': league.config('PLAYOFFS'),
         'relative_to': relative_to,
         'user': context['user'],
         'league': league,
-        'season_weeks': league.season_weeks(context.get('season', None))
+        'season_weeks': league.season_weeks(week.season if week else None)
     }
 
 
-@register.inclusion_tag(get_templates('season_nav_all.html'), takes_context=True)
+@register.inclusion_tag(get_templates('@season_nav_all.html'), takes_context=True)
 def all_seasons_nav(context, current, league, relative_to):
     user = context['user']
     return {

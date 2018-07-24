@@ -1,6 +1,5 @@
 <nav class="season-nav all-season-nav">
     <ul class="pagination">
-        <li class="disabled"><a href="#">{{ label }}</a></li>
         {% for season in league.available_seasons %}
         <li{% if season == current %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ season }}/">{{ season }}</a>

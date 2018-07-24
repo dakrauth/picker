@@ -71,7 +71,7 @@ class RosterProfile(PickerViewBase):
 #  Results
 
 class Results(PickerViewBase):
-    template_name = '@unavailable.html'
+    template_name = '@results/week.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -84,18 +84,21 @@ class Results(PickerViewBase):
                     game_set.update_results()
                 except PickerResultException:
                     pass
-
-            self.template_name = '@results/week.html'
-            context['week'] = game_set
-
-        if self.league.config('PLAYOFFS'):
+        elif self.league.config('PLAYOFFS'):
             playoff = league.current_playoffs
             if playoff:
                 ctx = PlayoffContext.week(playoff)
                 self.template_name = '@results/playoffs.html'
                 context.update(week=ctx, playoff=playoff)
+                return self.render_to_response(context)
 
-        context['heading'] = 'Results currently unavailable'
+        game_set = game_set or self.league.latest_gameset
+        if game_set:
+            context['week'] = game_set
+        else:
+            self.template_name = '@unavailable.html'
+            context['heading'] = 'Results currently unavailable'
+
         return self.render_to_response(context)
 
 
@@ -138,18 +141,18 @@ class PicksBySeason(PickerViewBase):
 class Picks(PicksBase):
 
     def get(self, request, *args, **kwargs):
-        gs = self.league.current_gameset
-        if gs:
-            return self.weekly_picks(request, gs)
+        game_set = self.league.current_gameset
+        if game_set:
+            return self.weekly_picks(request, game_set)
 
         if self.league.config('PLAYOFFS'):
             playoff = self.league.current_playoffs
             if playoff:
                 return self.playoff_picks(request, playoff)
 
-        gs = self.league.latest_gameset
-        if gs:
-            return self.weekly_picks(request, gs)
+        game_set = self.league.latest_gameset
+        if game_set:
+            return self.weekly_picks(request, game_set)
 
         return super().get(request, heading='Picks currently unavailable')
 
