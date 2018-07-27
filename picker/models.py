@@ -392,13 +392,13 @@ class League(models.Model):
                 new_old[0 if is_new else 1] += 1
         return new_old
 
-    @staticmethod
-    def import_league(filepath):
+    @classmethod
+    def import_league(cls, filepath):
         with open(filepath) as fin:
             data = json.loads(fin.read())
 
         name = data['name']
-        league, created = League.objects.get_or_create(
+        league, created = cls.objects.get_or_create(
             name=name,
             abbr=data.get('abbr', ''.join(name.lower().split())),
             defaults={'is_pickable': data.get('is_pickable', False)},
