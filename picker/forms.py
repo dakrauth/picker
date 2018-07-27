@@ -1,7 +1,4 @@
 from django import forms
-from django.template import Context, loader, TemplateDoesNotExist
-from django.utils.safestring import mark_safe
-from django.utils.encoding import force_text
 from . import models as picker
 from . import utils
 from .conf import import_setting
@@ -14,41 +11,12 @@ game_key_format = 'game_{}'.format
 def get_picker_widget():
     global _picker_widget
     if not _picker_widget:
-        _picker_widget = import_setting('TEAM_PICKER_WIDGET') or forms.RadioSelect
+        _picker_widget = import_setting('TEAM_PICKER_WIDGET')
+        _picker_widget = _picker_widget or forms.RadioSelect
 
     return _picker_widget
 
 
-class TemplateTeamChoice(forms.RadioSelect):
-
-    template_name = 'picker/team_pick_field.html'
-
-    def __init__(self, *args, **kws):
-        super(TemplateTeamChoice, self).__init__(*args, **kws)
-
-    def render(self, name, value, attrs=None, renderer=None):
-        try:
-            tmpl = loader.get_template(self.template_name)
-        except TemplateDoesNotExist:
-            return super(TemplateTeamChoice, self).render(name, value, attrs)
-
-        labels = ''
-        str_value = force_text(value if value is not None else '')
-        final_attrs = self.build_attrs(attrs)
-        for i, (game_id, team) in enumerate(self.choices):
-            readonly = bool('readonly' in final_attrs)
-            labels += tmpl.render(Context(dict(
-                home_away='home' if i else 'away',
-                choice_id='%s_%s' % (attrs['id'], game_id),
-                name=name,
-                team=team,
-                checked='checked="checked"' if game_id == str_value else '',
-                value=game_id,
-                readonly='readonly="readonly"' if readonly else '',
-                disabled='disabled="disabled"' if readonly else ''
-            )))
-
-        return mark_safe(labels)
 
 
 class GameField(forms.ChoiceField):
@@ -60,20 +28,16 @@ class GameField(forms.ChoiceField):
         self.game_id = game.id
         self.is_game = True
         self.disabled = not self.manage and (self.game.kickoff <= utils.datetime_now())
-        widget = widget or get_picker_widget()
         super(GameField, self).__init__(
             choices=choices,
             label=game.kickoff.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
-            widget=widget
+            widget=widget or get_picker_widget()
         )
 
     def widget_attrs(self, widget):
-        return {
-            'readonly': 'readonly',
-            'disabled': 'disabled'
-        } if self.disabled else {}
+        return {'readonly': 'readonly', 'disabled': 'disabled'} if self.disabled else {}
 
 
 class FieldIter:

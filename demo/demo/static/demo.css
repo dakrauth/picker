@@ -7,3 +7,19 @@
     background: #d9534f;
     color: #fff;
 }
+
+table.picks > tbody > tr > td { vertical-align: middle; }
+
+table.picks .teams label {
+    margin: 0 .5em;
+}
+table.picks .teams label input {
+    display:inline-block;
+    height:135px
+}
+table.picks .teams label > div {
+    display: inline-block;
+    text-align: center;
+    width: 160px;
+}
+table.picks .teams label > div .record { display: block; }

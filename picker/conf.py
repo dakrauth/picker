@@ -22,7 +22,7 @@ DEFAULT_PICKER_SETTINGS = {
     'NFL_PLAYOFF_SCORE': {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 2, 10: 2, 11: 4},
 
     'PARTICIPATION_HOOKS': [],
-    'TEAM_PICKER_WIDGET': 'picker.forms.TemplateTeamChoice',
+    'TEAM_PICKER_WIDGET': None,
 }
 
 picker_settings = dict(

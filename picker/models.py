@@ -1,4 +1,6 @@
 # -*- coding:utf8 -*-
+import os
+import json
 import random
 import functools
 from importlib import import_module
@@ -13,6 +15,7 @@ from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 
+from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
 from django_extensions.db.fields.json import JSONField
 
@@ -24,6 +27,13 @@ from . import managers
 
 GAME_DURATION = timedelta(hours=4.5)
 LOGOS_DIR = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
+
+
+
+
+def get_dt(dts):
+    dt = parse(dts)
+    return list(dt.timetuple())[:5]
 
 
 class Preference(models.Model):
@@ -328,6 +338,100 @@ class League(models.Model):
 
             new_old[0 if is_new else 1] += 1
         return new_old
+
+    # [
+    #     "CIN",
+    #     "IND",
+    #     "2018-09-09T17:00Z",
+    #     "CBS",
+    #     "Lucas Oil Stadium, Indianapolis"
+    # ],
+    def import_games(self, season, filepath):
+        with open(os.path.join(filepath)) as fp:
+            data = json.loads(fp.read())
+
+        game_set = None
+        teams = self.team_dict()
+        new_old = [0, 0]
+        for sequence, item in enumerate(data):
+            byes = item['byes']
+
+            dt = parse_dt(item['games'][0][2])
+            opens = dt - timedelta(days=dt.weekday() - 1)
+            opens = opens.replace(hour=12, minute=0)
+            closes = opens + timedelta(days=6, seconds=3600*24-1)
+
+            game_set, is_new = self.game_set.get_or_create(
+                season=season,
+                week=sequence,
+                defaults={'opens': opens, 'closes': closes}
+            )
+            if not is_new:
+                if game_set.opens != opens or game_set.closes != closes:
+                    game_set.opens = opens
+                    game_set.closes = closes
+                    game_set.save()
+
+            if byes:
+                game_set.byes.add(*[teams[t] for t in byes])
+
+            for away, home, dt, tv, location in item['games']:
+                away = teams[away]
+                home = teams[home]
+                dt = parse_dt(dt)
+
+                is_new = Game.objects.get_or_create(
+                    home=home,
+                    away=away,
+                    week=game_set,
+                    kickoff=dt,
+                    tv=tv,
+                    location=location,
+                )[1]
+
+                new_old[0 if is_new else 1] += 1
+        return new_old
+
+    @staticmethod
+    def import_league(filepath):
+        with open(filepath) as fin:
+            data = json.loads(fin.read())
+
+        name = data['name']
+        league, created = League.objects.get_or_create(
+            name=name,
+            abbr=data.get('abbr', ''.join(name.lower().split())),
+            defaults={'is_pickable': data.get('is_pickable', False)},
+        )
+        confs = {}
+        divs = {}
+        teams = {}
+        for tm in data['teams']:
+            conf, div = tm['sub']
+            if conf not in confs:
+                confs[conf] = Conference.objects.get_or_create(
+                    name=conf,
+                    league=league,
+                    abbr=conf.lower()
+                )[0]
+
+            if (div, conf) not in divs:
+                divs[(div, conf)] = Division.objects.get_or_create(
+                name=name,
+                conference=confs[conf]
+            )[0]
+
+            teams[tm['abbr']] = Team.objects.get_or_create(
+                name=tm['name'],
+                abbr=tm['abbr'],
+                nickname=tm['nickname'],
+                league=league,
+                conference=confs[conf],
+                division=divs[(div, conf)],
+                logo='picker/logos/{}.gif'.format(league.abbr.lower())
+            )[0]
+
+        return league, teams
 
     @classmethod
     def get(cls, abbr=None):

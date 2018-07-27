@@ -1,0 +1,198 @@
+{
+    "name": "National Football League",
+    "is_pickable": true,
+    "teams": [
+        {
+            "abbr": "ARI",
+            "name": "Arizona",
+            "nickname": "Cardinals",
+            "sub": ["NFC","West" ]
+        },
+        {
+            "abbr": "ATL",
+            "name": "Atlanta",
+            "nickname": "Falcons",
+            "sub": ["NFC", "South"]
+        },
+        {
+            "abbr": "BAL",
+            "name": "Baltimore",
+            "nickname": "Ravens",
+            "sub": ["AFC", "North"]
+        },
+        {
+            "abbr": "BUF",
+            "name": "Buffalo",
+            "nickname": "Bills",
+            "sub": ["AFC", "East"]
+        },
+        {
+            "abbr": "CAR",
+            "name": "Carolina",
+            "nickname": "Panthers",
+            "sub": ["NFC", "South"]
+        },
+        {
+            "abbr": "CHI",
+            "name": "Chicago",
+            "nickname": "Bears",
+            "sub": ["NFC", "North"]
+        },
+        {
+            "abbr": "CIN",
+            "name": "Cincinnati",
+            "nickname": "Bengals",
+            "sub": ["AFC", "North"]
+        },
+        {
+            "abbr": "CLE",
+            "name": "Cleveland",
+            "nickname": "Browns",
+            "sub": ["AFC", "North"]
+        },
+        {
+            "abbr": "DAL",
+            "name": "Dallas",
+            "nickname": "Cowboys",
+            "sub": ["NFC", "East"]
+        },
+        {
+            "abbr": "DEN",
+            "name": "Denver",
+            "nickname": "Broncos",
+            "sub": ["AFC", "West"]
+        },
+        {
+            "abbr": "DET",
+            "name": "Detroit",
+            "nickname": "Lions",
+            "sub": ["NFC", "North"]
+        },
+        {
+            "abbr": "GB",
+            "name": "Green Bay",
+            "nickname": "Packers",
+            "sub": ["NFC", "North"]
+        },
+        {
+            "abbr": "HOU",
+            "name": "Houston",
+            "nickname": "Texans",
+            "sub": ["AFC", "South"]
+        },
+        {
+            "abbr": "IND",
+            "name": "Indianapolis",
+            "nickname": "Colts",
+            "sub": ["AFC", "South"]
+        },
+        {
+            "abbr": "JAX",
+            "name": "Jacksonville",
+            "nickname": "Jaguars",
+            "sub": ["AFC", "South"]
+        },
+        {
+            "abbr": "KC",
+            "name": "Kansas City",
+            "nickname": "Chiefs",
+            "sub": ["AFC", "West"]
+        },
+        {
+            "abbr": "LAC",
+            "name": "Los Angeles",
+            "nickname": "Chargers",
+            "sub": ["AFC", "West"]
+        },
+        {
+            "abbr": "LAR",
+            "name": "Los Angeles",
+            "nickname": "Rams",
+            "sub": ["NFC", "West"]
+        },
+        {
+            "abbr": "MIA",
+            "name": "Miami",
+            "nickname": "Dolphins",
+            "sub": ["AFC", "East"]
+        },
+        {
+            "abbr": "MIN",
+            "name": "Minnesota",
+            "nickname": "Vikings",
+            "sub": ["NFC", "North"]
+        },
+        {
+            "abbr": "NE",
+            "name": "New England",
+            "nickname": "Patriots",
+            "sub": ["AFC", "East"]
+        },
+        {
+            "abbr": "NO",
+            "name": "New Orleans",
+            "nickname": "Saints",
+            "sub": ["NFC", "South"]
+        },
+        {
+            "abbr": "NYG",
+            "name": "New York",
+            "nickname": "Giants",
+            "sub": ["NFC", "East"]
+        },
+        {
+            "abbr": "NYJ",
+            "name": "New York",
+            "nickname": "Jets",
+            "sub": ["AFC", "East"]
+        },
+        {
+            "abbr": "OAK",
+            "name": "Oakland",
+            "nickname": "Raiders",
+            "sub": ["AFC", "West"]
+        },
+        {
+            "abbr": "PHI",
+            "name": "Philadelphia",
+            "nickname": "Eagles",
+            "sub": ["NFC", "East"]
+        },
+        {
+            "abbr": "PIT",
+            "name": "Pittsburgh",
+            "nickname": "Steelers",
+            "sub": ["AFC", "North"]
+        },
+        {
+            "abbr": "SF",
+            "name": "San Francisco",
+            "nickname": "49ers",
+            "sub": ["NFC", "West"]
+        },
+        {
+            "abbr": "SEA",
+            "name": "Seattle",
+            "nickname": "Seahawks",
+            "sub": ["NFC", "West"]
+        },
+        {
+            "abbr": "TB",
+            "name": "Tampa Bay",
+            "nickname": "Buccaneers",
+            "sub": ["NFC", "South"]
+        },
+        {
+            "abbr": "TEN",
+            "name": "Tennessee",
+            "nickname": "Titans",
+            "sub": ["AFC", "South"]
+        },
+        {
+            "abbr": "WSH",
+            "name": "Washington",
+            "nickname": "Redskins",
+            "sub": ["NFC", "East"]
+        }
+    ]
+}

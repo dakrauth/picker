@@ -1,0 +1,14 @@
+<label class="team-choice {{ home_away }}" for="{{ choice_id }}" >
+    {% if home_away == "home" %}
+    <input type="radio" id="{{ choice_id }}" {{ readonly }} {{ disabled }} value="{{ value }}" name="{{ name }}" {{ checked }}>
+    {% endif %}
+    <div class="team-info team-{{ team.abbr.lower }}">
+        <img src="{{ team.logo.url }}"><br>
+        <span class="market">{{ team.name }}</span>
+        <span class="nickname">{{ team.nickname }}</span>
+        <span class="record">{{ team.record_as_string }}</span>
+    </div>
+    {% if home_away == "away" %}
+    <input type="radio" id="{{ choice_id }}" {{ readonly }} {{ disabled }} value="{{ value }}" name="{{ name }}" {{ checked }}>
+    {% endif %}
+</label>
