@@ -13,27 +13,20 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
 
 from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
 from django_extensions.db.fields.json import JSONField
 
-from .utils import Attr, datetime_now, parse_feed, percent
 from . import signals
 from .exceptions import PickerResultException
 from .conf import get_setting as picker_setting
 from . import managers
+from . import utils
+from .utils import datetime_now
 
 GAME_DURATION = timedelta(hours=4.5)
 LOGOS_DIR = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
-
-
-
-
-def get_dt(dts):
-    dt = parse(dts)
-    return list(dt.timetuple())[:5]
 
 
 class Preference(models.Model):
@@ -178,7 +171,7 @@ class League(models.Model):
     @cached_property
     def feed(self):
         url = self.config('FEED_URL')
-        return parse_feed(url) if url else None
+        return utils.parse_feed(url) if url else None
 
     @cached_property
     def scores_module(self):
@@ -271,81 +264,11 @@ class League(models.Model):
     def config(self, key, default=None):
         return picker_setting('{}_{}'.format(self.abbr.upper(), key), default)
 
-    def create_season(self, season, schedule, byes=None):
-        '''
-        Create all GameSet and Game entries for a season, where:
+    def preferences(self):
+        return self.preference_set.filter(
+            league=self,
+        ).select_related().order_by('user__username')
 
-        *   `season` is an int (2009)
-        *   `schedule` is an iterable of 6-tuples of the following format:
-            (sequence #, away, home, datetime or datetime-tuple, TV, location)
-
-            Away and home teams are referenced by abbreviation.
-
-            Example:
-
-                (1, 'STL', 'SEA', (2009, 9, 13, 16, 15), 'CBS', 'Qwest Field')
-
-        *   `byes` is a dictionary keyed by sequence number with the value being a
-            list of team abbreviations
-
-            Example:
-
-                byes = {
-                    4: ['ATL', 'PHI', 'ARI', 'CAR'],
-                    5: ['CHI', 'GB', 'NO', 'LAC'],
-                 ...
-                }
-        '''
-        current_sequence = None
-        game_set = None
-        teams = self.team_dict()
-        new_old = [0, 0]
-        for sequence, away, home, dt, tv, where in schedule:
-            away = teams[away]
-            home = teams[home]
-            dt = dt if isinstance(dt, datetime) else datetime(*dt)
-            dt = dt.replace(tzinfo=UTC)
-
-            if sequence != current_sequence:
-                current_sequence = sequence
-
-                opens = dt - timedelta(days=dt.weekday() - 1)
-                opens = opens.replace(hour=12, minute=0)
-                closes = opens + timedelta(days=6, seconds=3600*24-1)
-
-                game_set, is_new = self.game_set.get_or_create(
-                    season=season,
-                    week=sequence,
-                    defaults={'opens': opens, 'closes': closes}
-                )
-                if not is_new:
-                    if game_set.opens != opens or game_set.closes != closes:
-                        game_set.opens = opens
-                        game_set.closes = closes
-                        game_set.save()
-
-                if byes and (sequence in byes):
-                    game_set.byes.add(*[teams[t] for t in byes[sequence]])
-
-            is_new = Game.objects.get_or_create(
-                home=home,
-                away=away,
-                week=game_set,
-                kickoff=dt,
-                tv=tv,
-                location=where,
-            )[1]
-
-            new_old[0 if is_new else 1] += 1
-        return new_old
-
-    # [
-    #     "CIN",
-    #     "IND",
-    #     "2018-09-09T17:00Z",
-    #     "CBS",
-    #     "Lucas Oil Stadium, Indianapolis"
-    # ],
     def import_games(self, season, filepath):
         with open(os.path.join(filepath)) as fp:
             data = json.loads(fp.read())
@@ -354,8 +277,6 @@ class League(models.Model):
         teams = self.team_dict()
         new_old = [0, 0]
         for sequence, item in enumerate(data):
-            byes = item['byes']
-
             dt = parse_dt(item['games'][0][2])
             opens = dt - timedelta(days=dt.weekday() - 1)
             opens = opens.replace(hour=12, minute=0)
@@ -372,8 +293,8 @@ class League(models.Model):
                     game_set.closes = closes
                     game_set.save()
 
-            if byes:
-                game_set.byes.add(*[teams[t] for t in byes])
+            if item['byes']:
+                game_set.byes.add(*[teams[t] for t in item['byes']])
 
             for away, home, dt, tv, location in item['games']:
                 away = teams[away]
@@ -688,7 +609,7 @@ class GameSet(models.Model):
             wp = self.pick_for_user(pref.user)
             if wp:
                 wp.complete_picks(auto, list(self.game_set.all()))
-            elif can_user_participate(pref, self):
+            elif utils.can_user_participate(pref, self):
                 strategy = Strategy.RANDOM if auto else Strategy.USER
                 self.create_picks_for_user(pref.user, strategy, True)
 
@@ -737,7 +658,7 @@ class GameSet(models.Model):
 
     def weekly_results(self):
         picks = list(self.pick_set.select_related())
-        return sorted_standings(
+        return utils.sorted_standings(
             picks,
             key=lambda ps: (ps.correct, -ps.points_delta),
             reverse=True
@@ -959,7 +880,7 @@ class GamePick(models.Model):
         return None
 
 
-class PlayoffResult(Attr):
+class PlayoffResult(utils.Attr):
 
     def __repr__(self):
         return '%d,%d,%s' % (self.score, self.delta, self.picks)
@@ -1058,97 +979,3 @@ class PlayoffPicks(models.Model):
         pts = self.picks.get('points', '')
         return int(pts) if pts.isdigit() else 0
 
-
-class RosterStats:
-
-    def __init__(self, preference, league, season=None):
-        self.preference = preference
-        self.user = preference.user
-        self.season = season
-        self.league = league
-        self.correct = 0
-        self.wrong = 0
-        self.points_delta = 0
-
-        qs = self.user.pick_set.filter(week__league=league).select_related().filter(
-            models.Q(correct__gt=0) | models.Q(wrong__gt=0)
-        )
-
-        if season:
-            qs = qs.filter(week__season=season)
-
-        self.weeks_played = 0
-        for wp in qs:
-            self.weeks_played += 1
-            self.correct += wp.correct
-            self.wrong += wp.wrong
-            self.points_delta += wp.points_delta if wp.week.points else 0
-
-        self.is_active = self.preference.is_active
-        self.pct = percent(self.correct, self.correct + self.wrong)
-        self.avg_points_delta = (
-            float(self.points_delta) / self.weeks_played
-            if self.weeks_played
-            else 0
-        )
-
-    @property
-    def weeks_won(self):
-        query = GameSet.objects.filter(pick_set__is_winner=True, pick_set__user=self.user)
-        if self.season:
-            query = query.filter(season=self.season)
-
-        return list(query.select_related())
-
-    def __str__(self):
-        return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
-
-    __repr__ = __str__
-
-    @staticmethod
-    def get_details(league, season=None):
-        season = season or league.current_season
-        prefs = Preference.objects.filter(
-            league=league
-        ).select_related().order_by('user__username')
-
-        def keyfn(rs):
-            return (rs.correct, -rs.points_delta, rs.weeks_played)
-
-        stats = [RosterStats(p, league) for p in prefs]
-        by_user = {
-            entry.user: entry for entry in sorted_standings(stats, key=keyfn)
-        }
-
-        stats = [RosterStats(p, league, season) for p in prefs]
-        return [
-            (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
-        ]
-
-
-def sorted_standings(items, key=None, reverse=True):
-    weighted = []
-    prev_place, prev_results = 1, (0, 0)
-    for i, item in enumerate(sorted(items, reverse=reverse, key=key), 1):
-        results = (item.correct, item.points_delta)
-        item.place = prev_place if results == prev_results else i
-        prev_place, prev_results = item.place, results
-        weighted.append(item)
-
-    return weighted
-
-
-__participation_hooks = None
-
-
-def can_user_participate(pref, week):
-    global __participation_hooks
-    if __participation_hooks is None:
-        hooks = picker_setting('PARTICIPATION_HOOKS', [])
-        __participation_hooks = [import_string(hook) for hook in hooks]
-
-    for hook in __participation_hooks:
-        if not hook(pref, week):
-            return False
-
-    return True

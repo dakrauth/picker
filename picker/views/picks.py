@@ -1,7 +1,8 @@
 from django import http
 from django.shortcuts import get_object_or_404, get_list_or_404
 
-from ..models import League, RosterStats, Preference, PickerResultException
+from ..models import League, Preference, PickerResultException
+from ..stats import RosterStats
 from .base import (
     SimplePickerViewBase,
     PickerViewBase,

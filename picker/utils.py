@@ -7,6 +7,8 @@ from django.conf import settings
 from django.template import loader
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from django.utils.module_loading import import_string
+
 import dateutil.tz
 from dateutil.parser import parse as dt_parse
 import feedparser
@@ -26,6 +28,33 @@ else:
         return datetime.utcnow().replace(tzinfo=dateutil.tz.UTC)
 
 json_dumps = functools.partial(json.dumps, indent=4)
+
+__participation_hooks = None
+
+
+def can_user_participate(pref, week):
+    global __participation_hooks
+    if __participation_hooks is None:
+        hooks = get_setting('PARTICIPATION_HOOKS', [])
+        __participation_hooks = [import_string(hook) for hook in hooks]
+
+    for hook in __participation_hooks:
+        if not hook(pref, week):
+            return False
+
+    return True
+
+
+def sorted_standings(items, key=None, reverse=True):
+    weighted = []
+    prev_place, prev_results = 1, (0, 0)
+    for i, item in enumerate(sorted(items, reverse=reverse, key=key), 1):
+        results = (item.correct, item.points_delta)
+        item.place = prev_place if results == prev_results else i
+        prev_place, prev_results = item.place, results
+        weighted.append(item)
+
+    return weighted
 
 
 def user_email_exists(email):
@@ -70,10 +99,6 @@ def db_execute(sql, args):
     cursor = connection.cursor()
     cursor.execute(sql, args)
     return cursor.fetchall()
-
-
-def percent(num, denom):
-    return 0.0 if denom == 0 else (float(num) / denom) * 100.0
 
 
 def render_to_string(request, template, data=None):
