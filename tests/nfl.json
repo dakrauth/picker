@@ -1,5 +1,6 @@
 {
     "name": "National Football League",
+    "abbr": "NFL",
     "is_pickable": true,
     "teams": [
         {

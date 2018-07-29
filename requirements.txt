@@ -6,4 +6,3 @@ python-dateutil==2.7.3
 django-extensions<2.1
 feedparser==5.2.1
 pycodestyle
--e ..

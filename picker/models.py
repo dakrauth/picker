@@ -278,20 +278,23 @@ class League(models.Model):
             league=self,
         ).select_related().order_by('user__username')
 
-    def import_games(self, season, filepath):
+    @classmethod
+    def import_season(cls, filepath):
         with open(os.path.join(filepath)) as fp:
             data = json.loads(fp.read())
 
         game_set = None
-        teams = self.team_dict()
+        league = cls.objects.get(abbr=data['league'])
+        season = data['season']
+        teams = league.team_dict()
         new_old = [0, 0]
-        for sequence, item in enumerate(data):
+        for sequence, item in enumerate(data['weeks']):
             dt = parse_dt(item['games'][0][2])
             opens = dt - timedelta(days=dt.weekday() - 1)
             opens = opens.replace(hour=12, minute=0)
             closes = opens + timedelta(days=6, seconds=3600*24-1)
 
-            game_set, is_new = self.game_set.get_or_create(
+            game_set, is_new = league.game_set.get_or_create(
                 season=season,
                 week=sequence,
                 defaults={'opens': opens, 'closes': closes}
@@ -328,9 +331,10 @@ class League(models.Model):
             data = json.loads(fin.read())
 
         name = data['name']
+        default_abbr = ''.join(c[0] for c in name.upper().split())
         league, created = cls.objects.get_or_create(
             name=name,
-            abbr=data.get('abbr', ''.join(name.lower().split())),
+            abbr=data.get('abbr', default_abbr),
             defaults={'is_pickable': data.get('is_pickable', False)},
         )
         confs = {}

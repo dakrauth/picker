@@ -16,9 +16,14 @@ For Linux/Mac OS X:
 .. code-block:: bash
 
     $ git clone https://github.com/dakrauth/picker.git
-    $ cd picker/demo
-    $ make init
-    $ ./manage.py runserver
+    $ cd picker
+    $ python -m venv venv
+    $ pip install -r requirements.txt
+    $ pip install -e .
+    $ pip install -e demo
+    $ demo migrate
+    $ demo loaddemo
+    $ demo runserver
 
 Browse to: http://127.0.0.1:8000
 

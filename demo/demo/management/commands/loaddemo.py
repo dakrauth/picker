@@ -1,6 +1,8 @@
 import os
-from pprint import pprint
+from pathlib import Path
+from datetime import datetime
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from picker import models as picker
@@ -8,24 +10,33 @@ from picker.utils import datetime_now
 
 
 def load_users(league):
-    if not User.objects.filter(username='demo').exists():
-        user = User.objects.create_superuser('demo', 'demo@example.com', 'demo')
-        picker.Preference.objects.get_or_create(user=user, league=league)
-    for i in range(1,10):
+    new, old = 0, 0
+    if User.objects.filter(username='demo').exists():
+        old += 1
+    else:
+        new += 1
+        picker.Preference.objects.get_or_create(
+            user=User.objects.create_superuser('demo', 'demo@example.com', 'demo')
+        )
+        print('Superuser username/password: demo/demo')
+
+
+    for i in range(1, 10):
         name = 'user{}'.format(i)
-        if not User.objects.filter(username=name).exists():
-            picker.Preference.objects.get_or_create(
+        if User.objects.filter(username=name).exists():
+            old += 1
+        else:
+            new += 1
+            picker.Preference.objects.create(
                 user=User.objects.create_user(
                     name,
                     '{}@example.com'.format(name),
                     password=name
                 ),
-                league=league
             )
+            print('User username/password: {}/{}'.format(name, name))
 
-
-def file_in_this_dir(name):
-    return os.path.join(os.path.dirname(__file__), name)
+    return new, old
 
 
 class Command(BaseCommand):
@@ -33,12 +44,31 @@ class Command(BaseCommand):
     requires_migrations_checks = True
     requires_system_checks = False
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--league',
+            default='tests/nfl.json',
+            dest='league',
+            help='File path to league import JSON',
+        )
+
+        parser.add_argument(
+            '--season',
+            default='tests/nfl2018.json',
+            dest='season',
+            help='File path to season import JSON',
+        )
+
     def handle(self, *args, **options):
-        season = 2018
-        league, teams = picker.League.import_league(file_in_this_dir('nfl.json'))
-        new_old = league.import_games(season, file_in_this_dir('nfl{}.json'.format(season)))
-        gs = league.game_set.get(season=2018, week=1)
+        call_command('migrate', no_input=True, interactive=False)
+        call_command('import_league', options['league'])
+        call_command('import_season', options['season'])
+
+        gs = picker.GameSet.objects.order_by('-id')[0]
+        league = gs.league
+        league.game_set.get(season=gs.season, week=1)
         gs.opens = datetime_now()
         gs.save()
-        load_users(league)
-        print('Created {} new, {} old games'.format(*new_old))
+
+        new_old = load_users(league)
+        print('Created {} new, {} old users'.format(*new_old))
