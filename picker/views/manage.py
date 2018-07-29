@@ -40,7 +40,7 @@ class ManageSeason(ManagementViewBase):
     template_name = '@manage/season.html'
 
     def extra_data(self, data):
-        data['weeks'] = get_list_or_404(self.league.game_set, season=self.args[0])
+        data['weeks'] = get_list_or_404(self.league.game_set, season=self.season)
 
 
 class ManageWeek(ManagementViewBase):
@@ -48,7 +48,8 @@ class ManageWeek(ManagementViewBase):
 
     @property
     def gameset(self):
-        season, week = self.args
+        season = self.season
+        week = self.args[0]
         return get_object_or_404(self.league.game_set, season=season, week=week)
 
     def redirect_game_set(self, gs):

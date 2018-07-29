@@ -1,9 +1,10 @@
 {% extends league_base %}
 {% block title %}Manage Weekly Results - {{ season }}
-
+{% load picker_tags %}
 {% endblock %}
 {% block main_content %}
     <h1>Manage {{ season }} &ndash; Select a week</h1>
+    {% all_seasons_nav season league "manage" %}
     <ul>
     {% for week in weeks %}
         <li>

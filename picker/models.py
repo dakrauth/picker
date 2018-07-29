@@ -3,6 +3,7 @@ import os
 import json
 import random
 import functools
+from collections import ChainMap
 from importlib import import_module
 from datetime import datetime, timedelta
 
@@ -20,43 +21,32 @@ from django_extensions.db.fields.json import JSONField
 
 from . import signals
 from .exceptions import PickerResultException
-from .conf import get_setting as picker_setting
+from .conf import picker_settings
 from . import managers
 from . import utils
 from .utils import datetime_now
 
 GAME_DURATION = timedelta(hours=4.5)
-LOGOS_DIR = picker_setting('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
+LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
 
 
 class Preference(models.Model):
-
-    class Status(ChoiceEnumeration):
-        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
-        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
-        SUSPENDED = ChoiceEnumeration.Option('SUSP', 'Suspended')
 
     class Autopick(ChoiceEnumeration):
         NONE = ChoiceEnumeration.Option('NONE', 'None')
         RANDOM = ChoiceEnumeration.Option('RAND', 'Random', default=True)
 
-    league = models.ForeignKey('League', on_delete=models.CASCADE)
-    favorite_team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True, blank=True)
+    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='picker_preferences'
     )
-    status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
-    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
 
     objects = managers.PreferenceManager()
 
-    class Meta:
-        unique_together = ('league', 'user')
-
     def __str__(self):
-        return '{}:{}'.format(self.user.username, self.league)
+        return str('{} Preference'.format(self.user))
 
     @cached_property
     def email(self):
@@ -68,11 +58,7 @@ class Preference(models.Model):
 
     @cached_property
     def is_active(self):
-        return self.user.is_active and self.status == self.Status.ACTIVE
-
-    @property
-    def is_suspended(self):
-        return self.status == self.Status.SUSPENDED
+        return self.user.is_active
 
     @property
     def should_autopick(self):
@@ -101,13 +87,13 @@ class PickerGrouping(models.Model):
 class PickerFavorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     league = models.ForeignKey('picker.League', on_delete=models.CASCADE)
-    team = models.ForeignKey('picker.Team', on_delete=models.CASCADE)
+    team = models.ForeignKey('picker.Team', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return '{}: {} ({})'.format(self.user, self.team, self.league)
 
     def save(self, *args, **kws):
-        if self.team.league != self.league:
+        if self.team and self.team.league != self.league:
             raise ValueError('Team {} not in league {}'.format(self.team, self.league))
 
         return super().save(*args, **kws)
@@ -133,6 +119,14 @@ class PickerMembership(models.Model):
     )
     status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
     autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
+
+    @property
+    def is_active(self):
+        return self.status == self.Status.ACTIVE
+
+    @property
+    def is_management(self):
+        return self.status == self.Status.MANAGER
 
 
 class League(models.Model):
@@ -160,7 +154,7 @@ class League(models.Model):
         return self.abbr.lower()
 
     def _load_league_module(self, mod_name):
-        base = picker_setting('LEAGUE_MODULE_BASE', 'picker.league')
+        base = picker_settings.get('LEAGUE_MODULE_BASE', 'picker.league')
         if base:
             try:
                 return import_module('{}.{}.{}'.format(base, self.lower, mod_name))
@@ -242,7 +236,7 @@ class League(models.Model):
 
     @cached_property
     def current_season(self):
-        return self.config('CURRENT_SEASON', datetime_now().year)
+        return self.config('CURRENT_SEASON') or self.latest_season
 
     def season_weeks(self, season=None):
         season = season or self.current_season or self.latest_season
@@ -261,8 +255,23 @@ class League(models.Model):
         gs = self.current_gameset
         signals.picker_reminder.send(sender=GameSet, week=gs)
 
+    @cached_property
+    def _config(self):
+        core = {}
+        base = {}
+        league = {}
+        for key, value in picker_settings.items():
+            if key == '_BASE':
+                base = picker_settings[key]
+            elif isinstance(value, dict) and key == self.abbr:
+                league = value
+            else:
+                core[key] = value
+
+        return ChainMap(league, base, core)
+
     def config(self, key, default=None):
-        return picker_setting('{}_{}'.format(self.abbr.upper(), key), default)
+        return self._config.get(key, default)
 
     def preferences(self):
         return self.preference_set.filter(
@@ -356,8 +365,8 @@ class League(models.Model):
 
     @classmethod
     def get(cls, abbr=None):
-        abbr = abbr or picker_setting('DEFAULT_LEAGUE', 'nfl')
-        return League.objects.get(abbr=abbr)
+        abbr = abbr or picker_settings.get('DEFAULT_LEAGUE', 'nfl')
+        return cls.objects.get(abbr=abbr)
 
 
 class Conference(models.Model):
@@ -423,12 +432,15 @@ class Team(models.Model):
             models.Q(home=self) | models.Q(away=self),
             week__season=season,
         ):
-            if game.winner.id == self.id:
-                wins += 1
-            elif game.status == Game.Status.TIE:
+            if game.status == Game.Status.TIE:
                 ties += 1
             else:
-                losses += 1
+                winner = game.winner
+                if winner:
+                    if winner.id == self.id:
+                        wins += 1
+                    else:
+                        losses += 1
 
         return (wins, losses, ties) if ties else (wins, losses)
 
@@ -567,20 +579,6 @@ class GameSet(models.Model):
     def games(self):
         return tuple(self.game_set.order_by('kickoff'))
 
-    @property
-    def winners(self):
-        winners = []
-        if self.points:
-            for place, item in self.weekly_results():
-                if place > 1:
-                    break
-                winners.append(item.user)
-        return winners
-
-    def update_pick_status(self):
-        for wp in self.pick_set.all():
-            wp.update_status()
-
     def pick_for_user(self, user):
         try:
             return self.pick_set.select_related().get(user=user)
@@ -618,7 +616,10 @@ class GameSet(models.Model):
         if not results:
             raise PickerResultException('Results unavailable')
 
-        completed = {g['home']: g for g in results}
+        if results['week'] != self.week and results['season'] != self.season:
+            raise PickerResultException('Results not updated, wrong season or week')
+
+        completed = {g['home']: g for g in results['games']}
         if not completed:
             raise PickerResultException('No completed results')
 
@@ -656,13 +657,21 @@ class GameSet(models.Model):
             gs.closes = (ko + nxt).replace(hour=11, minute=59, second=59)
             gs.save()
 
+    @property
+    def winners(self):
+        if self.points:
+            for item in self.weekly_results():
+                if item.place == 1:
+                    yield item
+
+    def update_pick_status(self):
+        winners = set(w.id for w in self.winners)
+        for wp in self.pick_set.all():
+            wp.update_status(wp.id in winners)
+
     def weekly_results(self):
         picks = list(self.pick_set.select_related())
-        return utils.sorted_standings(
-            picks,
-            key=lambda ps: (ps.correct, -ps.points_delta),
-            reverse=True
-        )
+        return utils.sorted_standings(picks, key=PickSet.sort_key, reverse=True)
 
 
 class Game(models.Model):
@@ -793,6 +802,9 @@ class PickSet(models.Model):
     def __str__(self):
         return '%s %s %d' % (self.game_set, self.user, self.correct)
 
+    def sort_key(self):
+        return (self.correct, -self.points_delta)
+
     @property
     def game_set(self):
         return self.week
@@ -812,10 +824,11 @@ class PickSet(models.Model):
     def progress(self):
         return self.gamepick_set.filter(winner__isnull=False).count()
 
-    def update_status(self):
+    def update_status(self, is_winner=False):
         picks = self.gamepick_set.all()
         self.correct = sum([1 for gp in picks if gp.is_correct])
         self.wrong = len(picks) - self.correct
+        self.is_winner = is_winner
         self.save()
         return self.correct
 

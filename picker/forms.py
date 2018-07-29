@@ -70,7 +70,7 @@ class BasePickForm(forms.Form):
 
         if games:
             self.fields['points'] = forms.IntegerField(
-                label=games[-1].vs_description,
+                label='{} {}'.format('Points Total:', games[-1].vs_description),
                 required=False
             )
 
@@ -219,22 +219,33 @@ class PlayoffBuilderForm(forms.ModelForm):
 
 
 class PreferenceForm(forms.ModelForm):
-    email = forms.EmailField(widget=forms.TextInput(attrs=dict(size='50')))
-    favorite_team = forms.ModelChoiceField(
-        picker.Team.objects.filter(league__abbr='NFL'),
-        empty_label='-- Select --',
-        required=False
-    )
 
     class Meta:
         model = picker.Preference
-        exclude = ('user', 'status', 'autopick', 'league')
+        fields = ('autopick',)
 
     def __init__(self, instance, *args, **kws):
         kws['instance'] = instance
         self.current_email = instance.user.email.lower()
         kws.setdefault('initial', {})['email'] = self.current_email
         super(PreferenceForm, self).__init__(*args, **kws)
+
+        for league in picker.League.objects.all():
+            field_name = '{}_favorite'.format(league.abbr)
+            current = None
+            if instance:
+                try:
+                    current = picker.PickerFavorite.objects.get(user=instance.user, league=league)
+                except picker.PickerFavorite.DoesNotExist:
+                    pass
+
+            self.fields[field_name] = forms.ModelChoiceField(
+                picker.Team.objects.filter(league=league),
+                label='{} Fav'.format(league.abbr.upper()),
+                empty_label='-- Select --',
+                required=False,
+                initial=current.team if current else None
+            )
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower().strip()
@@ -250,3 +261,16 @@ class PreferenceForm(forms.ModelForm):
             if email != self.current_email:
                 self.instance.user.email = email
                 self.instance.user.save()
+
+            picker.PickerFavorite.objects.filter(user=self.instance.user).delete()
+            for key in self.cleaned_data:
+                if not key.endswith('_favorite'):
+                    continue
+
+                abbr = key.rsplit('_')[0]
+                league = picker.League.get(abbr)
+                picker.PickerFavorite.objects.create(
+                    league=league,
+                    user=self.instance.user,
+                    team=self.cleaned_data[key]
+                )

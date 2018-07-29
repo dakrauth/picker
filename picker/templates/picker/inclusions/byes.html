@@ -1,0 +1,3 @@
+{% if week.byes.count %}
+<p><strong>Byes:</strong> <em>{{ week.byes.all|join:", " }}</em></p>
+{% endif %}

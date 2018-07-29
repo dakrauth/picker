@@ -4,10 +4,12 @@
         <li{% if sw == week %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
-        {% if week and show_playoffs %}
+        {% if week %}
+        {% if show_playoffs %}
         <li{% if week.week == "playoffs" %} class="active"{% endif %}>
             <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
         </li>
+        {% endif %}
         {% if is_manager %}
         <li><a href="{% url 'picker-manage-week' league.lower week.season week.week %}">Manage</a></li>
         {% endif %}

@@ -168,7 +168,7 @@ def scores(playoffs=False, cache_ttl=120, no_cache=False, completed=False):
             cache.set('nfl_score_strip', data, cache_ttl)
 
     if data and completed:
-        data = [
+        data['games'] = [
             g for g in data['games']
             if g['status'].startswith(('Final', 'F/OT'))
         ]

@@ -72,8 +72,7 @@ class GameSetAdmin(admin.ModelAdmin):
 
 
 class PreferenceAdmin(admin.ModelAdmin):
-    list_display = ('user', 'league', 'status')
-    list_filter = ('league', 'user')
+    list_display = ('user', 'autopick')
 
 
 class GamePickInlineForm(forms.ModelForm):

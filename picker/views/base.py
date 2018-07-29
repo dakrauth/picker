@@ -118,6 +118,8 @@ class SimplePickerViewBase(TemplateView):
         if season and season.isdigit():
             return int(season)
 
+        league = self.league
+        current_season = league.current_season
         return season if season else self.league.current_season
 
     @cached_property
@@ -141,10 +143,7 @@ class SimplePickerViewBase(TemplateView):
         league = self.league
         if hasattr(self.request, 'user') and self.request.user.is_authenticated:
             try:
-                data['preferences'] = Preference.objects.get(
-                    league=league,
-                    user=self.request.user
-                )
+                data['preferences'] = Preference.objects.get(user=self.request.user)
             except Preference.DoesNotExist:
                 pass
 

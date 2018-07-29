@@ -7,9 +7,7 @@
         Week #{{ week.week }}
         <small><a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></small>
     </h1>
-    {% having week.byes.all as byes %}
-    <p><strong>Byes:</strong> {{ byes|join:", " }}</p>
-    {% endhaving %}
+    {% include "picker/inclusions/byes.html" %}
     {% season_nav week "picks" %}
     {% if form.errors %}
     <p class="errorlist">Please fix the errors below:</p>

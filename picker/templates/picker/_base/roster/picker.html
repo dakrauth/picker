@@ -1,7 +1,8 @@
 {% extends league_base %}
 {% load picker_tags %}
 {% block title %}Roster Profile{% endblock %}
-{% block fav_team %}team-{{ profile.favorite_team.abbr|default:"ne"|lower }}{% endblock fav_team %}
+{% favorite_team profile.user as fav %}
+{% block fav_team %}team-{{ fav.abbr|default:"none"|lower }}{% endblock fav_team %}
 {% block main_content %}
 <h1 class="profile-header clearfix">
     <img class="top" src="{{ profile.user|picker_user_image }}">
@@ -9,10 +10,10 @@
     <small>Since {{ profile.user.date_joined|date:"M j, Y" }}</small>
 </h1>
 <p class="home-team-choice">
-    {% having profile.favorite_team as team %}
-    {% if team.logo %}<img style="width: 62px; height: 47px" src="{{ team.logo.url }}">{% endif %}
-    <a href="{{ team.get_absolute_url }}">{{ team }}</a>
-    {% endhaving %}
+    {% if fav %}
+    {% if fav.logo %}<img style="width: 62px; height: 47px" src="{{ fav.logo.url }}">{% endif %}
+    <a href="{{ fav.get_absolute_url }}">{{ fav }}</a>
+    {% endif %}
 </p>
 <table class="table table-striped roster">
 <thead>
@@ -35,13 +36,13 @@
         <td>{{ entry.weeks_played }}</td>
         <td>
             {% with entry.weeks_won as weeks_won %}
-            {{ weeks_won|length }}{% if weeks_won and entry.season %} ( 
+            {{ weeks_won|length }}{% if weeks_won and entry.season %} (
             {% for w in weeks_won %}
             <a href="{{ w.get_absolute_url }}">
                 #{{ w.week }}</a>{% if not forloop.last  %}, {% endif %}
             {% endfor %})
             {% endif %}
-            {% endwith %} 
+            {% endwith %}
         </td>
         <td>{{ entry.correct }}</td>
         <td>{{ entry.wrong }}</td>

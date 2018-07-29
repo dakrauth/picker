@@ -41,7 +41,10 @@ class Schedule(SimplePickerViewBase):
     template_name = '@schedule/season.html'
 
     def extra_data(self, data):
-        data['weeks'] = get_list_or_404(self.league.game_set.select_related())
+        season = self.season or self.league.latest_season
+        data['weeks'] = get_list_or_404(
+            self.league.game_set.filter(season=self.season).select_related()
+        )
 
 
 # Views requiring login
