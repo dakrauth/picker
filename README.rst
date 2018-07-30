@@ -21,7 +21,6 @@ For Linux/Mac OS X:
     $ pip install -r requirements.txt
     $ pip install -e .
     $ pip install -e demo
-    $ demo migrate
     $ demo loaddemo
     $ demo runserver
 
