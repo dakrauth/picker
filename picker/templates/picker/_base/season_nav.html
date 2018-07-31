@@ -2,16 +2,16 @@
 <nav class="season-nav">
     <ul class="pagination {{ relative_to }}">{% for sw in season_weeks %}
         <li{% if sw == week %} class="active"{% endif %}>
-            <a href="/{{ league.lower }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
+            <a href="/{{ league.slug }}/{{ relative_to }}/{{ sw.season }}/{{ sw.week }}/">{{ sw.week }}</a>
         </li> {% endfor %}
         {% if week %}
         {% if show_playoffs %}
         <li{% if week.week == "playoffs" %} class="active"{% endif %}>
-            <a href="/{{ league.lower }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
+            <a href="/{{ league.slug }}/{{ relative_to }}/{{ week.season }}/playoffs/">Playoffs</a>
         </li>
         {% endif %}
         {% if is_manager %}
-        <li><a href="{% url 'picker-manage-week' league.lower week.season week.week %}">Manage</a></li>
+        <li><a href="{% url 'picker-manage-week' league.slug week.season week.week %}">Manage</a></li>
         {% endif %}
         {% endif %}
     </ul>

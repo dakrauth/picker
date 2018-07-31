@@ -42,7 +42,7 @@ def all_seasons_nav(context, current, league, relative_to):
     user = context['user']
     return {
         'label': 'All seasons',
-        'current': int(current),
+        'current': int(current) if current else None,
         'relative_to': relative_to,
         'user': user,
         'is_manager': user.is_superuser or user.is_staff,

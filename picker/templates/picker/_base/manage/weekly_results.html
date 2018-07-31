@@ -18,7 +18,7 @@
     <form method="post">{% csrf_token %}
     <div class="panel panel-danger">
         <div class="panel-heading">Weekly Results</div>
-        <table class="table table-striped manage-picks">
+        <table class="table table-striped picks manage-picks">
             <tr>
                 <th class="kickoff">Kickoff</th>
                 <th class="teams">Away vs. Home</th>
@@ -28,7 +28,7 @@
             <tr>
                 <td class="kickoff">
                     {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
-                    <a href="{% url 'picker-manage-game' league.lower field.field.game.id  %}">
+                    <a href="{% url 'picker-manage-game' league.slug field.field.game.id  %}">
                         <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
                         <span class="date-weekday">{{ dt|date:"D, P" }}</span></a>
                     {% endwith %}{% else %}{{ field.label }}

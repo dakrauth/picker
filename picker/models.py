@@ -76,12 +76,14 @@ class PickerGrouping(models.Model):
 
     name = models.CharField(max_length=75, unique=True)
     leagues = models.ManyToManyField('picker.League', blank=True)
-    members = models.ManyToManyField('picker.PickerMembership', blank=True)
     status = models.CharField(
         max_length=4,
         choices=Status.CHOICES,
         default=Status.DEFAULT
     )
+
+    def __str__(self):
+        return self.name
 
 
 class PickerFavorite(models.Model):
@@ -111,14 +113,17 @@ class PickerMembership(models.Model):
         SUSPENDED = ChoiceEnumeration.Option('SUSP', 'Suspended')
         MANAGER = ChoiceEnumeration.Option('MNGT', 'Manager')
 
-    group = models.ForeignKey(PickerGrouping, on_delete=models.CASCADE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='picker_memberships'
     )
+    group = models.ForeignKey(PickerGrouping, on_delete=models.CASCADE, related_name='members')
     status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
     autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
+
+    def __str__(self):
+        return str(self.user)
 
     @property
     def is_active(self):
@@ -129,35 +134,37 @@ class PickerMembership(models.Model):
         return self.status == self.Status.MANAGER
 
 
+def temp_slug():
+    return '{:10.0f}'.format(random.random() * 10_000_000_000)
+
+
 class League(models.Model):
     name = models.CharField(max_length=50, unique=True)
     abbr = models.CharField(max_length=8)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
     is_pickable = models.BooleanField(default=False)
+    current_season = models.IntegerField(blank=True, null=True)
+    slug = models.SlugField(default=temp_slug)
 
     objects = managers.LeagueManager()
 
     def __str__(self):
         return self.name
 
-    def _reverse(self, name): return reverse(name, args=[self.lower])
+    def _reverse(self, name): return reverse(name, args=[self.slug])
     def get_absolute_url(self): return self._reverse('picker-home')
     def picks_url(self): return self._reverse('picker-picks')
     def results_url(self): return self._reverse('picker-results')
-    def roster_url(self): return self._reverse('picker-roster')
+    def roster_url(self): return self._reverse('picker-roster-base')
     def teams_url(self): return self._reverse('picker-teams')
     def schedule_url(self): return self._reverse('picker-schedule')
     def manage_url(self): return self._reverse('picker-manage')
-
-    @cached_property
-    def lower(self):
-        return self.abbr.lower()
 
     def _load_league_module(self, mod_name):
         base = picker_settings.get('LEAGUE_MODULE_BASE', 'picker.league')
         if base:
             try:
-                return import_module('{}.{}.{}'.format(base, self.lower, mod_name))
+                return import_module('{}.{}.{}'.format(base, self.slug, mod_name))
             except ImportError:
                 pass
         return None
@@ -234,10 +241,6 @@ class League(models.Model):
             flat=True
         ).distinct()
 
-    @cached_property
-    def current_season(self):
-        return self.config('CURRENT_SEASON') or self.latest_season
-
     def season_weeks(self, season=None):
         season = season or self.current_season or self.latest_season
         return self.game_set.filter(season=season)
@@ -273,11 +276,6 @@ class League(models.Model):
     def config(self, key, default=None):
         return self._config.get(key, default)
 
-    def preferences(self):
-        return self.preference_set.filter(
-            league=self,
-        ).select_related().order_by('user__username')
-
     @classmethod
     def import_season(cls, filepath):
         with open(os.path.join(filepath)) as fp:
@@ -288,7 +286,7 @@ class League(models.Model):
         season = data['season']
         teams = league.team_dict()
         new_old = [0, 0]
-        for sequence, item in enumerate(data['weeks']):
+        for sequence, item in enumerate(data['weeks'], 1):
             dt = parse_dt(item['games'][0][2])
             opens = dt - timedelta(days=dt.weekday() - 1)
             opens = opens.replace(hour=12, minute=0)
@@ -332,10 +330,15 @@ class League(models.Model):
 
         name = data['name']
         default_abbr = ''.join(c[0] for c in name.upper().split())
+        abbr = data.get('abbr', default_abbr).upper()
         league, created = cls.objects.get_or_create(
             name=name,
-            abbr=data.get('abbr', default_abbr),
-            defaults={'is_pickable': data.get('is_pickable', False)},
+            abbr=abbr,
+            slug=abbr.lower(),
+            defaults={
+                'is_pickable': data.get('is_pickable', False),
+                'current_season': data.get('current_season')
+            },
         )
         confs = {}
         divs = {}
@@ -362,15 +365,21 @@ class League(models.Model):
                 league=league,
                 conference=confs[conf],
                 division=divs[(div, conf)],
-                logo='picker/logos/{}.gif'.format(league.abbr.lower())
+                logo=tm.get('logo', '')
             )[0]
+
+        for name, key in data.get('aliases', {}).items():
+            Alias.objects.get_or_create(
+                team=teams[key],
+                name=name,
+            )
 
         return league, teams
 
     @classmethod
     def get(cls, abbr=None):
         abbr = abbr or picker_settings.get('DEFAULT_LEAGUE', 'nfl')
-        return cls.objects.get(abbr=abbr)
+        return cls.objects.get(abbr__iexact=abbr)
 
 
 class Conference(models.Model):
@@ -413,7 +422,7 @@ class Team(models.Model):
         return '{} {}'.format(self.name, self.nickname)
 
     def get_absolute_url(self):
-        return reverse('picker-team', args=[self.league.lower, self.abbr])
+        return reverse('picker-team', args=[self.league.slug, self.abbr])
 
     @property
     def aliases(self):
@@ -542,13 +551,13 @@ class GameSet(models.Model):
     def get_absolute_url(self):
         return reverse(
             'picker-game-sequence',
-            args=[self.league.lower, str(self.season), str(self.sequence)]
+            args=[self.league.slug, str(self.season), str(self.sequence)]
         )
 
     def picks_url(self):
         return reverse(
             'picker-picks-sequence',
-            args=[self.league.lower, str(self.season), str(self.sequence)]
+            args=[self.league.slug, str(self.season), str(self.sequence)]
         )
 
     @property

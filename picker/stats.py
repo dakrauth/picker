@@ -9,9 +9,9 @@ def percent(num, denom):
 
 class RosterStats:
 
-    def __init__(self, preference, league, season=None):
-        self.preference = preference
-        self.user = preference.user
+    def __init__(self, member, league, season=None):
+        self.member = member
+        self.user = member.user
         self.season = season
         self.league = league
         self.correct = 0
@@ -32,7 +32,7 @@ class RosterStats:
             self.wrong += wp.wrong
             self.points_delta += wp.points_delta if wp.week.points else 0
 
-        self.is_active = self.preference.is_active
+        self.is_active = self.member.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
         self.avg_points_delta = (
             float(self.points_delta) / self.weeks_played
@@ -54,19 +54,19 @@ class RosterStats:
     __repr__ = __str__
 
     @classmethod
-    def get_details(cls, league, season=None):
+    def get_details(cls, league, group, season=None):
         season = season or league.current_season
-        prefs = league.preferences()
+        mbrs = group.members.all()
 
         def keyfn(rs):
             return (rs.correct, -rs.points_delta, rs.weeks_played)
 
-        stats = [cls(p, league) for p in prefs]
+        stats = [cls(m, league) for m in mbrs]
         by_user = {
             entry.user: entry for entry in sorted_standings(stats, key=keyfn)
         }
 
-        stats = [cls(p, league, season) for p in prefs]
+        stats = [cls(m, league, season) for m in mbrs]
         return [
             (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
         ]

@@ -1,7 +1,7 @@
 {% extends league_base %}{% load staticfiles picker_tags %}
 {% block title %}Roster{% endblock %}
 {% block main_content %}
-    <h1>Roster and Season Standings &mdash; {{ season }}</h1>
+    <h1>Roster and Season Standings &mdash; {{ group }} {{ season }}</h1>
     {% all_seasons_nav season league "roster" %}
     <div class="panel panel-default">
         <table class="table table-striped table-hover roster">
@@ -30,12 +30,12 @@
                     <img src="{{ entry.user|picker_user_image:"32" }}">
                     <div>
                         <strong>
-                            <a href="{% url 'picker-roster-profile' league.lower entry.user.username %}">
+                            <a href="{% url 'picker-roster-profile' league.slug 1 entry.user.username %}">
                                 {{ entry.user.username }}</a></strong> <br />
-                        {% favorite_team entry.preference.user as team %}
+                        {% favorite_team entry.user as team %}
                         {% if team %}
                         <a class="fav_team" href="{{ team.get_absolute_url }}">{{ team }}</a>
-                        {% team %}
+                        {% endif %}
                     </div>
                 </td>
                 <td>{{ entry.place }}</td>

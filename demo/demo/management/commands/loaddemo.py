@@ -10,33 +10,34 @@ from picker.utils import datetime_now
 
 
 def load_users(league):
-    new, old = 0, 0
-    if User.objects.filter(username='demo').exists():
-        old += 1
-    else:
-        new += 1
-        picker.Preference.objects.get_or_create(
-            user=User.objects.create_superuser('demo', 'demo@example.com', 'demo')
+    users = []
+    l = picker.League.get()
+
+    group = picker.PickerGrouping.objects.create(name='Demo Group')
+    group.leagues.add(l)
+
+    for name in ['demo'] + ['user{}'.format(i) for i in range(1, 10)]:
+        user = User.objects.create_user(
+            name,
+            '{}@example.com'.format(name),
+            password=name
         )
-        print('Superuser username/password: demo/demo')
+        users.append(user)
+        count = len(users)
+        print('{} username/password: {}/{}'.format(
+            'User' if count == 1 else 'Superuser',
+            name,
+            name
+        ))
 
+        if count == 1:
+            user.is_superuser = True
+            user.save()
 
-    for i in range(1, 10):
-        name = 'user{}'.format(i)
-        if User.objects.filter(username=name).exists():
-            old += 1
-        else:
-            new += 1
-            picker.Preference.objects.create(
-                user=User.objects.create_user(
-                    name,
-                    '{}@example.com'.format(name),
-                    password=name
-                ),
-            )
-            print('User username/password: {}/{}'.format(name, name))
+        picker.Preference.objects.create(user=user)
+        group.members.create(user=user)
 
-    return new, old
+    return users, group
 
 
 class Command(BaseCommand):
@@ -66,9 +67,17 @@ class Command(BaseCommand):
 
         gs = picker.GameSet.objects.order_by('-id')[0]
         league = gs.league
-        league.game_set.get(season=gs.season, week=1)
+        gs = league.game_set.get(season=gs.season, week=1)
         gs.opens = datetime_now()
         gs.save()
 
-        new_old = load_users(league)
-        print('Created {} new, {} old users'.format(*new_old))
+        count = load_users(league)
+        print('Created {} new users'.format(count))
+
+        picker.League.objects.create(
+            name='Faux League',
+            abbr='FL',
+            slug='fl',
+            is_pickable=False
+        )
+

@@ -1,22 +1,24 @@
 from django import forms
+from django.utils.module_loading import import_string
+
 from . import models as picker
 from . import utils
-from .conf import import_setting
 from .signals import picker_weekly_results
 
 _picker_widget = None
 game_key_format = 'game_{}'.format
 
 
-def get_picker_widget():
+def get_picker_widget(league):
     global _picker_widget
     if not _picker_widget:
-        _picker_widget = import_setting('TEAM_PICKER_WIDGET')
+        widget_path = league.config('TEAM_PICKER_WIDGET')
+        if widget_path:
+            _picker_widget = import_string(widget_path)
+
         _picker_widget = _picker_widget or forms.RadioSelect
 
     return _picker_widget
-
-
 
 
 class GameField(forms.ChoiceField):
@@ -33,7 +35,7 @@ class GameField(forms.ChoiceField):
             label=game.kickoff.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
-            widget=widget or get_picker_widget()
+            widget=widget or get_picker_widget(game.week.league)
         )
 
     def widget_attrs(self, widget):

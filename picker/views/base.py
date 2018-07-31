@@ -58,13 +58,13 @@ class PlayoffPicksMixin:
     def playoff_picks(self, request, playoff):
         season = self.season
         if utils.datetime_now() > playoff.kickoff:
-            return self.redirect('picker-playoffs-results', self.league.lower, season)
+            return self.redirect('picker-playoffs-results', self.league.slug, season)
 
         if request.method == 'POST':
             picks = playoff.user_picks(request.user)
             picks.picks = {k: v for k, v in request.POST.items()}
             picks.save()
-            return self.redirect('picker-playoffs-results', self.league.lower, season)
+            return self.redirect('picker-playoffs-results', self.league.slug, season)
 
         self.template_name = '@picks/playoffs.html'
         return self.render_to_response(PlayoffContext.conference(playoff, request.user))
@@ -151,7 +151,7 @@ class SimplePickerViewBase(TemplateView):
             'now': utils.datetime_now(),
             'league': league,
             'season': self.season or league.current_season,
-            'league_base': 'picker/{}/base.html'.format(league.lower)
+            'league_base': 'picker/{}/base.html'.format(league.slug)
         })
         self.extra_data(data)
         return data

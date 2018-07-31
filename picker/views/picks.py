@@ -1,7 +1,7 @@
 from django import http
 from django.shortcuts import get_object_or_404, get_list_or_404
 
-from ..models import League, Preference, PickerResultException
+from ..models import League, Preference, PickerResultException, PickerGrouping
 from ..stats import RosterStats
 from .base import (
     SimplePickerViewBase,
@@ -49,16 +49,32 @@ class Schedule(SimplePickerViewBase):
 
 # Views requiring login
 
+class RosterRedirect(PickerViewBase):
 
-class Roster(PickerViewBase):
+    def get(self, request, *args, **kwargs):
+        qs = request.user.picker_memberships.filter(group__leagues=self.league)
+        if qs.exists():
+            group = qs[0]
+            return self.redirect('picker-roster', self.league.slug, group.id)
+
+
+class RosterMixin:
+
+    @property
+    def group(self):
+        return get_object_or_404(PickerGrouping, pk=self.args[0])
+
+
+class Roster(RosterMixin, PickerViewBase):
     template_name = '@roster/season.html'
 
     def extra_data(self, data):
-        roster = RosterStats.get_details(self.league, self.season)
-        data.update(roster=roster)
+        group = self.group
+        roster = RosterStats.get_details(self.league, group, self.season)
+        data.update(roster=roster, group=group)
 
 
-class RosterProfile(PickerViewBase):
+class RosterProfile(RosterMixin, PickerViewBase):
     template_name = '@roster/picker.html'
 
     def extra_data(self, data):
@@ -164,7 +180,8 @@ class Picks(PicksBase):
 class PicksByWeek(PicksBase):
 
     def get(self, request, *args, **kwargs):
-        season, week = self.args[:2]
+        season = self.season
+        week = self.args[0]
         week = get_object_or_404(self.league.game_set, season=season, week=week)
         return self.weekly_picks(request, week)
 

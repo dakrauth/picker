@@ -54,7 +54,7 @@ class ManageWeek(ManagementViewBase):
 
     def redirect_game_set(self, gs):
         return http.HttpResponseRedirect(
-            reverse('picker-game-sequence', args=(self.league.lower, gs.season, gs.week))
+            reverse('picker-game-sequence', args=(self.league.slug, gs.season, gs.week))
         )
 
     def post(self, *args, **kwargs):

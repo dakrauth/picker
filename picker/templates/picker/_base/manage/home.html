@@ -7,5 +7,5 @@
     {% all_seasons_nav season league "manage" %}
     {% season_nav week "manage" %}
     <hr>
-    <a class="btn btn-default" href="{% url 'picker-manage-playoff-builder' league.lower %}">Playoff Builder</a>
+    <a class="btn btn-default" href="{% url 'picker-manage-playoff-builder' league.slug %}">Playoff Builder</a>
 {% endblock %}

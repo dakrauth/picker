@@ -18,11 +18,9 @@ For Linux/Mac OS X:
     $ git clone https://github.com/dakrauth/picker.git
     $ cd picker
     $ python -m venv venv
-    $ pip install -r requirements.txt
-    $ pip install -e .
-    $ pip install -e demo
-    $ demo loaddemo
-    $ demo runserver
+    $ source venv/bin/activate
+    $ pip install invoke
+    $ inv demo
 
 Browse to: http://127.0.0.1:8000
 

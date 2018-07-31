@@ -76,7 +76,7 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 
 
 PICKER = {
-    'FAKE_DATETIME_NOW': (2018, 8, 22, 15),
+    'FAKE_DATETIME_NOW': None,
     'NFL': {
         'TEAM_PICKER_WIDGET': 'demo.forms.TemplateTeamChoice',
     }

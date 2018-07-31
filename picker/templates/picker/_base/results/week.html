@@ -4,7 +4,7 @@
 {% block main_content %}
     <h1>
         Results for week {{ week.week }}
-        <small><a href="{% url 'picker-season-results' week.league.lower week.season %}">{{ week.season }}</a></small>
+        <small><a href="{% url 'picker-season-results' week.league.slug week.season %}">{{ week.season }}</a></small>
     </h1>
     {% season_nav week "results" %}
     {% with week.weekly_results as weekly_results %}
