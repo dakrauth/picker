@@ -3,24 +3,10 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 
 from ..models import League, Preference, PickerResultException, PickerGrouping
 from ..stats import RosterStats
-from .base import (
-    SimplePickerViewBase,
-    PickerViewBase,
-    PlayoffPicksMixin,
-    PlayoffContext,
-    PicksBase
-)
-
+from .base import SimplePickerViewBase, PickerViewBase, PicksBase
+from .playoffs import PlayoffContext
 
 # Public views
-
-def api_v1(request, action, league=None):
-    league = League.get(league)
-    if action == 'scores':
-        return http.JsonResponse(league.scores(not league.current_gameset))
-
-    raise http.Http404
-
 
 class Home(SimplePickerViewBase):
     template_name = '@home.html'
@@ -50,12 +36,28 @@ class Schedule(SimplePickerViewBase):
 # Views requiring login
 
 class RosterRedirect(PickerViewBase):
+    template_name = '@roster/select.html'
 
     def get(self, request, *args, **kwargs):
-        qs = request.user.picker_memberships.filter(group__leagues=self.league)
-        if qs.exists():
-            group = qs[0]
-            return self.redirect('picker-roster', self.league.slug, group.id)
+        qs = request.user.picker_memberships.filter(
+            group__leagues=self.league
+        ).select_related('group')
+
+        count = qs.count()
+        if count == 1:
+            mbr = qs[0]
+            return self.redirect('picker-roster', self.league.slug, mbr.group.id)
+        elif count > 1:
+            return self.render_to_response({
+                'memberships': qs
+            })
+
+        self.template_name = '@unavailable.html'
+        return self.render_to_response({
+            'league_base': 'picker/base.html',
+            'heading': 'Roster unavailable',
+            'description': 'Please check back later',
+        })
 
 
 class RosterMixin:
@@ -68,10 +70,21 @@ class RosterMixin:
 class Roster(RosterMixin, PickerViewBase):
     template_name = '@roster/season.html'
 
+    @property
+    def season(self):
+        if len(self.args) == 2:
+            return int(self.args[1])
+
+        return super().season
+
     def extra_data(self, data):
         group = self.group
         roster = RosterStats.get_details(self.league, group, self.season)
-        data.update(roster=roster, group=group)
+        data.update(
+            roster=roster,
+            group=group,
+            other_groups=PickerGrouping.objects.filter(members__user=self.request.user)
+        )
 
 
 class RosterProfile(RosterMixin, PickerViewBase):
@@ -79,8 +92,8 @@ class RosterProfile(RosterMixin, PickerViewBase):
 
     def extra_data(self, data):
         league = self.league
-        username = self.args[0]
-        pref = get_object_or_404(Preference, league=league, user__username=username)
+        username = self.args[1]
+        pref = get_object_or_404(Preference, user__username=username)
         seasons = list(league.available_seasons) + [None]
         data.update(
             profile=pref,
@@ -91,7 +104,7 @@ class RosterProfile(RosterMixin, PickerViewBase):
 #  Results
 
 class Results(PickerViewBase):
-    template_name = '@results/week.html'
+    template_name = '@results/results.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -130,20 +143,11 @@ class ResultsBySeason(PickerViewBase):
 
 
 class ResultsByWeek(PickerViewBase):
-    template_name = '@results/week.html'
+    template_name = '@results/results.html'
 
     def extra_data(self, data):
         week = self.args[0]
         data['week'] = get_object_or_404(self.league.game_set, season=self.season, week=week)
-
-
-class ResultsForPlayoffs(PlayoffPicksMixin, PickerViewBase):
-
-    def get(self, request, *args, **kwargs):
-        return self.playoff_picks(
-            request,
-            get_object_or_404(self.league.playoff_set, season=self.args[0])
-        )
 
 
 #  Picks
@@ -154,7 +158,7 @@ class PicksBySeason(PickerViewBase):
     def extra_data(self, data):
         data['weeks'] = [
             (week, week.pick_for_user(self.request.user))
-            for week in get_list_or_404(self.league.game_set, season=self.args[0])
+            for week in get_list_or_404(self.league.game_set, season=self.season)
         ]
 
 

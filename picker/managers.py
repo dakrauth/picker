@@ -17,13 +17,13 @@ class LeagueManager(models.Manager):
 class GamePickManager(models.Manager):
 
     def games_started(self):
-        return self.filter(game__kickoff__lte=datetime_now())
+        return self.filter(game__start_time__lte=datetime_now())
 
 
 class GameManager(models.Manager):
 
     def games_started(self):
-        return self.filter(kickoff__lte=datetime_now())
+        return self.filter(start_time__lte=datetime_now())
 
     def incomplete(self, **kws):
         kws['status'] = self.model.Status.UNPLAYED
@@ -33,11 +33,7 @@ class GameManager(models.Manager):
 class PreferenceManager(models.Manager):
 
     def active(self, **kws):
-        return self.filter(
-            status=self.model.Status.ACTIVE,
-            user__is_active=True,
-            **kws
-        )
+        return self.filter(user__is_active=True, **kws)
 
     def email_active(self, subject, body, html=''):
         self.email(

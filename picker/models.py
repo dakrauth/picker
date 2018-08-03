@@ -26,8 +26,7 @@ from . import managers
 from . import utils
 from .utils import datetime_now
 
-GAME_DURATION = timedelta(hours=4.5)
-LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos/nfl')
+LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos')
 
 
 class Preference(models.Model):
@@ -145,6 +144,7 @@ class League(models.Model):
     is_pickable = models.BooleanField(default=False)
     current_season = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(default=temp_slug)
+    avg_game_duration = models.PositiveIntegerField(default=240)
 
     objects = managers.LeagueManager()
 
@@ -159,28 +159,6 @@ class League(models.Model):
     def teams_url(self): return self._reverse('picker-teams')
     def schedule_url(self): return self._reverse('picker-schedule')
     def manage_url(self): return self._reverse('picker-manage')
-
-    def _load_league_module(self, mod_name):
-        base = picker_settings.get('LEAGUE_MODULE_BASE', 'picker.league')
-        if base:
-            try:
-                return import_module('{}.{}.{}'.format(base, self.slug, mod_name))
-            except ImportError:
-                pass
-        return None
-
-    @cached_property
-    def feed(self):
-        url = self.config('FEED_URL')
-        return utils.parse_feed(url) if url else None
-
-    @cached_property
-    def scores_module(self):
-        return self._load_league_module('scores')
-
-    def scores(self, *args, **kws):
-        mod = self.scores_module
-        return mod.scores(*args, **kws) if mod else None
 
     def teams_by_conf(self):
         abbrs = self.conference_set.values('abbr', flat=True)
@@ -277,57 +255,60 @@ class League(models.Model):
         return self._config.get(key, default)
 
     @classmethod
-    def import_season(cls, filepath):
-        with open(os.path.join(filepath)) as fp:
-            data = json.loads(fp.read())
-
-        game_set = None
+    def import_season(cls, data):
+        gs = None
         league = cls.objects.get(abbr=data['league'])
         season = data['season']
         teams = league.team_dict()
         new_old = [0, 0]
         for sequence, item in enumerate(data['weeks'], 1):
-            dt = parse_dt(item['games'][0][2])
-            opens = dt - timedelta(days=dt.weekday() - 1)
-            opens = opens.replace(hour=12, minute=0)
-            closes = opens + timedelta(days=6, seconds=3600*24-1)
+            opens = item.get('opens')
+            if opens:
+                opens = parse_dt(opens)
+            else:
+                dt = parse_dt(item['games'][0]['start'])
+                opens = dt - timedelta(days=dt.weekday() - 1)
+                opens = opens.replace(hour=12, minute=0)
 
-            game_set, is_new = league.game_set.get_or_create(
+            closes = item.get('closes')
+            if closes:
+                closes = parse_dt(closes)
+            else:
+                closes = opens + timedelta(days=6, seconds=3600*24-1)
+
+            gs, is_new = league.game_set.get_or_create(
                 season=season,
                 week=sequence,
                 defaults={'opens': opens, 'closes': closes}
             )
             if not is_new:
-                if game_set.opens != opens or game_set.closes != closes:
-                    game_set.opens = opens
-                    game_set.closes = closes
-                    game_set.save()
+                if gs.opens != opens or gs.closes != closes:
+                    gs.opens = opens
+                    gs.closes = closes
+                    gs.save()
 
-            if item['byes']:
-                game_set.byes.add(*[teams[t] for t in item['byes']])
+            byes = item.get('byes')
+            if byes:
+                gs.byes.add(*[teams[t] for t in byes])
 
-            for away, home, dt, tv, location in item['games']:
-                away = teams[away]
-                home = teams[home]
-                dt = parse_dt(dt)
+            for dct in item['games']:
+                start_time = parse_dt(dct['start'])
+                game, is_new = gs.game_set.get_or_create(
+                    home=teams[dct['home']],
+                    away=teams[dct['away']],
+                    defaults={'start_time': start_time}
+                )
 
-                is_new = Game.objects.get_or_create(
-                    home=home,
-                    away=away,
-                    week=game_set,
-                    kickoff=dt,
-                    tv=tv,
-                    location=location,
-                )[1]
+                game.start_time = start_time
+                game.tv = dct.get('tv', game.tv)
+                game.location = dct.get('location', game.location)
+                game.save()
 
                 new_old[0 if is_new else 1] += 1
         return new_old
 
     @classmethod
-    def import_league(cls, filepath):
-        with open(filepath) as fin:
-            data = json.loads(fin.read())
-
+    def import_league(cls, data):
         name = data['name']
         default_abbr = ''.join(c[0] for c in name.upper().split())
         abbr = data.get('abbr', default_abbr).upper()
@@ -344,27 +325,30 @@ class League(models.Model):
         divs = {}
         teams = {}
         for tm in data['teams']:
-            conf, div = tm['sub']
-            if conf not in confs:
-                confs[conf] = Conference.objects.get_or_create(
-                    name=conf,
-                    league=league,
-                    abbr=conf.lower()
-                )[0]
+            if 'sub' in tm:
+                conf, div = tm['sub']
+                if conf not in confs:
+                    confs[conf] = Conference.objects.get_or_create(
+                        name=conf,
+                        league=league,
+                        abbr=conf.lower()
+                    )[0]
 
-            if (div, conf) not in divs:
-                divs[(div, conf)] = Division.objects.get_or_create(
-                name=name,
-                conference=confs[conf]
-            )[0]
+                if (div, conf) not in divs:
+                    divs[(div, conf)] = Division.objects.get_or_create(
+                    name=name,
+                    conference=confs[conf]
+                )[0]
+            else:
+                conf = div = None
 
             teams[tm['abbr']] = Team.objects.get_or_create(
                 name=tm['name'],
                 abbr=tm['abbr'],
                 nickname=tm['nickname'],
                 league=league,
-                conference=confs[conf],
-                division=divs[(div, conf)],
+                conference=confs.get(conf),
+                division=divs.get((div, conf)),
                 logo=tm.get('logo', '')
             )[0]
 
@@ -408,9 +392,8 @@ class Team(models.Model):
     abbr = models.CharField(max_length=8, blank=True)
     nickname = models.CharField(max_length=50)
     location = models.CharField(max_length=100, blank=True)
-    image = models.CharField(max_length=50, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
+    conference = models.ForeignKey(Conference, on_delete=models.SET_NULL, blank=True, null=True)
     division = models.ForeignKey(Division, on_delete=models.SET_NULL, blank=True, null=True)
     colors = models.CharField(max_length=40, blank=True)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
@@ -455,12 +438,12 @@ class Team(models.Model):
                     else:
                         losses += 1
 
-        return (wins, losses, ties) if ties else (wins, losses)
+        return (wins, losses, ties)
 
     def season_points(self, season=None):
         season = season or self.league.current_season
         w, l, t = self.season_record(season)
-        return ((w - l) * 2) + t
+        return w * 2 + t
 
     @property
     def record(self):
@@ -516,6 +499,7 @@ class Team(models.Model):
         ]]
 
 
+
 class Alias(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, unique=True)
@@ -569,8 +553,8 @@ class GameSet(models.Model):
         return self.games[0]
 
     @cached_property
-    def kickoff(self):
-        return self.first_game.kickoff
+    def start_time(self):
+        return self.first_game.start_time
 
     @property
     def end_time(self):
@@ -578,19 +562,19 @@ class GameSet(models.Model):
 
     @property
     def in_progress(self):
-        return self.end_time >= datetime_now() >= self.kickoff
+        return self.end_time >= datetime_now() >= self.start_time
 
     @property
     def has_started(self):
-        return datetime_now() >= self.kickoff
+        return datetime_now() >= self.start_time
 
     @property
     def is_open(self):
-        return datetime_now() < self.last_game.kickoff
+        return datetime_now() < self.last_game.start_time
 
     @cached_property
     def games(self):
-        return tuple(self.game_set.order_by('kickoff'))
+        return tuple(self.game_set.order_by('start_time'))
 
     def pick_for_user(self, user):
         try:
@@ -665,7 +649,7 @@ class GameSet(models.Model):
         prv = rd.relativedelta(weekday=rd.TU(-1))
         nxt = rd.relativedelta(weekday=rd.TU)
         for gs in self.game_set.all():
-            ko = gs.kickoff
+            ko = gs.start_time
             gs.opens = (ko + prv).replace(hour=12, minute=0)
             gs.closes = (ko + nxt).replace(hour=11, minute=59, second=59)
             gs.save()
@@ -673,7 +657,7 @@ class GameSet(models.Model):
     @property
     def winners(self):
         if self.points:
-            for item in self.weekly_results():
+            for item in self.results():
                 if item.place == 1:
                     yield item
 
@@ -682,7 +666,7 @@ class GameSet(models.Model):
         for wp in self.pick_set.all():
             wp.update_status(wp.id in winners)
 
-    def weekly_results(self):
+    def results(self):
         picks = list(self.pick_set.select_related())
         return utils.sorted_standings(picks, key=PickSet.sort_key, reverse=True)
 
@@ -705,7 +689,7 @@ class Game(models.Model):
     home = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_game_set')
     away = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_game_set')
     week = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='game_set')
-    kickoff = models.DateTimeField()
+    start_time = models.DateTimeField()
     tv = models.CharField('TV', max_length=8, blank=True)
     notes = models.TextField(blank=True)
     category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
@@ -714,7 +698,7 @@ class Game(models.Model):
     objects = managers.GameManager()
 
     class Meta:
-        ordering = ('kickoff', 'away')
+        ordering = ('start_time', 'away')
 
     def __str__(self):
         return '{} {}'.format(self.tiny_description, self.game_set)
@@ -725,7 +709,7 @@ class Game(models.Model):
 
     @property
     def has_started(self):
-        return datetime_now() >= self.kickoff
+        return datetime_now() >= self.start_time
 
     @property
     def tiny_description(self):
@@ -741,7 +725,7 @@ class Game(models.Model):
 
     @property
     def long_description(self):
-        return '%s %s %s' % (self.short_description, self.game_set, self.kickoff)
+        return '%s %s %s' % (self.short_description, self.game_set, self.start_time)
 
     @property
     def winner(self):
@@ -778,12 +762,12 @@ class Game(models.Model):
 
     @property
     def end_time(self):
-        return self.kickoff + GAME_DURATION
+        return self.start_time + timedelta(minutes=self.avg_game_duration)
 
     @property
     def in_progress(self):
         now = datetime_now()
-        return self.end_time >= now >= self.kickoff
+        return self.end_time >= now >= self.start_time
 
 
 class PickSet(models.Model):
@@ -876,11 +860,11 @@ class GamePick(models.Model):
     objects = managers.GamePickManager()
 
     class Meta:
-        ordering = ('game__kickoff', 'game__away')
+        ordering = ('game__start_time', 'game__away')
 
     @property
-    def kickoff(self):
-        return self.game.kickoff
+    def start_time(self):
+        return self.game.start_time
 
     @property
     def short_description(self):
@@ -906,7 +890,13 @@ class GamePick(models.Model):
         return None
 
 
-class PlayoffResult(utils.Attr):
+class PlayoffResult:
+
+    def __init__(self, **kws):
+        self.__dict__.update(kws)
+
+    def __getitem__(self, key):
+        return getattr(self, key)
 
     def __repr__(self):
         return '%d,%d,%s' % (self.score, self.delta, self.picks)
@@ -960,7 +950,7 @@ class Playoff(models.Model):
 
     @property
     def has_started(self):
-        return self.kickoff < datetime_now()
+        return self.start_time < datetime_now()
 
 
 class PlayoffTeam(models.Model):

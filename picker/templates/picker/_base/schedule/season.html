@@ -34,7 +34,7 @@
         </tr>
         {% for game in week.game_set.all %}
         <tr>
-            <td>{{ game.kickoff|date:"D M j, g:i a" }}</td>
+            <td>{{ game.start_time|date:"D M j, g:i a" }}</td>
             <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
             <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
             <td>{{ game.location }}</td>

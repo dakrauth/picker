@@ -57,7 +57,7 @@ class Callbacks:
         gs = league.current_gameset
         bad = 0
         for g in gs.games:
-            ko = g.kickoff
+            ko = g.start_time
             key = '%s @ %s' % (g.away.abbr, g.home.abbr)
             actual = score_strip_games[key]
             old = [ko.weekday(), ko.hour, ko.minute]
@@ -72,7 +72,7 @@ class Callbacks:
                     actual[1],
                     actual[2]
                 )
-                g.kickoff = new_ko
+                g.start_time = new_ko
                 g.save()
         print('{} incorrect'.format(bad))
 
@@ -100,7 +100,7 @@ class Callbacks:
     def send_reminder(league, **options):
         today = datetime_now().date()
         first_game = league.current_gameset.first_game
-        if first_game.kickoff.date() == today:
+        if first_game.start_time.date() == today:
             league.send_reminder_email()
             print('%s:%s' % (today, first_game))
         else:

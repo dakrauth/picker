@@ -1,3 +1,4 @@
+import json
 from django.core.management.base import BaseCommand
 from picker import models as picker
 
@@ -12,7 +13,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for arg in options['filenames']:
-            league, teams = picker.League.import_league(arg)
+            with open(arg) as fin:
+                data = json.loads(fin.read())
+
+            league, teams = picker.League.import_league(data)
             self.stdout.write('Created league {}\n'.format(league))
             for t in teams:
                 self.stdout.write('Created team {}\n'.format(t))

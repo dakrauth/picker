@@ -3,7 +3,9 @@
     <input type="radio" id="{{ choice_id }}" {{ readonly }} {{ disabled }} value="{{ value }}" name="{{ name }}" {{ checked }}>
     {% endif %}
     <div class="team-info team-{{ team.abbr.lower }}">
+        {% if team.logo %}
         <img src="{{ team.logo.url }}"><br>
+        {% endif %}
         <span class="market">{{ team.name }}</span>
         <span class="nickname">{{ team.nickname }}</span>
         <span class="record">{{ team.record_as_string }}</span>

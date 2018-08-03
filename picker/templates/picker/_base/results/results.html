@@ -7,11 +7,11 @@
         <small><a href="{% url 'picker-season-results' week.league.slug week.season %}">{{ week.season }}</a></small>
     </h1>
     {% season_nav week "results" %}
-    {% with week.weekly_results as weekly_results %}
+    {% with week.results as results %}
     <div class="panel panel-default">
         <div class="panel-heading">
             {{ week.game_set.count }} games,
-            {{ weekly_results|length }} entries
+            {{ results|length }} entries
         </div>
         <div class="panel-body">
             <p>
@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for result in weekly_results %}
+            {% for result in results %}
             <tr>
                 <td>
                     <img src="{{ result.user|picker_user_image:"32" }}">
@@ -60,7 +60,7 @@
                 {% endif %}
             </tr>
         </thead>
-        <tbody>{% for wp in weekly_results %}
+        <tbody>{% for wp in results %}
             <tr>
                 <td>{{ wp.place }}</td>
                 <td>

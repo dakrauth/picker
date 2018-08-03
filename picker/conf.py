@@ -9,7 +9,6 @@ DEFAULT_PICKER_SETTINGS = {
     'DEFAULT_LEAGUE': 'NFL',
     'EMAIL_HANDLER': 'django.core.mail.send_mail',
     'FAKE_DATETIME_NOW': False,
-    'LEAGUE_MODULE_BASE': 'picker.league',
     'LOGOS_UPLOAD_DIR': 'picker/logos',
     'GRAVATAR_KINDS': ['identicon', 'monsterid', 'wavatar', 'retro', 'robohash'],
 
@@ -18,7 +17,6 @@ DEFAULT_PICKER_SETTINGS = {
     '_BASE': {
         'CURRENT_SEASON': None,
         'FORCE_AUTOPICK': True,
-        'FEED_URL': 'http://www.nfl.com/rss/rsslanding?searchString=home',
         'PLAYOFFS': False,
         'PLAYOFF_SCORE': {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 2, 10: 2, 11: 4},
         'PARTICIPATION_HOOKS': [],

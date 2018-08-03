@@ -1,5 +1,6 @@
 from django import http
 from django.urls import reverse
+from django.template import loader
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.functional import cached_property
@@ -10,64 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .. import utils
 from .. import forms
 from ..models import League, Preference
-
-
-class PlayoffContext:
-
-    @staticmethod
-    def week(playoff):
-        count = 1 + playoff.league.game_set.count()
-        weeks = [{'season': playoff.season, 'week': w} for w in range(1, count)]
-        return {'season_weeks': weeks, 'week': 'playoffs'}
-
-    @staticmethod
-    def conference(playoff, user, **kws):
-        teams = {}
-        confs = {
-            abbr: []
-            for abbr in playoff.league.conference_set.values_list('abbr', flat=True)
-        }
-        for seed, team in playoff.seeds:
-            conf = confs[team.conference.abbr]
-            conf.append(team.abbr)
-            teams[team.abbr] = {
-                'url': team.logo.url if team.logo else '',
-                'seed': seed,
-                'name': team.name,
-                'abbr': team.abbr,
-                'record': team.record_as_string,
-                'conf': team.conference.abbr
-            }
-
-        try:
-            picks = playoff.playoffpicks_set.get(user=user)
-        except ObjectDoesNotExist:
-            picks = None
-
-        return dict(
-            {key: utils.json_dumps(confs[key]) for key in confs},
-            teams=utils.json_dumps(teams),
-            picks=utils.json_dumps(picks.picks if picks else []),
-            week=PlayoffContext.week(playoff),
-            **kws
-        )
-
-
-class PlayoffPicksMixin:
-
-    def playoff_picks(self, request, playoff):
-        season = self.season
-        if utils.datetime_now() > playoff.kickoff:
-            return self.redirect('picker-playoffs-results', self.league.slug, season)
-
-        if request.method == 'POST':
-            picks = playoff.user_picks(request.user)
-            picks.picks = {k: v for k, v in request.POST.items()}
-            picks.save()
-            return self.redirect('picker-playoffs-results', self.league.slug, season)
-
-        self.template_name = '@picks/playoffs.html'
-        return self.render_to_response(PlayoffContext.conference(playoff, request.user))
 
 
 class SimpleFormMixin:
@@ -119,8 +62,7 @@ class SimplePickerViewBase(TemplateView):
             return int(season)
 
         league = self.league
-        current_season = league.current_season
-        return season if season else self.league.current_season
+        return league.current_season or league.latest_season
 
     @cached_property
     def league(self):
@@ -151,7 +93,10 @@ class SimplePickerViewBase(TemplateView):
             'now': utils.datetime_now(),
             'league': league,
             'season': self.season or league.current_season,
-            'league_base': 'picker/{}/base.html'.format(league.slug)
+            'league_base': loader.select_template([
+                'picker/{}/base.html'.format(league.slug),
+                'picker/base.html',
+            ])
         })
         self.extra_data(data)
         return data
@@ -169,8 +114,7 @@ class SimplePickerViewBase(TemplateView):
         )
 
 
-
-class WeeklyPicksMixin(PlayoffPicksMixin, SimpleFormMixin):
+class WeeklyPicksMixin(SimpleFormMixin):
     success_msg = 'Your picks have been saved'
     form_class = forms.UserPickForm
 

@@ -18,14 +18,14 @@
         <table class="table table-striped picks">
             <tbody>
             <tr>
-                <th class="kickoff">Kickoff</th>
+                <th class="start-time">Start Time</th>
                 <th class="teams">Away vs. Home</th>
                 <th class="tv">TV</th>
             </tr> {% for field in form.game_fields %}{% with field.field.game as gm %}
             <tr>
                 <td class="kickoff">
-                    <span class="date-day">{{ gm.kickoff|date:"M jS, Y"}}</span>
-                    <span class="date-weekday">{{ gm.kickoff|date:"D, P" }}</span>
+                    <span class="date-day">{{ gm.start_time|date:"M jS, Y"}}</span>
+                    <span class="date-weekday">{{ gm.start_time|date:"D, P" }}</span>
                     {% if gm.location %}<br>
                     <span class="location">{{ gm.location }}</span>{% endif %}
                 </td>

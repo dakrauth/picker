@@ -23,7 +23,7 @@
             {% for game in team.schedule %}
             <tr>
                 <td>{{ game.week.week }}</td>
-                <td>{{ game.kickoff|date:"D, M j - P" }}</td>
+                <td>{{ game.start_time|date:"D, M j - P" }}</td>
                 <td>
                     {% if team.id == game.away.id %}
                         @ <a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a>

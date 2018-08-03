@@ -9,13 +9,14 @@ from picker import models as picker
 from picker.utils import datetime_now
 
 
-def load_users(league):
+def create_grouping(league, name):
+    group = picker.PickerGrouping.objects.create(name=name)
+    group.leagues.add(league)
+    return group
+
+
+def load_users(grouping):
     users = []
-    l = picker.League.get()
-
-    group = picker.PickerGrouping.objects.create(name='Demo Group')
-    group.leagues.add(l)
-
     for name in ['demo'] + ['user{}'.format(i) for i in range(1, 10)]:
         user = User.objects.create_user(
             name,
@@ -25,7 +26,7 @@ def load_users(league):
         users.append(user)
         count = len(users)
         print('{} username/password: {}/{}'.format(
-            'User' if count == 1 else 'Superuser',
+            'User' if count > 1 else 'Superuser',
             name,
             name
         ))
@@ -35,9 +36,9 @@ def load_users(league):
             user.save()
 
         picker.Preference.objects.create(user=user)
-        group.members.create(user=user)
+        grouping.members.create(user=user)
 
-    return users, group
+    return users
 
 
 class Command(BaseCommand):
@@ -71,7 +72,8 @@ class Command(BaseCommand):
         gs.opens = datetime_now()
         gs.save()
 
-        count = load_users(league)
+        grouping = create_grouping(league, 'Demo Group')
+        count = load_users(grouping)
         print('Created {} new users'.format(count))
 
         picker.League.objects.create(

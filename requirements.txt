@@ -5,12 +5,11 @@ django-bootstrap3==10.0.1
 Pillow==5.2.0
 python-dateutil==2.7.3
 django-extensions==2.1.0
-feedparser==5.2.1
 coverage==4.5.1
 ipdb==0.11
 ipython==6.5
 pytest-django>=3.3.3
-pytest==3.6.4
+pytest==3.7.1
 pytest-cov==2.5.1
 pycodestyle
 pycodestyle

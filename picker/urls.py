@@ -40,7 +40,7 @@ roster_urls = [
     url(r'^$', views.RosterRedirect.as_view(), name='picker-roster-base'),
     url(r'^(\d+)/', include([
         url(r'^$', views.Roster.as_view(), name='picker-roster'),
-        url(r'^(?P<season>\d{4})/$', views.Roster.as_view(), name='picker-season-roster'),
+        url(r'^(\d{4})/$', views.Roster.as_view(), name='picker-season-roster'),
         url(r'^p/(\w+)/$', views.RosterProfile.as_view(), name='picker-roster-profile'),
     ])),
 ]
@@ -65,10 +65,3 @@ urlpatterns = [
     url(r'^manage/', include(management_urls))
 ]
 
-if settings.DEBUG:
-    from django.views.static import serve
-    urlpatterns += [url(
-        r'^media/(?P<path>.*)$',
-        serve,
-        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}
-    )]

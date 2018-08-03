@@ -21,7 +21,7 @@
 </tr>
 {% for pick in picks.gamepick_set.all %}
 <tr> {% with pick.is_correct as is_correct %}
-    <td class="when">{{ pick.game.kickoff|date:"D P, M jS" }}</td>
+    <td class="when">{{ pick.game.start_time|date:"D P, M jS" }}</td>
     <td class="{{ is_correct|yesno:"correct,incorrect,unknown"}}{% if pick.game.away == pick.winner %} selected{% endif %}">
         <a href="{{ pick.game.away.get_absolute_url }}">{{ pick.game.away }}</a>
     </td>

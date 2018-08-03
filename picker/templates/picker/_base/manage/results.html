@@ -8,7 +8,7 @@
     <form action="" method="post" class="actions">
         <p>
             <button class="btn btn-warning" type="submit" name="reminder">Reminder Email</button>
-            <button class="btn btn-warning" type="submit" name="kickoff">Kickoff Autopicks</button>
+            <button class="btn btn-warning" type="submit" name="autopicks">Run Autopicks</button>
             <button class="btn btn-warning" type="submit" name="update">Auto Update</button>
         </p>
     </form>
@@ -20,14 +20,14 @@
         <div class="panel-heading">Weekly Results</div>
         <table class="table table-striped picks manage-picks">
             <tr>
-                <th class="kickoff">Kickoff</th>
+                <th class="start_time">Start Time</th>
                 <th class="teams">Away vs. Home</th>
                 <th class="tv">TV</th>
             </tr>
             {% for field in form.game_fields %}{% with field.field.game as gm %}
             <tr>
-                <td class="kickoff">
-                    {% if field.field.is_game %}{% with field.field.game.kickoff as dt %}
+                <td class="start-time">
+                    {% if field.field.is_game %}{% with field.field.game.start_time as dt %}
                     <a href="{% url 'picker-manage-game' league.slug field.field.game.id  %}">
                         <span class="date-day">{{ dt|date:"M jS, Y"}}</span>
                         <span class="date-weekday">{{ dt|date:"D, P" }}</span></a>

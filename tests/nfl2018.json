@@ -2,1924 +2,1923 @@
     "league": "NFL",
     "season": 2018,
     "weeks": [
-    {
-        "byes": [],
-        "games": [
-            [
-                "ATL",
-                "PHI",
-                "2018-09-07T00:20Z",
-                "NBC",
-                "Lincoln Financial Field, Philadelphia"
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "ATL",
+                    "home": "PHI",
+                    "start": "2018-09-07T00:20Z",
+                    "tv": "NBC",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "PIT",
+                    "home": "CLE",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "CBS",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "CIN",
+                    "home": "IND",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "TEN",
+                    "home": "MIA",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "FOX",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "SF",
+                    "home": "MIN",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "FOX",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "HOU",
+                    "home": "NE",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "CBS",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "TB",
+                    "home": "NO",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "JAX",
+                    "home": "NYG",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "BUF",
+                    "home": "BAL",
+                    "start": "2018-09-09T17:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "KC",
+                    "home": "LAC",
+                    "start": "2018-09-09T20:05Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "SEA",
+                    "home": "DEN",
+                    "start": "2018-09-09T20:25Z",
+                    "tv": "FOX",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "WSH",
+                    "home": "ARI",
+                    "start": "2018-09-09T20:25Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "DAL",
+                    "home": "CAR",
+                    "start": "2018-09-09T20:25Z",
+                    "tv": "FOX",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "CHI",
+                    "home": "GB",
+                    "start": "2018-09-10T00:20Z",
+                    "tv": "NBC",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "DET",
+                    "start": "2018-09-10T23:10Z",
+                    "tv": "ESPN",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "LAR",
+                    "home": "OAK",
+                    "start": "2018-09-11T02:20Z",
+                    "tv": "ESPN",
+                    "location": "Oakland Coliseum, Oakland"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "BAL",
+                    "home": "CIN",
+                    "start": "2018-09-14T00:20Z",
+                    "tv": "NFL",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "CAR",
+                    "home": "ATL",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "LAC",
+                    "home": "BUF",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "CBS",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "MIN",
+                    "home": "GB",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "FOX",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "HOU",
+                    "home": "TEN",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "CLE",
+                    "home": "NO",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "MIA",
+                    "home": "NYJ",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "KC",
+                    "home": "PIT",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "CBS",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "PHI",
+                    "home": "TB",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "IND",
+                    "home": "WSH",
+                    "start": "2018-09-16T17:00Z",
+                    "tv": "CBS",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "ARI",
+                    "home": "LAR",
+                    "start": "2018-09-16T20:05Z",
+                    "tv": "FOX",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "DET",
+                    "home": "SF",
+                    "start": "2018-09-16T20:05Z",
+                    "tv": "FOX",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "OAK",
+                    "home": "DEN",
+                    "start": "2018-09-16T20:25Z",
+                    "tv": "CBS",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "NE",
+                    "home": "JAX",
+                    "start": "2018-09-16T20:25Z",
+                    "tv": "CBS",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "NYG",
+                    "home": "DAL",
+                    "start": "2018-09-17T00:20Z",
+                    "tv": "NBC",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "SEA",
+                    "home": "CHI",
+                    "start": "2018-09-18T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Soldier Field, Chicago"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "NYJ",
+                    "home": "CLE",
+                    "start": "2018-09-21T00:20Z",
+                    "tv": "NFL",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "NO",
+                    "home": "ATL",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "SF",
+                    "home": "KC",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "FOX",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "OAK",
+                    "home": "MIA",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "CBS",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "BUF",
+                    "home": "MIN",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "CBS",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "IND",
+                    "home": "PHI",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "FOX",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "GB",
+                    "home": "WSH",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "FOX",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "CIN",
+                    "home": "CAR",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "CBS",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "TEN",
+                    "home": "JAX",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "CBS",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "DEN",
+                    "home": "BAL",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "NYG",
+                    "home": "HOU",
+                    "start": "2018-09-23T17:00Z",
+                    "tv": "FOX",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "LAC",
+                    "home": "LAR",
+                    "start": "2018-09-23T20:05Z",
+                    "tv": "CBS",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "CHI",
+                    "home": "ARI",
+                    "start": "2018-09-23T20:25Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "DAL",
+                    "home": "SEA",
+                    "start": "2018-09-23T20:25Z",
+                    "tv": "FOX",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "NE",
+                    "home": "DET",
+                    "start": "2018-09-24T00:20Z",
+                    "tv": "NBC",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "PIT",
+                    "home": "TB",
+                    "start": "2018-09-25T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Raymond James Stadium, Tampa"
+                }
+            ]
+        },
+        {
+            "byes": [
+                "WSH",
+                "CAR"
             ],
-            [
+            "games": [
+                {
+                    "away": "MIN",
+                    "home": "LAR",
+                    "start": "2018-09-28T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "CIN",
+                    "home": "ATL",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "CBS",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "TB",
+                    "home": "CHI",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "FOX",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "DET",
+                    "home": "DAL",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "FOX",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "BUF",
+                    "home": "GB",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "CBS",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "PHI",
+                    "home": "TEN",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "FOX",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "HOU",
+                    "home": "IND",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "MIA",
+                    "home": "NE",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "CBS",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "JAX",
+                    "start": "2018-09-30T17:00Z",
+                    "tv": "FOX",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "CLE",
+                    "home": "OAK",
+                    "start": "2018-09-30T20:05Z",
+                    "tv": "FOX",
+                    "location": "Oakland Coliseum, Oakland"
+                },
+                {
+                    "away": "SEA",
+                    "home": "ARI",
+                    "start": "2018-09-30T20:05Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "NO",
+                    "home": "NYG",
+                    "start": "2018-09-30T20:25Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "SF",
+                    "home": "LAC",
+                    "start": "2018-09-30T20:25Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "BAL",
+                    "home": "PIT",
+                    "start": "2018-10-01T00:20Z",
+                    "tv": "NBC",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "KC",
+                    "home": "DEN",
+                    "start": "2018-10-02T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                }
+            ]
+        },
+        {
+            "byes": [
+                "CHI",
+                "TB"
+            ],
+            "games": [
+                {
+                    "away": "IND",
+                    "home": "NE",
+                    "start": "2018-10-05T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "TEN",
+                    "home": "BUF",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "CBS",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "MIA",
+                    "home": "CIN",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "CBS",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "BAL",
+                    "home": "CLE",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "CBS",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "GB",
+                    "home": "DET",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "FOX",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "JAX",
+                    "home": "KC",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "CBS",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "DEN",
+                    "home": "NYJ",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "ATL",
+                    "home": "PIT",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "FOX",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "NYG",
+                    "home": "CAR",
+                    "start": "2018-10-07T17:00Z",
+                    "tv": "FOX",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "OAK",
+                    "home": "LAC",
+                    "start": "2018-10-07T20:05Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "MIN",
+                    "home": "PHI",
+                    "start": "2018-10-07T20:25Z",
+                    "tv": "FOX",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "ARI",
+                    "home": "SF",
+                    "start": "2018-10-07T20:25Z",
+                    "tv": "FOX",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "LAR",
+                    "home": "SEA",
+                    "start": "2018-10-07T20:25Z",
+                    "tv": "FOX",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "DAL",
+                    "home": "HOU",
+                    "start": "2018-10-08T00:20Z",
+                    "tv": "NBC",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "WSH",
+                    "home": "NO",
+                    "start": "2018-10-09T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                }
+            ]
+        },
+        {
+            "byes": [
+                "DET",
+                "NO"
+            ],
+            "games": [
+                {
+                    "away": "PHI",
+                    "home": "NYG",
+                    "start": "2018-10-12T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "TB",
+                    "home": "ATL",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "PIT",
+                    "home": "CIN",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "CBS",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "LAC",
+                    "home": "CLE",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "CBS",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "SEA",
+                    "home": "OAK",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "FOX",
+                    "location": "Tottenham Stadium, London"
+                },
+                {
+                    "away": "CHI",
+                    "home": "MIA",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "FOX",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "ARI",
+                    "home": "MIN",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "FOX",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "IND",
+                    "home": "NYJ",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "CAR",
+                    "home": "WSH",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "FOX",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "BUF",
+                    "home": "HOU",
+                    "start": "2018-10-14T17:00Z",
+                    "tv": "CBS",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "LAR",
+                    "home": "DEN",
+                    "start": "2018-10-14T20:05Z",
+                    "tv": "FOX",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "JAX",
+                    "home": "DAL",
+                    "start": "2018-10-14T20:25Z",
+                    "tv": "CBS",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "BAL",
+                    "home": "TEN",
+                    "start": "2018-10-14T20:25Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "KC",
+                    "home": "NE",
+                    "start": "2018-10-15T00:20Z",
+                    "tv": "NBC",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "SF",
+                    "home": "GB",
+                    "start": "2018-10-16T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Lambeau Field, Green Bay"
+                }
+            ]
+        },
+        {
+            "byes": [
+                "GB",
+                "OAK",
                 "PIT",
-                "CLE",
-                "2018-09-09T17:00Z",
-                "CBS",
-                "FirstEnergy Stadium, Cleveland"
+                "SEA"
             ],
-            [
+            "games": [
+                {
+                    "away": "DEN",
+                    "home": "ARI",
+                    "start": "2018-10-19T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "TEN",
+                    "home": "LAC",
+                    "start": "2018-10-21T13:30Z",
+                    "tv": "CBS",
+                    "location": "Wembley Stadium, London"
+                },
+                {
+                    "away": "NE",
+                    "home": "CHI",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "CBS",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "BUF",
+                    "home": "IND",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "CIN",
+                    "home": "KC",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "CBS",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "DET",
+                    "home": "MIA",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "FOX",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "MIN",
+                    "home": "NYJ",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "CAR",
+                    "home": "PHI",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "FOX",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "CLE",
+                    "home": "TB",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "HOU",
+                    "home": "JAX",
+                    "start": "2018-10-21T17:00Z",
+                    "tv": "CBS",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "NO",
+                    "home": "BAL",
+                    "start": "2018-10-21T20:05Z",
+                    "tv": "FOX",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "DAL",
+                    "home": "WSH",
+                    "start": "2018-10-21T20:25Z",
+                    "tv": "CBS",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "LAR",
+                    "home": "SF",
+                    "start": "2018-10-22T00:20Z",
+                    "tv": "NBC",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "NYG",
+                    "home": "ATL",
+                    "start": "2018-10-23T00:15Z",
+                    "tv": "ESPN",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                }
+            ]
+        },
+        {
+            "byes": [
+                "ATL",
+                "DAL",
+                "TEN",
+                "LAC"
+            ],
+            "games": [
+                {
+                    "away": "MIA",
+                    "home": "HOU",
+                    "start": "2018-10-26T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "PHI",
+                    "home": "JAX",
+                    "start": "2018-10-28T13:30Z",
+                    "tv": "NFL",
+                    "location": "Wembley Stadium, London"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "CHI",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "CBS",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "TB",
+                    "home": "CIN",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "FOX",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "SEA",
+                    "home": "DET",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "FOX",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "DEN",
+                    "home": "KC",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "CBS",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "WSH",
+                    "home": "NYG",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "CLE",
+                    "home": "PIT",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "CBS",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "BAL",
+                    "home": "CAR",
+                    "start": "2018-10-28T17:00Z",
+                    "tv": "CBS",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "IND",
+                    "home": "OAK",
+                    "start": "2018-10-28T20:05Z",
+                    "tv": "CBS",
+                    "location": "Oakland Coliseum, Oakland"
+                },
+                {
+                    "away": "GB",
+                    "home": "LAR",
+                    "start": "2018-10-28T20:25Z",
+                    "tv": "FOX",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "SF",
+                    "home": "ARI",
+                    "start": "2018-10-28T20:25Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "NO",
+                    "home": "MIN",
+                    "start": "2018-10-29T00:20Z",
+                    "tv": "NBC",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "NE",
+                    "home": "BUF",
+                    "start": "2018-10-30T00:15Z",
+                    "tv": "ESPN",
+                    "location": "New Era Field, Buffalo"
+                }
+            ]
+        },
+        {
+            "byes": [
                 "CIN",
                 "IND",
-                "2018-09-09T17:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "TEN",
-                "MIA",
-                "2018-09-09T17:00Z",
-                "FOX",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "SF",
-                "MIN",
-                "2018-09-09T17:00Z",
-                "FOX",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "HOU",
-                "NE",
-                "2018-09-09T17:00Z",
-                "CBS",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "TB",
-                "NO",
-                "2018-09-09T17:00Z",
-                "FOX",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "JAX",
-                "NYG",
-                "2018-09-09T17:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "BUF",
-                "BAL",
-                "2018-09-09T17:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "KC",
-                "LAC",
-                "2018-09-09T20:05Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "SEA",
-                "DEN",
-                "2018-09-09T20:25Z",
-                "FOX",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "WSH",
-                "ARI",
-                "2018-09-09T20:25Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "DAL",
-                "CAR",
-                "2018-09-09T20:25Z",
-                "FOX",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "CHI",
-                "GB",
-                "2018-09-10T00:20Z",
-                "NBC",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "NYJ",
-                "DET",
-                "2018-09-10T23:10Z",
-                "ESPN",
-                "Ford Field, Detroit"
-            ],
-            [
-                "LAR",
-                "OAK",
-                "2018-09-11T02:20Z",
-                "ESPN",
-                "Oakland Coliseum, Oakland"
-            ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "BAL",
-                "CIN",
-                "2018-09-14T00:20Z",
-                "NFL",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "CAR",
-                "ATL",
-                "2018-09-16T17:00Z",
-                "FOX",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "LAC",
-                "BUF",
-                "2018-09-16T17:00Z",
-                "CBS",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "MIN",
-                "GB",
-                "2018-09-16T17:00Z",
-                "FOX",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "HOU",
-                "TEN",
-                "2018-09-16T17:00Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "CLE",
-                "NO",
-                "2018-09-16T17:00Z",
-                "FOX",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "MIA",
-                "NYJ",
-                "2018-09-16T17:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "KC",
-                "PIT",
-                "2018-09-16T17:00Z",
-                "CBS",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "PHI",
-                "TB",
-                "2018-09-16T17:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "IND",
-                "WSH",
-                "2018-09-16T17:00Z",
-                "CBS",
-                "FedEx Field, Landover"
-            ],
-            [
-                "ARI",
-                "LAR",
-                "2018-09-16T20:05Z",
-                "FOX",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "DET",
-                "SF",
-                "2018-09-16T20:05Z",
-                "FOX",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "OAK",
-                "DEN",
-                "2018-09-16T20:25Z",
-                "CBS",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "NE",
-                "JAX",
-                "2018-09-16T20:25Z",
-                "CBS",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "NYG",
-                "DAL",
-                "2018-09-17T00:20Z",
-                "NBC",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "SEA",
-                "CHI",
-                "2018-09-18T00:15Z",
-                "ESPN",
-                "Soldier Field, Chicago"
-            ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "NYJ",
-                "CLE",
-                "2018-09-21T00:20Z",
-                "NFL",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "NO",
-                "ATL",
-                "2018-09-23T17:00Z",
-                "FOX",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "SF",
-                "KC",
-                "2018-09-23T17:00Z",
-                "FOX",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "OAK",
-                "MIA",
-                "2018-09-23T17:00Z",
-                "CBS",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "BUF",
-                "MIN",
-                "2018-09-23T17:00Z",
-                "CBS",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "IND",
-                "PHI",
-                "2018-09-23T17:00Z",
-                "FOX",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "GB",
-                "WSH",
-                "2018-09-23T17:00Z",
-                "FOX",
-                "FedEx Field, Landover"
-            ],
-            [
-                "CIN",
-                "CAR",
-                "2018-09-23T17:00Z",
-                "CBS",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "TEN",
-                "JAX",
-                "2018-09-23T17:00Z",
-                "CBS",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "DEN",
-                "BAL",
-                "2018-09-23T17:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "NYG",
-                "HOU",
-                "2018-09-23T17:00Z",
-                "FOX",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "LAC",
-                "LAR",
-                "2018-09-23T20:05Z",
-                "CBS",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "CHI",
-                "ARI",
-                "2018-09-23T20:25Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "DAL",
-                "SEA",
-                "2018-09-23T20:25Z",
-                "FOX",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "NE",
-                "DET",
-                "2018-09-24T00:20Z",
-                "NBC",
-                "Ford Field, Detroit"
-            ],
-            [
-                "PIT",
-                "TB",
-                "2018-09-25T00:15Z",
-                "ESPN",
-                "Raymond James Stadium, Tampa"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "WSH",
-            "CAR"
-        ],
-        "games": [
-            [
-                "MIN",
-                "LAR",
-                "2018-09-28T00:20Z",
-                "FOX/NFL",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "CIN",
-                "ATL",
-                "2018-09-30T17:00Z",
-                "CBS",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "TB",
-                "CHI",
-                "2018-09-30T17:00Z",
-                "FOX",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "DET",
-                "DAL",
-                "2018-09-30T17:00Z",
-                "FOX",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "BUF",
-                "GB",
-                "2018-09-30T17:00Z",
-                "CBS",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "PHI",
-                "TEN",
-                "2018-09-30T17:00Z",
-                "FOX",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "HOU",
-                "IND",
-                "2018-09-30T17:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "MIA",
-                "NE",
-                "2018-09-30T17:00Z",
-                "CBS",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "NYJ",
-                "JAX",
-                "2018-09-30T17:00Z",
-                "FOX",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "CLE",
-                "OAK",
-                "2018-09-30T20:05Z",
-                "FOX",
-                "Oakland Coliseum, Oakland"
-            ],
-            [
-                "SEA",
-                "ARI",
-                "2018-09-30T20:05Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "NO",
-                "NYG",
-                "2018-09-30T20:25Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "SF",
-                "LAC",
-                "2018-09-30T20:25Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "BAL",
-                "PIT",
-                "2018-10-01T00:20Z",
-                "NBC",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "KC",
-                "DEN",
-                "2018-10-02T00:15Z",
-                "ESPN",
-                "Sports Authority Field at Mile High, Denver"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "CHI",
-            "TB"
-        ],
-        "games": [
-            [
-                "IND",
-                "NE",
-                "2018-10-05T00:20Z",
-                "FOX/NFL",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "TEN",
-                "BUF",
-                "2018-10-07T17:00Z",
-                "CBS",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "MIA",
-                "CIN",
-                "2018-10-07T17:00Z",
-                "CBS",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "BAL",
-                "CLE",
-                "2018-10-07T17:00Z",
-                "CBS",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "GB",
-                "DET",
-                "2018-10-07T17:00Z",
-                "FOX",
-                "Ford Field, Detroit"
-            ],
-            [
-                "JAX",
-                "KC",
-                "2018-10-07T17:00Z",
-                "CBS",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "DEN",
-                "NYJ",
-                "2018-10-07T17:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "ATL",
-                "PIT",
-                "2018-10-07T17:00Z",
-                "FOX",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "NYG",
-                "CAR",
-                "2018-10-07T17:00Z",
-                "FOX",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "OAK",
-                "LAC",
-                "2018-10-07T20:05Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "MIN",
-                "PHI",
-                "2018-10-07T20:25Z",
-                "FOX",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "ARI",
-                "SF",
-                "2018-10-07T20:25Z",
-                "FOX",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "LAR",
-                "SEA",
-                "2018-10-07T20:25Z",
-                "FOX",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "DAL",
-                "HOU",
-                "2018-10-08T00:20Z",
-                "NBC",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "WSH",
-                "NO",
-                "2018-10-09T00:15Z",
-                "ESPN",
-                "Mercedes-Benz Superdome, New Orleans"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "DET",
-            "NO"
-        ],
-        "games": [
-            [
-                "PHI",
-                "NYG",
-                "2018-10-12T00:20Z",
-                "FOX/NFL",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "TB",
-                "ATL",
-                "2018-10-14T17:00Z",
-                "FOX",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "PIT",
-                "CIN",
-                "2018-10-14T17:00Z",
-                "CBS",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "LAC",
-                "CLE",
-                "2018-10-14T17:00Z",
-                "CBS",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "SEA",
-                "OAK",
-                "2018-10-14T17:00Z",
-                "FOX",
-                "Tottenham Stadium, London"
-            ],
-            [
-                "CHI",
-                "MIA",
-                "2018-10-14T17:00Z",
-                "FOX",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "ARI",
-                "MIN",
-                "2018-10-14T17:00Z",
-                "FOX",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "IND",
-                "NYJ",
-                "2018-10-14T17:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "CAR",
-                "WSH",
-                "2018-10-14T17:00Z",
-                "FOX",
-                "FedEx Field, Landover"
-            ],
-            [
-                "BUF",
-                "HOU",
-                "2018-10-14T17:00Z",
-                "CBS",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "LAR",
-                "DEN",
-                "2018-10-14T20:05Z",
-                "FOX",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "JAX",
-                "DAL",
-                "2018-10-14T20:25Z",
-                "CBS",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "BAL",
-                "TEN",
-                "2018-10-14T20:25Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "KC",
-                "NE",
-                "2018-10-15T00:20Z",
-                "NBC",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "SF",
-                "GB",
-                "2018-10-16T00:15Z",
-                "ESPN",
-                "Lambeau Field, Green Bay"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "GB",
-            "OAK",
-            "PIT",
-            "SEA"
-        ],
-        "games": [
-            [
-                "DEN",
-                "ARI",
-                "2018-10-19T00:20Z",
-                "FOX/NFL",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "TEN",
-                "LAC",
-                "2018-10-21T13:30Z",
-                "CBS",
-                "Wembley Stadium, London"
-            ],
-            [
-                "NE",
-                "CHI",
-                "2018-10-21T17:00Z",
-                "CBS",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "BUF",
-                "IND",
-                "2018-10-21T17:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "CIN",
-                "KC",
-                "2018-10-21T17:00Z",
-                "CBS",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "DET",
-                "MIA",
-                "2018-10-21T17:00Z",
-                "FOX",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "MIN",
-                "NYJ",
-                "2018-10-21T17:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "CAR",
-                "PHI",
-                "2018-10-21T17:00Z",
-                "FOX",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "CLE",
-                "TB",
-                "2018-10-21T17:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "HOU",
-                "JAX",
-                "2018-10-21T17:00Z",
-                "CBS",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "NO",
-                "BAL",
-                "2018-10-21T20:05Z",
-                "FOX",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "DAL",
-                "WSH",
-                "2018-10-21T20:25Z",
-                "CBS",
-                "FedEx Field, Landover"
-            ],
-            [
-                "LAR",
-                "SF",
-                "2018-10-22T00:20Z",
-                "NBC",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "NYG",
-                "ATL",
-                "2018-10-23T00:15Z",
-                "ESPN",
-                "Mercedes-Benz Stadium, Atlanta"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "ATL",
-            "DAL",
-            "TEN",
-            "LAC"
-        ],
-        "games": [
-            [
-                "MIA",
-                "HOU",
-                "2018-10-26T00:20Z",
-                "FOX/NFL",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "PHI",
-                "JAX",
-                "2018-10-28T13:30Z",
-                "NFL",
-                "Wembley Stadium, London"
-            ],
-            [
-                "NYJ",
-                "CHI",
-                "2018-10-28T17:00Z",
-                "CBS",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "TB",
-                "CIN",
-                "2018-10-28T17:00Z",
-                "FOX",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "SEA",
-                "DET",
-                "2018-10-28T17:00Z",
-                "FOX",
-                "Ford Field, Detroit"
-            ],
-            [
-                "DEN",
-                "KC",
-                "2018-10-28T17:00Z",
-                "CBS",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "WSH",
-                "NYG",
-                "2018-10-28T17:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "CLE",
-                "PIT",
-                "2018-10-28T17:00Z",
-                "CBS",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "BAL",
-                "CAR",
-                "2018-10-28T17:00Z",
-                "CBS",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "IND",
-                "OAK",
-                "2018-10-28T20:05Z",
-                "CBS",
-                "Oakland Coliseum, Oakland"
-            ],
-            [
-                "GB",
-                "LAR",
-                "2018-10-28T20:25Z",
-                "FOX",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "SF",
-                "ARI",
-                "2018-10-28T20:25Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "NO",
-                "MIN",
-                "2018-10-29T00:20Z",
-                "NBC",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "NE",
-                "BUF",
-                "2018-10-30T00:15Z",
-                "ESPN",
-                "New Era Field, Buffalo"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "CIN",
-            "IND",
-            "NYG",
-            "PHI",
-            "ARI",
-            "JAX"
-        ],
-        "games": [
-            [
-                "OAK",
-                "SF",
-                "2018-11-02T00:20Z",
-                "FOX/NFL",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "CHI",
-                "BUF",
-                "2018-11-04T18:00Z",
-                "FOX",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "KC",
-                "CLE",
-                "2018-11-04T18:00Z",
-                "CBS",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "NYJ",
-                "MIA",
-                "2018-11-04T18:00Z",
-                "CBS",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "DET",
-                "MIN",
-                "2018-11-04T18:00Z",
-                "FOX",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "ATL",
-                "WSH",
-                "2018-11-04T18:00Z",
-                "FOX",
-                "FedEx Field, Landover"
-            ],
-            [
-                "TB",
-                "CAR",
-                "2018-11-04T18:00Z",
-                "FOX",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "PIT",
-                "BAL",
-                "2018-11-04T18:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "HOU",
-                "DEN",
-                "2018-11-04T21:05Z",
-                "CBS",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "LAC",
-                "SEA",
-                "2018-11-04T21:05Z",
-                "CBS",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "LAR",
-                "NO",
-                "2018-11-04T21:25Z",
-                "FOX",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "GB",
-                "NE",
-                "2018-11-05T01:20Z",
-                "NBC",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "TEN",
-                "DAL",
-                "2018-11-06T01:15Z",
-                "ESPN",
-                "AT&T Stadium, Arlington"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "DEN",
-            "MIN",
-            "BAL",
-            "HOU"
-        ],
-        "games": [
-            [
-                "CAR",
-                "PIT",
-                "2018-11-09T01:20Z",
-                "FOX/NFL",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "DET",
-                "CHI",
-                "2018-11-11T18:00Z",
-                "FOX",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "NO",
-                "CIN",
-                "2018-11-11T18:00Z",
-                "FOX",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "ATL",
-                "CLE",
-                "2018-11-11T18:00Z",
-                "FOX",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "MIA",
-                "GB",
-                "2018-11-11T18:00Z",
-                "CBS",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "NE",
-                "TEN",
-                "2018-11-11T18:00Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "JAX",
-                "IND",
-                "2018-11-11T18:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "ARI",
-                "KC",
-                "2018-11-11T18:00Z",
-                "FOX",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "BUF",
-                "NYJ",
-                "2018-11-11T18:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "WSH",
-                "TB",
-                "2018-11-11T18:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "LAC",
-                "OAK",
-                "2018-11-11T21:05Z",
-                "FOX",
-                "Oakland Coliseum, Oakland"
-            ],
-            [
-                "SEA",
-                "LAR",
-                "2018-11-11T21:25Z",
-                "CBS",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "DAL",
-                "PHI",
-                "2018-11-12T01:20Z",
-                "NBC",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "NYG",
-                "SF",
-                "2018-11-13T01:15Z",
-                "ESPN",
-                "Levi's Stadium, Santa Clara"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "BUF",
-            "CLE",
-            "MIA",
-            "NE",
-            "NYJ",
-            "SF"
-        ],
-        "games": [
-            [
-                "GB",
-                "SEA",
-                "2018-11-16T01:20Z",
-                "FOX/NFL",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "DAL",
-                "ATL",
-                "2018-11-18T18:00Z",
-                "FOX",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "MIN",
-                "CHI",
-                "2018-11-18T18:00Z",
-                "FOX",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "CAR",
-                "DET",
-                "2018-11-18T18:00Z",
-                "FOX",
-                "Ford Field, Detroit"
-            ],
-            [
-                "TEN",
-                "IND",
-                "2018-11-18T18:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "PHI",
-                "NO",
-                "2018-11-18T18:00Z",
-                "FOX",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "TB",
-                "NYG",
-                "2018-11-18T18:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "HOU",
-                "WSH",
-                "2018-11-18T18:00Z",
-                "CBS",
-                "FedEx Field, Landover"
-            ],
-            [
-                "CIN",
-                "BAL",
-                "2018-11-18T18:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "OAK",
-                "ARI",
-                "2018-11-18T21:05Z",
-                "CBS",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "DEN",
-                "LAC",
-                "2018-11-18T21:05Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "PIT",
-                "JAX",
-                "2018-11-19T01:20Z",
-                "NBC",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "KC",
-                "LAR",
-                "2018-11-20T01:15Z",
-                "ESPN",
-                "Estadio Azteca, Mexico City"
-            ]
-        ]
-    },
-    {
-        "byes": [
-            "KC",
-            "LAR"
-        ],
-        "games": [
-            [
-                "CHI",
-                "DET",
-                "2018-11-22T17:30Z",
-                "CBS",
-                "Ford Field, Detroit"
-            ],
-            [
-                "WSH",
-                "DAL",
-                "2018-11-22T21:30Z",
-                "FOX",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "ATL",
-                "NO",
-                "2018-11-23T01:20Z",
-                "NBC",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "JAX",
-                "BUF",
-                "2018-11-25T18:00Z",
-                "CBS",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "CLE",
-                "CIN",
-                "2018-11-25T18:00Z",
-                "CBS",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "MIA",
-                "IND",
-                "2018-11-25T18:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "NE",
-                "NYJ",
-                "2018-11-25T18:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
                 "NYG",
                 "PHI",
-                "2018-11-25T18:00Z",
-                "FOX",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "SF",
-                "TB",
-                "2018-11-25T18:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "SEA",
-                "CAR",
-                "2018-11-25T18:00Z",
-                "FOX",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "OAK",
-                "BAL",
-                "2018-11-25T18:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
                 "ARI",
-                "LAC",
-                "2018-11-25T21:05Z",
-                "FOX",
-                "StubHub Center, Carson"
+                "JAX"
             ],
-            [
-                "PIT",
-                "DEN",
-                "2018-11-25T21:25Z",
-                "CBS",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "GB",
-                "MIN",
-                "2018-11-26T01:20Z",
-                "NBC",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "TEN",
-                "HOU",
-                "2018-11-27T01:15Z",
-                "ESPN",
-                "NRG Stadium, Houston"
+            "games": [
+                {
+                    "away": "OAK",
+                    "home": "SF",
+                    "start": "2018-11-02T00:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "CHI",
+                    "home": "BUF",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "FOX",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "KC",
+                    "home": "CLE",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "CBS",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "MIA",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "CBS",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "DET",
+                    "home": "MIN",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "FOX",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "ATL",
+                    "home": "WSH",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "FOX",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "TB",
+                    "home": "CAR",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "FOX",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "PIT",
+                    "home": "BAL",
+                    "start": "2018-11-04T18:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "HOU",
+                    "home": "DEN",
+                    "start": "2018-11-04T21:05Z",
+                    "tv": "CBS",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "LAC",
+                    "home": "SEA",
+                    "start": "2018-11-04T21:05Z",
+                    "tv": "CBS",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "LAR",
+                    "home": "NO",
+                    "start": "2018-11-04T21:25Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "GB",
+                    "home": "NE",
+                    "start": "2018-11-05T01:20Z",
+                    "tv": "NBC",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "TEN",
+                    "home": "DAL",
+                    "start": "2018-11-06T01:15Z",
+                    "tv": "ESPN",
+                    "location": "AT&T Stadium, Arlington"
+                }
             ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "NO",
-                "DAL",
-                "2018-11-30T01:20Z",
-                "FOX/NFL",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "BAL",
-                "ATL",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
+        },
+        {
+            "byes": [
                 "DEN",
-                "CIN",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "Paul Brown Stadium, Cincinnati"
+                "MIN",
+                "BAL",
+                "HOU"
             ],
-            [
-                "LAR",
-                "DET",
-                "2018-12-02T18:00Z",
-                "FOX",
-                "Ford Field, Detroit"
-            ],
-            [
-                "ARI",
-                "GB",
-                "2018-12-02T18:00Z",
-                "FOX",
-                "Lambeau Field, Green Bay"
-            ],
-            [
+            "games": [
+                {
+                    "away": "CAR",
+                    "home": "PIT",
+                    "start": "2018-11-09T01:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "DET",
+                    "home": "CHI",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "FOX",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "NO",
+                    "home": "CIN",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "FOX",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "ATL",
+                    "home": "CLE",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "FOX",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "MIA",
+                    "home": "GB",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "NE",
+                    "home": "TEN",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "JAX",
+                    "home": "IND",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "ARI",
+                    "home": "KC",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "FOX",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "BUF",
+                    "home": "NYJ",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "WSH",
+                    "home": "TB",
+                    "start": "2018-11-11T18:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "LAC",
+                    "home": "OAK",
+                    "start": "2018-11-11T21:05Z",
+                    "tv": "FOX",
+                    "location": "Oakland Coliseum, Oakland"
+                },
+                {
+                    "away": "SEA",
+                    "home": "LAR",
+                    "start": "2018-11-11T21:25Z",
+                    "tv": "CBS",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "DAL",
+                    "home": "PHI",
+                    "start": "2018-11-12T01:20Z",
+                    "tv": "NBC",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "NYG",
+                    "home": "SF",
+                    "start": "2018-11-13T01:15Z",
+                    "tv": "ESPN",
+                    "location": "Levi's Stadium, Santa Clara"
+                }
+            ]
+        },
+        {
+            "byes": [
                 "BUF",
-                "MIA",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "CHI",
-                "NYG",
-                "2018-12-02T18:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "LAC",
-                "PIT",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "CAR",
-                "TB",
-                "2018-12-02T18:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "IND",
-                "JAX",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
                 "CLE",
-                "HOU",
-                "2018-12-02T18:00Z",
-                "CBS",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "NYJ",
-                "TEN",
-                "2018-12-02T21:05Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "KC",
-                "OAK",
-                "2018-12-02T21:05Z",
-                "CBS",
-                "Oakland Coliseum, Oakland"
-            ],
-            [
-                "MIN",
-                "NE",
-                "2018-12-02T21:25Z",
-                "FOX",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "SF",
-                "SEA",
-                "2018-12-03T01:20Z",
-                "NBC",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "WSH",
-                "PHI",
-                "2018-12-04T01:15Z",
-                "ESPN",
-                "Lincoln Financial Field, Philadelphia"
-            ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "JAX",
-                "TEN",
-                "2018-12-07T01:20Z",
-                "FOX",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "NYJ",
-                "BUF",
-                "2018-12-09T18:00Z",
-                "CBS",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "LAR",
-                "CHI",
-                "2018-12-09T18:00Z",
-                "FOX",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "CAR",
-                "CLE",
-                "2018-12-09T18:00Z",
-                "FOX",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "ATL",
-                "GB",
-                "2018-12-09T18:00Z",
-                "FOX",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "BAL",
-                "KC",
-                "2018-12-09T18:00Z",
-                "CBS",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "NE",
                 "MIA",
-                "2018-12-09T18:00Z",
-                "CBS",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "NO",
-                "TB",
-                "2018-12-09T18:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "NYG",
-                "WSH",
-                "2018-12-09T18:00Z",
-                "FOX",
-                "FedEx Field, Landover"
-            ],
-            [
-                "IND",
-                "HOU",
-                "2018-12-09T18:00Z",
-                "CBS",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "CIN",
-                "LAC",
-                "2018-12-09T21:05Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "DEN",
-                "SF",
-                "2018-12-09T21:05Z",
-                "CBS",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "PHI",
-                "DAL",
-                "2018-12-09T21:25Z",
-                "FOX",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "DET",
-                "ARI",
-                "2018-12-09T21:25Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "PIT",
-                "OAK",
-                "2018-12-10T01:20Z",
-                "NBC",
-                "Oakland Coliseum, Oakland"
-            ],
-            [
-                "MIN",
-                "SEA",
-                "2018-12-11T01:15Z",
-                "ESPN",
-                "CenturyLink Field, Seattle"
-            ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "LAC",
-                "KC",
-                "2018-12-14T01:20Z",
-                "FOX",
-                "Arrowhead Stadium, Kansas City"
-            ],
-            [
-                "CLE",
-                "DEN",
-                "2018-12-15T21:30Z",
-                "NFL",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "HOU",
-                "NYJ",
-                "2018-12-15T21:30Z",
-                "NFL",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "ARI",
-                "ATL",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "Mercedes-Benz Stadium, Atlanta"
-            ],
-            [
-                "DET",
-                "BUF",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "GB",
-                "CHI",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "Soldier Field, Chicago"
-            ],
-            [
-                "OAK",
-                "CIN",
-                "2018-12-16T18:00Z",
-                "CBS",
-                "Paul Brown Stadium, Cincinnati"
-            ],
-            [
-                "DAL",
-                "IND",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "MIA",
-                "MIN",
-                "2018-12-16T18:00Z",
-                "CBS",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "TEN",
-                "NYG",
-                "2018-12-16T18:00Z",
-                "CBS",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "WSH",
-                "JAX",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "TIAA Bank Field, Jacksonville"
-            ],
-            [
-                "TB",
-                "BAL",
-                "2018-12-16T18:00Z",
-                "FOX",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "SEA",
-                "SF",
-                "2018-12-16T21:05Z",
-                "FOX",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
                 "NE",
-                "PIT",
-                "2018-12-16T21:25Z",
-                "CBS",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "PHI",
-                "LAR",
-                "2018-12-17T01:20Z",
-                "NBC",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "NO",
-                "CAR",
-                "2018-12-18T01:15Z",
-                "ESPN",
-                "Bank of America Stadium, Charlotte"
-            ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "CIN",
-                "CLE",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "FirstEnergy Stadium, Cleveland"
-            ],
-            [
-                "TB",
-                "DAL",
-                "2018-12-23T18:00Z",
-                "FOX",
-                "AT&T Stadium, Arlington"
-            ],
-            [
-                "MIN",
-                "DET",
-                "2018-12-23T18:00Z",
-                "FOX",
-                "Ford Field, Detroit"
-            ],
-            [
-                "WSH",
-                "TEN",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "NYG",
-                "IND",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "Lucas Oil Stadium, Indianapolis"
-            ],
-            [
-                "JAX",
-                "MIA",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "Hard Rock Stadium, Miami Gardens"
-            ],
-            [
-                "BUF",
-                "NE",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "GB",
                 "NYJ",
-                "2018-12-23T18:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
+                "SF"
             ],
-            [
-                "HOU",
-                "PHI",
-                "2018-12-23T18:00Z",
-                "CBS",
-                "Lincoln Financial Field, Philadelphia"
-            ],
-            [
-                "ATL",
-                "CAR",
-                "2018-12-23T18:00Z",
-                "FOX",
-                "Bank of America Stadium, Charlotte"
-            ],
-            [
-                "LAR",
-                "ARI",
-                "2018-12-23T21:05Z",
-                "FOX",
-                "U of Phoenix Stadium, Glendale"
-            ],
-            [
-                "BAL",
-                "LAC",
-                "2018-12-23T21:05Z",
-                "CBS",
-                "StubHub Center, Carson"
-            ],
-            [
-                "CHI",
-                "SF",
-                "2018-12-23T21:05Z",
-                "FOX",
-                "Levi's Stadium, Santa Clara"
-            ],
-            [
-                "PIT",
-                "NO",
-                "2018-12-23T21:25Z",
-                "CBS",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "KC",
-                "SEA",
-                "2018-12-24T01:20Z",
-                "NBC",
-                "CenturyLink Field, Seattle"
-            ],
-            [
-                "DEN",
-                "OAK",
-                "2018-12-25T01:15Z",
-                "ESPN",
-                "Oakland Coliseum, Oakland"
+            "games": [
+                {
+                    "away": "GB",
+                    "home": "SEA",
+                    "start": "2018-11-16T01:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "DAL",
+                    "home": "ATL",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "MIN",
+                    "home": "CHI",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "FOX",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "CAR",
+                    "home": "DET",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "FOX",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "TEN",
+                    "home": "IND",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "PHI",
+                    "home": "NO",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "TB",
+                    "home": "NYG",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "HOU",
+                    "home": "WSH",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "CBS",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "CIN",
+                    "home": "BAL",
+                    "start": "2018-11-18T18:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "OAK",
+                    "home": "ARI",
+                    "start": "2018-11-18T21:05Z",
+                    "tv": "CBS",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "DEN",
+                    "home": "LAC",
+                    "start": "2018-11-18T21:05Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "PIT",
+                    "home": "JAX",
+                    "start": "2018-11-19T01:20Z",
+                    "tv": "NBC",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "KC",
+                    "home": "LAR",
+                    "start": "2018-11-20T01:15Z",
+                    "tv": "ESPN",
+                    "location": "Estadio Azteca, Mexico City"
+                }
             ]
-        ]
-    },
-    {
-        "byes": [],
-        "games": [
-            [
-                "MIA",
-                "BUF",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "New Era Field, Buffalo"
-            ],
-            [
-                "DET",
-                "GB",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "Lambeau Field, Green Bay"
-            ],
-            [
-                "IND",
-                "TEN",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "Nissan Stadium, Nashville"
-            ],
-            [
-                "OAK",
+        },
+        {
+            "byes": [
                 "KC",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "Arrowhead Stadium, Kansas City"
+                "LAR"
             ],
-            [
-                "CHI",
-                "MIN",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "U.S. Bank Stadium, Minneapolis"
-            ],
-            [
-                "NYJ",
-                "NE",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "Gillette Stadium, Foxboro"
-            ],
-            [
-                "CAR",
-                "NO",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "Mercedes-Benz Superdome, New Orleans"
-            ],
-            [
-                "DAL",
-                "NYG",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "MetLife Stadium, East Rutherford"
-            ],
-            [
-                "CIN",
-                "PIT",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "Heinz Field, Pittsburgh"
-            ],
-            [
-                "ATL",
-                "TB",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "Raymond James Stadium, Tampa"
-            ],
-            [
-                "PHI",
-                "WSH",
-                "2018-12-30T18:00Z",
-                "FOX",
-                "FedEx Field, Landover"
-            ],
-            [
-                "CLE",
-                "BAL",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "M&T Bank Stadium, Baltimore"
-            ],
-            [
-                "JAX",
-                "HOU",
-                "2018-12-30T18:00Z",
-                "CBS",
-                "NRG Stadium, Houston"
-            ],
-            [
-                "LAC",
-                "DEN",
-                "2018-12-30T21:25Z",
-                "CBS",
-                "Sports Authority Field at Mile High, Denver"
-            ],
-            [
-                "SF",
-                "LAR",
-                "2018-12-30T21:25Z",
-                "FOX",
-                "Los Angeles Memorial Coliseum, Los Angeles"
-            ],
-            [
-                "ARI",
-                "SEA",
-                "2018-12-30T21:25Z",
-                "FOX",
-                "CenturyLink Field, Seattle"
+            "games": [
+                {
+                    "away": "CHI",
+                    "home": "DET",
+                    "start": "2018-11-22T17:30Z",
+                    "tv": "CBS",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "WSH",
+                    "home": "DAL",
+                    "start": "2018-11-22T21:30Z",
+                    "tv": "FOX",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "ATL",
+                    "home": "NO",
+                    "start": "2018-11-23T01:20Z",
+                    "tv": "NBC",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "JAX",
+                    "home": "BUF",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "CBS",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "CLE",
+                    "home": "CIN",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "CBS",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "MIA",
+                    "home": "IND",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "NE",
+                    "home": "NYJ",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "NYG",
+                    "home": "PHI",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "FOX",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "SF",
+                    "home": "TB",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "SEA",
+                    "home": "CAR",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "FOX",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "OAK",
+                    "home": "BAL",
+                    "start": "2018-11-25T18:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "ARI",
+                    "home": "LAC",
+                    "start": "2018-11-25T21:05Z",
+                    "tv": "FOX",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "PIT",
+                    "home": "DEN",
+                    "start": "2018-11-25T21:25Z",
+                    "tv": "CBS",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "GB",
+                    "home": "MIN",
+                    "start": "2018-11-26T01:20Z",
+                    "tv": "NBC",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "TEN",
+                    "home": "HOU",
+                    "start": "2018-11-27T01:15Z",
+                    "tv": "ESPN",
+                    "location": "NRG Stadium, Houston"
+                }
             ]
-        ]
-    }
-]
-
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "NO",
+                    "home": "DAL",
+                    "start": "2018-11-30T01:20Z",
+                    "tv": "FOX/NFL",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "BAL",
+                    "home": "ATL",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "DEN",
+                    "home": "CIN",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "LAR",
+                    "home": "DET",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "FOX",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "ARI",
+                    "home": "GB",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "FOX",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "BUF",
+                    "home": "MIA",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "CHI",
+                    "home": "NYG",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "LAC",
+                    "home": "PIT",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "CAR",
+                    "home": "TB",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "IND",
+                    "home": "JAX",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "CLE",
+                    "home": "HOU",
+                    "start": "2018-12-02T18:00Z",
+                    "tv": "CBS",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "TEN",
+                    "start": "2018-12-02T21:05Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "KC",
+                    "home": "OAK",
+                    "start": "2018-12-02T21:05Z",
+                    "tv": "CBS",
+                    "location": "Oakland Coliseum, Oakland"
+                },
+                {
+                    "away": "MIN",
+                    "home": "NE",
+                    "start": "2018-12-02T21:25Z",
+                    "tv": "FOX",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "SF",
+                    "home": "SEA",
+                    "start": "2018-12-03T01:20Z",
+                    "tv": "NBC",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "WSH",
+                    "home": "PHI",
+                    "start": "2018-12-04T01:15Z",
+                    "tv": "ESPN",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "JAX",
+                    "home": "TEN",
+                    "start": "2018-12-07T01:20Z",
+                    "tv": "FOX",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "BUF",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "CBS",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "LAR",
+                    "home": "CHI",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "FOX",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "CAR",
+                    "home": "CLE",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "FOX",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "ATL",
+                    "home": "GB",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "FOX",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "BAL",
+                    "home": "KC",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "CBS",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "NE",
+                    "home": "MIA",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "CBS",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "NO",
+                    "home": "TB",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "NYG",
+                    "home": "WSH",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "FOX",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "IND",
+                    "home": "HOU",
+                    "start": "2018-12-09T18:00Z",
+                    "tv": "CBS",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "CIN",
+                    "home": "LAC",
+                    "start": "2018-12-09T21:05Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "DEN",
+                    "home": "SF",
+                    "start": "2018-12-09T21:05Z",
+                    "tv": "CBS",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "PHI",
+                    "home": "DAL",
+                    "start": "2018-12-09T21:25Z",
+                    "tv": "FOX",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "DET",
+                    "home": "ARI",
+                    "start": "2018-12-09T21:25Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "PIT",
+                    "home": "OAK",
+                    "start": "2018-12-10T01:20Z",
+                    "tv": "NBC",
+                    "location": "Oakland Coliseum, Oakland"
+                },
+                {
+                    "away": "MIN",
+                    "home": "SEA",
+                    "start": "2018-12-11T01:15Z",
+                    "tv": "ESPN",
+                    "location": "CenturyLink Field, Seattle"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "LAC",
+                    "home": "KC",
+                    "start": "2018-12-14T01:20Z",
+                    "tv": "FOX",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "CLE",
+                    "home": "DEN",
+                    "start": "2018-12-15T21:30Z",
+                    "tv": "NFL",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "HOU",
+                    "home": "NYJ",
+                    "start": "2018-12-15T21:30Z",
+                    "tv": "NFL",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "ARI",
+                    "home": "ATL",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Stadium, Atlanta"
+                },
+                {
+                    "away": "DET",
+                    "home": "BUF",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "GB",
+                    "home": "CHI",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "Soldier Field, Chicago"
+                },
+                {
+                    "away": "OAK",
+                    "home": "CIN",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "CBS",
+                    "location": "Paul Brown Stadium, Cincinnati"
+                },
+                {
+                    "away": "DAL",
+                    "home": "IND",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "MIA",
+                    "home": "MIN",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "CBS",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "TEN",
+                    "home": "NYG",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "CBS",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "WSH",
+                    "home": "JAX",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "TIAA Bank Field, Jacksonville"
+                },
+                {
+                    "away": "TB",
+                    "home": "BAL",
+                    "start": "2018-12-16T18:00Z",
+                    "tv": "FOX",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "SEA",
+                    "home": "SF",
+                    "start": "2018-12-16T21:05Z",
+                    "tv": "FOX",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "NE",
+                    "home": "PIT",
+                    "start": "2018-12-16T21:25Z",
+                    "tv": "CBS",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "PHI",
+                    "home": "LAR",
+                    "start": "2018-12-17T01:20Z",
+                    "tv": "NBC",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "NO",
+                    "home": "CAR",
+                    "start": "2018-12-18T01:15Z",
+                    "tv": "ESPN",
+                    "location": "Bank of America Stadium, Charlotte"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "CIN",
+                    "home": "CLE",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "FirstEnergy Stadium, Cleveland"
+                },
+                {
+                    "away": "TB",
+                    "home": "DAL",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "FOX",
+                    "location": "AT&T Stadium, Arlington"
+                },
+                {
+                    "away": "MIN",
+                    "home": "DET",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "FOX",
+                    "location": "Ford Field, Detroit"
+                },
+                {
+                    "away": "WSH",
+                    "home": "TEN",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "NYG",
+                    "home": "IND",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lucas Oil Stadium, Indianapolis"
+                },
+                {
+                    "away": "JAX",
+                    "home": "MIA",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "Hard Rock Stadium, Miami Gardens"
+                },
+                {
+                    "away": "BUF",
+                    "home": "NE",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "GB",
+                    "home": "NYJ",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "HOU",
+                    "home": "PHI",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "CBS",
+                    "location": "Lincoln Financial Field, Philadelphia"
+                },
+                {
+                    "away": "ATL",
+                    "home": "CAR",
+                    "start": "2018-12-23T18:00Z",
+                    "tv": "FOX",
+                    "location": "Bank of America Stadium, Charlotte"
+                },
+                {
+                    "away": "LAR",
+                    "home": "ARI",
+                    "start": "2018-12-23T21:05Z",
+                    "tv": "FOX",
+                    "location": "U of Phoenix Stadium, Glendale"
+                },
+                {
+                    "away": "BAL",
+                    "home": "LAC",
+                    "start": "2018-12-23T21:05Z",
+                    "tv": "CBS",
+                    "location": "StubHub Center, Carson"
+                },
+                {
+                    "away": "CHI",
+                    "home": "SF",
+                    "start": "2018-12-23T21:05Z",
+                    "tv": "FOX",
+                    "location": "Levi's Stadium, Santa Clara"
+                },
+                {
+                    "away": "PIT",
+                    "home": "NO",
+                    "start": "2018-12-23T21:25Z",
+                    "tv": "CBS",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "KC",
+                    "home": "SEA",
+                    "start": "2018-12-24T01:20Z",
+                    "tv": "NBC",
+                    "location": "CenturyLink Field, Seattle"
+                },
+                {
+                    "away": "DEN",
+                    "home": "OAK",
+                    "start": "2018-12-25T01:15Z",
+                    "tv": "ESPN",
+                    "location": "Oakland Coliseum, Oakland"
+                }
+            ]
+        },
+        {
+            "byes": [],
+            "games": [
+                {
+                    "away": "MIA",
+                    "home": "BUF",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "New Era Field, Buffalo"
+                },
+                {
+                    "away": "DET",
+                    "home": "GB",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "Lambeau Field, Green Bay"
+                },
+                {
+                    "away": "IND",
+                    "home": "TEN",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "Nissan Stadium, Nashville"
+                },
+                {
+                    "away": "OAK",
+                    "home": "KC",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "Arrowhead Stadium, Kansas City"
+                },
+                {
+                    "away": "CHI",
+                    "home": "MIN",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "U.S. Bank Stadium, Minneapolis"
+                },
+                {
+                    "away": "NYJ",
+                    "home": "NE",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "Gillette Stadium, Foxboro"
+                },
+                {
+                    "away": "CAR",
+                    "home": "NO",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "Mercedes-Benz Superdome, New Orleans"
+                },
+                {
+                    "away": "DAL",
+                    "home": "NYG",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "MetLife Stadium, East Rutherford"
+                },
+                {
+                    "away": "CIN",
+                    "home": "PIT",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "Heinz Field, Pittsburgh"
+                },
+                {
+                    "away": "ATL",
+                    "home": "TB",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "Raymond James Stadium, Tampa"
+                },
+                {
+                    "away": "PHI",
+                    "home": "WSH",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "FOX",
+                    "location": "FedEx Field, Landover"
+                },
+                {
+                    "away": "CLE",
+                    "home": "BAL",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "M&T Bank Stadium, Baltimore"
+                },
+                {
+                    "away": "JAX",
+                    "home": "HOU",
+                    "start": "2018-12-30T18:00Z",
+                    "tv": "CBS",
+                    "location": "NRG Stadium, Houston"
+                },
+                {
+                    "away": "LAC",
+                    "home": "DEN",
+                    "start": "2018-12-30T21:25Z",
+                    "tv": "CBS",
+                    "location": "Sports Authority Field at Mile High, Denver"
+                },
+                {
+                    "away": "SF",
+                    "home": "LAR",
+                    "start": "2018-12-30T21:25Z",
+                    "tv": "FOX",
+                    "location": "Los Angeles Memorial Coliseum, Los Angeles"
+                },
+                {
+                    "away": "ARI",
+                    "home": "SEA",
+                    "start": "2018-12-30T21:25Z",
+                    "tv": "FOX",
+                    "location": "CenturyLink Field, Seattle"
+                }
+            ]
+        }
+    ]
 }

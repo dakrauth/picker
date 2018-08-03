@@ -3,7 +3,7 @@
 {% block main_content %}
     <div class="span-20  last">
     <h1>Playoffs, {{ week.season }}</h1>
-    <h2>Kickoff: {{ week.kickoff|date:"D, F jS, P" }}</h2>
+    <h2>Kickoff: {{ week.start_time|date:"D, F jS, P" }}</h2>
     {% season_nav week "picks" %}
 
     {% if form.errors %}

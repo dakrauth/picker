@@ -1,34 +1,89 @@
 import os
+import json
 import pytest
+from datetime import datetime, timedelta
 from picker import models as picker
-from demo.management.commands.loaddemo import load_users
+from demo.management.commands.loaddemo import load_users, create_grouping
 
 
-def filepath_here(name):
-    return os.path.join(os.path.dirname(__file__), name)
-
-
-@pytest.fixture
-def nfl_season_json_path():
-    return filepath_here('nfl2018.json')
+def read_json(name):
+    filepath = os.path.join(os.path.dirname(__file__), name)
+    with open(filepath) as fin:
+        return json.load(fin)
 
 
 @pytest.fixture
-def nfl_json_path():
-    return filepath_here('nfl.json')
+def nfl_season_data():
+    return read_json('nfl2018.json')
 
 
 @pytest.fixture
-def league(nfl_json_path):
-    return picker.League.import_league(nfl_json_path)[0]
+def nfl_data():
+    return read_json('nfl.json')
 
 
 @pytest.fixture
-def users(league):
-    return load_users(league)[0]
+def league(nfl_data):
+    return picker.League.import_league(nfl_data)[0]
 
 
 @pytest.fixture
-def gamesets(league, nfl_season_json_path):
-    league.import_season(nfl_season_json_path)
+def grouping(league):
+    return create_grouping(league, 'Test group')
+
+
+@pytest.fixture
+def users(grouping):
+    return load_users(grouping)
+
+
+@pytest.fixture
+def user(users):
+    return users[1]
+
+
+@pytest.fixture
+def superuser(users):
+    return users[0]
+
+
+@pytest.fixture
+def gamesets(league, nfl_season_data):
+    picker.League.import_season(nfl_season_data)
     return league.season_weeks()
+
+
+@pytest.fixture
+def quidditch():
+    year = 2018
+    league = picker.League.import_league({
+        "name": "Quidditch",
+        "slug": "quidditch",
+        "abbr": "QDCH",
+        "is_pickable": True,
+        "current_season": year,
+        "teams": [
+            {"abbr": "GRF", "name": "Gryffindor", "nickname": "Lions"},
+            {"abbr": "HUF", "name": "Hufflepuff", "nickname": "Badgers"},
+            {"abbr": "RVN", "name": "Ravenclaw", "nickname": "Eagles"},
+            {"abbr": "SLY", "name": "Slytherin", "nickname": "Serpents"}
+        ]
+    })[0]
+
+    picker.League.import_season({"league": "QDCH", "season": year, "weeks": [
+        {"games": [
+            {"away": "GRF", "home": "HUF", "start": "2018-09-07T04:00Z", "location": "Hogwarts"},
+            {"away": "RVN", "home": "SLY", "start": "2018-09-07T08:00Z", "location": "Hogwarts"}
+        ]},
+        {"games": [
+            {"away": "GRF", "home": "RVN", "start": "2018-09-14T04:00Z", "location": "Hogwarts"},
+            {"away": "HUF", "home": "SLY", "start": "2018-09-14T08:00Z", "location": "Hogwarts"}
+        ]}
+    ]})
+
+    grouping = create_grouping(league, 'Quidditch grouping')
+    users = load_users(grouping)
+    return league, grouping, users
+
+
+

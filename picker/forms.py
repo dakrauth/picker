@@ -3,7 +3,7 @@ from django.utils.module_loading import import_string
 
 from . import models as picker
 from . import utils
-from .signals import picker_weekly_results
+from .signals import picker_results
 
 _picker_widget = None
 game_key_format = 'game_{}'.format
@@ -29,10 +29,10 @@ class GameField(forms.ChoiceField):
         self.manage = manage
         self.game_id = game.id
         self.is_game = True
-        self.disabled = not self.manage and (self.game.kickoff <= utils.datetime_now())
+        self.disabled = not self.manage and (self.game.start_time <= utils.datetime_now())
         super(GameField, self).__init__(
             choices=choices,
-            label=game.kickoff.strftime('%a, %b %d %I:%M %p'),
+            label=game.start_time.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
             widget=widget or get_picker_widget(game.week.league)
@@ -101,7 +101,7 @@ class ManagementPickForm(BasePickForm):
                 game.winner = team_dict[int(winner)]
 
         week.update_pick_status()
-        picker_weekly_results.send(sender=week.__class__, week=week, send_mail=send_mail)
+        picker_results.send(sender=week.__class__, week=week, send_mail=send_mail)
 
     @staticmethod
     def get_initial_picks(week):
@@ -162,7 +162,7 @@ class GameForm(forms.ModelForm):
 
     class Meta:
         model = picker.Game
-        fields = ('kickoff', 'location')
+        fields = ('start_time', 'location')
 
 
 class PlayoffField(forms.ModelChoiceField):
@@ -233,7 +233,7 @@ class PreferenceForm(forms.ModelForm):
         super(PreferenceForm, self).__init__(*args, **kws)
 
         for league in picker.League.objects.all():
-            field_name = '{}_favorite'.format(league.abbr)
+            field_name = '{}_favorite'.format(league.slug)
             current = None
             if instance:
                 try:
@@ -249,28 +249,16 @@ class PreferenceForm(forms.ModelForm):
                 initial=current.team if current else None
             )
 
-    def clean_email(self):
-        email = self.cleaned_data['email'].lower().strip()
-        if email != self.current_email and utils.user_email_exists(email):
-            raise forms.ValidationError('That email is already in use')
-
-        return email
-
     def save(self, commit=True):
         super(PreferenceForm, self).save(commit)
         if commit:
-            email = self.cleaned_data['email']
-            if email != self.current_email:
-                self.instance.user.email = email
-                self.instance.user.save()
-
             picker.PickerFavorite.objects.filter(user=self.instance.user).delete()
             for key in self.cleaned_data:
                 if not key.endswith('_favorite'):
                     continue
 
-                abbr = key.rsplit('_')[0]
-                league = picker.League.get(abbr)
+                slug = key.rsplit('_')[0]
+                league = picker.League.objects.get(slug=slug)
                 picker.PickerFavorite.objects.create(
                     league=league,
                     user=self.instance.user,

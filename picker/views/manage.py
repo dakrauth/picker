@@ -5,7 +5,8 @@ from django.utils.functional import cached_property
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from .base import PickerViewBase, SimpleFormMixin, PlayoffContext
+from .base import PickerViewBase, SimpleFormMixin
+from .playoffs import PlayoffContext
 from .. import forms
 from ..models import Game, PickerResultException
 
@@ -44,7 +45,7 @@ class ManageSeason(ManagementViewBase):
 
 
 class ManageWeek(ManagementViewBase):
-    template_name = '@manage/weekly_results.html'
+    template_name = '@manage/results.html'
 
     @property
     def gameset(self):
@@ -60,14 +61,14 @@ class ManageWeek(ManagementViewBase):
     def post(self, *args, **kwargs):
         gs = self.gameset
         request = self.request
-        if 'kickoff' in request.POST:
+        if 'autopicks' in request.POST:
             gs.picks_kickoff()
             try:
                 gs.update_results()
             except PickerResultException:
                 pass
 
-            messages.success(request, 'Week kickoff successful')
+            messages.success(request, 'Auto picks successful')
             return self.redirect_game_set(gs)
 
         if 'reminder' in request.POST:
