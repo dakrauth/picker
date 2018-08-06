@@ -4,22 +4,22 @@
 <h1>{{ league }} {{ season }} Schedule</h1>
 <nav class="season-nav">
     <ul class="pagination">
-        <li class="disabled"><a href="#">Weeks:</a></li>{% for sw in weeks %}
+        <li class="disabled"><a href="#">Weeks:</a></li>{% for gs in gamesets %}
         <li>
-            <a href="#week-{{ sw.week }}">{{ sw.week }}</a>
+            <a href="#week-{{ gs.sequence }}">{{ gs.sequence }}</a>
         </li> {% endfor %}
     </ul>
 </nav>
-{% for week in weeks %}
+{% for gameset in gamesets %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h2 class="panel-title" id="week-{{ week.week }}">Week {{ week.week }}</h2>
+        <h2 class="panel-title" id="week-{{ gameset.sequence }}">Week {{ gameset.sequence }}</h2>
     </div>
-    {% if week.byes.count %}
+    {% if gameset.byes.count %}
     <div class="panel-body">
         <p class="team-byes">
             <span class="label label-default">Byes</span>
-            {{ week.byes.all|join:", "}}
+            {{ gameset.byes.all|join:", "}}
         </p>
     </div>
     {% endif %}
@@ -32,7 +32,7 @@
             <th>Location</th>
             <th class="text-right">TV</th>
         </tr>
-        {% for game in week.game_set.all %}
+        {% for game in gameset.games.all %}
         <tr>
             <td>{{ game.start_time|date:"D M j, g:i a" }}</td>
             <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>

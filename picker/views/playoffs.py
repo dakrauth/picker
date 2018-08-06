@@ -6,7 +6,7 @@ class PlayoffContext:
 
     @staticmethod
     def week(playoff):
-        count = 1 + playoff.league.game_set.count()
+        count = 1 + playoff.league.gamesets.count()
         weeks = [{'season': playoff.season, 'week': w} for w in range(1, count)]
         return {'season_weeks': weeks, 'week': 'playoffs'}
 

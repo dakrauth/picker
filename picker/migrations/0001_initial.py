@@ -95,8 +95,8 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('strategy', models.CharField(default='USER', max_length=4, choices=[('USER', b'User'), ('RAND', b'Random'), ('HOME', b'Home Team'), ('BEST', b'Best Record')])),
-                ('user', models.ForeignKey(on_delete=models.CASCADE, related_name='pick_set', to=settings.AUTH_USER_MODEL)),
-                ('week', models.ForeignKey(on_delete=models.CASCADE, related_name='pick_set', to='picker.GameSet')),
+                ('user', models.ForeignKey(on_delete=models.CASCADE, related_name='picksets', to=settings.AUTH_USER_MODEL)),
+                ('week', models.ForeignKey(on_delete=models.CASCADE, related_name='picksets', to='picker.GameSet')),
             ],
         ),
         migrations.CreateModel(
@@ -200,17 +200,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='game',
             name='away',
-            field=models.ForeignKey(on_delete=models.CASCADE, related_name='away_game_set', to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='away_games', to='picker.Team'),
         ),
         migrations.AddField(
             model_name='game',
             name='home',
-            field=models.ForeignKey(on_delete=models.CASCADE, related_name='home_game_set', to='picker.Team'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='home_games', to='picker.Team'),
         ),
         migrations.AddField(
             model_name='game',
             name='week',
-            field=models.ForeignKey(on_delete=models.CASCADE, related_name='game_set', to='picker.GameSet'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='games', to='picker.GameSet'),
         ),
         migrations.AddField(
             model_name='conference',

@@ -1,10 +1,10 @@
 {% extends league_base %}
 {% block title %}Picks Management{% endblock %}
 {% block main_content %}
-    <h1>Manage Picks: Week {{ week.week }}, {{ week.season }}</h1>
+    <h1>Manage Picks: Week {{ gameset.sequence }}, {{ gameset.season }}</h1>
     {% load bootstrap3 picker_tags %}
     {% all_seasons_nav season league "manage" %}
-    {% season_nav week "manage" %}
+    {% season_nav gameset "manage" %}
     <form action="" method="post" class="actions">
         <p>
             <button class="btn btn-warning" type="submit" name="reminder">Reminder Email</button>

@@ -28,8 +28,8 @@ class Schedule(SimplePickerViewBase):
 
     def extra_data(self, data):
         season = self.season or self.league.latest_season
-        data['weeks'] = get_list_or_404(
-            self.league.game_set.filter(season=self.season).select_related()
+        data['gamesets'] = get_list_or_404(
+            self.league.gamesets.filter(season=self.season).select_related()
         )
 
 
@@ -110,11 +110,11 @@ class Results(PickerViewBase):
         context = self.get_context_data(**kwargs)
 
         league = self.league
-        game_set = league.current_gameset
-        if game_set:
-            if game_set.has_started:
+        gameset = league.current_gameset
+        if gameset:
+            if gameset.has_started:
                 try:
-                    game_set.update_results()
+                    gameset.update_results()
                 except PickerResultException:
                     pass
         elif self.league.config('PLAYOFFS'):
@@ -122,12 +122,12 @@ class Results(PickerViewBase):
             if playoff:
                 ctx = PlayoffContext.week(playoff)
                 self.template_name = '@results/playoffs.html'
-                context.update(week=ctx, playoff=playoff)
+                context.update(gameset=ctx, playoff=playoff)
                 return self.render_to_response(context)
 
-        game_set = game_set or self.league.latest_gameset
-        if game_set:
-            context['week'] = game_set
+        gameset = gameset or self.league.latest_gameset
+        if gameset:
+            context['gameset'] = gameset
         else:
             self.template_name = '@unavailable.html'
             context['heading'] = 'Results currently unavailable'
@@ -139,15 +139,19 @@ class ResultsBySeason(PickerViewBase):
     template_name = '@results/season.html'
 
     def extra_data(self, data):
-        data.update(weeks=self.league.game_set.filter(season=self.season))
+        data.update(gamesets=self.league.gamesets.filter(season=self.season))
 
 
 class ResultsByWeek(PickerViewBase):
     template_name = '@results/results.html'
 
     def extra_data(self, data):
-        week = self.args[0]
-        data['week'] = get_object_or_404(self.league.game_set, season=self.season, week=week)
+        sequence = self.args[0]
+        data['gameset'] = get_object_or_404(
+            self.league.gamesets,
+            season=self.season,
+            sequence=sequence
+        )
 
 
 #  Picks
@@ -156,38 +160,38 @@ class PicksBySeason(PickerViewBase):
     template_name = '@picks/season.html'
 
     def extra_data(self, data):
-        data['weeks'] = [
-            (week, week.pick_for_user(self.request.user))
-            for week in get_list_or_404(self.league.game_set, season=self.season)
+        data['gamesets'] = [
+            (gs, gs.pick_for_user(self.request.user))
+            for gs in get_list_or_404(self.league.gamesets, season=self.season)
         ]
 
 
 class Picks(PicksBase):
 
     def get(self, request, *args, **kwargs):
-        game_set = self.league.current_gameset
-        if game_set:
-            return self.weekly_picks(request, game_set)
+        gameset = self.league.current_gameset
+        if gameset:
+            return self.gameset_picks(request, gameset)
 
         if self.league.config('PLAYOFFS'):
             playoff = self.league.current_playoffs
             if playoff:
                 return self.playoff_picks(request, playoff)
 
-        game_set = self.league.latest_gameset
-        if game_set:
-            return self.weekly_picks(request, game_set)
+        gameset = self.league.latest_gameset
+        if gameset:
+            return self.gameset_picks(request, gameset)
 
         return super().get(request, heading='Picks currently unavailable')
 
 
-class PicksByWeek(PicksBase):
+class PicksByGameset(PicksBase):
 
     def get(self, request, *args, **kwargs):
         season = self.season
-        week = self.args[0]
-        week = get_object_or_404(self.league.game_set, season=season, week=week)
-        return self.weekly_picks(request, week)
+        sequence = self.args[0]
+        gameset = get_object_or_404(self.league.gamesets, season=season, week=sequence)
+        return self.gameset_picks(request, gameset)
 
 
 class PicksForPlayoffs(PicksBase):

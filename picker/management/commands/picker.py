@@ -108,7 +108,7 @@ class Callbacks:
 
     @staticmethod
     def reset_pick_results(league, **options):
-        league.current_gameset.pick_set.update(correct=0, wrong=0)
+        league.current_gameset.picksets.update(correct=0, wrong=0)
 
     @staticmethod
     def update_status(league, **options):
@@ -131,14 +131,14 @@ class Callbacks:
     def standings(league, **options):
         wk = options.get('week')
         if wk:
-            week = league.game_set.get(week=wk, season=league.current_season)
+            week = league.gamesets.get(week=wk, season=league.current_season)
         else:
             week = league.current_gameset
 
         print('{}, Week {}, {}'.format(week.league, week.week, week.season))
         print('%5s %4s %3s %s' % ('Place', 'Correct', 'Points', 'Picker'))
         for place, pick in picker.sorted_standings(
-            list(week.pick_set.select_related())
+            list(week.picksets.select_related())
         ):
             print('%5d %7d %6d %s' % (place, pick.correct, pick.points, pick.user))
 

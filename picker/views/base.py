@@ -114,25 +114,25 @@ class SimplePickerViewBase(TemplateView):
         )
 
 
-class WeeklyPicksMixin(SimpleFormMixin):
+class GamesetPicksMixin(SimpleFormMixin):
     success_msg = 'Your picks have been saved'
     form_class = forms.UserPickForm
 
-    def weekly_picks(self, request, week):
-        if week.is_open:
-            data = {'user': request.user, 'week': week}
+    def gameset_picks(self, request, gameset):
+        if gameset.is_open:
+            data = {'user': request.user, 'gameset': gameset}
             self.template_name = '@picks/make.html'
-            self.redirect_path = week.get_absolute_url()
+            self.redirect_path = gameset.get_absolute_url()
             return self.form_handler(request, context=data, form_kws=data)
 
         self.template_name = '@picks/show.html'
-        picks = week.pick_for_user(request.user)
-        return super().get(request, week=week, picks=picks)
+        picks = gameset.pick_for_user(request.user)
+        return super().get(request, gameset=gameset, picks=picks)
 
 
 class PickerViewBase(LoginRequiredMixin, SimplePickerViewBase):
     pass
 
 
-class PicksBase(WeeklyPicksMixin, PickerViewBase):
+class PicksBase(GamesetPicksMixin, PickerViewBase):
     template_name = '@unavailable.html'

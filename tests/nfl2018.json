@@ -1,7 +1,7 @@
 {
     "league": "NFL",
     "season": 2018,
-    "weeks": [
+    "gamesets": [
         {
             "byes": [],
             "games": [

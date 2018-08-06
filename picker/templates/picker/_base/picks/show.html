@@ -3,13 +3,13 @@
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
 <h1>My Weekly Picks</h1>
-<h2> Week #{{ week.week }} {{ week.season }}</h2>
-{% season_nav week "picks" %}
+<h2> Week #{{ gameset.sequence }} {{ gameset.season }}</h2>
+{% season_nav gameset "picks" %}
 {% if picks %}
 <h3>Summary</h3>
 <p>
     <strong>Correct Picks:</strong> {{ picks.correct }}/{{ picks.gamepick_set.count }} &bull;
-    <strong>Points:</strong> &plusmn;{{ picks.points_delta }} ({{ picks.points }} vs {{ week.points }})
+    <strong>Points:</strong> &plusmn;{{ picks.points_delta }} ({{ picks.points }} vs {{ gameset.points }})
 </p>
 <table class="table table-striped table-bordered past-picks">
 <tbody>
@@ -39,6 +39,6 @@
 </tbody>
 </table>
 {% else %}
-<p>You have not registered picks for this week.</p>
+<p>You have not registered picks for this gameset.</p>
 {% endif %}
 {% endblock %}

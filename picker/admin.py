@@ -3,6 +3,7 @@ from django.contrib import admin
 from . import models as picker
 
 
+@admin.register(picker.League)
 class LeagueAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'is_pickable')
 
@@ -11,17 +12,20 @@ class AliasInline(admin.TabularInline):
     model = picker.Alias
 
 
+@admin.register(picker.Team)
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'nickname', 'league', 'conference', 'division')
     list_filter = ('league',)
     inlines = [AliasInline]
 
 
+@admin.register(picker.Conference)
 class ConferenceAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'league')
     list_filter = ('league',)
 
 
+@admin.register(picker.Division)
 class DivisionAdmin(admin.ModelAdmin):
     list_display = ('name', 'conference', 'league')
     list_filter = ('conference', 'conference__league')
@@ -63,6 +67,7 @@ class GameInline(admin.TabularInline):
         return False
 
 
+@admin.register(picker.GameSet)
 class GameSetAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'league', 'points', 'opens', 'closes')
     list_filter = ('league', 'season')
@@ -71,6 +76,7 @@ class GameSetAdmin(admin.ModelAdmin):
     form = GameSetForm
 
 
+@admin.register(picker.Preference)
 class PreferenceAdmin(admin.ModelAdmin):
     list_display = ('user', 'autopick')
 
@@ -100,20 +106,12 @@ class GamePickInline(admin.TabularInline):
         return '{}'.format(obj.game)
 
 
+@admin.register(picker.PickSet)
 class PickSetAdmin(admin.ModelAdmin):
-    list_display = ('user', 'week', 'league')
-    list_filter = ('user', 'week')
+    list_display = ('user', 'gameset', 'league')
+    list_filter = ('user', 'gameset')
     fields = ('points', 'strategy')
     inlines = [GamePickInline]
 
     def league(self, obj):
-        return obj.week.league
-
-
-admin.site.register(picker.PickSet, PickSetAdmin)
-admin.site.register(picker.Team, TeamAdmin)
-admin.site.register(picker.League, LeagueAdmin)
-admin.site.register(picker.Conference, ConferenceAdmin)
-admin.site.register(picker.Division, DivisionAdmin)
-admin.site.register(picker.GameSet, GameSetAdmin)
-admin.site.register(picker.Preference, PreferenceAdmin)
+        return obj.gameset.league

@@ -35,7 +35,7 @@ class GameField(forms.ChoiceField):
             label=game.start_time.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
-            widget=widget or get_picker_widget(game.week.league)
+            widget=widget or get_picker_widget(game.gameset.league)
         )
 
     def widget_attrs(self, widget):
@@ -60,11 +60,11 @@ class BasePickForm(forms.Form):
 
     management = False
 
-    def __init__(self, week, *args, **kws):
+    def __init__(self, gameset, *args, **kws):
         super(BasePickForm, self).__init__(*args, **kws)
-        self.week = week
+        self.gameset = gameset
         self.game_fields = FieldIter(self)
-        games = list(week.game_set.all())
+        games = list(gameset.games.all())
         for gm in games:
             key = game_key_format(gm.id)
             self.fields[key] = GameField(gm, self.management)
@@ -81,53 +81,53 @@ class ManagementPickForm(BasePickForm):
 
     management = True
 
-    def __init__(self, week, *args, **kws):
-        kws.setdefault('initial', self.get_initial_picks(week))
-        super(ManagementPickForm, self).__init__(week, *args, **kws)
+    def __init__(self, gameset, *args, **kws):
+        kws.setdefault('initial', self.get_initial_picks(gameset))
+        super(ManagementPickForm, self).__init__(gameset, *args, **kws)
         self.fields['send_mail'] = forms.BooleanField(required=False)
 
     def save(self):
-        week = self.week
+        gameset = self.gameset
         data = self.cleaned_data.copy()
         send_mail = data.pop('send_mail', False)
-        week.points = data.pop('points', 0)
-        week.save()
-        team_dict = week.league.team_dict()
+        gameset.points = data.pop('points', 0)
+        gameset.save()
+        team_dict = gameset.league.team_dict()
 
         for key, winner in data.items():
             if winner:
                 key = key.split('_')[1]
-                game = week.game_set.get(pk=key)
+                game = gameset.games.get(pk=key)
                 game.winner = team_dict[int(winner)]
 
-        week.update_pick_status()
-        picker_results.send(sender=week.__class__, week=week, send_mail=send_mail)
+        gameset.update_pick_status()
+        picker_results.send(sender=gameset.__class__, gameset=gameset, send_mail=send_mail)
 
     @staticmethod
-    def get_initial_picks(week):
+    def get_initial_picks(gameset):
         return dict({
             game_key_format(game.id): game.winner.id
-            for game in week.game_set.all()
+            for game in gameset.games.all()
             if game.winner
-        }, points=week.points)
+        }, points=gameset.points)
 
 
 class UserPickForm(BasePickForm):
 
-    def __init__(self, user, week, *args, **kws):
-        kws.setdefault('initial', self.get_initial_user_picks(week, user))
+    def __init__(self, user, gameset, *args, **kws):
+        kws.setdefault('initial', self.get_initial_user_picks(gameset, user))
         self.user = user
-        super(UserPickForm, self).__init__(week, *args, **kws)
+        super(UserPickForm, self).__init__(gameset, *args, **kws)
 
     def save(self):
         data = self.cleaned_data.copy()
-        week = self.week
-        picks = week.pick_set.get_or_create(user=self.user)[0]
+        gameset = self.gameset
+        picks = gameset.picksets.get_or_create(user=self.user)[0]
         picks.points = data.pop('points', 0) or 0
         picks.strategy = picker.PickSet.Strategy.USER
         picks.save()
 
-        games_dict = {game_key_format(g.id): g for g in week.games}
+        games_dict = {game_key_format(g.id): g for g in gameset.games.all()}
         game_picks = [(k, v) for k, v in data.items() if v]
         for game, winner in game_picks:
             game = games_dict.get(game, None)
@@ -144,11 +144,11 @@ class UserPickForm(BasePickForm):
 
         picks.send_confirmation()
         picks.complete_picks(False, games_dict.values())
-        return week
+        return gameset
 
     @staticmethod
-    def get_initial_user_picks(week, user):
-        wp = week.pick_for_user(user)
+    def get_initial_user_picks(gameset, user):
+        wp = gameset.pick_for_user(user)
         if not wp:
             return {}
 

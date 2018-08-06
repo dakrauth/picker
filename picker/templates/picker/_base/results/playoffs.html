@@ -1,8 +1,8 @@
 {% extends league_base %}{% load staticfiles picker_tags %}
-{% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
+{% block title %}Week {{ gameset.sequence }} - {{ gameset.season }}{% endblock %}
 {% block main_content %}
     <h1>Results for {{ season }} Playoffs</h1>
-    {% season_nav week "results" %}
+    {% season_nav gameset "results" %}
     {% if playoff.has_started %}
     <table class="results-table">
         <thead>

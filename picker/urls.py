@@ -22,7 +22,7 @@ picks_urls = [
     url(r'^$', views.Picks.as_view(), name='picker-picks'),
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.PicksBySeason.as_view(), name='picker-season-picks'),
-        url(r'^(-?\d+)/$', views.PicksByWeek.as_view(), name='picker-picks-sequence'),
+        url(r'^(-?\d+)/$', views.PicksByGameset.as_view(), name='picker-picks-sequence'),
         url(r'^playoffs/$', views.PicksForPlayoffs.as_view(), name='picker-playoffs-picks'),
     ])),
 ]

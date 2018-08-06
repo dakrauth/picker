@@ -188,7 +188,7 @@ class League(models.Model):
     def latest_gameset(self):
         rel = datetime_now()
         try:
-            return self.game_set.filter(closes__lte=rel).latest('closes')
+            return self.gamesets.filter(closes__lte=rel).latest('closes')
         except GameSet.DoesNotExist:
             return None
 
@@ -201,7 +201,7 @@ class League(models.Model):
     def current_gameset(self):
         rel = datetime_now()
         try:
-            return self.game_set.get(opens__lte=rel, closes__gte=rel)
+            return self.gamesets.get(opens__lte=rel, closes__gte=rel)
         except GameSet.DoesNotExist:
             return None
 
@@ -214,17 +214,17 @@ class League(models.Model):
 
     @cached_property
     def available_seasons(self):
-        return self.game_set.order_by('-season').values_list(
+        return self.gamesets.order_by('-season').values_list(
             'season',
             flat=True
         ).distinct()
 
-    def season_weeks(self, season=None):
+    def season_gamesets(self, season=None):
         season = season or self.current_season or self.latest_season
-        return self.game_set.filter(season=season)
+        return self.gamesets.filter(season=season)
 
     def random_points(self):
-        d = self.game_set.filter(points__gt=0).aggregate(
+        d = self.gamesets.filter(points__gt=0).aggregate(
             stddev=models.StdDev('points'),
             avg=models.Avg('points')
         )
@@ -234,7 +234,7 @@ class League(models.Model):
 
     def send_reminder_email(self):
         gs = self.current_gameset
-        signals.picker_reminder.send(sender=GameSet, week=gs)
+        signals.picker_reminder.send(sender=GameSet, gameset=gs)
 
     @cached_property
     def _config(self):
@@ -261,7 +261,7 @@ class League(models.Model):
         season = data['season']
         teams = league.team_dict()
         new_old = [0, 0]
-        for sequence, item in enumerate(data['weeks'], 1):
+        for sequence, item in enumerate(data['gamesets'], 1):
             opens = item.get('opens')
             if opens:
                 opens = parse_dt(opens)
@@ -276,9 +276,9 @@ class League(models.Model):
             else:
                 closes = opens + timedelta(days=6, seconds=3600*24-1)
 
-            gs, is_new = league.game_set.get_or_create(
+            gs, is_new = league.gamesets.get_or_create(
                 season=season,
-                week=sequence,
+                sequence=sequence,
                 defaults={'opens': opens, 'closes': closes}
             )
             if not is_new:
@@ -293,7 +293,7 @@ class League(models.Model):
 
             for dct in item['games']:
                 start_time = parse_dt(dct['start'])
-                game, is_new = gs.game_set.get_or_create(
+                game, is_new = gs.games.get_or_create(
                     home=teams[dct['home']],
                     away=teams[dct['away']],
                     defaults={'start_time': start_time}
@@ -426,7 +426,7 @@ class Team(models.Model):
         wins, losses, ties = (0, 0, 0)
         for game in Game.objects.exclude(status=Game.Status.UNPLAYED).filter(
             models.Q(home=self) | models.Q(away=self),
-            week__season=season,
+            gameset__season=season,
         ):
             if game.status == Game.Status.TIE:
                 ties += 1
@@ -465,23 +465,23 @@ class Team(models.Model):
             return None
 
     def schedule(self, season=None):
-        return Game.objects.select_related('week').filter(
+        return Game.objects.select_related('gameset').filter(
             models.Q(away=self) | models.Q(home=self),
-            week__season=season or self.league.current_season
+            gameset__season=season or self.league.current_season
         )
 
-    def bye_week(self, season=None):
+    def byes(self, season=None):
         return self.bye_set.get(season=season or self.league.current_season)
 
     def complete_record(self):
         home_games = [0, 0, 0]
         away_games = [0, 0, 0]
 
-        for game_set, accum, status in (
-            (self.away_game_set, away_games, Game.Status.AWAY_WIN),
-            (self.home_game_set, home_games, Game.Status.HOME_WIN),
+        for games, accum, status in (
+            (self.away_games, away_games, Game.Status.AWAY_WIN),
+            (self.home_games, home_games, Game.Status.HOME_WIN),
         ):
-            for res in game_set.exclude(status=Game.Status.UNPLAYED).values_list(
+            for res in games.exclude(status=Game.Status.UNPLAYED).values_list(
                 'status',
                 flat=True
             ):
@@ -509,9 +509,9 @@ class Alias(models.Model):
 
 
 class GameSet(models.Model):
-    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='game_set')
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='gamesets')
     season = models.PositiveSmallIntegerField()
-    week = models.PositiveSmallIntegerField()
+    sequence = models.PositiveSmallIntegerField()
     points = models.PositiveSmallIntegerField(default=0)
     opens = models.DateTimeField()
     closes = models.DateTimeField()
@@ -523,14 +523,10 @@ class GameSet(models.Model):
     )
 
     class Meta:
-        ordering = ('season', 'week')
+        ordering = ('season', 'sequence')
 
     def __str__(self):
         return '{}:{}'.format(self.sequence, self.season)
-
-    @property
-    def sequence(self):
-        return self.week
 
     def get_absolute_url(self):
         return reverse(
@@ -546,11 +542,11 @@ class GameSet(models.Model):
 
     @property
     def last_game(self):
-        return self.games[-1]
+        return self.games.last()
 
     @property
     def first_game(self):
-        return self.games[0]
+        return self.games.first()
 
     @cached_property
     def start_time(self):
@@ -572,25 +568,21 @@ class GameSet(models.Model):
     def is_open(self):
         return datetime_now() < self.last_game.start_time
 
-    @cached_property
-    def games(self):
-        return tuple(self.game_set.order_by('start_time'))
-
     def pick_for_user(self, user):
         try:
-            return self.pick_set.select_related().get(user=user)
+            return self.picksets.select_related().get(user=user)
         except PickSet.DoesNotExist:
             return None
 
     def create_picks_for_user(self, user, strategy, send_confirmation=True):
         Strategy = self.model.Strategy
         is_auto = (strategy == Strategy.RANDOM)
-        picks = self.pick_set.create(
+        picks = self.picksets.create(
             user=user,
             points=self.league.random_points() if is_auto else 0,
             strategy=strategy
         )
-        picks.complete_picks(is_auto, self.game_set.all())
+        picks.complete_picks(is_auto, self.games.all())
         if send_confirmation:
             picks.send_confirmation(is_auto)
 
@@ -603,17 +595,17 @@ class GameSet(models.Model):
             auto = True if force_autopick else pref.should_autopick
             wp = self.pick_for_user(pref.user)
             if wp:
-                wp.complete_picks(auto, list(self.game_set.all()))
+                wp.complete_picks(auto, list(self.games.all()))
             elif utils.can_user_participate(pref, self):
                 strategy = Strategy.RANDOM if auto else Strategy.USER
                 self.create_picks_for_user(pref.user, strategy, True)
 
-    def update_results(self):
-        results = self.league.scores(completed=True)
+    def update_results(self, results):
+        # results = self.league.scores(completed=True)
         if not results:
             raise PickerResultException('Results unavailable')
 
-        if results['week'] != self.week and results['season'] != self.season:
+        if results['week'] != self.sequence and results['season'] != self.season:
             raise PickerResultException('Results not updated, wrong season or week')
 
         completed = {g['home']: g for g in results['games']}
@@ -621,7 +613,7 @@ class GameSet(models.Model):
             raise PickerResultException('No completed results')
 
         count = 0
-        for game in self.game_set.incomplete(home__abbr__in=completed.keys()):
+        for game in self.games.incomplete(home__abbr__in=completed.keys()):
             result = completed.get(game.home.abbr, None)
             if result:
                 winner = result['winner']
@@ -648,7 +640,7 @@ class GameSet(models.Model):
     def set_default_open_and_close(self):
         prv = rd.relativedelta(weekday=rd.TU(-1))
         nxt = rd.relativedelta(weekday=rd.TU)
-        for gs in self.game_set.all():
+        for gs in self.games.all():
             ko = gs.start_time
             gs.opens = (ko + prv).replace(hour=12, minute=0)
             gs.closes = (ko + nxt).replace(hour=11, minute=59, second=59)
@@ -663,11 +655,11 @@ class GameSet(models.Model):
 
     def update_pick_status(self):
         winners = set(w.id for w in self.winners)
-        for wp in self.pick_set.all():
+        for wp in self.picksets.all():
             wp.update_status(wp.id in winners)
 
     def results(self):
-        picks = list(self.pick_set.select_related())
+        picks = list(self.picksets.select_related())
         return utils.sorted_standings(picks, key=PickSet.sort_key, reverse=True)
 
 
@@ -686,9 +678,9 @@ class Game(models.Model):
         AWAY_WIN = ChoiceEnumeration.Option('A', 'Away Win')
         CANCELLED = ChoiceEnumeration.Option('X', 'Cancelled')
 
-    home = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_game_set')
-    away = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_game_set')
-    week = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='game_set')
+    home = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_games')
+    away = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_games')
+    gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='games')
     start_time = models.DateTimeField()
     tv = models.CharField('TV', max_length=8, blank=True)
     notes = models.TextField(blank=True)
@@ -701,11 +693,7 @@ class Game(models.Model):
         ordering = ('start_time', 'away')
 
     def __str__(self):
-        return '{} {}'.format(self.tiny_description, self.game_set)
-
-    @property
-    def game_set(self):
-        return self.week
+        return '{} {}'.format(self.tiny_description, self.gameset)
 
     @property
     def has_started(self):
@@ -725,7 +713,7 @@ class Game(models.Model):
 
     @property
     def long_description(self):
-        return '%s %s %s' % (self.short_description, self.game_set, self.start_time)
+        return '%s %s %s' % (self.short_description, self.gameset, self.start_time)
 
     @property
     def winner(self):
@@ -781,10 +769,10 @@ class PickSet(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='pick_set'
+        related_name='picksets'
     )
 
-    week = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='pick_set')
+    gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='picksets')
     points = models.PositiveSmallIntegerField(default=0)
     correct = models.PositiveSmallIntegerField(default=0)
     wrong = models.PositiveSmallIntegerField(default=0)
@@ -794,17 +782,13 @@ class PickSet(models.Model):
     is_winner = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (('user', 'week'),)
+        unique_together = (('user', 'gameset'),)
 
     def __str__(self):
-        return '%s %s %d' % (self.game_set, self.user, self.correct)
+        return '%s %s %d' % (self.gameset, self.user, self.correct)
 
     def sort_key(self):
         return (self.correct, -self.points_delta)
-
-    @property
-    def game_set(self):
-        return self.week
 
     @property
     def is_autopicked(self):
@@ -814,7 +798,7 @@ class PickSet(models.Model):
     def is_complete(self):
         return (
             False if self.points is None
-            else (self.progress == len(self.game_set.games))
+            else (self.progress == len(self.gameset.games))
         )
 
     @property
@@ -831,20 +815,20 @@ class PickSet(models.Model):
 
     @property
     def points_delta(self):
-        if self.game_set.points == 0:
+        if self.gameset.points == 0:
             return 0
 
-        return abs(self.points - self.game_set.points)
+        return abs(self.points - self.gameset.points)
 
     def send_confirmation(self, auto_pick=False):
         signals.picker_confirmation.send(
             sender=self.__class__,
-            weekly_picks=self,
+            pickset=self,
             auto_pick=auto_pick
         )
 
     def complete_picks(self, is_random=True, games=None):
-        games = games or self.game_set.all()
+        games = games or self.gameset.all()
         picked_games = set((gp.game for gp in self.gamepick_set.all()))
         for g in games:
             if g not in picked_games:

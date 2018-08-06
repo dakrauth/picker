@@ -3,7 +3,7 @@
 {% block main_content %}
     <h1 class="bg-danger">{{ game.away }} @ {{ game.home }}</h1>
     <p>
-        Week {{ game.week.week }} &middot; {{ game.start_time }}
+        Week {{ game.gameset.sequence }} &middot; {{ game.start_time }}
     </p>
     {% load bootstrap3 %}
     <form method="post">{% csrf_token %}

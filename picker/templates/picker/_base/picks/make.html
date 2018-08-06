@@ -4,11 +4,11 @@
 {% block main_content %}
     {% load bootstrap3 %}
     <h1>
-        Week #{{ week.week }}
-        <small><a href="{% url 'picker-season-picks' week.league.abbr.lower week.season %}">{{ week.season }}</a></small>
+        Week #{{ gameset.sequence }}
+        <small><a href="{% url 'picker-season-picks' gameset.league.abbr.lower gameset.season %}">{{ gameset.season }}</a></small>
     </h1>
     {% include "picker/inclusions/byes.html" %}
-    {% season_nav week "picks" %}
+    {% season_nav gameset "picks" %}
     {% if form.errors %}
     <p class="errorlist">Please fix the errors below:</p>
     {% endif %}
@@ -39,7 +39,7 @@
                 <td>
                     {% if field.errors %}{{ field.errors }}<br>{% endif %}
                     {% bootstrap_field field %}
-                    {% if week.is_open %}
+                    {% if gameset.is_open %}
                     {% buttons %}
                     <button type="submit" class="btn btn-primary">Submit</button>
                     {% endbuttons %}

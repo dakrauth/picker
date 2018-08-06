@@ -53,7 +53,7 @@ class TestPicks:
         team_dict = league.team_dict()
 
         user = users[0]
-        assert user.pick_set.count() == 0
+        assert user.picksets.count() == 0
 
         client.force_login(user)
         r = client.post(
@@ -61,9 +61,9 @@ class TestPicks:
             {'points': '137', 'game_1': '1', 'game_2': '3'}
         )
         assert r.status_code == 302
-        assert user.pick_set.count() == 1
+        assert user.picksets.count() == 1
 
-        ps = user.pick_set.get()
+        ps = user.picksets.get()
         assert ps.points == 137
 
         gp = ps.gamepick_set.first()
@@ -76,9 +76,9 @@ class TestPicks:
             {'points': '731', 'game_1': '2', 'game_2': '4'}
         )
         assert r.status_code == 302
-        assert user.pick_set.count() == 1
+        assert user.picksets.count() == 1
 
-        ps = user.pick_set.get()
+        ps = user.picksets.get()
         assert ps.points == 731
 
         gp = ps.gamepick_set.first()

@@ -50,7 +50,7 @@ def superuser(users):
 @pytest.fixture
 def gamesets(league, nfl_season_data):
     picker.League.import_season(nfl_season_data)
-    return league.season_weeks()
+    return league.season_gamesets()
 
 
 @pytest.fixture
@@ -70,7 +70,7 @@ def quidditch():
         ]
     })[0]
 
-    picker.League.import_season({"league": "QDCH", "season": year, "weeks": [
+    picker.League.import_season({"league": "QDCH", "season": year, "gamesets": [
         {"games": [
             {"away": "GRF", "home": "HUF", "start": "2018-09-07T04:00Z", "location": "Hogwarts"},
             {"away": "RVN", "home": "SLY", "start": "2018-09-07T08:00Z", "location": "Hogwarts"}

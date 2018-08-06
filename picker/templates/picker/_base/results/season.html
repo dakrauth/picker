@@ -9,12 +9,12 @@
             <th class="text-center">Week</th>
             <th>Winner(s)</th>
         </tr>
-        {% for week in weeks %}
+        {% for gameset in gamesets %}
         <tr>
             <td class="text-center">
-                <a href="{{ week.get_absolute_url }}">Week {{ week.week }}</a>
+                <a href="{{ gameset.get_absolute_url }}">Week {{ gameset.sequence }}</a>
             </td>
-            <td>{% for w in week.winners %}
+            <td>{% for w in gameset.winners %}
                 <div style="display: inline-block; margin-left: 8px;">
                     <img src="{{ w.user|picker_user_image:"32" }}">
                     <strong class="username">{{ w.user }}</strong>

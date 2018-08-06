@@ -8,7 +8,7 @@
             {{ team.conference }} {{ team.division }} ({{ team.record_as_string }})
         </small>
     </h1>
-    <p><strong>Bye Week:</strong> Week {{ team.bye_week.week }}</p>
+    <p><strong>Bye Week:</strong> Week {{ team.bye_gameset.sequence }}</p>
     <div class="panel panel-default">
         <table class="table table-striped">
             <thead>
@@ -22,7 +22,7 @@
             <tbody>
             {% for game in team.schedule %}
             <tr>
-                <td>{{ game.week.week }}</td>
+                <td>{{ game.gameset.sequence }}</td>
                 <td>{{ game.start_time|date:"D, M j - P" }}</td>
                 <td>
                     {% if team.id == game.away.id %}

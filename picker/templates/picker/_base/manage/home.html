@@ -5,7 +5,7 @@
     <h3>Weekly Results</h3>
     {% load picker_tags %}
     {% all_seasons_nav season league "manage" %}
-    {% season_nav week "manage" %}
+    {% season_nav gameset "manage" %}
     <hr>
     <a class="btn btn-default" href="{% url 'picker-manage-playoff-builder' league.slug %}">Playoff Builder</a>
 {% endblock %}

@@ -1,27 +1,27 @@
 {% extends league_base %}
 {% load picker_tags %}
-{% block title %}Week {{ week.week }} - {{ week.season }}{% endblock %}
+{% block title %}Week {{ gameset.sequence }} - {{ gameset.season }}{% endblock %}
 {% block main_content %}
     <h1>
-        Results for week {{ week.week }}
-        <small><a href="{% url 'picker-season-results' week.league.slug week.season %}">{{ week.season }}</a></small>
+        Results for week {{ gameset.sequence }}
+        <small><a href="{% url 'picker-season-results' gameset.league.slug gameset.season %}">{{ gameset.season }}</a></small>
     </h1>
-    {% season_nav week "results" %}
-    {% with week.results as results %}
+    {% season_nav gameset "results" %}
+    {% with gameset.results as results %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            {{ week.game_set.count }} games,
+            {{ gameset.games.count }} games,
             {{ results|length }} entries
         </div>
         <div class="panel-body">
             <p>
                 <span class="autopick">Italicized user names indicate auto-picker selections</span><br />
-                {% if week.points %}Final points total: {{ week.points }}{% endif %}
+                {% if gameset.points %}Final points total: {{ gameset.points }}{% endif %}
             </p>
             {% include "picker/inclusions/byes.html" %}
         </div>
         <table class="table table-striped results">
-        {% if not week.has_started %}
+        {% if not gameset.has_started %}
         <thead>
             <tr>
                 <th>Player</th>
@@ -43,13 +43,13 @@
             {% endfor %}
         </tbody>
         {% else %}
-        {% with week.last_game.has_started as has_started  %}
+        {% with gameset.last_game.has_started as has_started  %}
         <thead>
             <tr>
                 <th>Place</th>
                 <th>Picker</th>
                 <th>Score</th>
-                {% for item in week.game_set.games_started %}
+                {% for item in gameset.games.games_started %}
                 <th data-game_id="{{ item.id }}">
                     {{ item.home.abbr }}<br />@<br />{{ item.away.abbr }}
                 </th>

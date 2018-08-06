@@ -23,25 +23,26 @@ def picker_user_image(user, size=None):
 
 
 @register.inclusion_tag(get_templates('@season_nav.html'), takes_context=True)
-def season_nav(context, week, relative_to):
+def season_nav(context, gameset, relative_to):
     user = context['user']
     league = context['league']
     return {
-        'week': week,
+        'gameset': gameset,
         'show_playoffs': league.config('PLAYOFFS'),
         'relative_to': relative_to,
         'user': context['user'],
         'league': league,
         'is_manager': user.is_superuser or user.is_staff,
-        'season_weeks': league.season_weeks(week.season if week else None)
+        'season_gamesets': league.season_gamesets(gameset.season if gameset else None)
     }
 
 
 @register.inclusion_tag(get_templates('@season_nav_all.html'), takes_context=True)
-def all_seasons_nav(context, current, league, relative_to):
+def all_seasons_nav(context, current, league, relative_to, group=None):
     user = context['user']
     return {
         'label': 'All seasons',
+        'group': group,
         'current': int(current) if current else None,
         'relative_to': relative_to,
         'user': user,

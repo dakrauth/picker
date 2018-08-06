@@ -6,10 +6,10 @@
     <h1>Manage {{ season }} &ndash; Select a week</h1>
     {% all_seasons_nav season league "manage" %}
     <ul>
-    {% for week in weeks %}
+    {% for gameset in gamesets %}
         <li>
-            <a href="./{{ week.week }}/">Week {{ week.week }}</a>
-            {% if week.points %}&ndash; complete{% endif %}
+            <a href="./{{ gameset.sequence }}/">Week {{ gameset.sequence }}</a>
+            {% if gameset.points %}&ndash; complete{% endif %}
         </li>
     {% endfor %}
     </ul>

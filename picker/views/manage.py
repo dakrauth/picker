@@ -34,14 +34,14 @@ class ManagementHome(ManagementViewBase):
 
     def extra_data(self, data):
         league = self.league
-        data['week'] = league.current_gameset  # or PlayoffContext.week(league.playoff)
+        data['gameset'] = league.current_gameset  # or PlayoffContext.week(league.playoff)
 
 
 class ManageSeason(ManagementViewBase):
     template_name = '@manage/season.html'
 
     def extra_data(self, data):
-        data['weeks'] = get_list_or_404(self.league.game_set, season=self.season)
+        data['gamesets'] = get_list_or_404(self.league.gamesets, season=self.season)
 
 
 class ManageWeek(ManagementViewBase):
@@ -50,12 +50,12 @@ class ManageWeek(ManagementViewBase):
     @property
     def gameset(self):
         season = self.season
-        week = self.args[0]
-        return get_object_or_404(self.league.game_set, season=season, week=week)
+        sequence = self.args[0]
+        return get_object_or_404(self.league.gamesets, season=season, week=sequence)
 
-    def redirect_game_set(self, gs):
+    def redirect_gameset(self, gs):
         return http.HttpResponseRedirect(
-            reverse('picker-game-sequence', args=(self.league.slug, gs.season, gs.week))
+            reverse('picker-game-sequence', args=(self.league.slug, gs.season, gs.sequence))
         )
 
     def post(self, *args, **kwargs):
@@ -69,12 +69,12 @@ class ManageWeek(ManagementViewBase):
                 pass
 
             messages.success(request, 'Auto picks successful')
-            return self.redirect_game_set(gs)
+            return self.redirect_gameset(gs)
 
         if 'reminder' in request.POST:
             self.league.send_reminder_email()
             messages.success(request, 'User email sent')
-            return self.redirect_game_set(gs)
+            return self.redirect_gameset(gs)
 
         if 'update' in request.POST:
             try:
@@ -83,17 +83,17 @@ class ManageWeek(ManagementViewBase):
                 messages.warning(request, str(exc))
             else:
                 messages.success(request, '{} game(s) update'.format(res))
-            return self.redirect_game_set(gs)
+            return self.redirect_gameset(gs)
 
         form = forms.ManagementPickForm(gs, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Results saved')
-            return self.redirect_game_set(gs)
+            return self.redirect_gameset(gs)
 
         return self.render_to_response(self.get_context_data(
             form=form,
-            week=gs,
+            gameset=gs,
             **kwargs
         ))
 
@@ -109,7 +109,7 @@ class ManageWeek(ManagementViewBase):
 
         return self.render_to_response(self.get_context_data(
             form=forms.ManagementPickForm(gs),
-            week=gs,
+            gameset=gs,
             **kwargs
         ))
 

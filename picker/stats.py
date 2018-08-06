@@ -18,19 +18,19 @@ class RosterStats:
         self.wrong = 0
         self.points_delta = 0
 
-        qs = self.user.pick_set.filter(week__league=league).select_related().filter(
+        qs = self.user.picksets.filter(gameset__league=league).select_related().filter(
             Q(correct__gt=0) | Q(wrong__gt=0)
         )
 
         if season:
-            qs = qs.filter(week__season=season)
+            qs = qs.filter(gameset__season=season)
 
         self.weeks_played = 0
         for wp in qs:
             self.weeks_played += 1
             self.correct += wp.correct
             self.wrong += wp.wrong
-            self.points_delta += wp.points_delta if wp.week.points else 0
+            self.points_delta += wp.points_delta if wp.gameset.points else 0
 
         self.is_active = self.member.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
@@ -42,7 +42,7 @@ class RosterStats:
 
     @property
     def weeks_won(self):
-        query = GameSet.objects.filter(pick_set__is_winner=True, pick_set__user=self.user)
+        query = GameSet.objects.filter(picksets__is_winner=True, picksets__user=self.user)
         if self.season:
             query = query.filter(season=self.season)
 
