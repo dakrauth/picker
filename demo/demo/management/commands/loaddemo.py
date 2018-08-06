@@ -68,7 +68,7 @@ class Command(BaseCommand):
 
         gs = picker.GameSet.objects.order_by('-id')[0]
         league = gs.league
-        gs = league.gamesets.get(season=gs.season, week=1)
+        gs = league.gamesets.get(season=gs.season, sequence=1)
         gs.opens = datetime_now()
         gs.save()
 
