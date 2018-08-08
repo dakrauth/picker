@@ -50,21 +50,15 @@ class InlineGameForm(forms.ModelForm):
 
     class Meta:
         model = picker.Game
-        fields = '__all__'
-
-    def has_add_permission(self):
-        return False
-
-    def has_change_permission(self):
-        return False
+        exclude = ('notes', )
 
 
 class GameInline(admin.TabularInline):
     model = picker.Game
     form = InlineGameForm
 
-    def has_add_permission(self, request):
-        return False
+    def get_formset(self, request, obj=None, **kwargs):
+        return super().get_formset(request, obj, **kwargs)
 
 
 @admin.register(picker.GameSet)

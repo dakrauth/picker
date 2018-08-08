@@ -60,6 +60,15 @@ class PlayoffPicksMixin:
         return self.render_to_response(PlayoffContext.conference(playoff, request.user))
 
 
+class PicksForPlayoffs(PickerViewBase):
+
+    def get(self, request, *args, **kwargs):
+        playoff = self.league.current_playoffs
+        if playoff:
+            return self.playoff_picks(request, playoff)
+
+        return super().get(request, heading='Playoff picks currently unavailable')
+
 class ResultsForPlayoffs(PlayoffPicksMixin, PickerViewBase):
 
     def get(self, request, *args, **kwargs):

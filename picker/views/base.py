@@ -3,50 +3,42 @@ from django.urls import reverse
 from django.template import loader
 from django.contrib import messages
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
 from django.utils.functional import cached_property
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .. import utils
-from .. import forms
 from ..models import League, Preference
 
 
-class SimpleFormMixin:
-    form_class = None
+class SimpleFormMixin(FormMixin):
     success_msg = None
     redirect_path = None
 
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
 
-    def form_handler(
-        self,
-        request,
-        context=None,
-        instance=None,
-        form_kws=None,
-    ):
-        form_kws = form_kws or {}
-        if instance:
-            form_kws['instance'] = instance
+    def get_success_url(self):
+        return self.redirect_path or self.request.path
 
-        if request.method == 'POST':
-            form = self.form_class(data=request.POST, **form_kws)
-            if form.is_valid():
-                form.save()
-                if self.success_msg:
-                    messages.success(request, self.success_msg)
+    def form_valid(self, form):
+        form.save()
+        if self.success_msg:
+            messages.success(self.request, self.success_msg)
 
-                return http.HttpResponseRedirect(self.redirect_path or request.path)
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
         else:
-            form = self.form_class(**form_kws)
+            return self.form_invalid(form)
 
-        return self.render_to_response(self.get_context_data(
-            form=form,
-            **(context or {})
-        ))
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response(self.get_context_data())
 
 
 class SimplePickerViewBase(TemplateView):
@@ -77,9 +69,6 @@ class SimplePickerViewBase(TemplateView):
 
         return utils.get_templates(self.template_name, self.league)
 
-    def extra_data(self, data):
-        pass
-
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         league = self.league
@@ -98,7 +87,6 @@ class SimplePickerViewBase(TemplateView):
                 'picker/base.html',
             ])
         })
-        self.extra_data(data)
         return data
 
     def render_to_response(self, context, **response_kwargs):
@@ -114,25 +102,5 @@ class SimplePickerViewBase(TemplateView):
         )
 
 
-class GamesetPicksMixin(SimpleFormMixin):
-    success_msg = 'Your picks have been saved'
-    form_class = forms.UserPickForm
-
-    def gameset_picks(self, request, gameset):
-        if gameset.is_open:
-            data = {'user': request.user, 'gameset': gameset}
-            self.template_name = '@picks/make.html'
-            self.redirect_path = gameset.get_absolute_url()
-            return self.form_handler(request, context=data, form_kws=data)
-
-        self.template_name = '@picks/show.html'
-        picks = gameset.pick_for_user(request.user)
-        return super().get(request, gameset=gameset, picks=picks)
-
-
 class PickerViewBase(LoginRequiredMixin, SimplePickerViewBase):
     pass
-
-
-class PicksBase(GamesetPicksMixin, PickerViewBase):
-    template_name = '@unavailable.html'

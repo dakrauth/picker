@@ -2,47 +2,52 @@ import os
 import pytest
 from django.urls import reverse
 from picker import models as picker
-from picker import (
-    forms,
-    stats,
-    urls,
-    views,
-)
+from picker import utils
 
 
 @pytest.mark.django_db
 class TestViews:
 
-    def test_views(self, client, league, gamesets, users):
-        user = users[-1]
+    def test_lookup(self, client,  league, gamesets, user):
+        # /<league>/picks/    picker.views.picks.Picks    picker-picks
+        url = reverse('picker-picks', args=['nfl'])
+        r = client.get(url)
+        assert r.status_code == 302
+        assert r.url == reverse('login') + '?next=' + url
 
+        utils.datetime_now('2018-09-07T00:20Z')
+        client.force_login(user)
+        r = client.get(url, follow=False)
+        assert b'Picks currently unavailable' not in r.content
+        assert r.status_code == 302
+
+    def test_views(self, client, league, gamesets, user):
         for code in [302, 200]:
             if code == 200:
                 client.force_login(user)
 
-            # /<league>/picks/    picker.views.picks.Picks    picker-picks
-            r = client.get(reverse('picker-picks', args=['nfl']))
-            assert r.status_code == code
+            for name, args in [
+                # /<league>/picks/<season>/ picker.views.picks.PicksBySeason picker-season-picks
+                ('picker-season-picks', ['nfl', '2018']),
 
-            # /<league>/picks/<season>/   picker.views.picks.PicksBySeason    picker-season-picks
-            r = client.get(reverse('picker-season-picks', args=['nfl', '2018']))
-            assert r.status_code == code
+                # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
+                ('picker-picks-sequence', ['nfl', '2018', '1']),
 
-            # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
-            r = client.get(reverse('picker-picks-sequence', args=['nfl', '2018', '1']))
-            assert r.status_code == code
+                # /<league>/results/  picker.views.picks.Results  picker-results
+                ('picker-results', ['nfl']),
 
-            # /<league>/results/  picker.views.picks.Results  picker-results
-            r = client.get(reverse('picker-results', args=['nfl']))
-            assert r.status_code == code
+                # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
+                ('picker-season-results', ['nfl', '2018']),
 
-            # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
-            r = client.get(reverse('picker-season-results', args=['nfl', '2018']))
-            assert r.status_code == code
+                # /<league>/results/<season>/<var>/ picker.views.picks.ResultsByWeek picker-game-sequence
+                ('picker-game-sequence', ['nfl', '2018', '1']),
+            ]:
+                url = reverse(name, args=args)
+                r = client.get(url)
+                assert r.status_code == code
+                if code == 302:
+                    assert r.url == reverse('login') + '?next=' + url
 
-            # /<league>/results/<season>/<var>/   picker.views.picks.ResultsByWeek picker-game-sequence
-            r = client.get(reverse('picker-game-sequence', args=['nfl', '2018', '1']))
-            assert r.status_code == code
 
 
 @pytest.mark.django_db

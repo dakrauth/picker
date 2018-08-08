@@ -5,11 +5,16 @@ from datetime import datetime, timedelta
 from picker import models as picker
 from demo.management.commands.loaddemo import load_users, create_grouping
 
+json_data = {}
 
 def read_json(name):
-    filepath = os.path.join(os.path.dirname(__file__), name)
-    with open(filepath) as fin:
-        return json.load(fin)
+    global json_data
+    if name not in json_data:
+        filepath = os.path.join(os.path.dirname(__file__), name)
+        with open(filepath) as fin:
+            json_data[name] = json.load(fin)
+
+    return json_data[name]
 
 
 @pytest.fixture

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from . import views
+from .views import playoffs as playoff_views
 
 
 management_urls = [
@@ -23,7 +24,7 @@ picks_urls = [
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.PicksBySeason.as_view(), name='picker-season-picks'),
         url(r'^(-?\d+)/$', views.PicksByGameset.as_view(), name='picker-picks-sequence'),
-        url(r'^playoffs/$', views.PicksForPlayoffs.as_view(), name='picker-playoffs-picks'),
+        url(r'^playoffs/$', playoff_views.PicksForPlayoffs.as_view(), name='picker-playoffs-picks'),
     ])),
 ]
 
@@ -32,7 +33,7 @@ results_urls = [
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.ResultsBySeason.as_view(), name='picker-season-results'),
         url(r'^(-?\d+)/$', views.ResultsByWeek.as_view(), name='picker-game-sequence'),
-        url(r'^playoffs/$', views.ResultsForPlayoffs.as_view(), name='picker-playoffs-results'),
+        url(r'^playoffs/$', playoff_views.ResultsForPlayoffs.as_view(), name='picker-playoffs-results'),
     ])),
 ]
 

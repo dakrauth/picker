@@ -32,7 +32,7 @@ def load_users(grouping):
         ))
 
         if count == 1:
-            user.is_superuser = True
+            user.is_superuser = user.is_staff = True
             user.save()
 
         picker.Preference.objects.create(user=user)

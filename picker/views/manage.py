@@ -32,16 +32,18 @@ class ManagementViewBase(ManagementMixin, PickerViewBase):
 class ManagementHome(ManagementViewBase):
     template_name = '@manage/home.html'
 
-    def extra_data(self, data):
-        league = self.league
-        data['gameset'] = league.current_gameset  # or PlayoffContext.week(league.playoff)
+
+    def get_context_data(self, **kwargs):
+        # or PlayoffContext.week(league.playoff)
+        return super().get_context_data(gameset=self.league.current_gameset, **kwargs)
 
 
 class ManageSeason(ManagementViewBase):
     template_name = '@manage/season.html'
 
-    def extra_data(self, data):
-        data['gamesets'] = get_list_or_404(self.league.gamesets, season=self.season)
+    def get_context_data(self, **kwargs):
+        gamesets = get_list_or_404(self.league.gamesets, season=self.season)
+        return super().get_context_data(gamesets=gamesets, **kwargs)
 
 
 class ManageWeek(ManagementViewBase):
@@ -51,7 +53,7 @@ class ManageWeek(ManagementViewBase):
     def gameset(self):
         season = self.season
         sequence = self.args[0]
-        return get_object_or_404(self.league.gamesets, season=season, week=sequence)
+        return get_object_or_404(self.league.gamesets, season=season, sequence=sequence)
 
     def redirect_gameset(self, gs):
         return http.HttpResponseRedirect(
@@ -123,18 +125,23 @@ class ManageGame(SimpleFormMixin, ManagementViewBase):
     def game(self):
         return get_object_or_404(Game, pk=self.args[0])
 
-    def get(self, request, *args, **kwargs):
-        game = self.game
-        return self.form_handler(request, {'game': game}, instance=game)
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(instance=self.game, **kwargs)
 
+    def get_form_kwargs(self):
+        data = super().get_form_kwargs()
+        data['instance'] = self.game
+        return data
 
 class ManagePlayoffBuilder(SimpleFormMixin, ManagementViewBase):
     template_name = '@manage/playoff_builder.html'
     form_class = forms.PlayoffBuilderForm
     success_msg = 'Playoff saved'
 
-    def get(self, request, *args, **kwargs):
-        return self.form_handler(request, form_kws={'league': self.league})
+    def get_form_kwargs(self):
+        data = super().get_form_kwargs()
+        data['league'] = self.league
+        return data
 
 
 class ManagePlayoffs(ManagementViewBase):

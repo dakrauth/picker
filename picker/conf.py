@@ -22,6 +22,7 @@ DEFAULT_PICKER_SETTINGS = {
         'PARTICIPATION_HOOKS': [],
         'TEAM_PICKER_WIDGET': None,
         'FAKE_DATETIME_NOW': False,
+        'GAMESET_DURATION': {'days': 7, 'seconds': -1},
     }
 }
 

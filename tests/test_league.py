@@ -33,8 +33,11 @@ class TestLeague:
         assert league.current_season == 2018
         assert league.team_set.count() == 32
 
-        new_old = league.import_season(nfl_season_data)
-        assert new_old == [256, 0]
+        info = league.import_season(nfl_season_data)
+        assert len(info) == 17
+        for gs, is_new, games in info:
+            assert is_new == True
+            assert all(is_new for g, is_new in games)
         assert picker.Game.objects.incomplete().count() == 256
 
         assert picker.Alias.objects.count() == 4
@@ -52,6 +55,10 @@ class TestLeague:
         assert tm.aliases == 'FOO,BAR,BAZ'
         assert tm.season_points() == 0
         assert tm.complete_record() == [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+    def test_league(self, league, gamesets):
+        assert league.current_playoffs == None
+        assert league.latest_gameset == None
 
 
 @pytest.mark.django_db

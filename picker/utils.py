@@ -8,15 +8,18 @@ from dateutil.parser import parse as dt_parse
 
 from .conf import get_setting
 
-TZINFO = dateutil.tz.gettz(settings.TIME_ZONE)
-
 
 def datetime_now():
-    fake_datetime_settings = get_setting('FAKE_DATETIME_NOW')
+    TZINFO = dateutil.tz.gettz(settings.TIME_ZONE)
+    fake_now_str = get_setting('FAKE_DATETIME_NOW')
+    fake_now = dt_parse(fake_now_str) if fake_now_str else None
     def inner(when=None):
-        fake_datetime_now = when or fake_datetime_settings
-        if fake_datetime_now:
-            return datetime(*fake_datetime_now, tzinfo=TZINFO).astimezone(dateutil.tz.UTC)
+        nonlocal fake_now
+        if when:
+            fake_now = dt_parse(when)
+
+        if fake_now:
+            return fake_now
         else:
             return datetime.utcnow().replace(tzinfo=dateutil.tz.UTC)
     return inner
@@ -25,12 +28,12 @@ datetime_now = datetime_now()
 
 def can_user_participate():
     participation_hooks = None
-    def inner(pre, week):
+    def inner(pref, gs):
         nonlocal participation_hooks
         if participation_hooks is None:
             participation_hooks = [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
         for hook in participation_hooks:
-            if not hook(pref, week):
+            if not hook(pref, gs):
                 return False
         return True
     return inner

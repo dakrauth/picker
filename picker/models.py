@@ -160,14 +160,6 @@ class League(models.Model):
     def schedule_url(self): return self._reverse('picker-schedule')
     def manage_url(self): return self._reverse('picker-manage')
 
-    def teams_by_conf(self):
-        abbrs = self.conference_set.values('abbr', flat=True)
-        confs = {abbr.lower(): [] for abbr in abbrs}
-        for team in self.team_set.all():
-            confs[team.conference.abbr.lower()].append(team)
-
-        return confs
-
     def team_dict(self, aliases=True):
         names = {}
         for team in self.team_set.all():
@@ -260,7 +252,7 @@ class League(models.Model):
         league = cls.objects.get(abbr=data['league'])
         season = data['season']
         teams = league.team_dict()
-        new_old = [0, 0]
+        gamesets = []
         for sequence, item in enumerate(data['gamesets'], 1):
             opens = item.get('opens')
             if opens:
@@ -274,38 +266,26 @@ class League(models.Model):
             if closes:
                 closes = parse_dt(closes)
             else:
-                closes = opens + timedelta(days=6, seconds=3600*24-1)
+                closes = opens + timedelta(
+                    **league.config('GAMESET_DURATION', {'days': 7, 'seconds': -1})
+                )
 
             gs, is_new = league.gamesets.get_or_create(
                 season=season,
                 sequence=sequence,
                 defaults={'opens': opens, 'closes': closes}
             )
+            gamesets.append([gs, is_new])
             if not is_new:
                 if gs.opens != opens or gs.closes != closes:
                     gs.opens = opens
                     gs.closes = closes
                     gs.save()
 
-            byes = item.get('byes')
-            if byes:
-                gs.byes.add(*[teams[t] for t in byes])
+            games = gs.import_games(item, teams)
+            gamesets[-1].append(games)
 
-            for dct in item['games']:
-                start_time = parse_dt(dct['start'])
-                game, is_new = gs.games.get_or_create(
-                    home=teams[dct['home']],
-                    away=teams[dct['away']],
-                    defaults={'start_time': start_time}
-                )
-
-                game.start_time = start_time
-                game.tv = dct.get('tv', game.tv)
-                game.location = dct.get('location', game.location)
-                game.save()
-
-                new_old[0 if is_new else 1] += 1
-        return new_old
+        return gamesets
 
     @classmethod
     def import_league(cls, data):
@@ -353,10 +333,7 @@ class League(models.Model):
             )[0]
 
         for name, key in data.get('aliases', {}).items():
-            Alias.objects.get_or_create(
-                team=teams[key],
-                name=name,
-            )
+            Alias.objects.get_or_create(team=teams[key], name=name)
 
         return league, teams
 
@@ -540,6 +517,28 @@ class GameSet(models.Model):
             args=[self.league.slug, str(self.season), str(self.sequence)]
         )
 
+    def import_games(self, data, teams=None):
+        teams = teams or self.league.team_dict()
+        byes = data.get('byes')
+        if byes:
+            self.byes.add(*[teams[t] for t in byes])
+
+        games = []
+        for dct in data['games']:
+            start_time = parse_dt(dct['start'])
+            game, is_new = self.games.get_or_create(
+                home=teams[dct['home']],
+                away=teams[dct['away']],
+                defaults={'start_time': start_time}
+            )
+            game.start_time = start_time
+            game.tv = dct.get('tv', game.tv)
+            game.location = dct.get('location', game.location)
+            game.save()
+            games.append([game, is_new])
+
+        return games
+
     @property
     def last_game(self):
         return self.games.last()
@@ -599,6 +598,9 @@ class GameSet(models.Model):
             elif utils.can_user_participate(pref, self):
                 strategy = Strategy.RANDOM if auto else Strategy.USER
                 self.create_picks_for_user(pref.user, strategy, True)
+
+    def get_results(self):
+        return None
 
     def update_results(self, results):
         # results = self.league.scores(completed=True)
