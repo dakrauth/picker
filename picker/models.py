@@ -24,6 +24,7 @@ from .exceptions import PickerResultException
 from .conf import picker_settings
 from . import managers
 from . import utils
+from . import importers
 from .utils import datetime_now
 
 LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos')
@@ -162,7 +163,7 @@ class League(models.Model):
 
     def team_dict(self, aliases=True):
         names = {}
-        for team in self.team_set.all():
+        for team in self.teams.all():
             names[team.abbr] = team
             names[team.name] = team
             if team.nickname:
@@ -248,94 +249,11 @@ class League(models.Model):
 
     @classmethod
     def import_season(cls, data):
-        gs = None
-        league = cls.objects.get(abbr=data['league'])
-        season = data['season']
-        teams = league.team_dict()
-        gamesets = []
-        for sequence, item in enumerate(data['gamesets'], 1):
-            opens = item.get('opens')
-            if opens:
-                opens = parse_dt(opens)
-            else:
-                dt = parse_dt(item['games'][0]['start'])
-                opens = dt - timedelta(days=dt.weekday() - 1)
-                opens = opens.replace(hour=12, minute=0)
-
-            closes = item.get('closes')
-            if closes:
-                closes = parse_dt(closes)
-            else:
-                closes = opens + timedelta(
-                    **league.config('GAMESET_DURATION', {'days': 7, 'seconds': -1})
-                )
-
-            gs, is_new = league.gamesets.get_or_create(
-                season=season,
-                sequence=sequence,
-                defaults={'opens': opens, 'closes': closes}
-            )
-            gamesets.append([gs, is_new])
-            if not is_new:
-                if gs.opens != opens or gs.closes != closes:
-                    gs.opens = opens
-                    gs.closes = closes
-                    gs.save()
-
-            games = gs.import_games(item, teams)
-            gamesets[-1].append(games)
-
-        return gamesets
+        return importers.import_season(cls, data)
 
     @classmethod
     def import_league(cls, data):
-        name = data['name']
-        default_abbr = ''.join(c[0] for c in name.upper().split())
-        abbr = data.get('abbr', default_abbr).upper()
-        league, created = cls.objects.get_or_create(
-            name=name,
-            abbr=abbr,
-            slug=abbr.lower(),
-            defaults={
-                'is_pickable': data.get('is_pickable', False),
-                'current_season': data.get('current_season')
-            },
-        )
-        confs = {}
-        divs = {}
-        teams = {}
-        for tm in data['teams']:
-            if 'sub' in tm:
-                conf, div = tm['sub']
-                if conf not in confs:
-                    confs[conf] = Conference.objects.get_or_create(
-                        name=conf,
-                        league=league,
-                        abbr=conf.lower()
-                    )[0]
-
-                if (div, conf) not in divs:
-                    divs[(div, conf)] = Division.objects.get_or_create(
-                    name=name,
-                    conference=confs[conf]
-                )[0]
-            else:
-                conf = div = None
-
-            teams[tm['abbr']] = Team.objects.get_or_create(
-                name=tm['name'],
-                abbr=tm['abbr'],
-                nickname=tm['nickname'],
-                league=league,
-                conference=confs.get(conf),
-                division=divs.get((div, conf)),
-                logo=tm.get('logo', '')
-            )[0]
-
-        for name, key in data.get('aliases', {}).items():
-            Alias.objects.get_or_create(team=teams[key], name=name)
-
-        return league, teams
+        return importers.import_league(cls, data)
 
     @classmethod
     def get(cls, abbr=None):
@@ -346,7 +264,7 @@ class League(models.Model):
 class Conference(models.Model):
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=8)
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='conferences')
 
     def __str__(self):
         return self.name
@@ -354,7 +272,7 @@ class Conference(models.Model):
 
 class Division(models.Model):
     name = models.CharField(max_length=50)
-    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE, related_name='divisions')
 
     def __str__(self):
         return self.name
@@ -369,9 +287,21 @@ class Team(models.Model):
     abbr = models.CharField(max_length=8, blank=True)
     nickname = models.CharField(max_length=50)
     location = models.CharField(max_length=100, blank=True)
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
-    conference = models.ForeignKey(Conference, on_delete=models.SET_NULL, blank=True, null=True)
-    division = models.ForeignKey(Division, on_delete=models.SET_NULL, blank=True, null=True)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='teams')
+    conference = models.ForeignKey(
+        Conference,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='teams'
+    )
+    division = models.ForeignKey(
+        Division,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='teams'
+    )
     colors = models.CharField(max_length=40, blank=True)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
 
@@ -478,7 +408,7 @@ class Team(models.Model):
 
 
 class Alias(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='aliases')
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):

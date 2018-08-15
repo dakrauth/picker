@@ -1,6 +1,6 @@
 pip==10.0.1
-Django<2.1
-choice-enum==0.9
+Django<2.2
+choice-enum==1.0.0
 django-bootstrap3==10.0.1
 Pillow==5.2.0
 python-dateutil==2.7.3

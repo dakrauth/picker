@@ -4,3 +4,7 @@ class PickerException(Exception):
 
 class PickerResultException(PickerException):
     pass
+
+
+class PickerConfigurationError(PickerException):
+    pass

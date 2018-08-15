@@ -49,7 +49,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--league',
-            default='tests/nfl.json',
+            default='tests/nfl2018.json',
             dest='league',
             help='File path to league import JSON',
         )
