@@ -19,7 +19,7 @@ class Team(SimplePickerViewBase):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(
-            team=get_object_or_404(self.league.team_set, abbr=self.args[0]),
+            team=get_object_or_404(self.league.teams, abbr=self.args[0]),
             **kwargs
         )
 

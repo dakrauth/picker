@@ -18,13 +18,8 @@ def read_json(name):
 
 
 @pytest.fixture
-def nfl_season_data():
-    return read_json('nfl2018.json')
-
-
-@pytest.fixture
 def nfl_data():
-    return read_json('nfl.json')
+    return read_json('nfl2018.json')
 
 
 @pytest.fixture
@@ -53,8 +48,8 @@ def superuser(users):
 
 
 @pytest.fixture
-def gamesets(league, nfl_season_data):
-    picker.League.import_season(nfl_season_data)
+def gamesets(league, nfl_data):
+    picker.League.import_season(nfl_data)
     return league.season_gamesets()
 
 
@@ -62,6 +57,7 @@ def gamesets(league, nfl_season_data):
 def quidditch():
     year = 2018
     league = picker.League.import_league({
+        "schema": "league",
         "name": "Quidditch",
         "slug": "quidditch",
         "abbr": "QDCH",
@@ -75,7 +71,7 @@ def quidditch():
         ]
     })[0]
 
-    picker.League.import_season({"league": "QDCH", "season": year, "gamesets": [
+    picker.League.import_season({"schema": "season", "league": "QDCH", "season": year, "gamesets": [
         {"games": [
             {"away": "GRF", "home": "HUF", "start": "2018-09-07T04:00Z", "location": "Hogwarts"},
             {"away": "RVN", "home": "SLY", "start": "2018-09-07T08:00Z", "location": "Hogwarts"}

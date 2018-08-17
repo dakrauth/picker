@@ -1,9 +1,9 @@
 import os
 import pytest
 from django.urls import reverse
-from picker import models as picker
 from django.core.management import call_command
 
+from picker import models as picker
 from picker import (
     forms,
     stats,
@@ -21,19 +21,22 @@ from picker.management.commands import import_league, import_season
 class TestLeague:
 
     def test_management_commands(self):
-        call_command('import_league', 'tests/nfl.json')
+        call_command('import_league', 'tests/nfl2018.json')
         call_command('import_season', 'tests/nfl2018.json')
 
-    def test_import(self, nfl_data, nfl_season_data):
-        league, teams = picker.League.import_league(nfl_data)
+    def test_import(self, nfl_data):
+        league, teams = picker.League.import_league(nfl_data['league'])
         assert league == picker.League.objects.pickable()[0]
 
         assert league.slug == 'nfl'
         assert league.abbr == 'NFL'
         assert league.current_season == 2018
-        assert league.team_set.count() == 32
+        assert league.conferences.count() == 2
+        print(picker.Division.objects.all())
+        #assert picker.Division.objects.count() == 8
+        assert league.teams.count() == 32
 
-        info = league.import_season(nfl_season_data)
+        info = league.import_season(nfl_data['season'])
         assert len(info) == 17
         for gs, is_new, games in info:
             assert is_new == True
@@ -49,10 +52,9 @@ class TestLeague:
 
     def test_team(self, league):
         tm = picker.Team.objects.get(league=league, nickname='Jaguars')
-        assert tm.aliases == 'JAC'
+        aliases = list(tm.aliases.values_list('name', flat=True))
+        assert aliases == ['JAC']
 
-        tm.aliases = 'FOO,BAR,BAZ'
-        assert tm.aliases == 'FOO,BAR,BAZ'
         assert tm.season_points() == 0
         assert tm.complete_record() == [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 

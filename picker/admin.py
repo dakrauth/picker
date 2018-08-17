@@ -43,7 +43,7 @@ class GameSetForm(forms.ModelForm):
     def __init__(self, *args, **kws):
         super(GameSetForm, self).__init__(*args, **kws)
         if self.instance and self.instance.id:
-            self.fields['byes'].queryset = self.instance.league.team_set.all()
+            self.fields['byes'].queryset = self.instance.league.teams.all()
 
 
 class InlineGameForm(forms.ModelForm):

@@ -170,7 +170,7 @@ class PlayoffField(forms.ModelChoiceField):
     def __init__(self, conf, seed):
         super(PlayoffField, self).__init__(
             label='%s %d Seed' % (conf, seed),
-            queryset=conf.team_set.all(),
+            queryset=conf.teams.all(),
             required=False
         )
         self.conf = conf
@@ -195,7 +195,7 @@ class PlayoffBuilderForm(forms.ModelForm):
             )[0]
 
         super(PlayoffBuilderForm, self).__init__(*args, **kws)
-        for conf in league.conference_set.all():
+        for conf in league.conferences.all():
             for seed in range(1, self.NUM_TEAMS + 1):
                 field_name = '{}_{}'.format(conf.abbr, seed)
                 self.fields[field_name] = PlayoffField(conf, seed)

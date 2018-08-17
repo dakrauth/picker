@@ -15,7 +15,7 @@ class PlayoffContext:
         teams = {}
         confs = {
             abbr: []
-            for abbr in playoff.league.conference_set.values_list('abbr', flat=True)
+            for abbr in playoff.league.conferences.values_list('abbr', flat=True)
         }
         for seed, team in playoff.seeds:
             conf = confs[team.conference.abbr]

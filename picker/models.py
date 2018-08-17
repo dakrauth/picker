@@ -225,10 +225,6 @@ class League(models.Model):
         stddev = int(d['stddev'])
         return random.randint(avg - stddev, avg + stddev)
 
-    def send_reminder_email(self):
-        gs = self.current_gameset
-        signals.picker_reminder.send(sender=GameSet, gameset=gs)
-
     @cached_property
     def _config(self):
         core = {}
@@ -275,7 +271,7 @@ class Division(models.Model):
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE, related_name='divisions')
 
     def __str__(self):
-        return self.name
+        return '{} {}'.format(self.conference.name, self.name)
 
 
 class Team(models.Model):
@@ -313,16 +309,6 @@ class Team(models.Model):
 
     def get_absolute_url(self):
         return reverse('picker-team', args=[self.league.slug, self.abbr])
-
-    @property
-    def aliases(self):
-        return ','.join(self.alias_set.values_list('name', flat=True))
-
-    @aliases.setter
-    def aliases(self, values):
-        self.alias_set.all().delete()
-        for value in values.split(','):
-            self.alias_set.create(name=value.strip())
 
     @property
     def lower(self):
@@ -532,12 +518,12 @@ class GameSet(models.Model):
     def get_results(self):
         return None
 
-    def update_results(self, results):
+    def update_results(self, results=None):
         # results = self.league.scores(completed=True)
         if not results:
             raise PickerResultException('Results unavailable')
 
-        if results['week'] != self.sequence and results['season'] != self.season:
+        if results['sequence'] != self.sequence and results['season'] != self.season:
             raise PickerResultException('Results not updated, wrong season or week')
 
         completed = {g['home']: g for g in results['games']}

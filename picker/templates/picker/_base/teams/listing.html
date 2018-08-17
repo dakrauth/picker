@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for team in league.team_set.all  %}
+        {% for team in league.teams.all  %}
             <tr>
                 <td>
                     {% if team.logo %}<img class="team-logo" src="{{ team.logo.url }}">{% endif %}

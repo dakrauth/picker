@@ -63,30 +63,6 @@ class ManageWeek(ManagementViewBase):
     def post(self, *args, **kwargs):
         gs = self.gameset
         request = self.request
-        if 'autopicks' in request.POST:
-            gs.picks_kickoff()
-            try:
-                gs.update_results()
-            except PickerResultException:
-                pass
-
-            messages.success(request, 'Auto picks successful')
-            return self.redirect_gameset(gs)
-
-        if 'reminder' in request.POST:
-            self.league.send_reminder_email()
-            messages.success(request, 'User email sent')
-            return self.redirect_gameset(gs)
-
-        if 'update' in request.POST:
-            try:
-                res = gs.update_results()
-            except PickerResultException as exc:
-                messages.warning(request, str(exc))
-            else:
-                messages.success(request, '{} game(s) update'.format(res))
-            return self.redirect_gameset(gs)
-
         form = forms.ManagementPickForm(gs, request.POST)
         if form.is_valid():
             form.save()
@@ -101,14 +77,6 @@ class ManageWeek(ManagementViewBase):
 
     def get(self, request, *args, **kwargs):
         gs = self.gameset
-        if gs.has_started:
-            try:
-                gs.update_results()
-            except PickerResultException as exc:
-                messages.warning(self.request, str(exc))
-            else:
-                messages.success(self.request, 'Scores automatically updated!')
-
         return self.render_to_response(self.get_context_data(
             form=forms.ManagementPickForm(gs),
             gameset=gs,
