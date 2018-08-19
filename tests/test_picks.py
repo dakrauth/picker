@@ -8,39 +8,43 @@ from picker import utils
 @pytest.mark.django_db
 class TestViews:
 
-    def test_lookup(self, client,  league, gamesets, user):
+    def test_lookup(self, client, quidditch):
+        league, grouping, users = quidditch
+        user = users[-1]
         # /<league>/picks/    picker.views.picks.Picks    picker-picks
-        url = reverse('picker-picks', args=['nfl'])
+        url = reverse('picker-picks', args=['hq'])
         r = client.get(url)
         assert r.status_code == 302
         assert r.url == reverse('login') + '?next=' + url
 
-        utils.datetime_now('2018-09-07T00:20Z')
+        utils.datetime_now('2018-06-07T00:20Z')
         client.force_login(user)
         r = client.get(url, follow=False)
-        assert b'Picks currently unavailable' not in r.content
         assert r.status_code == 302
+        assert r.url == '/hq/picks/2018/1/'
 
-    def test_views(self, client, league, gamesets, user):
+    def test_views(self, client, quidditch):
+        league, grouping, users = quidditch
+        user = users[-1]
         for code in [302, 200]:
             if code == 200:
                 client.force_login(user)
 
             for name, args in [
                 # /<league>/picks/<season>/ picker.views.picks.PicksBySeason picker-season-picks
-                ('picker-season-picks', ['nfl', '2018']),
+                ('picker-season-picks', ['hq', '2018']),
 
                 # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
-                ('picker-picks-sequence', ['nfl', '2018', '1']),
+                ('picker-picks-sequence', ['hq', '2018', '1']),
 
                 # /<league>/results/  picker.views.picks.Results  picker-results
-                ('picker-results', ['nfl']),
+                ('picker-results', ['hq']),
 
                 # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
-                ('picker-season-results', ['nfl', '2018']),
+                ('picker-season-results', ['hq', '2018']),
 
                 # /<league>/results/<season>/<var>/ picker.views.picks.ResultsByWeek picker-game-sequence
-                ('picker-game-sequence', ['nfl', '2018', '1']),
+                ('picker-game-sequence', ['hq', '2018', '1']),
             ]:
                 url = reverse(name, args=args)
                 r = client.get(url)

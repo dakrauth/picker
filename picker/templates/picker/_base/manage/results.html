@@ -5,20 +5,13 @@
     {% load bootstrap3 picker_tags %}
     {% all_seasons_nav season league "manage" %}
     {% season_nav gameset "manage" %}
-    <form action="" method="post" class="actions">
-        <p>
-            <button class="btn btn-warning" type="submit" name="reminder">Reminder Email</button>
-            <button class="btn btn-warning" type="submit" name="autopicks">Run Autopicks</button>
-            <button class="btn btn-warning" type="submit" name="update">Auto Update</button>
-        </p>
-    </form>
     {% if form.errors %}
     <p>Please fix the errors below:</p>
     {% endif %}
     <form method="post">{% csrf_token %}
     <div class="panel panel-danger">
         <div class="panel-heading">Weekly Results</div>
-        <table class="table table-striped picks manage-picks">
+        <table class="table picks manage-picks">
             <tr>
                 <th class="start_time">Start Time</th>
                 <th class="teams">Away vs. Home</th>
@@ -46,7 +39,7 @@
             </tr>
             {% endwith %}{% endfor %}
             <tr>
-                <td>{% bootstrap_field form.send_mail %}</td>
+                <td></td>
                 <td class="manage-picks-complete">
                     {% if form.points.errors %}{{ form.points.errors }}<br>{% endif %}
                     {% bootstrap_field form.points %}

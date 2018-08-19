@@ -5,8 +5,8 @@
     <h1>{{ season }} Picks &ndash; Select a week</h1>
     {% all_seasons_nav season league "picks" %}
     <div class="list-group">
-    {% for gameset, pick in gamesets %}
-        <a class="list-group-item" href="{{ gameset.picks_url }}">Week {{ gameset.seqason }}
+    {% for gameset,pick in gamesets %}
+        <a class="list-group-item" href="{{ gameset.picks_url }}">Week {{ gameset.sequence }}
         {% if gameset.is_open %}
         {% if pick %}&ndash;
         {{ pick.is_complete|yesno:"complete,pending" }}{% else %}

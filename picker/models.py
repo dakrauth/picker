@@ -181,6 +181,11 @@ class League(models.Model):
     def latest_gameset(self):
         rel = datetime_now()
         try:
+            return self.gamesets.filter(points=0, opens__gte=rel).earliest('opens')
+        except GameSet.DoesNotExist:
+            pass
+
+        try:
             return self.gamesets.filter(closes__lte=rel).latest('closes')
         except GameSet.DoesNotExist:
             return None
@@ -281,7 +286,7 @@ class Team(models.Model):
 
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=8, blank=True)
-    nickname = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=50, blank=True)
     location = models.CharField(max_length=100, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='teams')
     conference = models.ForeignKey(
@@ -348,7 +353,7 @@ class Team(models.Model):
 
     @property
     def color_options(self):
-        return self.colors.split(',')
+        return self.colors.split(',') if self.colors else []
 
     @property
     def playoff(self):
@@ -715,8 +720,8 @@ class PickSet(models.Model):
     @property
     def is_complete(self):
         return (
-            False if self.points is None
-            else (self.progress == len(self.gameset.games))
+            False if self.points == 0
+            else (self.progress == self.gameset.games.count())
         )
 
     @property

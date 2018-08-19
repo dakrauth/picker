@@ -24,7 +24,8 @@ def nfl_data():
 
 @pytest.fixture
 def league(nfl_data):
-    return picker.League.import_league(nfl_data)[0]
+    league_info, teams_info = picker.League.import_league(nfl_data)
+    return league_info[0]
 
 
 @pytest.fixture
@@ -55,33 +56,10 @@ def gamesets(league, nfl_data):
 
 @pytest.fixture
 def quidditch():
-    year = 2018
-    league = picker.League.import_league({
-        "schema": "league",
-        "name": "Quidditch",
-        "slug": "quidditch",
-        "abbr": "QDCH",
-        "is_pickable": True,
-        "current_season": year,
-        "teams": [
-            {"abbr": "GRF", "name": "Gryffindor", "nickname": "Lions"},
-            {"abbr": "HUF", "name": "Hufflepuff", "nickname": "Badgers"},
-            {"abbr": "RVN", "name": "Ravenclaw", "nickname": "Eagles"},
-            {"abbr": "SLY", "name": "Slytherin", "nickname": "Serpents"}
-        ]
-    })[0]
-
-    picker.League.import_season({"schema": "season", "league": "QDCH", "season": year, "gamesets": [
-        {"games": [
-            {"away": "GRF", "home": "HUF", "start": "2018-09-07T04:00Z", "location": "Hogwarts"},
-            {"away": "RVN", "home": "SLY", "start": "2018-09-07T08:00Z", "location": "Hogwarts"}
-        ]},
-        {"games": [
-            {"away": "GRF", "home": "RVN", "start": "2018-09-14T04:00Z", "location": "Hogwarts"},
-            {"away": "HUF", "home": "SLY", "start": "2018-09-14T08:00Z", "location": "Hogwarts"}
-        ]}
-    ]})
-
+    data = read_json('quidditch.json')
+    league_info, teams_info = picker.League.import_league(data)
+    league = league_info[0]
+    picker.League.import_season(data)
     grouping = create_grouping(league, 'Quidditch grouping')
     users = load_users(grouping)
     return league, grouping, users

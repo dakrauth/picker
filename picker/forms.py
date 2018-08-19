@@ -1,9 +1,9 @@
+from pprint import pprint
 from django import forms
 from django.utils.module_loading import import_string
 
 from . import models as picker
 from . import utils
-from .signals import picker_results
 
 _picker_widget = None
 game_key_format = 'game_{}'.format
@@ -72,7 +72,7 @@ class BasePickForm(forms.Form):
 
         if games:
             self.fields['points'] = forms.IntegerField(
-                label='{} {}'.format('Points Total:', games[-1].vs_description),
+                label='{}'.format(games[-1].vs_description),
                 required=False
             )
 
@@ -84,12 +84,10 @@ class ManagementPickForm(BasePickForm):
     def __init__(self, gameset, *args, **kws):
         kws.setdefault('initial', self.get_initial_picks(gameset))
         super(ManagementPickForm, self).__init__(gameset, *args, **kws)
-        self.fields['send_mail'] = forms.BooleanField(required=False)
 
     def save(self):
         gameset = self.gameset
         data = self.cleaned_data.copy()
-        send_mail = data.pop('send_mail', False)
         gameset.points = data.pop('points', 0)
         gameset.save()
         team_dict = gameset.league.team_dict()
@@ -101,7 +99,6 @@ class ManagementPickForm(BasePickForm):
                 game.winner = team_dict[int(winner)]
 
         gameset.update_pick_status()
-        picker_results.send(sender=gameset.__class__, gameset=gameset, send_mail=send_mail)
 
     @staticmethod
     def get_initial_picks(gameset):
@@ -115,7 +112,8 @@ class ManagementPickForm(BasePickForm):
 class UserPickForm(BasePickForm):
 
     def __init__(self, user, gameset, *args, **kws):
-        kws.setdefault('initial', self.get_initial_user_picks(gameset, user))
+        initial = self.get_initial_user_picks(gameset, user)
+        kws.setdefault('initial', {}).update(initial)
         self.user = user
         super(UserPickForm, self).__init__(gameset, *args, **kws)
 
@@ -152,10 +150,12 @@ class UserPickForm(BasePickForm):
         if not wp:
             return {}
 
-        return dict({
+        picks = {
             game_key_format(gp.game.id): gp.winner.id
             for gp in wp.gamepick_set.filter(winner__isnull=False)
-        }, points=wp.points)
+        }
+        picks['points'] = wp.points
+        return picks
 
 
 class GameForm(forms.ModelForm):
@@ -232,7 +232,7 @@ class PreferenceForm(forms.ModelForm):
         kws.setdefault('initial', {})['email'] = self.current_email
         super(PreferenceForm, self).__init__(*args, **kws)
 
-        for league in picker.League.objects.all():
+        for league in picker.League.objects.filter(is_pickable=True):
             field_name = '{}_favorite'.format(league.slug)
             current = None
             if instance:
@@ -243,7 +243,7 @@ class PreferenceForm(forms.ModelForm):
 
             self.fields[field_name] = forms.ModelChoiceField(
                 picker.Team.objects.filter(league=league),
-                label='{} Fav'.format(league.abbr.upper()),
+                label='{} Favorite'.format(league.abbr.upper()),
                 empty_label='-- Select --',
                 required=False,
                 initial=current.team if current else None

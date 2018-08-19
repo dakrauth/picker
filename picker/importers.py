@@ -66,7 +66,7 @@ def import_league(cls, data):
     name = data['name']
     default_abbr = ''.join(c[0] for c in name.upper().split())
     abbr = data.get('abbr', default_abbr).upper()
-    league, created = cls.objects.get_or_create(
+    league, created_league = cls.objects.get_or_create(
         name=name,
         abbr=abbr,
         slug=abbr.lower(),
@@ -78,32 +78,42 @@ def import_league(cls, data):
     confs = {}
     divs = {}
     teams = {}
+    teams_results = []
     for tm in data['teams']:
-        if 'sub' in tm:
-            conf, div = tm['sub']
-            if conf not in confs:
-                confs[conf] = league.conferences.get_or_create(
-                    name=conf,
+        conf = div = None
+        if 'sub' in tm and len(tm['sub']):
+            conf_name = tm['sub'][0]
+            if conf_name not in confs:
+                conf, conf_created = league.conferences.get_or_create(
+                    name=conf_name,
                     league=league,
-                    abbr=conf.lower()
-                )[0]
+                    abbr=conf_name.lower()
+                )
+                confs[conf_name] = conf
 
-            if (div, conf) not in divs:
-                divs[(div, conf)] = confs[conf].divisions.get_or_create(name=name)[0]
-        else:
-            conf = div = None
+            if len(tm['sub']) > 1:
+                div_name = tm['sub'][1]
+                if (div_name, conf_name) not in divs:
+                    div, div_created = confs[conf_name].divisions.get_or_create(name=div_name)
+                    divs[(div_name, conf_name)] = div
 
-        teams[tm['abbr']] = league.teams.get_or_create(
+        team, created = league.teams.get_or_create(
             name=tm['name'],
             abbr=tm['abbr'],
-            nickname=tm['nickname'],
-            conference=confs.get(conf),
-            division=divs.get((div, conf)),
-            logo=tm.get('logo', '')
-        )[0]
+            defaults={
+                'nickname': tm.get('nickname', ''),
+                'colors': tm.get('colors', ''),
+                'conference': conf,
+                'division': div,
+                'logo': tm.get('logo', ''),
+           }
+        )
+        teams[tm['abbr']] = team
+        teams_results.append([team, created])
+
 
     for name, key in data.get('aliases', {}).items():
         teams[key].aliases.get_or_create(name=name)
 
-    return league, teams
+    return [[league, created_league], teams_results]
 

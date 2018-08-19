@@ -181,19 +181,20 @@ class Picks(PickerViewBase):
     template_name = '@unavailable.html'
 
     def get(self, request, *args, **kwargs):
-        gameset = self.league.current_gameset or self.league.latest_gameset
+        league = self.league
+        gameset = league.current_gameset or league.latest_gameset
         if gameset:
             return self.redirect(
                 'picker-picks-sequence',
-                self.league.slug,
+                league.slug,
                 gameset.season,
                 gameset.sequence
             )
 
-        if self.league.config('PLAYOFFS'):
-            playoff = self.league.current_playoffs
+        if league.config('PLAYOFFS'):
+            playoff = league.current_playoffs
             if playoff:
-                return self.redirect('picker-playoffs-picks', self.league.slug, self.season)
+                return self.redirect('picker-playoffs-picks', league.slug, self.season)
 
         return self.render_to_response(self.get_context_data(
             heading='Picks currently unavailable',
@@ -222,7 +223,8 @@ class PicksByGameset(SimpleFormMixin, PickerViewBase):
         return super().get_context_data(gameset=self.gameset, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.gameset.is_open:
+        gameset = self.gameset
+        if gameset.is_open:
             self.template_name = '@picks/make.html'
             return self.render_to_response(self.get_context_data(**kwargs))
 

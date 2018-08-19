@@ -57,13 +57,17 @@ class ManageWeek(ManagementViewBase):
 
     def redirect_gameset(self, gs):
         return http.HttpResponseRedirect(
-            reverse('picker-game-sequence', args=(self.league.slug, gs.season, gs.sequence))
+            self.request.path
         )
+
+    def get_form(self):
+        return forms.ManagementPickForm
 
     def post(self, *args, **kwargs):
         gs = self.gameset
         request = self.request
-        form = forms.ManagementPickForm(gs, request.POST)
+        FormClass = self.get_form()
+        form = FormClass(gs, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Results saved')

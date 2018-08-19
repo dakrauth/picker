@@ -1,4 +1,6 @@
+import os
 from datetime import datetime
+from django.utils import timezone
 from django.conf import settings
 from django.utils.module_loading import import_string
 from django.core.validators import ValidationError, validate_email
@@ -9,19 +11,27 @@ from dateutil.parser import parse as dt_parse
 from .conf import get_setting
 
 
+def parse_datetime(dtstr):
+    dt = dt_parse(dtstr)
+    if timezone.is_naive(dt):
+        dt = timezone.make_aware(dt)
+
+    return dt
+
+
 def datetime_now():
-    TZINFO = dateutil.tz.gettz(settings.TIME_ZONE)
-    fake_now_str = get_setting('FAKE_DATETIME_NOW')
-    fake_now = dt_parse(fake_now_str) if fake_now_str else None
+    TZINFO = timezone.get_default_timezone()
+    fake_now_str = os.environ.get('FAKE_DATETIME_NOW', get_setting('FAKE_DATETIME_NOW'))
+    fake_now = parse_datetime(fake_now_str) if fake_now_str else None
     def inner(when=None):
         nonlocal fake_now
         if when:
-            fake_now = dt_parse(when)
+            fake_now = parse_datetime(when)
 
         if fake_now:
             return fake_now
         else:
-            return datetime.utcnow().replace(tzinfo=dateutil.tz.UTC)
+            return timezone.now()
     return inner
 datetime_now = datetime_now()
 

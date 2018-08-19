@@ -46,25 +46,9 @@ class Command(BaseCommand):
     requires_migrations_checks = True
     requires_system_checks = False
 
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '--league',
-            default='tests/nfl2018.json',
-            dest='league',
-            help='File path to league import JSON',
-        )
-
-        parser.add_argument(
-            '--season',
-            default='tests/nfl2018.json',
-            dest='season',
-            help='File path to season import JSON',
-        )
-
     def handle(self, *args, **options):
         call_command('migrate', no_input=True, interactive=False)
-        call_command('import_league', options['league'])
-        call_command('import_season', options['season'])
+        call_command('import_picks', 'tests/nfl2018.json')
 
         gs = picker.GameSet.objects.order_by('-id')[0]
         league = gs.league

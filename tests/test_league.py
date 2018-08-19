@@ -12,20 +12,22 @@ from picker import (
     views,
     signals,
     managers,
+    importers
 )
 from picker.templatetags import picker_tags
-from picker.management.commands import import_league, import_season
+from picker.management.commands import import_picks
 
 
 @pytest.mark.django_db
 class TestLeague:
 
     def test_management_commands(self):
-        call_command('import_league', 'tests/nfl2018.json')
-        call_command('import_season', 'tests/nfl2018.json')
+        call_command('import_picks', 'tests/nfl2018.json')
 
     def test_import(self, nfl_data):
-        league, teams = picker.League.import_league(nfl_data['league'])
+        league_info, teams_info = picker.League.import_league(nfl_data['league'])
+        league, created = league_info
+        assert created is True
         assert league == picker.League.objects.pickable()[0]
 
         assert league.slug == 'nfl'
@@ -33,7 +35,7 @@ class TestLeague:
         assert league.current_season == 2018
         assert league.conferences.count() == 2
         print(picker.Division.objects.all())
-        #assert picker.Division.objects.count() == 8
+        assert picker.Division.objects.count() == 8
         assert league.teams.count() == 32
 
         info = league.import_season(nfl_data['season'])
@@ -53,14 +55,14 @@ class TestLeague:
     def test_team(self, league):
         tm = picker.Team.objects.get(league=league, nickname='Jaguars')
         aliases = list(tm.aliases.values_list('name', flat=True))
-        assert aliases == ['JAC']
+        assert aliases == ['JAX']
 
         assert tm.season_points() == 0
         assert tm.complete_record() == [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
     def test_league(self, league, gamesets):
         assert league.current_playoffs == None
-        assert league.latest_gameset == None
+        assert league.latest_gameset == gamesets[0]
 
 
 @pytest.mark.django_db
