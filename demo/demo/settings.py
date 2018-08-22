@@ -18,7 +18,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'bootstrap3',
     'django_extensions',
-    'picker',
+    'picker.apps.PickerConfig',
     'demo',
 )
 
@@ -31,6 +31,7 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'demo.middleware.demo_middleware',
 )
 
 TEMPLATES = [{
@@ -43,6 +44,7 @@ TEMPLATES = [{
             'django.template.context_processors.request',
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
+            'demo.context_processors.demo',
         ],
     },
 },]
@@ -75,9 +77,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 
 
+DEMO = {
+    'allow_fake_datetime': True,
+    'dump_post_data': True
+}
+
 PICKER = {
     'FAKE_DATETIME_NOW': None,
     'NFL': {
+        'TEAM_PICKER_WIDGET': 'demo.forms.TemplateTeamChoice',
+    },
+    'HQ': {
         'TEAM_PICKER_WIDGET': 'demo.forms.TemplateTeamChoice',
     }
 }

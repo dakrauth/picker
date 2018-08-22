@@ -1,4 +1,3 @@
-from pprint import pprint
 from django import forms
 from django.utils.module_loading import import_string
 
@@ -6,7 +5,11 @@ from . import models as picker
 from . import utils
 
 _picker_widget = None
-game_key_format = 'game_{}'.format
+encoded_game_key= 'game_{}'.format
+
+
+def decoded_game_key(value):
+    return int(value.replace('game_', ''))
 
 
 def get_picker_widget(league):
@@ -65,16 +68,16 @@ class BasePickForm(forms.Form):
         self.gameset = gameset
         self.game_fields = FieldIter(self)
         games = list(gameset.games.all())
-        for gm in games:
-            key = game_key_format(gm.id)
-            self.fields[key] = GameField(gm, self.management)
-            self.game_fields.append(key)
-
         if games:
-            self.fields['points'] = forms.IntegerField(
-                label='{}'.format(games[-1].vs_description),
-                required=False
-            )
+            for gm in games:
+                key = encoded_game_key(gm.id)
+                self.fields[key] = GameField(gm, self.management)
+                self.game_fields.append(key)
+
+                self.fields['points'] = forms.IntegerField(
+                    label='{}:'.format(games[-1].vs_description),
+                    required=False
+                )
 
 
 class ManagementPickForm(BasePickForm):
@@ -94,8 +97,8 @@ class ManagementPickForm(BasePickForm):
 
         for key, winner in data.items():
             if winner:
-                key = key.split('_')[1]
-                game = gameset.games.get(pk=key)
+                pk = decoded_game_key(key)
+                game = gameset.games.get(pk=pk)
                 game.winner = team_dict[int(winner)]
 
         gameset.update_pick_status()
@@ -103,9 +106,8 @@ class ManagementPickForm(BasePickForm):
     @staticmethod
     def get_initial_picks(gameset):
         return dict({
-            game_key_format(game.id): game.winner.id
-            for game in gameset.games.all()
-            if game.winner
+            encoded_game_key(game.id): str(game.winner.id)
+            for game in gameset.games.played()
         }, points=gameset.points)
 
 
@@ -119,43 +121,19 @@ class UserPickForm(BasePickForm):
 
     def save(self):
         data = self.cleaned_data.copy()
-        gameset = self.gameset
-        picks = gameset.picksets.get_or_create(user=self.user)[0]
-        picks.points = data.pop('points', 0) or 0
-        picks.strategy = picker.PickSet.Strategy.USER
-        picks.save()
-
-        games_dict = {game_key_format(g.id): g for g in gameset.games.all()}
-        game_picks = [(k, v) for k, v in data.items() if v]
-        for game, winner in game_picks:
-            game = games_dict.get(game, None)
-            if not game:
-                continue
-
-            gp, created = picks.gamepick_set.get_or_create(
-                game=game,
-                defaults=dict(winner=None)
-            )
-            if not game.has_started:
-                gp.winner_id = winner
-                gp.save()
-
-        picks.send_confirmation()
-        picks.complete_picks(False, games_dict.values())
-        return gameset
+        picks = picker.PickSet.objects.for_gameset_user(self.gameset, self.user)
+        points = data.pop('points', None)
+        games = {decoded_game_key(k): v for k, v in data.items() if v}
+        picks.update_picks(games=games, points=points)
+        return picks
 
     @staticmethod
     def get_initial_user_picks(gameset, user):
-        wp = gameset.pick_for_user(user)
-        if not wp:
-            return {}
-
-        picks = {
-            game_key_format(gp.game.id): gp.winner.id
-            for gp in wp.gamepick_set.filter(winner__isnull=False)
-        }
-        picks['points'] = wp.points
-        return picks
+        ps = gameset.pick_for_user(user)
+        initial = dict({
+            encoded_game_key(g_id): str(w_id) for g_id, w_id in ps.gamepicks.picked_winner_ids()
+        }, points=ps.points) if ps else {}
+        return initial
 
 
 class GameForm(forms.ModelForm):
@@ -163,61 +141,6 @@ class GameForm(forms.ModelForm):
     class Meta:
         model = picker.Game
         fields = ('start_time', 'location')
-
-
-class PlayoffField(forms.ModelChoiceField):
-
-    def __init__(self, conf, seed):
-        super(PlayoffField, self).__init__(
-            label='%s %d Seed' % (conf, seed),
-            queryset=conf.teams.all(),
-            required=False
-        )
-        self.conf = conf
-        self.seed = seed
-
-
-class PlayoffBuilderForm(forms.ModelForm):
-
-    NUM_TEAMS = 6
-
-    class Meta:
-        model = picker.Playoff
-        fields = ('kickoff', )
-
-    def __init__(self, league, *args, **kws):
-        self.league = league
-        if 'instance' not in kws:
-            kws['instance'] = picker.Playoff.objects.get_or_create(
-                league=league,
-                season=league.current_season,
-                defaults={'kickoff': utils.datetime_now()}
-            )[0]
-
-        super(PlayoffBuilderForm, self).__init__(*args, **kws)
-        for conf in league.conferences.all():
-            for seed in range(1, self.NUM_TEAMS + 1):
-                field_name = '{}_{}'.format(conf.abbr, seed)
-                self.fields[field_name] = PlayoffField(conf, seed)
-
-        if self.instance.id:
-            for playoff_team in self.instance.playoffteam_set.all():
-                key = '%s_%s' % (playoff_team.team.conference, playoff_team.seed)
-                self.fields[key].initial = playoff_team.team
-
-    def save(self, commit=True):
-        super(PlayoffBuilderForm, self).save()
-        playoff = self.instance
-        data = self.cleaned_data
-        data.pop('kickoff')
-
-        picker.PlayoffTeam.objects.filter(playoff=playoff).delete()
-        for key, team in data.items():
-            if team:
-                seed = key.split('_')[-1]
-                playoff.playoffteam_set.create(team=team, seed=seed)
-
-        return playoff
 
 
 class PreferenceForm(forms.ModelForm):

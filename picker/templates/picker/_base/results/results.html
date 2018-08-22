@@ -8,17 +8,15 @@
     </h1>
     {% season_nav gameset "results" %}
     {% with gameset.results as results %}
+    <p>
+        {% if gameset.points %}<strong>Final points total:</strong> {{ gameset.points }}<br>{% endif %}
+        <em class="autopick">Note: Italicized user names indicate auto-picker selections</em>
+    </p>
+    {% include "picker/inclusions/byes.html" %}
     <div class="panel panel-default">
         <div class="panel-heading">
             {{ gameset.games.count }} games,
             {{ results|length }} entries
-        </div>
-        <div class="panel-body">
-            <p>
-                <span class="autopick">Italicized user names indicate auto-picker selections</span><br />
-                {% if gameset.points %}Final points total: {{ gameset.points }}{% endif %}
-            </p>
-            {% include "picker/inclusions/byes.html" %}
         </div>
         <table class="table table-striped results">
         {% if not gameset.has_started %}
@@ -69,7 +67,7 @@
                     <strong class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</strong>
                 </td>
                 <td>{{ wp.correct }}</td>
-                {% for item in wp.gamepick_set.games_started %}
+                {% for item in wp.gamepicks.games_started %}
                 <td class="{{ item.is_correct|yesno:"correct,incorrect,unknown" }}">
                     {{ item.winner_abbr }}
                 </td>

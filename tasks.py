@@ -22,13 +22,13 @@ def install(ctx):
 
 
 @task
-def test(ctx, cov=False):
+def test(ctx, cov=False, failfast=False):
     '''Run tests and coverage. Optionally open the coverage reports.'''
     cov_string = ''
     if cov:
         cov_string = '--cov-config .coveragerc --cov-report html --cov-report term --cov=picker'
 
-    ctx.run("py.test {}".format(cov_string), pty=True)
+    ctx.run("py.test {} {}".format('-x' if failfast else '', cov_string), pty=True)
 
     if cov and os.path.exists('build/coverage/index.html'):
         ctx.run('open build/coverage/index.html', pty=True)

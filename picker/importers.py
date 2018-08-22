@@ -13,10 +13,9 @@ def valid_schema(data, expected_schema):
         data = data[expected_schema]
 
     if data.get('schema') != expected_schema:
-        raise PickerConfigurationError('Missing schema type for {}'.forma(expected_schema))
+        raise PickerConfigurationError('Missing schema type for {}'.format(expected_schema))
 
     return data
-
 
 
 def import_season(cls, data):
@@ -111,9 +110,7 @@ def import_league(cls, data):
         teams[tm['abbr']] = team
         teams_results.append([team, created])
 
-
     for name, key in data.get('aliases', {}).items():
         teams[key].aliases.get_or_create(name=name)
 
     return [[league, created_league], teams_results]
-

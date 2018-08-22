@@ -4,7 +4,7 @@ from .utils import sorted_standings
 
 
 def percent(num, denom):
-    return 0.0 if denom == 0 else (float(num) / denom) * 100.0
+    return 0.0 if denom == 0 else num / denom * 100.0
 
 
 class RosterStats:
@@ -18,35 +18,33 @@ class RosterStats:
         self.wrong = 0
         self.points_delta = 0
 
-        qs = self.user.picksets.filter(gameset__league=league).select_related().filter(
+        queryset = self.user.picksets.filter(gameset__league=league).select_related().filter(
             Q(correct__gt=0) | Q(wrong__gt=0)
         )
 
         if season:
-            qs = qs.filter(gameset__season=season)
+            queryset = queryset.filter(gameset__season=season)
 
-        self.weeks_played = 0
-        for wp in qs:
-            self.weeks_played += 1
-            self.correct += wp.correct
-            self.wrong += wp.wrong
-            self.points_delta += wp.points_delta if wp.gameset.points else 0
+        self.picksets_played = 0
+        for picks in queryset.select_related('gameset'):
+            self.picksets_played += 1
+            self.correct += picks.correct
+            self.wrong += picks.wrong
+            self.points_delta += picks.points_delta if picks.gameset.points else 0
 
-        self.is_active = self.member.is_active
+        self.is_active = self.member.user.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
         self.avg_points_delta = (
-            float(self.points_delta) / self.weeks_played
-            if self.weeks_played
+            self.points_delta / self.picksets_played
+            if self.picksets_played
             else 0
         )
 
-    @property
-    def weeks_won(self):
         query = GameSet.objects.filter(picksets__is_winner=True, picksets__user=self.user)
         if self.season:
             query = query.filter(season=self.season)
 
-        return list(query.select_related())
+        self.picksets_won = list(query.select_related())
 
     def __str__(self):
         return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
@@ -59,7 +57,7 @@ class RosterStats:
         mbrs = group.members.all()
 
         def keyfn(rs):
-            return (rs.correct, -rs.points_delta, rs.weeks_played)
+            return (rs.correct, -rs.points_delta, rs.picksets_played)
 
         stats = [cls(m, league) for m in mbrs]
         by_user = {

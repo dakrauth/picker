@@ -8,7 +8,7 @@
 {% if picks %}
 <h3>Summary</h3>
 <p>
-    <strong>Correct Picks:</strong> {{ picks.correct }}/{{ picks.gamepick_set.count }} &bull;
+    <strong>Correct Picks:</strong> {{ picks.correct }}/{{ picks.gamepicks.count }} &bull;
     <strong>Points:</strong> &plusmn;{{ picks.points_delta }} ({{ picks.points }} vs {{ gameset.points }})
 </p>
 <table class="table table-striped table-bordered past-picks">
@@ -19,7 +19,7 @@
     <th>Home</th>
     <th class="text-center">Result</th>
 </tr>
-{% for pick in picks.gamepick_set.all %}
+{% for pick in picks.gamepicks.all %}
 <tr> {% with pick.is_correct as is_correct %}
     <td class="when">{{ pick.game.start_time|date:"D P, M jS" }}</td>
     <td class="{{ is_correct|yesno:"correct,incorrect,unknown"}}{% if pick.game.away == pick.winner %} selected{% endif %}">

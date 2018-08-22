@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             name='GamePick',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('game', models.ForeignKey(on_delete=models.CASCADE, related_name='gamepick_set', to='picker.Game')),
+                ('game', models.ForeignKey(on_delete=models.CASCADE, related_name='gamepicks', to='picker.Game')),
             ],
             options={
                 'ordering': ('game__kickoff', 'game__away'),

@@ -1,1 +1,35 @@
 {% extends "base.html" %}
+{% block nav %}
+{% if league %}
+<nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'picker-home' league=league.abbr %}">{{ league.abbr.upper }}</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ league.picks_url }}">Picks</a></li>
+                <li><a href="{{ league.results_url }}">Results</a></li>
+                <li><a href="{{ league.roster_url }}">Standings</a></li>
+                <li><a href="{{ league.teams_url }}">Teams</a></li>
+                <li><a href="{{ league.schedule_url }}">Schedule</a></li>
+                <li><a href="{{ league.manage_url }}">Manage</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    {% if user.is_authenticated %}<a href="{% url 'logout' %}?next=/">Logout</a>
+                    {% else %}<a href="{% url 'login' %}?next=/{{ league.abbr }}/">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{% endif %}
+{% endblock nav %}

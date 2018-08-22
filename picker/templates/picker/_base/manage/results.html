@@ -40,15 +40,15 @@
             {% endwith %}{% endfor %}
             <tr>
                 <td></td>
-                <td class="manage-picks-complete">
-                    {% if form.points.errors %}{{ form.points.errors }}<br>{% endif %}
+                <td class="manage-picks-complete form-inline">
+                    {% if form.points.errors %}
+                    <p>{{ form.points.errors }}</p>{% endif %}
                     {% bootstrap_field form.points %}
-                </td>
-                <td>
                     {% buttons %}
                     <button type="submit" class="btn btn-primary">Submit</button>
                     {% endbuttons %}
                 </td>
+                <td></td>
             </tr>
         </table>
     </div>

@@ -28,7 +28,6 @@ def season_nav(context, gameset, relative_to):
     league = context['league']
     return {
         'gameset': gameset,
-        'show_playoffs': league.config('PLAYOFFS'),
         'relative_to': relative_to,
         'user': context['user'],
         'league': league,

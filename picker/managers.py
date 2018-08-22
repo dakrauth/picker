@@ -1,11 +1,11 @@
-from django.conf import settings
 from django.db import models
-from django.utils.module_loading import import_string
-
-from .conf import get_setting
 from .utils import datetime_now
 
-send_mail = import_string(get_setting('EMAIL_HANDLER'))
+
+class PreferenceManager(models.Manager):
+
+    def for_user(self, user):
+        return self.get_or_create(user=user)[0]
 
 
 class LeagueManager(models.Manager):
@@ -19,6 +19,9 @@ class GamePickManager(models.Manager):
     def games_started(self):
         return self.filter(game__start_time__lte=datetime_now())
 
+    def picked_winner_ids(self):
+        return self.filter(winner__isnull=False).values_list('game__id', 'winner__id')
+
 
 class GameManager(models.Manager):
 
@@ -29,26 +32,32 @@ class GameManager(models.Manager):
         kws['status'] = self.model.Status.UNPLAYED
         return self.filter(**kws)
 
+    def played(self, **kws):
+        Status = self.model.Status
+        kws['status__in'] = [Status.TIE, Status.HOME_WIN, Status.AWAY_WIN]
+        return self.filter(**kws)
 
-class PreferenceManager(models.Manager):
 
-    def active(self, **kws):
-        return self.filter(user__is_active=True, **kws)
+class PickSetManager(models.Manager):
 
-    def email_active(self, subject, body, html=''):
-        self.email(
-            subject,
-            body,
-            selected=self.active(),
-            html=html,
+    def for_gameset_user(self, gameset, user, strategy=None, autopick=False):
+        Strategy = self.model.Strategy
+        strategy = strategy or Strategy.USER
+        picks, created = self.get_or_create(
+            gameset=gameset,
+            user=user,
+            defaults={'strategy': strategy}
         )
+        if created and autopick:
+            picks.points = gameset.league.random_points()
+            picks.save()
 
-    @staticmethod
-    def email(subject, body, selected, html=''):
-        send_mail(
-            subject,
-            body,
-            from_email=settings.SERVER_EMAIL,
-            recipient_list=[p.pretty_email for p in selected],
-            html=html,
-        )
+        games = set(gameset.games.values_list('id', flat=True))
+        if not created:
+            games -= set(picks.gamepicks.values_list('game__id', flat=True))
+
+        for game in gameset.games.filter(id__in=games).select_related():
+            winner = game.get_random_winner() if autopick else None
+            picks.gamepicks.create(game=game, winner=winner)
+
+        return picks

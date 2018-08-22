@@ -35,7 +35,6 @@ def load_users(grouping):
             user.is_superuser = user.is_staff = True
             user.save()
 
-        picker.Preference.objects.create(user=user)
         grouping.members.create(user=user)
 
     return users
@@ -46,9 +45,12 @@ class Command(BaseCommand):
     requires_migrations_checks = True
     requires_system_checks = False
 
+    def add_arguments(self, parser):
+        parser.add_argument('--filename', '-f', default='tests/nfl2018.json')
+
     def handle(self, *args, **options):
         call_command('migrate', no_input=True, interactive=False)
-        call_command('import_picks', 'tests/nfl2018.json')
+        call_command('import_picks', options['filename'])
 
         gs = picker.GameSet.objects.order_by('-id')[0]
         league = gs.league
@@ -60,10 +62,4 @@ class Command(BaseCommand):
         count = load_users(grouping)
         print('Created {} new users'.format(count))
 
-        picker.League.objects.create(
-            name='Faux League',
-            abbr='FL',
-            slug='fl',
-            is_pickable=False
-        )
 

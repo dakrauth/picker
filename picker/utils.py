@@ -1,11 +1,10 @@
 import os
 from datetime import datetime
 from django.utils import timezone
-from django.conf import settings
+from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 from django.core.validators import ValidationError, validate_email
 
-import dateutil.tz
 from dateutil.parser import parse as dt_parse
 
 from .conf import get_setting
@@ -19,35 +18,48 @@ def parse_datetime(dtstr):
     return dt
 
 
-def datetime_now():
-    TZINFO = timezone.get_default_timezone()
-    fake_now_str = os.environ.get('FAKE_DATETIME_NOW', get_setting('FAKE_DATETIME_NOW'))
-    fake_now = parse_datetime(fake_now_str) if fake_now_str else None
-    def inner(when=None):
-        nonlocal fake_now
+class FakeableDatetime:
+
+    def __init__(self, default=None):
+        if isinstance(default, datetime):
+            default = default.isoformat()
+
+        self.faked = False
+        self.default = default or ''
+        self.fake_str = os.environ.get('FAKE_DATETIME_NOW', self.default)
+        self.set(self.fake_str)
+
+    @property
+    def is_fake(self):
+        return bool(self.faked)
+
+    def set(self, when):
         if when:
-            fake_now = parse_datetime(when)
+            if when == 'reset':
+                self.faked = parse_datetime(self.fake_str) if self.fake_str else False
+            else:
+                self.faked = when if isinstance(when, datetime) else parse_datetime(when)
 
-        if fake_now:
-            return fake_now
-        else:
-            return timezone.now()
-    return inner
-datetime_now = datetime_now()
+        return self.faked or timezone.now()
+
+    def __call__(self, when=None):
+        return self.set(when)
 
 
-def can_user_participate():
-    participation_hooks = None
-    def inner(pref, gs):
-        nonlocal participation_hooks
-        if participation_hooks is None:
-            participation_hooks = [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
-        for hook in participation_hooks:
-            if not hook(pref, gs):
-                return False
-        return True
-    return inner
-can_user_participate = can_user_participate()
+datetime_now = FakeableDatetime(get_setting('FAKE_DATETIME_NOW'))
+
+
+class UserParticiption:
+
+    @cached_property
+    def participation_hooks(self):
+        return [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
+
+    def __call__(self, user, gs):
+        return all(hook(user, gs) for hook in self.participation_hooks)
+
+
+can_user_participate = UserParticiption()
 
 
 def sorted_standings(items, key=None, reverse=True):
@@ -81,4 +93,3 @@ def is_valid_email(value):
         return False
     else:
         return True
-

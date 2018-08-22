@@ -56,6 +56,7 @@ class InlineGameForm(forms.ModelForm):
 class GameInline(admin.TabularInline):
     model = picker.Game
     form = InlineGameForm
+    extra = 0
 
     def get_formset(self, request, obj=None, **kwargs):
         return super().get_formset(request, obj, **kwargs)
@@ -76,7 +77,7 @@ class PreferenceAdmin(admin.ModelAdmin):
 
 
 class GamePickInlineForm(forms.ModelForm):
-    winner = forms.ModelChoiceField(queryset=picker.Team.objects.none())
+    winner = forms.ModelChoiceField(queryset=picker.Team.objects.none(), required=False)
     model = picker.GamePick
     fields = ('winner',)
 
@@ -95,6 +96,7 @@ class GamePickInline(admin.TabularInline):
     form = GamePickInlineForm
     fields = ('game_info', 'winner',)
     readonly_fields = ('game_info', )
+    extra = 0
 
     def game_info(self, obj):
         return '{}'.format(obj.game)
@@ -104,7 +106,7 @@ class GamePickInline(admin.TabularInline):
 class PickSetAdmin(admin.ModelAdmin):
     list_display = ('user', 'gameset', 'league')
     list_filter = ('user', 'gameset')
-    fields = ('points', 'strategy')
+    # fields = ('points', 'strategy')
     inlines = [GamePickInline]
 
     def league(self, obj):

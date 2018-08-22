@@ -19,224 +19,384 @@
                 "logo": "picker/logos/nfl/ari.gif",
                 "name": "Arizona",
                 "nickname": "Cardinals",
-                "sub": ["NFC","West" ]
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "coach": "Steve Wilks",
+                "location": "University of Phoenix Stadium, Glendale, Arizona"
             },
             {
                 "abbr": "ATL",
                 "logo": "picker/logos/nfl/atl.gif",
                 "name": "Atlanta",
                 "nickname": "Falcons",
-                "sub": ["NFC", "South"]
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "coach": "Dan Quinn",
+                "location": "Mercedes-Benz Stadium, Atlanta, Georgia"
             },
             {
                 "abbr": "BAL",
                 "logo": "picker/logos/nfl/bal.gif",
                 "name": "Baltimore",
                 "nickname": "Ravens",
-                "sub": ["AFC", "North"]
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "coach": "John Harbaugh",
+                "location": "M&T Bank Stadium, Baltimore, Maryland"
             },
             {
                 "abbr": "BUF",
                 "logo": "picker/logos/nfl/buf.gif",
                 "name": "Buffalo",
                 "nickname": "Bills",
-                "sub": ["AFC", "East"]
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "coach": "Sean McDermott",
+                "location": "New Era Field, Orchard Park, New York"
             },
             {
                 "abbr": "CAR",
                 "logo": "picker/logos/nfl/car.gif",
                 "name": "Carolina",
                 "nickname": "Panthers",
-                "sub": ["NFC", "South"]
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "coach": "Ron Rivera",
+                "location": "Bank of America Stadium, Charlotte, North Carolina"
             },
             {
                 "abbr": "CHI",
                 "logo": "picker/logos/nfl/chi.gif",
                 "name": "Chicago",
                 "nickname": "Bears",
-                "sub": ["NFC", "North"]
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "coach": "Matt Nagy",
+                "location": "Soldier Field, Chicago, Illinois"
             },
             {
                 "abbr": "CIN",
                 "logo": "picker/logos/nfl/cin.gif",
                 "name": "Cincinnati",
                 "nickname": "Bengals",
-                "sub": ["AFC", "North"]
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "coach": "Marvin Lewis",
+                "location": "Paul Brown Stadium, Cincinnati, Ohio"
             },
             {
                 "abbr": "CLE",
                 "logo": "picker/logos/nfl/cle.gif",
                 "name": "Cleveland",
                 "nickname": "Browns",
-                "sub": ["AFC", "North"]
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "coach": "Hue Jackson",
+                "location": "FirstEnergy Stadium, Cleveland, Ohio"
             },
             {
                 "abbr": "DAL",
                 "logo": "picker/logos/nfl/dal.gif",
                 "name": "Dallas",
                 "nickname": "Cowboys",
-                "sub": ["NFC", "East"]
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "coach": "Jason Garrett",
+                "location": "AT&T Stadium, Arlington, Texas"
             },
             {
                 "abbr": "DEN",
                 "logo": "picker/logos/nfl/den.gif",
                 "name": "Denver",
                 "nickname": "Broncos",
-                "sub": ["AFC", "West"]
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "coach": "Vance Joseph",
+                "location": "Sports Authority Field at Mile High, Denver, Colorado"
             },
             {
                 "abbr": "DET",
                 "logo": "picker/logos/nfl/det.gif",
                 "name": "Detroit",
                 "nickname": "Lions",
-                "sub": ["NFC", "North"]
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "coach": "Matt Patricia",
+                "location": "Ford Field, Detroit, Michigan"
             },
             {
                 "abbr": "GB",
                 "logo": "picker/logos/nfl/gb.gif",
                 "name": "Green Bay",
                 "nickname": "Packers",
-                "sub": ["NFC", "North"]
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "coach": "Mike McCarthy",
+                "location": "Lambeau Field, Green Bay, Wisconsin"
             },
             {
                 "abbr": "HOU",
                 "logo": "picker/logos/nfl/hou.gif",
                 "name": "Houston",
                 "nickname": "Texans",
-                "sub": ["AFC", "South"]
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "coach": "Bill O'Brien",
+                "location": "NRG Stadium, Houston, Texas"
             },
             {
                 "abbr": "IND",
                 "logo": "picker/logos/nfl/ind.gif",
                 "name": "Indianapolis",
                 "nickname": "Colts",
-                "sub": ["AFC", "South"]
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "coach": "Frank Reich",
+                "location": "Lucas Oil Stadium, Indianapolis, Indiana"
             },
             {
                 "abbr": "JAC",
                 "logo": "picker/logos/nfl/jax.gif",
                 "name": "Jacksonville",
                 "nickname": "Jaguars",
-                "sub": ["AFC", "South"]
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "coach": "Doug Marrone",
+                "location": "TIAA Bank Field, Jacksonville, Florida"
             },
             {
                 "abbr": "KC",
                 "logo": "picker/logos/nfl/kc.gif",
                 "name": "Kansas City",
                 "nickname": "Chiefs",
-                "sub": ["AFC", "West"]
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "coach": "Andy Reid",
+                "location": "Arrowhead Stadium, Kansas City, Missouri"
             },
             {
                 "abbr": "LAC",
                 "logo": "picker/logos/nfl/lac.gif",
                 "name": "Los Angeles",
                 "nickname": "Chargers",
-                "sub": ["AFC", "West"]
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "coach": "Anthony Lynn",
+                "location": "StubHub Center, Carson, California"
             },
             {
                 "abbr": "LAR",
                 "logo": "picker/logos/nfl/lar.gif",
                 "name": "Los Angeles",
                 "nickname": "Rams",
-                "sub": ["NFC", "West"]
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "coach": "Sean McVay",
+                "location": "Los Angeles Memorial Coliseum, Los Angeles, California"
             },
             {
                 "abbr": "MIA",
                 "logo": "picker/logos/nfl/mia.gif",
                 "name": "Miami",
                 "nickname": "Dolphins",
-                "sub": ["AFC", "East"]
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "coach": "Adam Gase",
+                "location": "Hard Rock Stadium, Miami Gardens, Florida"
             },
             {
                 "abbr": "MIN",
                 "logo": "picker/logos/nfl/min.gif",
                 "name": "Minnesota",
                 "nickname": "Vikings",
-                "sub": ["NFC", "North"]
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "coach": "Mike Zimmer",
+                "location": "U.S. Bank Stadium, Minneapolis, Minnesota"
             },
             {
                 "abbr": "NE",
                 "logo": "picker/logos/nfl/ne.gif",
                 "name": "New England",
                 "nickname": "Patriots",
-                "sub": ["AFC", "East"]
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "coach": "Bill Belichick",
+                "location": "Gillette Stadium, Foxborough, Massachusetts"
             },
             {
                 "abbr": "NO",
                 "logo": "picker/logos/nfl/no.gif",
                 "name": "New Orleans",
                 "nickname": "Saints",
-                "sub": ["NFC", "South"]
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "coach": "Sean Payton",
+                "location": "Mercedes-Benz Superdome, New Orleans, Louisiana"
             },
             {
                 "abbr": "NYG",
                 "logo": "picker/logos/nfl/nyg.gif",
                 "name": "New York",
                 "nickname": "Giants",
-                "sub": ["NFC", "East"]
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "coach": "Pat Shurmur",
+                "location": "MetLife Stadium, East Rutherford, New Jersey"
             },
             {
                 "abbr": "NYJ",
                 "logo": "picker/logos/nfl/nyj.gif",
                 "name": "New York",
                 "nickname": "Jets",
-                "sub": ["AFC", "East"]
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "coach": "Todd Bowles",
+                "location": "MetLife Stadium, East Rutherford, New Jersey"
             },
             {
                 "abbr": "OAK",
                 "logo": "picker/logos/nfl/oak.gif",
                 "name": "Oakland",
                 "nickname": "Raiders",
-                "sub": ["AFC", "West"]
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "coach": "Jon Gruden",
+                "location": "Oakland\u2013Alameda County Coliseum, Oakland, California"
             },
             {
                 "abbr": "PHI",
                 "logo": "picker/logos/nfl/phi.gif",
                 "name": "Philadelphia",
                 "nickname": "Eagles",
-                "sub": ["NFC", "East"]
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "coach": "Doug Pederson",
+                "location": "Lincoln Financial Field, Philadelphia, Pennsylvania"
             },
             {
                 "abbr": "PIT",
                 "logo": "picker/logos/nfl/pit.gif",
                 "name": "Pittsburgh",
                 "nickname": "Steelers",
-                "sub": ["AFC", "North"]
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "coach": "Mike Tomlin",
+                "location": "Heinz Field, Pittsburgh, Pennsylvania"
             },
             {
                 "abbr": "SF",
                 "logo": "picker/logos/nfl/sf.gif",
                 "name": "San Francisco",
                 "nickname": "49ers",
-                "sub": ["NFC", "West"]
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "coach": "Kyle Shanahan",
+                "location": "Levi's Stadium, Santa Clara, California"
             },
             {
                 "abbr": "SEA",
                 "logo": "picker/logos/nfl/sea.gif",
                 "name": "Seattle",
                 "nickname": "Seahawks",
-                "sub": ["NFC", "West"]
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "coach": "Pete Carroll",
+                "location": "CenturyLink Field, Seattle, Washington"
             },
             {
                 "abbr": "TB",
                 "logo": "picker/logos/nfl/tb.gif",
                 "name": "Tampa Bay",
                 "nickname": "Buccaneers",
-                "sub": ["NFC", "South"]
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "coach": "Dirk Koetter",
+                "location": "Raymond James Stadium, Tampa, Florida"
             },
             {
                 "abbr": "TEN",
                 "logo": "picker/logos/nfl/ten.gif",
                 "name": "Tennessee",
                 "nickname": "Titans",
-                "sub": ["AFC", "South"]
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "coach": "Mike Vrabel",
+                "location": "Nissan Stadium, Nashville, Tennessee"
             },
             {
                 "abbr": "WSH",
                 "logo": "picker/logos/nfl/wsh.gif",
                 "name": "Washington",
                 "nickname": "Redskins",
-                "sub": ["NFC", "East"]
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "coach": "Jay Gruden",
+                "location": "FedExField, Landover, Maryland"
             }
         ]
     },
@@ -247,6 +407,8 @@
         "gamesets": [
             {
                 "byes": [],
+                "opens": "2018-08-19T00:00Z",
+                "closes": "2018-09-11T08:20Z",
                 "games": [
                     {
                         "away": "ATL",
@@ -2048,6 +2210,7 @@
             },
             {
                 "byes": [],
+                "closes": "2018-12-30T21:26Z",
                 "games": [
                     {
                         "away": "MIA",

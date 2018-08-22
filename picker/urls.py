@@ -1,7 +1,5 @@
-from django.conf import settings
 from django.conf.urls import include, url
 from . import views
-from .views import playoffs as playoff_views
 
 
 management_urls = [
@@ -10,13 +8,7 @@ management_urls = [
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.ManageSeason.as_view(), name='picker-manage-season'),
         url(r'^(-?\d+)/$', views.ManageWeek.as_view(), name='picker-manage-week'),
-        url(r'^(playoffs)/$', views.ManagePlayoffs.as_view(), name='picker-manage-week'),
     ])),
-    url(
-        r'^playoff-builder/$',
-        views.ManagePlayoffBuilder.as_view(),
-        name='picker-manage-playoff-builder'
-    )
 ]
 
 picks_urls = [
@@ -24,7 +16,6 @@ picks_urls = [
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.PicksBySeason.as_view(), name='picker-season-picks'),
         url(r'^(-?\d+)/$', views.PicksByGameset.as_view(), name='picker-picks-sequence'),
-        url(r'^playoffs/$', playoff_views.PicksForPlayoffs.as_view(), name='picker-playoffs-picks'),
     ])),
 ]
 
@@ -33,7 +24,6 @@ results_urls = [
     url(r'^(?P<season>\d{4})/', include([
         url(r'^$', views.ResultsBySeason.as_view(), name='picker-season-results'),
         url(r'^(-?\d+)/$', views.ResultsByWeek.as_view(), name='picker-game-sequence'),
-        url(r'^playoffs/$', playoff_views.ResultsForPlayoffs.as_view(), name='picker-playoffs-results'),
     ])),
 ]
 
@@ -65,4 +55,3 @@ urlpatterns = [
     url(r'^picks/', include(picks_urls)),
     url(r'^manage/', include(management_urls))
 ]
-

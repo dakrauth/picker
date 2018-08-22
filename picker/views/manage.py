@@ -1,26 +1,22 @@
 from django import http
-from django.urls import reverse
 from django.contrib import messages
 from django.utils.functional import cached_property
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
-from .base import PickerViewBase, SimpleFormMixin
-from .playoffs import PlayoffContext
 from .. import forms
-from ..models import Game, PickerResultException
+from ..models import Game
+from .base import PickerViewBase, SimpleFormMixin
 
-__all__ = [
-    'ManagementHome', 'ManageSeason', 'ManageWeek', 'ManageGame',
-    'ManagePlayoffBuilder', 'ManagePlayoffs'
-]
+
+__all__ = ['ManagementHome', 'ManageSeason', 'ManageWeek', 'ManageGame']
 
 
 class ManagementMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.is_authenticated and user.is_active and user.is_superuser
+        return user.is_authenticated and user.has_perm('can_update_score')
 
 
 class ManagementViewBase(ManagementMixin, PickerViewBase):
@@ -32,9 +28,7 @@ class ManagementViewBase(ManagementMixin, PickerViewBase):
 class ManagementHome(ManagementViewBase):
     template_name = '@manage/home.html'
 
-
     def get_context_data(self, **kwargs):
-        # or PlayoffContext.week(league.playoff)
         return super().get_context_data(gameset=self.league.current_gameset, **kwargs)
 
 
@@ -46,46 +40,38 @@ class ManageSeason(ManagementViewBase):
         return super().get_context_data(gamesets=gamesets, **kwargs)
 
 
-class ManageWeek(ManagementViewBase):
+class ManageWeek(SimpleFormMixin, ManagementViewBase):
     template_name = '@manage/results.html'
+    form_class = forms.ManagementPickForm
 
-    @property
+    @cached_property
     def gameset(self):
-        season = self.season
-        sequence = self.args[0]
-        return get_object_or_404(self.league.gamesets, season=season, sequence=sequence)
-
-    def redirect_gameset(self, gs):
-        return http.HttpResponseRedirect(
-            self.request.path
+        return get_object_or_404(
+            self.league.gamesets,
+            season=self.season,
+            sequence=self.args[0]
         )
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(gameset=self.gameset, **kwargs)
+
     def get_form(self):
-        return forms.ManagementPickForm
+        return self.form_class(self.gameset, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Results saved')
+        return http.HttpResponseRedirect(self.request.path)
 
     def post(self, *args, **kwargs):
-        gs = self.gameset
-        request = self.request
-        FormClass = self.get_form()
-        form = FormClass(gs, request.POST)
+        form = self.get_form()
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Results saved')
-            return self.redirect_gameset(gs)
-
-        return self.render_to_response(self.get_context_data(
-            form=form,
-            gameset=gs,
-            **kwargs
-        ))
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
     def get(self, request, *args, **kwargs):
-        gs = self.gameset
-        return self.render_to_response(self.get_context_data(
-            form=forms.ManagementPickForm(gs),
-            gameset=gs,
-            **kwargs
-        ))
+        return self.render_to_response(self.get_context_data())
 
 
 class ManageGame(SimpleFormMixin, ManagementViewBase):
@@ -105,31 +91,6 @@ class ManageGame(SimpleFormMixin, ManagementViewBase):
         data['instance'] = self.game
         return data
 
-class ManagePlayoffBuilder(SimpleFormMixin, ManagementViewBase):
-    template_name = '@manage/playoff_builder.html'
-    form_class = forms.PlayoffBuilderForm
-    success_msg = 'Playoff saved'
-
-    def get_form_kwargs(self):
-        data = super().get_form_kwargs()
-        data['league'] = self.league
-        return data
-
-
-class ManagePlayoffs(ManagementViewBase):
-    template_name = '@picks/playoffs.html'
-
-    @cached_property
-    def playoff(self):
-        return get_object_or_404(self.league.playoff_set, season=self.args[0])
-
-    def post(self, request, *args, **kwargs):
-        picks = self.playoff.admin
-        picks.picks = {k: v for k, v in self.request.POST.items()}
-        picks.save()
-        return self.redirect('picker-playoffs-results', self.args[0])
-
-    def get(self, request, *args, **kwargs):
-        return self.render_to_response(
-            PlayoffContext.conference(self.playoff, None, management=True)
-        )
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

@@ -1,68 +1,136 @@
 import os
-import json
 import pytest
 from datetime import datetime, timedelta
 from picker import models as picker
-from demo.management.commands.loaddemo import load_users, create_grouping
-
-json_data = {}
-
-def read_json(name):
-    global json_data
-    if name not in json_data:
-        filepath = os.path.join(os.path.dirname(__file__), name)
-        with open(filepath) as fin:
-            json_data[name] = json.load(fin)
-
-    return json_data[name]
+from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 @pytest.fixture
-def nfl_data():
-    return read_json('nfl2018.json')
+def league():
+    league = picker.League.objects.create(
+        name="Hogwarts Quidditch",
+        slug="hq",
+        abbr="HQ",
+        is_pickable=True,
+        current_season=2018,
+    )
+    conf = league.conferences.create(name='Hogwarts', abbr='HW')
+    for tm in [
+        {"id": 1, "abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions"},
+        {"id": 2, "abbr": "HUF", "name": "Hufflepuff", "logo": "picker/logos/hq/12657_Black.jpg", "colors": "#fff300,#000000", "nickname": "Badgers"},
+        {"id": 3, "abbr": "RVN", "name": "Ravenclaw", "logo": "picker/logos/hq/12654_Navy.jpg", "colors": "#0644ad,#7e4831", "nickname": "Eagles"},
+        {"id": 4, "abbr": "SLY", "name": "Slytherin", "logo": "picker/logos/hq/12655_Dark_Green.jpg", "colors": "#004101,#dcdcdc", "nickname": "Serpents"}
+    ]:
+        league.teams.create(conference=conf, **tm)
+
+    return league
 
 
 @pytest.fixture
-def league(nfl_data):
-    league_info, teams_info = picker.League.import_league(nfl_data)
-    return league_info[0]
+def now():
+    return timezone.now()
+
+
+@pytest.fixture
+def gameset(league, now):
+    teams = league.team_dict()
+    gs = league.gamesets.create(
+        season=now.year,
+        sequence=1,
+        points=0,
+        opens=now - timedelta(days=1),
+        closes=now + timedelta(days=6)
+    )
+    for away,home in [["GRF", "HUF"], ["RVN", "SLY"]]:
+        gs.games.create(
+            home=teams[home],
+            away=teams[away],
+            start_time=now,
+            location='Hogwards'
+        )
+    return gs
+
+
+@pytest.fixture
+def gamesets(league, now):
+    teams = league.team_dict()
+    gamesets = []
+
+    for i, data in enumerate([
+        [["GRF", "HUF"], ["RVN", "SLY"]],
+        [["GRF", "RVN"], ["HUF", "SLY"]],
+        [["SLY", "GRF"], ["HUF", "RVN"]]
+    ]):
+        rel = now + timedelta(days=i * 7)
+        gs = league.gamesets.create(
+            season=now.year,
+            sequence=i + 1,
+            points=0,
+            opens=rel - timedelta(days=1),
+            closes=rel + timedelta(days=6)
+        )
+        gamesets.append(gs)
+        for j, (away, home) in enumerate(data,1):
+            gs.games.create(
+                home=teams[home],
+                away=teams[away],
+                start_time=rel + timedelta(days=j),
+                location='Hogwards'
+            )
+
+    return gamesets
 
 
 @pytest.fixture
 def grouping(league):
-    return create_grouping(league, 'Test group')
+    grouping = picker.PickerGrouping.objects.create(name='grouping')
+    grouping.leagues.add(league)
+    return grouping
+
+
+def _make_mbr(user, grouping=None):
+    if grouping:
+        picker.PickerMembership.objects.create(user=user, group=grouping)
+    return user
 
 
 @pytest.fixture
-def users(grouping):
-    return load_users(grouping)
+def superuser(grouping):
+    return _make_mbr(User.objects.create_superuser(
+        username='super',
+        email='super@example.com',
+        password='password'
+    ), grouping)
 
 
 @pytest.fixture
-def user(users):
-    return users[1]
+def user(grouping):
+    return _make_mbr(
+        User.objects.create_user('user1', 'user1@example.com', 'password'),
+        grouping
+    )
 
 
 @pytest.fixture
-def superuser(users):
-    return users[0]
+def user2(grouping):
+    return _make_mbr(
+        User.objects.create_user('user2', 'user2@example.com', 'password'),
+        grouping
+    )
 
 
 @pytest.fixture
-def gamesets(league, nfl_data):
-    picker.League.import_season(nfl_data)
-    return league.season_gamesets()
+def user_ng():
+    return User.objects.create_user('user3', 'user3@example.com', 'password')
 
 
 @pytest.fixture
-def quidditch():
-    data = read_json('quidditch.json')
-    league_info, teams_info = picker.League.import_league(data)
-    league = league_info[0]
-    picker.League.import_season(data)
-    grouping = create_grouping(league, 'Quidditch grouping')
-    users = load_users(grouping)
-    return league, grouping, users
+def users(superuser, user, user2):
+    return [superuser, user, user2]
+
+
+
 
 
 

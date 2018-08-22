@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 from django.utils.functional import cached_property
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -17,14 +16,10 @@ class SimpleFormMixin(FormMixin):
     success_msg = None
     redirect_path = None
 
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
-
     def get_success_url(self):
         return self.redirect_path or self.request.path
 
     def form_valid(self, form):
-        form.save()
         if self.success_msg:
             messages.success(self.request, self.success_msg)
 

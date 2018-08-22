@@ -5,11 +5,6 @@
             <a href="/{{ league.slug }}/{{ relative_to }}/{{ gs.season }}/{{ gs.sequence }}/">{{ gs.sequence }}</a>
         </li> {% endfor %}
         {% if gameset %}
-        {% if show_playoffs %}
-        <li{% if gameset.sequence == "playoffs" %} class="active"{% endif %}>
-            <a href="/{{ league.slug }}/{{ relative_to }}/{{ gameset.season }}/playoffs/">Playoffs</a>
-        </li>
-        {% endif %}
         {% if is_manager %}
         <li><a href="{% url 'picker-manage-week' league.slug gameset.season gameset.sequence %}">Manage</a></li>
         {% endif %}

@@ -32,11 +32,28 @@
         {% block main_content %}{% endblock main_content %}
     </div>
     <hr>
-    <footer class="text-center">
-        <a href="https://github.com/dakrauth/picker">Django-picker</a> demo &copy; 2018 |
-        <a href="/admin/">Admin</a> |
-        {{ now }}
-    </footer>
+    <div class="container">
+        <footer class="text-center">
+            <a href="https://github.com/dakrauth/picker">Django-picker</a> demo &copy; 2018 |
+            <a href="/admin/">Admin</a> |
+            {{ now }}
+        </footer>
+        {% if allow_fake_datetime %}
+        <hr>
+        <div class="text-center">
+            <form action="" class="form-inline">
+                <p>
+                    <label class="control-label">Set fake datetime:</label>
+                    <input
+                    {% if is_fake_datetime %}value="{{ now }}"{% endif %}
+                    class="form-control input-sm"  placeholder="Set fake datetime" type="text" name="fakedt">
+                    <input type="submit" class="btn btn-warning btn-sm">
+                </p>
+            </form>
+        </div>
+        {% endif %}
+
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    {% block extra_body %}{% endblock extra_body %}
  </body>

@@ -5,6 +5,7 @@
 
 .pagination.manage > .active > a {
     background: #d9534f;
+    border-color: #d9534f;
     color: #fff;
 }
 
@@ -23,3 +24,4 @@ table.picks .teams label > div {
     width: 160px;
 }
 table.picks .teams label > div .record { display: block; }
+.team-listing .team-logo, .team-info img { height: 80px; }

@@ -29,17 +29,17 @@
         <th>&plusmn;avg</th>
     </tr>
 </thead>
-<tbody>{% for entry in stats %}{% if entry.weeks_played %}
+<tbody>{% for entry in stats %}{% if entry.picksets_played %}
     <tr>
         <td>{{ entry.season|default:"Totals" }}</td>
         <td></td>
-        <td>{{ entry.weeks_played }}</td>
+        <td>{{ entry.picksets_played }}</td>
         <td>
-            {% with entry.weeks_won as weeks_won %}
-            {{ weeks_won|length }}{% if weeks_won and entry.season %} (
-            {% for w in weeks_won %}
-            <a href="{{ w.get_absolute_url }}">
-                #{{ w.week }}</a>{% if not forloop.last  %}, {% endif %}
+            {% with entry.picksets_won as picksets_won %}
+            {{ picksets_won|length }}{% if picksets_won and entry.season %} (
+            {% for gs in picksets_won %}
+            <a href="{{ gs.get_absolute_url }}">
+                #{{ gs.sequence }}</a>{% if not forloop.last  %}, {% endif %}
             {% endfor %})
             {% endif %}
             {% endwith %}
