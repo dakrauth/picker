@@ -124,7 +124,7 @@ class PickerMembership(models.Model):
 
 
 def temp_slug():
-    return '{:10.0f}'.format(random.random() * 10_000_000_000)
+    return '{:10.0f}'.format(random.random() * 10000000000)
 
 
 class League(models.Model):
