@@ -32,17 +32,14 @@ class GameField(forms.ChoiceField):
         self.manage = manage
         self.game_id = game.id
         self.is_game = True
-        self.disabled = not self.manage and (self.game.start_time <= utils.datetime_now())
         super(GameField, self).__init__(
             choices=choices,
             label=game.start_time.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
+            disabled=not self.manage and (self.game.start_time <= utils.datetime_now()),
             widget=widget or get_picker_widget(game.gameset.league)
         )
-
-    def widget_attrs(self, widget):
-        return {'readonly': 'readonly', 'disabled': 'disabled'} if self.disabled else {}
 
 
 class FieldIter:

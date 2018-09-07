@@ -115,15 +115,7 @@ class Results(PickerViewBase):
         context = self.get_context_data(**kwargs)
 
         league = self.league
-        gameset = league.current_gameset
-        if gameset:
-            if gameset.has_started:
-                try:
-                    gameset.update_results(gameset.get_results())
-                except PickerResultException:
-                    pass
-
-        gameset = gameset or self.league.latest_gameset
+        gameset = league.current_gameset or league.latest_gameset
         if gameset:
             context['gameset'] = gameset
         else:
