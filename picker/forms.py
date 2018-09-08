@@ -82,13 +82,13 @@ class ManagementPickForm(BasePickForm):
     management = True
 
     def __init__(self, gameset, *args, **kws):
-        kws.setdefault('initial', self.get_initial_picks(gameset))
+        kws.setdefault('initial', {}).update(**self.get_initial_picks(gameset))
         super(ManagementPickForm, self).__init__(gameset, *args, **kws)
 
     def save(self):
         gameset = self.gameset
         data = self.cleaned_data.copy()
-        gameset.points = data.pop('points', 0)
+        gameset.points = data.pop('points', 0) or 0
         gameset.save()
         team_dict = gameset.league.team_dict()
 
