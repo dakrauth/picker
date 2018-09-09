@@ -66,6 +66,7 @@ class GameInline(admin.TabularInline):
 class GameSetAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'league', 'points', 'opens', 'closes')
     list_filter = ('league', 'season')
+    ordering = ('-season', 'sequence')
     filter_horizontal = ['byes']
     inlines = [GameInline]
     form = GameSetForm

@@ -105,6 +105,7 @@ class ManagementPickForm(BasePickForm):
         return dict({
             encoded_game_key(game.id): str(game.winner.id)
             for game in gameset.games.played()
+            if game.winner
         }, points=gameset.points)
 
 
