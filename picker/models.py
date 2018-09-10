@@ -10,6 +10,7 @@ from django.conf import settings
 from django.dispatch import Signal
 from django.db import OperationalError
 from django.utils.functional import cached_property
+from django.core.exceptions import ValidationError
 
 from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
@@ -268,13 +269,18 @@ class Division(models.Model):
         return '{} {}'.format(self.conference.name, self.name)
 
 
+def valid_team_abbr(value):
+    if value.startswith('__'):
+        raise ValidationError('Team abbr cannot start with "__"')
+
+
 class Team(models.Model):
     '''
     Common team attributes.
     '''
 
     name = models.CharField(max_length=50)
-    abbr = models.CharField(max_length=8, blank=True)
+    abbr = models.CharField(max_length=8, blank=True, validators=[valid_team_abbr])
     nickname = models.CharField(max_length=50, blank=True)
     location = models.CharField(max_length=100, blank=True)
     coach = models.CharField(max_length=50, blank=True)
@@ -477,7 +483,7 @@ class GameSet(models.Model):
 
     def update_results(self, results):
         '''
-        results schema: {'sequence': 1, 'season': 2018, 'type': 'REG', 'games': [{
+        results schema: {'sequence': 1, 'season': 2018, 'games': [{
             "home": "HOME",
             "away": "AWAY",
             "home_score": 15,
@@ -522,13 +528,12 @@ class GameSet(models.Model):
 
         return (count, self.points)
 
-    @property
     def winners(self):
         if self.points:
             yield from itertools.takewhile(lambda i: i.place == 1, self.results())
 
     def update_pick_status(self):
-        winners = set(w.id for w in self.winners)
+        winners = set(w.id for w in self.winners())
         for wp in self.picksets.all():
             wp.update_status(wp.id in winners)
 
@@ -569,6 +574,10 @@ class Game(models.Model):
 
     def __str__(self):
         return '{} @ {} {}'.format(self.away.abbr, self.home.abbr, self.gameset)
+
+    @property
+    def is_tie(self):
+        return self.status == self.Status.TIE
 
     @property
     def has_started(self):

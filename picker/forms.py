@@ -6,10 +6,18 @@ from . import utils
 
 _picker_widget = None
 encoded_game_key= 'game_{}'.format
+TIE_KEY = '__TIE__'
 
 
 def decoded_game_key(value):
     return int(value.replace('game_', ''))
+
+
+def encoded_game_item(game):
+    return (
+        encoded_game_key(game.id),
+        str(game.winner.id) if game.winner else (TIE_KEY if game.is_tie else '')
+    )
 
 
 def get_picker_widget(league):
@@ -27,7 +35,10 @@ def get_picker_widget(league):
 class GameField(forms.ChoiceField):
 
     def __init__(self, game, manage=False, widget=None):
-        choices = ((str(game.away.id), game.away), (str(game.home.id), game.home))
+        choices = [(str(game.away.id), game.away), (str(game.home.id), game.home)]
+        if manage:
+            choices.insert(1, (TIE_KEY, ''))
+
         self.game = game
         self.manage = manage
         self.game_id = game.id
@@ -96,7 +107,7 @@ class ManagementPickForm(BasePickForm):
             if winner:
                 pk = decoded_game_key(key)
                 game = gameset.games.get(pk=pk)
-                game.winner = team_dict[int(winner)]
+                game.winner = None if winner == TIE_KEY else team_dict[int(winner)]
 
         gameset.update_pick_status()
 
