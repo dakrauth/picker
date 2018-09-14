@@ -1,4 +1,6 @@
 from django.db.models import Q
+from django.core.cache import cache
+from django.contrib.auth import get_user_model
 from .models import GameSet
 from .utils import sorted_standings
 
@@ -9,9 +11,8 @@ def percent(num, denom):
 
 class RosterStats:
 
-    def __init__(self, member, league, season=None):
-        self.member = member
-        self.user = member.user
+    def __init__(self, user, league, season=None):
+        self.user = user
         self.season = season
         self.league = league
         self.correct = 0
@@ -32,7 +33,7 @@ class RosterStats:
             self.wrong += picks.wrong
             self.points_delta += picks.points_delta if picks.gameset.points else 0
 
-        self.is_active = self.member.user.is_active
+        self.is_active = self.user.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
         self.avg_points_delta = (
             self.points_delta / self.picksets_played
@@ -44,7 +45,7 @@ class RosterStats:
         if self.season:
             query = query.filter(season=self.season)
 
-        self.picksets_won = list(query.select_related())
+        self.picksets_won = query.count() # list(query.select_related())
 
     def __str__(self):
         return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
@@ -53,18 +54,23 @@ class RosterStats:
 
     @classmethod
     def get_details(cls, league, group, season=None):
+        key = 'roster-stats:{}:{}'.format(league.id, group.id)
         season = season or league.current_season
-        mbrs = group.members.all()
+        #mbrs = group.members.all().select_related('user')
+        User = get_user_model()
+        users = User.objects.filter(picker_memberships__group=group)
 
         def keyfn(rs):
             return (rs.correct, -rs.points_delta, rs.picksets_played)
 
-        stats = [cls(m, league) for m in mbrs]
+        stats = [cls(u, league) for u in users]
         by_user = {
             entry.user: entry for entry in sorted_standings(stats, key=keyfn)
         }
 
-        stats = [cls(m, league, season) for m in mbrs]
-        return [
+        stats = [cls(u, league, season) for u in users]
+        results = [
             (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
         ]
+        return results
+
