@@ -15,7 +15,8 @@
                 <th><abbr data-toggle="tooltip" title="{{ season }} Percentage correct">%</abbr></th>
                 <th><abbr data-toggle="tooltip" title="{{ season }} Total difference in final points">&plusmn; Pts</abbr></th>
                 <th><abbr data-toggle="tooltip" title="{{ season }} Average difference in final points">&plusmn;avg</abbr></th>
-                <th class="roster-separator"><abbr data-toggle="tooltip" title="All time correct picks">+</abbr></th>
+
+                <th><abbr data-toggle="tooltip" title="All time correct picks">+</abbr></th>
                 <th><abbr data-toggle="tooltip" title="All time incorrect picks">-</abbr></th>
                 <th><abbr data-toggle="tooltip" title="All time percentage correct">%</abbr></th>
                 <th><abbr data-toggle="tooltip" title="All time total difference in final points">&plusmn; Pts</abbr></th>
@@ -24,7 +25,13 @@
                 <th><strong><abbr data-toggle="tooltip" title="All time ranking">All</abbr></strong></th>
             </tr>
         </thead>
-        <tbody> {% for entry,all_time_stats in roster %}{% if entry.is_active %}
+        <tbody>
+            <tr>
+                <td></td>
+                <td colspan="7"><strong>{{ season }}</strong></td>
+                <td class="all-time" colspan="7"><strong>All Time</strong></td>
+            </tr>
+            {% for entry,all_time_stats in roster %}{% if entry.is_active %}
             <tr>
                 <td class="player">
                     <img src="{{ entry.user|picker_user_image:"32" }}">
@@ -46,13 +53,13 @@
                 <td>{{ entry.points_delta}}</td>
                 <td>{{ entry.avg_points_delta|floatformat }}</td>
 
-                <td class="roster-separator"><strong>{{ all_time_stats.correct }}</strong></td>
-                <td>{{ all_time_stats.wrong }}</td>
-                <td>{{ all_time_stats.pct|floatformat:"1" }}%</td>
-                <td>{{ all_time_stats.points_delta}}</td>
-                <td>{{ all_time_stats.avg_points_delta|floatformat }}</td>
-                <td>{{ all_time_stats.picksets_played }} / {{ all_time_stats.picksets_won|length }}</td>
-                <td>{{ all_time_stats.place }}</td>
+                <td class="all-time"><strong>{{ all_time_stats.correct }}</strong></td>
+                <td class="all-time">{{ all_time_stats.wrong }}</td>
+                <td class="all-time">{{ all_time_stats.pct|floatformat:"1" }}%</td>
+                <td class="all-time">{{ all_time_stats.points_delta}}</td>
+                <td class="all-time">{{ all_time_stats.avg_points_delta|floatformat }}</td>
+                <td class="all-time">{{ all_time_stats.picksets_played }} / {{ all_time_stats.picksets_won|length }}</td>
+                <td class="all-time{% if all_time_stats.place < 4 %} top-3{% endif %}">{{ all_time_stats.place }}</td>
             </tr>{% endif %}{% endfor %}
         </tbody>
         </table>
