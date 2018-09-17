@@ -101,7 +101,7 @@ class RosterProfile(RosterMixin, PickerViewBase):
         seasons = list(league.available_seasons) + [None]
         return super().get_context_data(
             profile=pref,
-            stats=[RosterStats(pref, league, s) for s in seasons],
+            stats=[RosterStats(pref.user, league, s) for s in seasons],
             **kwargs
         )
 

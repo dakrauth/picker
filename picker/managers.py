@@ -1,6 +1,6 @@
+from collections import OrderedDict
 from django.db import models
 from .utils import datetime_now
-
 
 class PreferenceManager(models.Manager):
 
@@ -19,11 +19,27 @@ class GamePickManager(models.Manager):
     def games_started(self):
         return self.filter(game__start_time__lte=datetime_now())
 
+    def games_started_display(self):
+        return self.games_started().values_list('game__id', 'winner__abbr')
+
     def picked_winner_ids(self):
         return self.filter(winner__isnull=False).values_list('game__id', 'winner__id')
 
 
 class GameManager(models.Manager):
+
+    def display_results(self):
+        return OrderedDict([
+            (item['id'], item) for item in self.games_started().annotate(
+                winner=models.Case(
+                    models.When(status='H', then='home__abbr'),
+                    models.When(status='A', then='away__abbr'),
+                    models.When(status='T', then=models.Value('__TIE__')),
+                    default=None,
+                    output_field=models.CharField()
+                )
+            ).values('id', 'home__abbr', 'away__abbr', 'winner')
+        ])
 
     def games_started(self):
         return self.filter(start_time__lte=datetime_now())

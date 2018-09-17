@@ -27,11 +27,22 @@ class RosterStats:
             queryset = queryset.filter(gameset__season=season)
 
         self.picksets_played = 0
-        for picks in queryset.select_related('gameset'):
+        self.picksets_won = 0
+        for correct, wrong, is_winner, points, actual_points in queryset.values_list(
+            'correct',
+            'wrong',
+            'is_winner',
+            'points',
+            'gameset__points'
+        ):
             self.picksets_played += 1
-            self.correct += picks.correct
-            self.wrong += picks.wrong
-            self.points_delta += picks.points_delta if picks.gameset.points else 0
+            self.correct += correct
+            self.wrong += wrong
+            if actual_points:
+                self.points_delta += abs(points - actual_points)
+
+            if is_winner:
+                self.picksets_won += 1
 
         self.is_active = self.user.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
@@ -40,12 +51,6 @@ class RosterStats:
             if self.picksets_played
             else 0
         )
-
-        query = GameSet.objects.filter(picksets__is_winner=True, picksets__user=self.user)
-        if self.season:
-            query = query.filter(season=self.season)
-
-        self.picksets_won = query.count() # list(query.select_related())
 
     def __str__(self):
         return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
@@ -56,9 +61,7 @@ class RosterStats:
     def get_details(cls, league, group, season=None):
         key = 'roster-stats:{}:{}'.format(league.id, group.id)
         season = season or league.current_season
-        #mbrs = group.members.all().select_related('user')
-        User = get_user_model()
-        users = User.objects.filter(picker_memberships__group=group)
+        users = get_user_model().objects.filter(picker_memberships__group=group)
 
         def keyfn(rs):
             return (rs.correct, -rs.points_delta, rs.picksets_played)

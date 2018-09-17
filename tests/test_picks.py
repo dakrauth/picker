@@ -167,8 +167,8 @@ class TestPicksForm:
         # pprint(vars(rs2))
 
         assert rs1.user == user2
-        assert len(rs1.picksets_won) == 1
-        assert len(rs2.picksets_won) == 2
+        assert rs1.picksets_won == 1
+        assert rs2.picksets_won == 2
 
         assert rs1.points_delta == 200
         assert rs2.points_delta == 300

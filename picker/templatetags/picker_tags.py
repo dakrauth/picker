@@ -21,6 +21,17 @@ def picker_user_image(user, size=None):
         '&s={}'.format(size) if size else ''
     )
 
+@register.simple_tag
+def user_result(user_pick, actual_results):
+    try:
+        res = actual_results[user_pick[0]]
+        if res['winner']:
+            return 'correct' if res['winner'] == user_pick[1] else 'incorrect'
+
+        return 'unknown'
+    except KeyError:
+        return 'error'
+
 
 @register.inclusion_tag(get_templates('@season_nav.html'), takes_context=True)
 def season_nav(context, gameset, relative_to):

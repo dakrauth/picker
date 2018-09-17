@@ -42,14 +42,15 @@
         </tbody>
         {% else %}
         {% with gameset.last_game.has_started as has_started  %}
+        {% with gameset.games.display_results as display_results %}
         <thead>
             <tr>
                 <th>Place</th>
                 <th>Picker</th>
                 <th>Score</th>
-                {% for item in gameset.games.games_started %}
-                <th data-game_id="{{ item.id }}">
-                    {{ item.home.abbr }}<br />@<br />{{ item.away.abbr }}
+                {% for res in display_results.values %}
+                <th data-game_id="{{ res.id }}">
+                    {{ res.away__abbr }} @<br>{{ res.home__abbr }}
                 </th>
                 {% endfor %}
                 {% if has_started %}
@@ -67,9 +68,9 @@
                     <strong class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</strong>
                 </td>
                 <td>{{ wp.correct }}</td>
-                {% for item in wp.gamepicks.games_started %}
-                <td class="{{ item.is_correct|yesno:"correct,incorrect,unknown" }}">
-                    {{ item.winner_abbr }}
+                {% for pick in wp.gamepicks.games_started_display %}
+                <td class="{% user_result pick display_results %}">
+                    {{ pick.1 }}
                 </td>
                 {% endfor %}
                 {% if has_started %}
@@ -78,6 +79,7 @@
                 {% endif %}
             </tr>{% endfor %}
         </tbody>
+        {% endwith %}
         {% endwith %}
         {% endif %}
         </table>
