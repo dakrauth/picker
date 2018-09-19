@@ -42,7 +42,7 @@
                     </div>
                 </td>
                 <td>{{ entry.place }}</td>
-                <td>{{ entry.picksets_played }} / {{ entry.picksets_won|length }}</td>
+                <td>{{ entry.picksets_played }} / {{ entry.picksets_won }}</td>
                 <td>{{ entry.correct }}-{{ entry.wrong }}</td>
                 <td>{{ entry.pct|floatformat:"1" }}%</td>
                 <td>{{ entry.points_delta}} ({{ entry.avg_points_delta|floatformat }})</td>
@@ -50,7 +50,7 @@
                 <td class="all-time"><strong>{{ all_time_stats.correct }}-{{ all_time_stats.wrong }}</strong></td>
                 <td class="all-time">{{ all_time_stats.pct|floatformat:"1" }}%</td>
                 <td class="all-time">{{ all_time_stats.points_delta}} ({{ all_time_stats.avg_points_delta|floatformat }})</td>
-                <td class="all-time">{{ all_time_stats.picksets_played }} / {{ all_time_stats.picksets_won|length }}</td>
+                <td class="all-time">{{ all_time_stats.picksets_played }} / {{ all_time_stats.picksets_won }}</td>
                 <td class="all-time{% if all_time_stats.place < 4 %} top-3{% endif %}">{{ all_time_stats.place }}</td>
             </tr>{% endif %}{% endfor %}
         </tbody>

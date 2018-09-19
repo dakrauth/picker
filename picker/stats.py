@@ -70,7 +70,6 @@ class RosterStats:
         by_user = {
             entry.user: entry for entry in sorted_standings(stats, key=keyfn)
         }
-
         stats = [cls(u, league, season) for u in users]
         results = [
             (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
