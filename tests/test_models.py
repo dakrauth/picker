@@ -104,13 +104,13 @@ class TestUserConf:
         user = users[0]
         fav = picker.PickerFavorite.objects.create(user=user, league=league, team=None)
         assert str(fav) == '{}: {} ({})'.format(user, 'None', league)
-        fav.team = league.team_dict()['GRF']
+        fav.team = league.team_dict['GRF']
         fav.save()
         assert str(fav) == '{}: {} ({})'.format(user, 'Gryffindor Lions', league)
 
         pref = picker.Preference.objects.get(user=user)
         form = forms.PreferenceForm(pref, {
-            'hq_favorite': league.team_dict()['RVN'].id,
+            'hq_favorite': league.team_dict['RVN'].id,
             'autopick': picker.Preference.Autopick.NONE
         })
 

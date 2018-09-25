@@ -23,7 +23,7 @@ def import_season(cls, data):
     gs = None
     league = cls.objects.get(abbr=data['league'])
     season = data['season']
-    teams = league.team_dict()
+    teams = league.team_dict
     gamesets = []
     for sequence, item in enumerate(data['gamesets'], 1):
         opens = item.get('opens')

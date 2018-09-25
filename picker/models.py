@@ -154,19 +154,18 @@ class League(models.Model):
     def schedule_url(self): return self._reverse('picker-schedule')
     def manage_url(self): return self._reverse('picker-manage')
 
-    def team_dict(self, aliases=True):
+    @cached_property
+    def team_dict(self):
         names = {}
         for team in self.teams.all():
             names[team.abbr] = team
-            names[team.name] = team
-            if team.nickname:
-                names[team.nickname] = team
-
-            if aliases:
-                for a in Alias.objects.filter(team=team):
-                    names[a.name] = team
-
             names[team.id] = team
+            if team.nickname:
+                full_name = '{} {}'.format(team.name, team.nickname)
+                names[full_name] = team
+
+            for alias in Alias.objects.filter(team=team).values_list('name', flat=True):
+                names[alias] = team
 
         return names
 
@@ -314,19 +313,22 @@ class Team(models.Model):
     def season_record(self, season=None):
         season = season or self.league.current_season
         wins, losses, ties = (0, 0, 0)
-        for game in Game.objects.exclude(status=Game.Status.UNPLAYED).filter(
+        for status, home_abbr, away_abbr in Game.objects.filter(
             models.Q(home=self) | models.Q(away=self),
             gameset__season=season,
-        ):
-            if game.status == Game.Status.TIE:
+        ).exclude(
+            status__in=[Game.Status.UNPLAYED, Game.Status.CANCELLED]
+        ).values_list('status', 'home__abbr', 'away__abbr'):
+            if status == Game.Status.TIE:
                 ties += 1
             else:
-                winner = game.winner
-                if winner:
-                    if winner.id == self.id:
-                        wins += 1
-                    else:
-                        losses += 1
+                if (
+                    (status == Game.Status.HOME_WIN and self.abbr == home_abbr) or
+                    (status == Game.Status.AWAY_WIN and self.abbr == away_abbr)
+                ):
+                    wins += 1
+                else:
+                    losses += 1
 
         return (wins, losses, ties)
 
@@ -426,7 +428,7 @@ class GameSet(models.Model):
         )
 
     def import_games(self, data, teams=None):
-        teams = teams or self.league.team_dict()
+        teams = teams or self.league.team_dict
         byes = data.get('byes')
         if byes:
             self.byes.add(*[teams[t] for t in byes])

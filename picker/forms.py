@@ -75,17 +75,17 @@ class BasePickForm(forms.Form):
         super(BasePickForm, self).__init__(*args, **kws)
         self.gameset = gameset
         self.game_fields = FieldIter(self)
-        games = list(gameset.games.all())
+        games = list(gameset.games.select_related('home__league', 'away__league'))
         if games:
             for gm in games:
                 key = encoded_game_key(gm.id)
                 self.fields[key] = GameField(gm, self.management)
                 self.game_fields.append(key)
 
-                self.fields['points'] = forms.IntegerField(
-                    label='{}:'.format(games[-1].vs_description),
-                    required=False
-                )
+            self.fields['points'] = forms.IntegerField(
+                label='{}:'.format(games[-1].vs_description),
+                required=False
+            )
 
 
 class ManagementPickForm(BasePickForm):
@@ -101,7 +101,7 @@ class ManagementPickForm(BasePickForm):
         data = self.cleaned_data.copy()
         gameset.points = data.pop('points', 0) or 0
         gameset.save()
-        team_dict = gameset.league.team_dict()
+        team_dict = gameset.league.team_dict
 
         for key, winner in data.items():
             if winner:

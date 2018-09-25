@@ -75,7 +75,7 @@ class TestImporters:
         assert picker.Game.objects.incomplete().count() == 256
 
         assert picker.Alias.objects.count() == 4
-        td = league.team_dict()
+        td = league.team_dict
         assert td['WAS'] == td['WSH']
 
         assert league.config('TEAM_PICKER_WIDGET') == 'demo.forms.TemplateTeamChoice'

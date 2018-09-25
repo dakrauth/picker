@@ -34,7 +34,7 @@ def now():
 
 @pytest.fixture
 def gameset(league, now):
-    teams = league.team_dict()
+    teams = league.team_dict
     gs = league.gamesets.create(
         season=now.year,
         sequence=1,
@@ -54,7 +54,7 @@ def gameset(league, now):
 
 @pytest.fixture
 def gamesets(league, now):
-    teams = league.team_dict()
+    teams = league.team_dict
     gamesets = []
 
     for i, data in enumerate([
