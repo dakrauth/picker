@@ -4,13 +4,13 @@
 <h1>{{ league }} {{ season }} Schedule</h1>
 <nav class="season-nav">
     <ul class="pagination">
-        <li class="disabled"><a href="#">Weeks:</a></li>{% for gs in gamesets %}
+        <li class="disabled"><a href="#">Weeks:</a></li>{% for gs,games in gamesets %}
         <li>
             <a href="#week-{{ gs.sequence }}">{{ gs.sequence }}</a>
         </li> {% endfor %}
     </ul>
 </nav>
-{% for gameset in gamesets %}
+{% for gameset,games in gamesets %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h2 class="panel-title" id="week-{{ gameset.sequence }}">Week {{ gameset.sequence }}</h2>
@@ -32,11 +32,11 @@
             <th>Location</th>
             <th class="text-right">TV</th>
         </tr>
-        {% for game in gameset.games.all %}
+        {% for game in games %}
         <tr>
             <td>{{ game.start_time|date:"D M j, g:i a" }}</td>
-            <td class="{% if game.winner == game.away %}winner{% endif %}"><a href="{{ game.away.get_absolute_url }}">{{ game.away }}</a></td>
-            <td class="{% if game.winner == game.home %}winner{% endif %}"><a href="{{ game.home.get_absolute_url }}">{{ game.home }}</a></td>
+            <td class="{% if game.is_away_win %}winner{% else %}{% if game.is_tie %}tie-game{% endif %} {% endif %}"><a href="{% url 'picker-team' league.slug game.away.abbr %}">{{ game.away }}</a></td>
+            <td class="{% if game.is_home_win %}winner{% else %}{% if game.is_tie %}tie-game{% endif %} {% endif %}"><a href="{% url 'picker-team' league.slug game.home.abbr %}">{{ game.home }}</a></td>
             <td>{{ game.location }}</td>
             <td class="text-right">{{ game.tv }}</td>
         </tr>

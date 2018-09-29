@@ -344,7 +344,7 @@ class Team(models.Model):
     @property
     def record_as_string(self):
         record = self.record
-        if not record[-1]:
+        if not record[2]:
             record = record[:2]
         return '-'.join(str(s) for s in record)
 
@@ -592,6 +592,18 @@ class Game(models.Model):
     @property
     def vs_description(self):
         return '%s vs %s' % (self.away.nickname, self.home.nickname)
+
+    @property
+    def is_home_win(self):
+        return self.status == self.Status.HOME_WIN
+
+    @property
+    def is_away_win(self):
+        return self.status == self.Status.AWAY_WIN
+
+    @property
+    def is_tie(self):
+        return self.status == self.Status.TIE
 
     @property
     def winner(self):

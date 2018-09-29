@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .. import forms
 from ..stats import RosterStats
 from .base import SimplePickerViewBase, PickerViewBase, SimpleFormMixin
-from ..models import Preference, PickerResultException, PickerGrouping
+from ..models import Preference, PickerResultException, PickerGrouping, Game
 
 
 class Home(SimplePickerViewBase):
@@ -24,18 +24,36 @@ class Team(SimplePickerViewBase):
 class Teams(SimplePickerViewBase):
     template_name = '@teams/listing.html'
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            teams=self.league.teams.select_related('conference', 'division'),
+            **kwargs
+        )
 
 class Schedule(SimplePickerViewBase):
     template_name = '@schedule/season.html'
 
     def get_context_data(self, **kwargs):
         season = self.season or self.league.latest_season
-        return super().get_context_data(
-            gamesets=get_list_or_404(
-                self.league.gamesets.filter(season=season).select_related()
-            ),
-            **kwargs
-        )
+        gamesets = []
+        current = None
+        previous = None
+        for game in Game.objects.filter(
+            gameset__season=season,
+            gameset__league=self.league
+        ).select_related(
+            'home',
+            'away',
+            'gameset',
+        ).order_by('gameset__sequence', 'start_time'):
+            if game.gameset.sequence != previous:
+                current = (game.gameset, [game])
+                gamesets.append(current)
+                previous = game.gameset.sequence
+            else:
+                current[1].append(game)
+
+        return super().get_context_data(gamesets=gamesets, **kwargs)
 
 
 class RosterRedirect(PickerViewBase):
