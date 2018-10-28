@@ -483,6 +483,10 @@ class GameSet(models.Model):
         except PickSet.DoesNotExist:
             return None
 
+    def reset_games_status(self):
+        UNPLAYED = Game.Status.UNPLAYED
+        self.games.exclude(status=UNPLAYED).update(status=UNPLAYED)
+
     def update_results(self, results):
         '''
         results schema: {'sequence': 1, 'season': 2018, 'games': [{
