@@ -24,6 +24,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='game',
             name='location',
-            field=models.CharField(blank=True, default='', max_length=50),
+            field=models.CharField(blank=True, default='', max_length=60),
         ),
     ]

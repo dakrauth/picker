@@ -402,7 +402,7 @@ class GameSet(models.Model):
     points = models.PositiveSmallIntegerField(default=0)
     opens = models.DateTimeField()
     closes = models.DateTimeField()
-    description = models.CharField(max_length=50, default='', blank=True)
+    description = models.CharField(max_length=60, default='', blank=True)
     byes = models.ManyToManyField(
         Team,
         blank=True,
@@ -584,8 +584,8 @@ class Game(models.Model):
     notes = models.TextField(blank=True)
     category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
     status = models.CharField(max_length=1, choices=Status.CHOICES, default=Status.DEFAULT)
-    location = models.CharField(blank=True, default='', max_length=50)
-    description = models.CharField(max_length=50, default='', blank=True)
+    location = models.CharField(blank=True, default='', max_length=60)
+    description = models.CharField(max_length=60, default='', blank=True)
 
     objects = managers.GameManager()
 
