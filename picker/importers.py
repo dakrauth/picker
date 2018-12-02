@@ -44,7 +44,7 @@ def import_season(cls, data):
 
         gs, is_new = league.gamesets.get_or_create(
             season=season,
-            sequence=sequence,
+            sequence=item.get('sequence', sequence),
             defaults={'opens': opens, 'closes': closes}
         )
         gamesets.append([gs, is_new])

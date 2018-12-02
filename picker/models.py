@@ -389,7 +389,7 @@ class Team(models.Model):
 
 class Alias(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='aliases')
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -402,6 +402,7 @@ class GameSet(models.Model):
     points = models.PositiveSmallIntegerField(default=0)
     opens = models.DateTimeField()
     closes = models.DateTimeField()
+    description = models.CharField(max_length=50, default='', blank=True)
     byes = models.ManyToManyField(
         Team,
         blank=True,
@@ -563,15 +564,28 @@ class Game(models.Model):
         AWAY_WIN = ChoiceEnumeration.Option('A', 'Away Win')
         CANCELLED = ChoiceEnumeration.Option('X', 'Cancelled')
 
-    home = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_games')
-    away = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_games')
+    home = models.ForeignKey(
+        Team,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='home_games'
+    )
+    away = models.ForeignKey(
+        Team,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='away_games'
+    )
     gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='games')
     start_time = models.DateTimeField()
     tv = models.CharField('TV', max_length=8, blank=True)
     notes = models.TextField(blank=True)
     category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
     status = models.CharField(max_length=1, choices=Status.CHOICES, default=Status.DEFAULT)
-    location = models.CharField(blank=True, max_length=50)
+    location = models.CharField(blank=True, default='', max_length=50)
+    description = models.CharField(max_length=50, default='', blank=True)
 
     objects = managers.GameManager()
 
