@@ -14,12 +14,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='game',
             name='description',
-            field=models.CharField(blank=True, default='', max_length=50),
+            field=models.CharField(blank=True, default='', max_length=60),
         ),
         migrations.AddField(
             model_name='gameset',
             name='description',
-            field=models.CharField(blank=True, default='', max_length=50),
+            field=models.CharField(blank=True, default='', max_length=60),
         ),
         migrations.AlterField(
             model_name='alias',

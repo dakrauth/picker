@@ -38,7 +38,7 @@ roster_urls = [
 
 teams_urls = [
     url(r'^$', views.Teams.as_view(), name='picker-teams'),
-    url(r'^(\w+)/$', views.Team.as_view(), name='picker-team'),
+    url(r'^([\w&-]+)/$', views.Team.as_view(), name='picker-team'),
 ]
 
 schedule_urls = [

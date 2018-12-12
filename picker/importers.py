@@ -82,17 +82,21 @@ def import_league(cls, data):
         conf = div = None
         if 'sub' in tm and len(tm['sub']):
             conf_name = tm['sub'][0]
-            if conf_name not in confs:
+            if conf_name in confs:
+                conf = confs[conf_name]
+            else:
                 conf, conf_created = league.conferences.get_or_create(
                     name=conf_name,
                     league=league,
-                    abbr=conf_name.lower()
+                    abbr='-'.join(conf_name.lower().split())
                 )
                 confs[conf_name] = conf
 
             if len(tm['sub']) > 1:
                 div_name = tm['sub'][1]
-                if (div_name, conf_name) not in divs:
+                if (div_name, conf_name) in divs:
+                    div = divs[(div_name, conf_name)]
+                else:
                     div, div_created = confs[conf_name].divisions.get_or_create(name=div_name)
                     divs[(div_name, conf_name)] = div
 

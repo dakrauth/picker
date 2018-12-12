@@ -4,24 +4,30 @@
 {% favorite_team profile.user as fav %}
 {% block fav_team %}team-{{ fav.abbr|default:"none"|lower }}{% endblock fav_team %}
 {% block main_content %}
-<h1 class="profile-header clearfix">
-    <img class="top" src="{{ profile.user|picker_user_image }}">
-    {{ profile }}
-    <small>Since {{ profile.user.date_joined|date:"M j, Y" }}</small>
-</h1>
+<div class="media">
+    <div class="media-left">
+        <img src="{{ profile.user|picker_user_image }}">
+    </div>
+    <div class="media-body">
+        <h1>{{ profile.user.username }}</h1>
+        <p>
+            Since {{ profile.user.date_joined|date:"M j, Y" }}
+        </p>
+    </div>
+</div>
+
+{% if fav %}
 <p class="home-team-choice">
-    {% if fav %}
     {% if fav.logo %}<img style="width: 62px; height: 47px" src="{{ fav.logo.url }}">{% endif %}
     <a href="{{ fav.get_absolute_url }}">{{ fav }}</a>
-    {% endif %}
 </p>
+{% endif %}
 <table class="table table-striped roster">
 <thead>
     <tr>
         <th>Season</th>
-        <th>Place</th>
-        <th>Wks Played</th>
-        <th>Wks Won</th>
+        <th>Weeks Played</th>
+        <th>Weeks Won</th>
         <th>Good</th>
         <th>Bad</th>
         <th>%</th>
@@ -32,18 +38,8 @@
 <tbody>{% for entry in stats %}{% if entry.picksets_played %}
     <tr>
         <td>{{ entry.season|default:"Totals" }}</td>
-        <td></td>
         <td>{{ entry.picksets_played }}</td>
-        <td>
-            {% with entry.picksets_won as picksets_won %}
-            {{ picksets_won|length }}{% if picksets_won and entry.season %} (
-            {% for gs in picksets_won %}
-            <a href="{{ gs.get_absolute_url }}">
-                #{{ gs.sequence }}</a>{% if not forloop.last  %}, {% endif %}
-            {% endfor %})
-            {% endif %}
-            {% endwith %}
-        </td>
+        <td>{{ entry.picksets_won }}</td>
         <td>{{ entry.correct }}</td>
         <td>{{ entry.wrong }}</td>
         <td>{{ entry.pct|floatformat:"1" }}%</td>

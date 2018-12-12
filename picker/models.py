@@ -300,6 +300,7 @@ class Team(models.Model):
     )
     colors = models.CharField(max_length=40, blank=True)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
+    notes = models.TextField(blank=True, default='')
 
     class Meta:
         ordering = ('name',)
@@ -438,13 +439,15 @@ class GameSet(models.Model):
         for dct in data['games']:
             start_time = parse_dt(dct['start'])
             game, is_new = self.games.get_or_create(
-                home=teams[dct['home']],
-                away=teams[dct['away']],
+                home=teams.get(dct['home']),
+                away=teams.get(dct['away']),
                 defaults={'start_time': start_time}
             )
             game.start_time = start_time
+            game.description = dct.get('description', game.description)
             game.tv = dct.get('tv', game.tv)
             game.location = dct.get('location', game.location)
+            game.notes = dct.get('notes', game.notes)
             game.save()
             games.append([game, is_new])
 
