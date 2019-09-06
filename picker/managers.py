@@ -2,6 +2,7 @@ from collections import OrderedDict
 from django.db import models
 from .utils import datetime_now
 
+
 class PreferenceManager(models.Manager):
 
     def for_user(self, user):

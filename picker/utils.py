@@ -5,13 +5,13 @@ from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 from django.core.validators import ValidationError, validate_email
 
-from dateutil.parser import parse as dt_parse
+from dateutil.parser import parse as parse_dt
 
 from .conf import get_setting
 
 
 def parse_datetime(dtstr):
-    dt = dt_parse(dtstr)
+    dt = parse_dt(dtstr)
     if timezone.is_naive(dt):
         dt = timezone.make_aware(dt)
 

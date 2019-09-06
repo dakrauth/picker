@@ -5,22 +5,24 @@ from picker import models as picker
 from picker.stats import RosterStats
 from picker import utils
 
+from .conftest import _now
+YEAR = _now.year
 
 PICK_ARGS = [
     # /<league>/picks/<season>/ picker.views.picks.PicksBySeason picker-season-picks
-    ('picker-season-picks', ['hq', '2018']),
+    ('picker-season-picks', ['hq', str(YEAR)]),
 
     # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
-    ('picker-picks-sequence', ['hq', '2018', '1']),
+    ('picker-picks-sequence', ['hq', str(YEAR), '1']),
 
     # /<league>/results/  picker.views.picks.Results  picker-results
     ('picker-results', ['hq']),
 
     # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
-    ('picker-season-results', ['hq', '2018']),
+    ('picker-season-results', ['hq', str(YEAR)]),
 
     # /<league>/results/<season>/<var>/ picker.views.picks.ResultsByWeek picker-game-sequence
-    ('picker-game-sequence', ['hq', '2018', '1']),
+    ('picker-game-sequence', ['hq', str(YEAR), '1']),
 ]
 
 
@@ -37,7 +39,7 @@ class TestViews:
         client.force_login(user)
         r = client.get(url, follow=False)
         assert r.status_code == 302
-        assert r.url == '/hq/picks/2018/1/'
+        assert r.url == '/hq/picks/{}/1/'.format(YEAR)
 
     def test_views_not_logged_in(self, client, league):
         for name, args in PICK_ARGS:

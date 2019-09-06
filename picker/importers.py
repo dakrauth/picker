@@ -1,3 +1,4 @@
+import warnings
 from datetime import timedelta
 
 from dateutil.parser import parse as parse_dt
@@ -111,10 +112,19 @@ def import_league(cls, data):
                 'logo': tm.get('logo', ''),
            }
         )
+        for alias in tm.get('aliases', []):
+            team.aliases.get_or_create(name=alias)
+
         teams[tm['abbr']] = team
         teams_results.append([team, created])
 
-    for name, key in data.get('aliases', {}).items():
-        teams[key].aliases.get_or_create(name=name)
+    if 'aliases' in data:
+        warnings.warn(
+            'aliases should be set on the team',
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        for name, key in data.get('aliases', {}).items():
+            teams[key].aliases.get_or_create(name=name)
 
     return [[league, created_league], teams_results]

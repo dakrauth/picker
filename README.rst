@@ -17,12 +17,9 @@ For Linux/Mac OS X:
 
     $ git clone https://github.com/dakrauth/picker.git
     $ cd picker
-    $ python -m venv venv
-    $ source venv/bin/activate
-    $ pip install invoke
-    $ inv demo
+    $ docker-compose up --build
 
-Browse to: http://127.0.0.1:8000
+Browse to: http://127.0.0.1:8080
 
 User ``demo``, password ``demo`` has management rights. Users [``user1``, ``user2``, ..., ``user9``]
 all share password ``password``.

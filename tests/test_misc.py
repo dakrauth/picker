@@ -7,7 +7,6 @@ from django.utils.module_loading import import_string
 
 import picker
 from picker import utils, conf
-from demo.management.commands.loaddemo import load_users, create_grouping
 from picker.templatetags import picker_tags
 
 class TestMisc:

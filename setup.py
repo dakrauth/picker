@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import os, sys
+import os
+import sys
 from setuptools import find_packages, setup
 
 if sys.argv[-1] == 'publish':
@@ -10,7 +11,7 @@ with open('README.rst', 'r') as f:
     long_description = f.read()
 
 # Dynamically calculate the version based on picker.VERSION.
-version=__import__('picker').get_version()
+version = __import__('picker').get_version()
 
 setup(
     name='picker',
@@ -23,12 +24,12 @@ setup(
     platforms=['any'],
     license='MIT License',
     classifiers=(
+        'License :: OSI Approved :: MIT License',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'License :: OSI Approved :: MIT License',
+        'Framework :: Django :: 2.2',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

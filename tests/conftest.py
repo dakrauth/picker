@@ -6,14 +6,21 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+_now = timezone.now()
+
 @pytest.fixture
-def league():
+def now():
+    return _now
+
+
+@pytest.fixture
+def league(now):
     league = picker.League.objects.create(
         name="Hogwarts Quidditch",
         slug="hq",
         abbr="HQ",
         is_pickable=True,
-        current_season=2018,
+        current_season=now.year,
     )
     conf = league.conferences.create(name='Hogwarts', abbr='HW')
     for tm in [
@@ -25,11 +32,6 @@ def league():
         league.teams.create(conference=conf, **tm)
 
     return league
-
-
-@pytest.fixture
-def now():
-    return timezone.now()
 
 
 @pytest.fixture

@@ -15,7 +15,10 @@ from picker import (
     exceptions,
 )
 
-results = {'sequence': 1, 'season': 2018, 'type': 'REG', 'games': [{
+from .conftest import _now
+
+
+results = {'sequence': 1, 'season': _now.year, 'type': 'REG', 'games': [{
     "home": "HUF",
     "away": "GRF",
     "home_score": 150,

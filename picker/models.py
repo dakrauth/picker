@@ -14,7 +14,6 @@ from django.core.exceptions import ValidationError
 
 from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
-from django_extensions.db.fields.json import JSONField
 
 from .exceptions import PickerResultException
 from .conf import picker_settings
@@ -154,6 +153,29 @@ class League(models.Model):
     def schedule_url(self): return self._reverse('picker-schedule')
     def manage_url(self): return self._reverse('picker-manage')
 
+    def to_dict(self):
+        return {
+            'schema': 'complete',
+            'league': {
+                'schema': 'league',
+                'name': self.name,
+                'slug': self.slug,
+                'abbr': self.abbr,
+                'is_pickable': self.is_pickable,
+                'current_season': self.current_season,
+                'teams': [team.to_dict() for team in self.teams.all()]
+            },
+            'season': {
+                'schema': 'season',
+                'league': self.abbr,
+                'season': self.current_season,
+                'gamesets': [
+                    gs.to_dict()
+                    for gs in self.gamesets.filter(season=self.current_season)
+                ]
+            }
+        }
+
     @cached_property
     def team_dict(self):
         names = {}
@@ -215,8 +237,8 @@ class League(models.Model):
         except OperationalError:
             return 0
         else:
-            avg = int(d['avg'])
-            stddev = int(d['stddev'])
+            avg = int(d.get('avg') or 0)
+            stddev = int(d.get('stddev') or 0)
             return random.randint(avg - stddev, avg + stddev)
 
     @cached_property
@@ -310,6 +332,21 @@ class Team(models.Model):
 
     def get_absolute_url(self):
         return reverse('picker-team', args=[self.league.slug, self.abbr])
+
+    def to_dict(self):
+        return {
+            'abbr': self.abbr,
+            'logo': self.logo.name,
+            'name': self.name,
+            'nickname': self.nickname,
+            'sub': [
+                self.conference.name,
+                self.division.name
+            ],
+            'aliases': list(self.aliases.values_list('name', flat=True)),
+            'coach': self.coach,
+            'location': self.location,
+        }
 
     def season_record(self, season=None):
         season = season or self.league.current_season
@@ -428,6 +465,16 @@ class GameSet(models.Model):
             'picker-picks-sequence',
             args=[self.league.slug, str(self.season), str(self.sequence)]
         )
+
+    def to_dict(self):
+        return {
+            'byes': list(self.byes.values_list('abbr', flat=True)),
+            'opens': self.opens.isoformat(),
+            'closes': self.closes.isoformat(),
+            'games': [
+                g.to_dict() for g in self.games.select_related('home', 'away')
+            ]
+        }
 
     def import_games(self, data, teams=None):
         teams = teams or self.league.team_dict
@@ -598,6 +645,15 @@ class Game(models.Model):
     def __str__(self):
         return '{} @ {} {}'.format(self.away.abbr, self.home.abbr, self.gameset)
 
+    def to_dict(self):
+        return {
+            'away': self.away.abbr,
+            'home': self.home.abbr,
+            'start': self.start_time.isoformat(),
+            'tv': self.tv,
+            'location': self.location
+        }
+
     @property
     def is_tie(self):
         return self.status == self.Status.TIE
@@ -621,10 +677,6 @@ class Game(models.Model):
     @property
     def is_away_win(self):
         return self.status == self.Status.AWAY_WIN
-
-    @property
-    def is_tie(self):
-        return self.status == self.Status.TIE
 
     @property
     def winner(self):

@@ -52,7 +52,7 @@ class TestImporters:
         assert closes != gs.closes
 
     def test_import(self, client):
-        nfl_data = load_json('nfl2018.json')
+        nfl_data = load_json('nfl2019.json')
 
         league_info, teams_info = picker.League.import_league(nfl_data['league'])
         league, created = league_info
@@ -61,7 +61,7 @@ class TestImporters:
 
         assert league.slug == 'nfl'
         assert league.abbr == 'NFL'
-        assert league.current_season == 2018
+        assert league.current_season == 2019
         assert league.conferences.count() == 2
         assert picker.Division.objects.count() == 8
         assert league.teams.count() == 32
@@ -74,7 +74,7 @@ class TestImporters:
             assert all(is_new for g, is_new in games)
         assert picker.Game.objects.incomplete().count() == 256
 
-        assert picker.Alias.objects.count() == 4
+        assert picker.Alias.objects.count() == 10
         td = league.team_dict
         assert td['WAS'] == td['WSH']
 
@@ -101,5 +101,5 @@ class TestImporters:
         assert r.status_code == 200
 
         # /<league>/schedule/<season>/    picker.views.picks.Schedule picker-schedule-year
-        r = client.get(reverse('picker-schedule-year', args=['nfl', '2018']))
+        r = client.get(reverse('picker-schedule-year', args=['nfl', '2019']))
         assert r.status_code == 200

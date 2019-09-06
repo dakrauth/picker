@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 from django.conf import settings
-import django_extensions.db.fields.json
 
 
 class Migration(migrations.Migration):
@@ -114,7 +111,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('picks', django_extensions.db.fields.json.JSONField()),
+                ('picks', models.TextField(blank=True)),
                 ('playoff', models.ForeignKey(on_delete=models.CASCADE, to='picker.Playoff')),
                 ('user', models.ForeignKey(on_delete=models.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],

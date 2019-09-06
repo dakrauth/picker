@@ -1,7 +1,5 @@
 from django.db.models import Q
-from django.core.cache import cache
 from django.contrib.auth import get_user_model
-from .models import GameSet
 from .utils import sorted_standings
 
 
@@ -59,7 +57,6 @@ class RosterStats:
 
     @classmethod
     def get_details(cls, league, group, season=None):
-        key = 'roster-stats:{}:{}'.format(league.id, group.id)
         season = season or league.current_season
         users = get_user_model().objects.filter(picker_memberships__group=group)
 
@@ -75,4 +72,3 @@ class RosterStats:
             (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
         ]
         return results
-

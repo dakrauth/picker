@@ -5,7 +5,7 @@ from . import models as picker
 from . import utils
 
 _picker_widget = None
-encoded_game_key= 'game_{}'.format
+encoded_game_key = 'game_{}'.format
 TIE_KEY = '__TIE__'
 
 

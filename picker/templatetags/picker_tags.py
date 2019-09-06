@@ -21,6 +21,7 @@ def picker_user_image(user, size=None):
         '&s={}'.format(size) if size else ''
     )
 
+
 @register.simple_tag
 def user_result(user_pick, actual_results):
     try:

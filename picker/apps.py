@@ -12,7 +12,6 @@ class PickerConfig(AppConfig):
     verbose_name = 'Django Picker'
 
     def ready(self):
-        #print('In Ready')
         from .conf import picker_settings
         auto_create = picker_settings.get('AUTO_CREATE_PREFERENCES')
         if auto_create:

@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .. import forms
 from ..stats import RosterStats
 from .base import SimplePickerViewBase, PickerViewBase, SimpleFormMixin
-from ..models import Preference, PickerResultException, PickerGrouping, Game
+from ..models import Preference, PickerGrouping, Game
 
 
 class Home(SimplePickerViewBase):
@@ -29,6 +29,7 @@ class Teams(SimplePickerViewBase):
             teams=self.league.teams.select_related('conference', 'division'),
             **kwargs
         )
+
 
 class Schedule(SimplePickerViewBase):
     template_name = '@schedule/season.html'
