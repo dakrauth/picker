@@ -82,14 +82,20 @@ def import_league(cls, data):
     for tm in data['teams']:
         conf = div = None
         if 'sub' in tm and len(tm['sub']):
-            conf_name = tm['sub'][0]
+            conf_abbr = conf_name = tm['sub'][0]
+            if not isinstance(conf_name, str):
+                conf_name, conf_abbr = conf_name
+            
+            conf_abbr = '-'.join(conf_abbr.lower().split())
+
             if conf_name in confs:
                 conf = confs[conf_name]
             else:
+                print(f'Creating {conf_name} {conf_abbr}')
                 conf, conf_created = league.conferences.get_or_create(
                     name=conf_name,
                     league=league,
-                    abbr='-'.join(conf_name.lower().split())
+                    abbr=conf_abbr
                 )
                 confs[conf_name] = conf
 
