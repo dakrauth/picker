@@ -23,6 +23,16 @@ setup(
     long_description=long_description,
     platforms=['any'],
     license='MIT License',
+    install_requires=[
+        'Django>=2.2.8,<3.0',
+        'choice-enum==1.0.0',
+        'django-bootstrap3>=12.0.1',
+        'Pillow>=6.2.1',
+        'python-dateutil>=2.8.1',
+    ],
+    extras_require={
+        'test': ['tox',' coverage',' pytest-django',' pytest',' pytest-cov',' flake8'],
+    },
     classifiers=(
         'License :: OSI Approved :: MIT License',
         'Environment :: Web Environment',
