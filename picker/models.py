@@ -690,14 +690,17 @@ class Game(models.Model):
 
     @winner.setter
     def winner(self, team):
+        '''``team`` can be either a Team instance or PK, or ``None`` to indicate a tie'''
         if team is None:
             self.status = self.Status.TIE
-        elif team == self.away:
-            self.status = self.Status.AWAY_WIN
-        elif team == self.home:
-            self.status = self.Status.HOME_WIN
         else:
-            return
+            team_id = team.id if isinstance(team, Team) else int(team)
+            if team_id == self.away.id:
+                self.status = self.Status.AWAY_WIN
+            elif team_id == self.home.id:
+                self.status = self.Status.HOME_WIN
+            else:
+                raise ValueError(f'{team} is not a valid winning team')
 
         self.save()
 

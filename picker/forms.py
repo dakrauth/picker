@@ -81,7 +81,6 @@ class BasePickForm(forms.Form):
                 key = encoded_game_key(gm.id)
                 self.fields[key] = GameField(gm, self.management)
                 self.game_fields.append(key)
-
             self.fields['points'] = forms.IntegerField(
                 label='{}:'.format(games[-1].vs_description),
                 required=False
@@ -101,13 +100,12 @@ class ManagementPickForm(BasePickForm):
         data = self.cleaned_data.copy()
         gameset.points = data.pop('points', 0) or 0
         gameset.save()
-        team_dict = gameset.league.team_dict
 
         for key, winner in data.items():
             if winner:
                 pk = decoded_game_key(key)
                 game = gameset.games.get(pk=pk)
-                game.winner = None if winner == TIE_KEY else team_dict[int(winner)]
+                game.winner = None if winner == TIE_KEY else int(winner)
 
         gameset.update_pick_status()
 
