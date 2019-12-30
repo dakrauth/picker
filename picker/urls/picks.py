@@ -1,6 +1,5 @@
 from django.conf.urls import include, url
-from . import views
-
+from .. import views
 
 management_urls = [
     url(r'^$', views.ManagementHome.as_view(), name='picker-manage'),
@@ -36,22 +35,3 @@ roster_urls = [
     ])),
 ]
 
-teams_urls = [
-    url(r'^$', views.Teams.as_view(), name='picker-teams'),
-    url(r'^([\w&-]+)/$', views.Team.as_view(), name='picker-team'),
-]
-
-schedule_urls = [
-    url(r'^$', views.Schedule.as_view(), name='picker-schedule'),
-    url(r'^(?P<season>\d{4})/$', views.Schedule.as_view(), name='picker-schedule-year'),
-]
-
-urlpatterns = [
-    url(r'^$', views.Home.as_view(), name='picker-home'),
-    url(r'^teams/', include(teams_urls)),
-    url(r'^schedule/', include(schedule_urls)),
-    url(r'^roster/', include(roster_urls)),
-    url(r'^results/', include(results_urls)),
-    url(r'^picks/', include(picks_urls)),
-    url(r'^manage/', include(management_urls))
-]

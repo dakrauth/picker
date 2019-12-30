@@ -2,12 +2,13 @@
 import random
 import itertools
 from datetime import timedelta
-from collections import ChainMap
+from collections import ChainMap, OrderedDict
+from functools import partialmethod
 
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
-from django.dispatch import Signal
+from django.utils import timezone
 from django.db import OperationalError
 from django.utils.functional import cached_property
 from django.core.exceptions import ValidationError
@@ -15,112 +16,17 @@ from django.core.exceptions import ValidationError
 from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
 
-from .exceptions import PickerResultException
-from .conf import picker_settings
-from . import managers
-from . import utils
-from . import importers
-from .utils import datetime_now
+from ..exceptions import PickerResultException
+from ..conf import picker_settings
+from .. import utils
+from .. import importers
+
+__all__ = [
+    'League', 'GameSet', 'Team', 'Game', 'Conference', 'Division', 'Alias',
+    'temp_slug', 'valid_team_abbr'
+]
 
 LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos')
-
-
-class Preference(models.Model):
-
-    class Autopick(ChoiceEnumeration):
-        NONE = ChoiceEnumeration.Option('NONE', 'None')
-        RAND = ChoiceEnumeration.Option('RAND', 'Random', default=True)
-
-    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='picker_preferences'
-    )
-
-    objects = managers.PreferenceManager()
-
-    def __str__(self):
-        return str('{} Preference'.format(self.user))
-
-    @property
-    def should_autopick(self):
-        return self.autopick != self.Autopick.NONE
-
-
-class PickerGrouping(models.Model):
-    class Category(ChoiceEnumeration):
-        PUBLIC = ChoiceEnumeration.Option('PUB', 'Public')
-        PROTECTED = ChoiceEnumeration.Option('PRT', 'Protected')
-        PRIVATE = ChoiceEnumeration.Option('PVT', 'Private', default=True)
-
-    class Status(ChoiceEnumeration):
-        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
-        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
-
-    name = models.CharField(max_length=75, unique=True)
-    leagues = models.ManyToManyField('picker.League', blank=True)
-    status = models.CharField(
-        max_length=4,
-        choices=Status.CHOICES,
-        default=Status.DEFAULT
-    )
-    category = models.CharField(
-        max_length=3,
-        choices=Category.CHOICES,
-        default=Category.DEFAULT
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class PickerFavorite(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    league = models.ForeignKey('picker.League', on_delete=models.CASCADE)
-    team = models.ForeignKey('picker.Team', null=True, blank=True, on_delete=models.SET_NULL)
-
-    def __str__(self):
-        return '{}: {} ({})'.format(self.user, self.team, self.league)
-
-    def save(self, *args, **kws):
-        if self.team and self.team.league != self.league:
-            raise ValueError('Team {} not in league {}'.format(self.team, self.league))
-
-        return super().save(*args, **kws)
-
-
-class PickerMembership(models.Model):
-
-    class Autopick(ChoiceEnumeration):
-        NONE = ChoiceEnumeration.Option('NONE', 'None')
-        RANDOM = ChoiceEnumeration.Option('RAND', 'Random', default=True)
-
-    class Status(ChoiceEnumeration):
-        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
-        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
-        SUSPENDED = ChoiceEnumeration.Option('SUSP', 'Suspended')
-        MANAGER = ChoiceEnumeration.Option('MNGT', 'Manager')
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='picker_memberships'
-    )
-    group = models.ForeignKey(PickerGrouping, on_delete=models.CASCADE, related_name='members')
-    status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
-    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
-
-    def __str__(self):
-        return str(self.user)
-
-    @property
-    def is_active(self):
-        return self.status == self.Status.ACTIVE
-
-    @property
-    def is_management(self):
-        return self.status == self.Status.MANAGER
 
 
 def temp_slug():
@@ -131,12 +37,9 @@ class League(models.Model):
     name = models.CharField(max_length=50, unique=True)
     abbr = models.CharField(max_length=8)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
-    is_pickable = models.BooleanField(default=False)
     current_season = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(default=temp_slug)
     avg_game_duration = models.PositiveIntegerField(default=240)
-
-    objects = managers.LeagueManager()
 
     class Meta:
         permissions = (("can_update_score", "Can update scores"),)
@@ -144,14 +47,16 @@ class League(models.Model):
     def __str__(self):
         return self.name
 
-    def _reverse(self, name): return reverse(name, args=[self.slug])
-    def get_absolute_url(self): return self._reverse('picker-home')
-    def picks_url(self): return self._reverse('picker-picks')
-    def results_url(self): return self._reverse('picker-results')
-    def roster_url(self): return self._reverse('picker-roster-base')
-    def teams_url(self): return self._reverse('picker-teams')
-    def schedule_url(self): return self._reverse('picker-schedule')
-    def manage_url(self): return self._reverse('picker-manage')
+    def _reverse(self, name):
+        return reverse(name, args=[self.slug])
+
+    get_absolute_url = partialmethod(_reverse, 'picker-home')
+    picks_url = partialmethod(_reverse, 'picker-picks')
+    results_url = partialmethod(_reverse, 'picker-results')
+    roster_url = partialmethod(_reverse, 'picker-roster-base')
+    teams_url = partialmethod(_reverse, 'picker-teams')
+    schedule_url = partialmethod(_reverse, 'picker-schedule')
+    manage_url = partialmethod(_reverse, 'picker-manage')
 
     def to_dict(self):
         return {
@@ -161,7 +66,6 @@ class League(models.Model):
                 'name': self.name,
                 'slug': self.slug,
                 'abbr': self.abbr,
-                'is_pickable': self.is_pickable,
                 'current_season': self.current_season,
                 'teams': [team.to_dict() for team in self.teams.all()]
             },
@@ -193,7 +97,7 @@ class League(models.Model):
 
     @property
     def latest_gameset(self):
-        rel = datetime_now()
+        rel = timezone.now()
         try:
             return self.gamesets.filter(points=0, opens__gte=rel).earliest('opens')
         except GameSet.DoesNotExist:
@@ -211,7 +115,7 @@ class League(models.Model):
 
     @cached_property
     def current_gameset(self):
-        rel = datetime_now()
+        rel = timezone.now()
         try:
             return self.gamesets.get(opens__lte=rel, closes__gte=rel)
         except GameSet.DoesNotExist:
@@ -441,6 +345,8 @@ class GameSet(models.Model):
     opens = models.DateTimeField()
     closes = models.DateTimeField()
     description = models.CharField(max_length=60, default='', blank=True)
+    label = models.CharField(max_length=12, blank=True)
+
     byes = models.ManyToManyField(
         Team,
         blank=True,
@@ -518,85 +424,47 @@ class GameSet(models.Model):
 
     @property
     def in_progress(self):
-        return self.end_time >= datetime_now() >= self.start_time
+        return self.end_time >= timezone.now() >= self.start_time
 
     @property
     def has_started(self):
-        return datetime_now() >= self.start_time
+        return timezone.now() >= self.start_time
 
     @property
     def is_open(self):
-        return datetime_now() < self.last_game.start_time
-
-    def pick_for_user(self, user):
-        try:
-            return self.picksets.select_related().get(user=user)
-        except PickSet.DoesNotExist:
-            return None
+        return timezone.now() < self.last_game.start_time
 
     def reset_games_status(self):
         UNPLAYED = Game.Status.UNPLAYED
         self.games.exclude(status=UNPLAYED).update(status=UNPLAYED)
 
-    def update_results(self, results):
-        '''
-        results schema: {'sequence': 1, 'season': 2018, 'games': [{
-            "home": "HOME",
-            "away": "AWAY",
-            "home_score": 15,
-            "away_score": 10,
-            "status": "Final",
-            "winner": "HOME",
-        }]}
-        '''
 
-        if not results:
-            raise PickerResultException('Results unavailable')
+class GameManager(models.Manager):
 
-        if results['sequence'] != self.sequence or results['season'] != self.season:
-            raise PickerResultException('Results not updated, wrong season or week')
-
-        completed = {g['home']: g for g in results['games'] if g['status'].startswith('F')}
-        if not completed:
-            return (0, None)
-
-        count = 0
-        for game in self.games.incomplete(home__abbr__in=completed.keys()):
-            result = completed.get(game.home.abbr, None)
-            if result:
-                winner = result['winner']
-                game.winner = (
-                    game.home if game.home.abbr == winner
-                    else game.away if game.away.abbr == winner else None
+    def display_results(self):
+        return OrderedDict([
+            (item['id'], item) for item in self.games_started().annotate(
+                winner=models.Case(
+                    models.When(status='H', then='home__abbr'),
+                    models.When(status='A', then='away__abbr'),
+                    models.When(status='T', then=models.Value('__TIE__')),
+                    default=None,
+                    output_field=models.CharField()
                 )
-                count += 1
+            ).values('id', 'home__abbr', 'away__abbr', 'winner')
+        ])
 
-        last_game = self.last_game
-        if not self.points and last_game.winner:
-            now = datetime_now()
-            if now > last_game.end_time:
-                result = completed.get(last_game.home.abbr, None)
-                if result:
-                    self.points = result['home_score'] + result['away_score']
-                    self.save()
+    def games_started(self):
+        return self.filter(start_time__lte=timezone.now())
 
-        if count:
-            self.update_pick_status()
+    def incomplete(self, **kws):
+        kws['status'] = self.model.Status.UNPLAYED
+        return self.filter(**kws)
 
-        return (count, self.points)
-
-    def winners(self):
-        if self.points:
-            yield from itertools.takewhile(lambda i: i.place == 1, self.results())
-
-    def update_pick_status(self):
-        winners = set(w.id for w in self.winners())
-        for wp in self.picksets.all():
-            wp.update_status(wp.id in winners)
-
-    def results(self):
-        picks = list(self.picksets.select_related())
-        return utils.sorted_standings(picks, key=PickSet.sort_key, reverse=True)
+    def played(self, **kws):
+        Status = self.model.Status
+        kws['status__in'] = [Status.TIE, Status.HOME_WIN, Status.AWAY_WIN]
+        return self.filter(**kws)
 
 
 class Game(models.Model):
@@ -621,6 +489,7 @@ class Game(models.Model):
         on_delete=models.SET_NULL,
         related_name='home_games'
     )
+    home_score = models.PositiveIntegerField(default=0)
     away = models.ForeignKey(
         Team,
         null=True,
@@ -628,6 +497,7 @@ class Game(models.Model):
         on_delete=models.SET_NULL,
         related_name='away_games'
     )
+    away_score = models.PositiveIntegerField(default=0)
     gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='games')
     start_time = models.DateTimeField()
     tv = models.CharField('TV', max_length=8, blank=True)
@@ -637,7 +507,7 @@ class Game(models.Model):
     location = models.CharField(blank=True, default='', max_length=60)
     description = models.CharField(max_length=60, default='', blank=True)
 
-    objects = managers.GameManager()
+    objects = GameManager()
 
     class Meta:
         ordering = ('start_time', 'away')
@@ -660,7 +530,7 @@ class Game(models.Model):
 
     @property
     def has_started(self):
-        return datetime_now() >= self.start_time
+        return timezone.now() >= self.start_time
 
     @property
     def short_description(self):
@@ -713,140 +583,5 @@ class Game(models.Model):
 
     @property
     def in_progress(self):
-        now = datetime_now()
+        now = timezone.now()
         return self.end_time >= now >= self.start_time
-
-
-class PickSet(models.Model):
-
-    class Strategy(ChoiceEnumeration):
-        USER = ChoiceEnumeration.Option('USER', 'User', default=True)
-        RANDOM = ChoiceEnumeration.Option('RAND', 'Random')
-        HOME = ChoiceEnumeration.Option('HOME', 'Home Team')
-        BEST = ChoiceEnumeration.Option('BEST', 'Best Record')
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='picksets'
-    )
-
-    gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='picksets')
-    points = models.PositiveSmallIntegerField(default=0)
-    correct = models.PositiveSmallIntegerField(default=0)
-    wrong = models.PositiveSmallIntegerField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    strategy = models.CharField(max_length=4, choices=Strategy.CHOICES, default=Strategy.DEFAULT)
-    is_winner = models.BooleanField(default=False)
-
-    objects = managers.PickSetManager()
-
-    updated_signal = Signal(providing_args=['pickset', 'auto_pick'])
-
-    class Meta:
-        unique_together = (('user', 'gameset'),)
-
-    def __str__(self):
-        return '%s %s %d' % (self.gameset, self.user, self.correct)
-
-    def sort_key(self):
-        return (self.correct, -self.points_delta)
-
-    @property
-    def is_autopicked(self):
-        return self.strategy != self.Strategy.USER
-
-    @property
-    def is_complete(self):
-        return (
-            False if self.points == 0
-            else (self.progress == self.gameset.games.count())
-        )
-
-    @property
-    def progress(self):
-        return self.gamepicks.filter(winner__isnull=False).count()
-
-    def update_status(self, is_winner=False):
-        picks = self.gamepicks.all()
-        self.correct = sum([1 for gp in picks if gp.is_correct])
-        self.wrong = len(picks) - self.correct
-        self.is_winner = is_winner
-        self.save()
-        return self.correct
-
-    @property
-    def points_delta(self):
-        if self.gameset.points == 0:
-            return 0
-
-        return abs(self.points - self.gameset.points)
-
-    def update_picks(self, games=None, points=None):
-        '''
-        games can be dict of {game.id: winner_id} for all picked games to update
-        '''
-        if games:
-            game_dict = {g.id: g for g in self.gameset.games.filter(id__in=games)}
-            game_picks = {pick.game.id: pick for pick in self.gamepicks.filter(game__id__in=games)}
-            for key, winner in games.items():
-                game = game_dict[key]
-                if not game.has_started:
-                    pick = game_picks[key]
-                    pick.winner_id = winner
-                    pick.save()
-
-        if points is not None:
-            self.points = points
-            self.save()
-
-        if games or points:
-            self.updated_signal.send(sender=self.__class__, pickset=self, auto_pick=False)
-
-
-class GamePick(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='gamepicks')
-    winner = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
-    pick = models.ForeignKey(PickSet, on_delete=models.CASCADE, related_name='gamepicks')
-
-    objects = managers.GamePickManager()
-
-    class Meta:
-        ordering = ('game__start_time', 'game__away')
-
-    def __str__(self):
-        return '%s: %s - Game %d' % (self.pick.user, self.winner, self.game.id)
-
-    def set_random_winner(self, force=False):
-        if self.winner is None or force:
-            self.winner = self.game.get_random_winner()
-            self.save()
-
-    @property
-    def start_time(self):
-        return self.game.start_time
-
-    @property
-    def short_description(self):
-        return self.game.short_description
-
-    @property
-    def winner_abbr(self):
-        return self.winner.abbr if self.winner else 'N/A'
-
-    @property
-    def picked_home(self):
-        return self.winner == self.game.home
-
-    @property
-    def picked_away(self):
-        return self.winner == self.game.away
-
-    @property
-    def is_correct(self):
-        winner = self.game.winner
-        if winner:
-            return self.winner == winner
-
-        return None

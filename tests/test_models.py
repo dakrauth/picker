@@ -11,7 +11,6 @@ from picker import (
     urls,
     utils,
     views,
-    managers,
     exceptions,
 )
 

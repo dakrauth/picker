@@ -5,34 +5,46 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.module_loading import import_string
 
-import picker
+from picker import VERSION, get_version
 from picker import utils, conf
 from picker.templatetags import picker_tags
+from picker import models as picker
+
 
 class TestMisc:
 
     def test_version(self):
-        ver = picker.get_version()
+        ver = get_version()
         assert isinstance(ver, str)
-        assert tuple(int(i) for i in ver.split('.')) == picker.VERSION
+        assert tuple(int(i) for i in ver.split('.')) == VERSION
+
+
+model_urls = ['conference', 'division', 'gameset', 'league', 'pickset', 'preference', 'team']
 
 
 @pytest.mark.django_db
 class TestAdmin:
 
-    def test_landing(self, client, superuser, league, gamesets):
-        client.force_login(superuser)
-        r = client.get('/admin/')
+    @pytest.mark.parametrize('bit', model_urls)
+    def test_landing(self, client, superuser, gameset, bit):
+        if bit == 'pickset':
+            picker.PickSet.objects.create(user=superuser, gameset=gameset)
+
+        r = client.get(f'/admin/picker/{bit}/')
         assert r.status_code == 200
 
-        for part in ['conference', 'division', 'gameset', 'league', 'pickset', 'preference', 'team']:
-            print(part, 'part')
-            r = client.get('/admin/picker/{}/'.format(part))
-            assert r.status_code == 200
+        r = client.get(f'/admin/picker/{bit}/add/')
+        assert r.status_code == 200
 
-            print('add')
-            r = client.get('/admin/picker/{}/add/'.format(part))
-            assert r.status_code == 200
+    def test_gameset_form(self, client, superuser, gameset):
+        r = client.get(f'/admin/picker/gameset/{gameset.pk}/change/')
+        assert r.status_code == 200
+
+    def test_pickset_inlines(self, client, superuser, gameset):
+        ps = picker.PickSet.objects.create(user=superuser, gameset=gameset)
+        ps.gamepicks.create(game=gameset.games.first())
+        r = client.get(f'/admin/picker/pickset/{ps.pk}/change/')
+        assert r.status_code == 200
 
 
 def can_participate(user, gs):
@@ -51,20 +63,3 @@ class TestUtils:
         assert utils.get_templates('@foo.html') == [
             'picker/foo.html', 'picker/_base/foo.html'
         ]
-
-    def test_valid_email(self):
-        assert utils.is_valid_email('foo@example.com')
-        assert utils.is_valid_email('foo') == False
-
-    def test_datetime_now(self):
-        td = utils.datetime_now() - timezone.now()
-        assert abs(td.total_seconds()) < 2
-
-        when = utils.datetime_now('1991-10-31T23:00Z')
-        assert when.replace(tzinfo=None) == datetime(1991, 10,31, 23)
-
-        td = utils.datetime_now('reset') - timezone.now()
-        assert abs(td.total_seconds()) < 2
-
-        when = timezone.make_aware(datetime(2001, 1, 1))
-        assert utils.parse_datetime('2001-01-01T00:00') == when

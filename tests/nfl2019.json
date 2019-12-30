@@ -2,7 +2,6 @@
     "league": {
         "current_season": 2019,
         "abbr": "NFL",
-        "is_pickable": true,
         "schema": "league",
         "slug": "nfl",
         "teams": [

@@ -5,7 +5,6 @@
         "name": "Hogwarts Quidditch",
         "slug": "hq",
         "abbr": "HQ",
-        "is_pickable": true,
         "current_season": "2018",
         "teams": [
             {"abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions", "sub": ["Hogwarts"]},

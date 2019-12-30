@@ -1,8 +1,11 @@
 from hashlib import md5
+
 from django.template import Library
+from django.core.validators import ValidationError, validate_email
+
 from ..conf import get_setting
 from ..models import PickerFavorite
-from ..utils import is_valid_email, get_templates
+from ..utils import get_templates
 
 register = Library()
 GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
@@ -11,7 +14,9 @@ GRAVATAR_KINDS = get_setting('GRAVATAR_KINDS')
 
 @register.filter
 def picker_user_image(user, size=None):
-    if not is_valid_email(user.email):
+    try:
+        validate_email(user.email)
+    except ValidationError:
         return ''
 
     return '{}{}.jpg?d={}{}'.format(

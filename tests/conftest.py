@@ -19,17 +19,17 @@ def league(now):
         name="Hogwarts Quidditch",
         slug="hq",
         abbr="HQ",
-        is_pickable=True,
         current_season=now.year,
     )
     conf = league.conferences.create(name='Hogwarts', abbr='HW')
+    division = conf.divisions.create(name='Varsity')
     for tm in [
         {"id": 1, "abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions"},
         {"id": 2, "abbr": "HUF", "name": "Hufflepuff", "logo": "picker/logos/hq/12657_Black.jpg", "colors": "#fff300,#000000", "nickname": "Badgers"},
         {"id": 3, "abbr": "RVN", "name": "Ravenclaw", "logo": "picker/logos/hq/12654_Navy.jpg", "colors": "#0644ad,#7e4831", "nickname": "Eagles"},
         {"id": 4, "abbr": "SLY", "name": "Slytherin", "logo": "picker/logos/hq/12655_Dark_Green.jpg", "colors": "#004101,#dcdcdc", "nickname": "Serpents"}
     ]:
-        league.teams.create(conference=conf, **tm)
+        league.teams.create(conference=conf, division=division, **tm)
 
     return league
 
@@ -37,7 +37,8 @@ def league(now):
 @pytest.fixture
 def gameset(league, now):
     teams = league.team_dict
-    gs = league.gamesets.create(
+    gs = picker.GameSetPicks.objects.create(
+        league=league,
         season=now.year,
         sequence=1,
         points=0,
@@ -98,12 +99,14 @@ def _make_mbr(user, grouping=None):
 
 
 @pytest.fixture
-def superuser(grouping):
-    return _make_mbr(User.objects.create_superuser(
+def superuser(client, grouping):
+    su = _make_mbr(User.objects.create_superuser(
         username='super',
         email='super@example.com',
         password='password'
     ), grouping)
+    client.force_login(su)
+    return su
 
 
 @pytest.fixture
@@ -130,9 +133,3 @@ def user_ng():
 @pytest.fixture
 def users(superuser, user, user2):
     return [superuser, user, user2]
-
-
-
-
-
-

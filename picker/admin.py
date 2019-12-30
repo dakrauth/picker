@@ -5,7 +5,7 @@ from . import models as picker
 
 @admin.register(picker.League)
 class LeagueAdmin(admin.ModelAdmin):
-    list_display = ('name', 'abbr', 'is_pickable')
+    list_display = ('name', 'abbr')
 
 
 class AliasInline(admin.TabularInline):
@@ -58,8 +58,8 @@ class GameInline(admin.TabularInline):
     form = InlineGameForm
     extra = 0
 
-    def get_formset(self, request, obj=None, **kwargs):
-        return super().get_formset(request, obj, **kwargs)
+    #def get_formset(self, request, obj=None, **kwargs):
+    #    return super().get_formset(request, obj, **kwargs)
 
 
 @admin.register(picker.GameSet)

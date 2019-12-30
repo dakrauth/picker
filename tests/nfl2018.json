@@ -5,7 +5,6 @@
         "name": "National Football League",
         "slug": "nfl",
         "abbr": "NFL",
-        "is_pickable": true,
         "current_season": 2018,
         "aliases": {
             "WAS": "WSH",

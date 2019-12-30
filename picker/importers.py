@@ -71,7 +71,6 @@ def import_league(cls, data):
         abbr=abbr,
         slug=abbr.lower(),
         defaults={
-            'is_pickable': data.get('is_pickable', False),
             'current_season': data.get('current_season')
         },
     )

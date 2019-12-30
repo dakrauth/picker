@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from django.utils.module_loading import import_string
 
 from . import models as picker
@@ -48,7 +49,7 @@ class GameField(forms.ChoiceField):
             label=game.start_time.strftime('%a, %b %d %I:%M %p'),
             required=False,
             help_text=game.tv,
-            disabled=not self.manage and (self.game.start_time <= utils.datetime_now()),
+            disabled=not self.manage and (self.game.start_time <= timezone.now()),
             widget=widget or get_picker_widget(game.gameset.league)
         )
 
@@ -162,7 +163,7 @@ class PreferenceForm(forms.ModelForm):
         kws.setdefault('initial', {})['email'] = self.current_email
         super(PreferenceForm, self).__init__(*args, **kws)
 
-        for league in picker.League.objects.filter(is_pickable=True):
+        for league in picker.League.objects.all():
             field_name = '{}_favorite'.format(league.slug)
             current = None
             if instance:

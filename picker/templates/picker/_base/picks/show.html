@@ -2,6 +2,9 @@
 {% load picker_tags %}
 {% block title %}Game picks{% endblock %}
 {% block main_content %}
+<style>
+    .when { white-space: nowrap; }
+</style>
 <h1>My Weekly Picks</h1>
 <h2> Week #{{ gameset.sequence }} {{ gameset.season }}</h2>
 {% season_nav gameset "picks" %}

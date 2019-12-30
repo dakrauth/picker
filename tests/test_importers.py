@@ -57,7 +57,6 @@ class TestImporters:
         league_info, teams_info = picker.League.import_league(nfl_data['league'])
         league, created = league_info
         assert created is True
-        assert league == picker.League.objects.pickable()[0]
 
         assert league.slug == 'nfl'
         assert league.abbr == 'NFL'
@@ -78,7 +77,7 @@ class TestImporters:
         td = league.team_dict
         assert td['WAS'] == td['WSH']
 
-        assert league.config('TEAM_PICKER_WIDGET') == 'demo.forms.TemplateTeamChoice'
+        assert league.config('TEAM_PICKER_WIDGET') == 'django.forms.RadioSelect'
 
         tm = picker.Team.objects.get(league=league, nickname='Jaguars')
         aliases = list(tm.aliases.values_list('name', flat=True))

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 from .. import forms
-from ..models import Game
+from ..models import Game, GameSetPicks
 from .base import PickerViewBase, SimpleFormMixin
 
 
@@ -47,7 +47,8 @@ class ManageWeek(SimpleFormMixin, ManagementViewBase):
     @cached_property
     def gameset(self):
         return get_object_or_404(
-            self.league.gamesets,
+            GameSetPicks,
+            league=self.league,
             season=self.season,
             sequence=self.args[0]
         )

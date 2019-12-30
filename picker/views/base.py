@@ -2,6 +2,7 @@ from django import http
 from django.urls import reverse
 from django.template import loader
 from django.contrib import messages
+from django.utils import timezone
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 from django.utils.functional import cached_property
@@ -74,7 +75,7 @@ class SimplePickerViewBase(TemplateView):
                 pass
 
         data.update({
-            'now': utils.datetime_now(),
+            'now': timezone.now(),
             'league': league,
             'season': self.season or league.current_season,
             'league_base': loader.select_template([

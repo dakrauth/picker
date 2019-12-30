@@ -1,9 +1,6 @@
-import os
-from datetime import datetime
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
-from django.core.validators import ValidationError, validate_email
 
 from dateutil.parser import parse as parse_dt
 
@@ -18,48 +15,16 @@ def parse_datetime(dtstr):
     return dt
 
 
-class FakeableDatetime:
+def can_user_participate():
+    hooks = None
+    def inner(user, gs):
+        nonlocal hooks
+        if hooks is None:
+            hooks = [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
+        return all(hook(user, gs) for hook in hooks) if hooks else True
+    return inner
 
-    def __init__(self, default=None):
-        if isinstance(default, datetime):
-            default = default.isoformat()
-
-        self.faked = False
-        self.default = default or ''
-        self.fake_str = os.environ.get('FAKE_DATETIME_NOW', self.default)
-        self.set(self.fake_str)
-
-    @property
-    def is_fake(self):
-        return bool(self.faked)
-
-    def set(self, when):
-        if when:
-            if when == 'reset':
-                self.faked = parse_datetime(self.fake_str) if self.fake_str else False
-            else:
-                self.faked = when if isinstance(when, datetime) else parse_datetime(when)
-
-        return self.faked or timezone.now()
-
-    def __call__(self, when=None):
-        return self.set(when)
-
-
-datetime_now = FakeableDatetime(get_setting('FAKE_DATETIME_NOW'))
-
-
-class UserParticiption:
-
-    @cached_property
-    def participation_hooks(self):
-        return [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
-
-    def __call__(self, user, gs):
-        return all(hook(user, gs) for hook in self.participation_hooks)
-
-
-can_user_participate = UserParticiption()
+can_user_participate = can_user_participate()
 
 
 def sorted_standings(items, key=None, reverse=True):
@@ -84,12 +49,3 @@ def get_templates(component, league=None):
         return dirs
 
     return component
-
-
-def is_valid_email(value):
-    try:
-        validate_email(value)
-    except ValidationError:
-        return False
-    else:
-        return True
