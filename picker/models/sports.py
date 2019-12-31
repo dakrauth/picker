@@ -432,7 +432,8 @@ class GameSet(models.Model):
 
     @property
     def is_open(self):
-        return timezone.now() < self.last_game.start_time
+        gm = self.last_game
+        return (timezone.now() < self.last_game.start_time) if gm else False
 
     def reset_games_status(self):
         UNPLAYED = Game.Status.UNPLAYED

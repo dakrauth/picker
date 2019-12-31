@@ -112,7 +112,8 @@ class ResultsByWeek(PickerViewBase):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(gameset=get_object_or_404(
-            self.league.gamesets,
+            GameSetPicks,
+            league=self.league,
             season=self.season,
             sequence=self.args[0]
         ), **kwargs)
