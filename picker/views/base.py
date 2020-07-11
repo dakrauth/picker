@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
+from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -54,7 +55,7 @@ class SimplePickerViewBase(TemplateView):
 
     @cached_property
     def league(self):
-        return League.get(self.kwargs['league'])
+        return get_object_or_404(League, abbr__iexact=self.kwargs['league'])
 
     def get_template_names(self):
         if self.template_name is None:
