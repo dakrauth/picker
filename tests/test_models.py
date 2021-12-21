@@ -1,18 +1,7 @@
-import os
-import json
-
 import pytest
-from django.urls import reverse
 
 from picker import models as picker
-from picker import (
-    forms,
-    stats,
-    urls,
-    utils,
-    views,
-    exceptions,
-)
+from picker import forms, exceptions
 
 from .conftest import _now
 
@@ -59,10 +48,10 @@ class TestGameSet:
 class TestLeague:
 
     def test_no_gamesets(self, league):
-        assert league.current_gameset == None
-        assert league.latest_gameset == None
-        assert league.latest_season == None
-        assert isinstance(league.random_points(), int) == True
+        assert league.current_gameset is None
+        assert league.latest_gameset is None
+        assert league.latest_season is None
+        assert isinstance(league.random_points(), int) is True
 
 
 @pytest.mark.django_db
@@ -88,20 +77,19 @@ class TestUserConf:
         assert not any(u.is_superuser for u in users[1:])
         assert picker.Preference.objects.count() == 3
         assert picker.Preference.objects.filter(user__is_active=True).count() == 3
-        assert picker.Preference.objects.last().should_autopick == True
+        assert picker.Preference.objects.last().should_autopick is True
 
         users_dct = {u.id: u for u in users}
         group = league.pickergrouping_set.get()
 
         mbr = group.members.first()
         assert str(mbr) == str(mbr.user)
-        assert mbr.is_active == True
-        assert mbr.is_management == False
+        assert mbr.is_active is True
+        assert mbr.is_management is False
         assert users_dct == {
             mbr.user.id: mbr.user
             for mbr in group.members.all()
         }
-
 
         user = users[0]
         fav = picker.PickerFavorite.objects.create(user=user, league=league, team=None)

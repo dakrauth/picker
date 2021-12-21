@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import os, sys
 from setuptools import find_packages, setup
 
 setup(
@@ -22,5 +21,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    entry_points={'console_scripts': ['demo=demo.__main__:main'],},
+    entry_points={'console_scripts': ['demo=demo.__main__:main']},
 )

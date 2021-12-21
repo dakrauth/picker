@@ -34,4 +34,3 @@ roster_urls = [
         re_path(r'^p/(\w+)/$', views.RosterProfile.as_view(), name='picker-roster-profile'),
     ])),
 ]
-

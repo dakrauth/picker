@@ -58,9 +58,6 @@ class GameInline(admin.TabularInline):
     form = InlineGameForm
     extra = 0
 
-    #def get_formset(self, request, obj=None, **kwargs):
-    #    return super().get_formset(request, obj, **kwargs)
-
 
 @admin.register(picker.GameSet)
 class GameSetAdmin(admin.ModelAdmin):

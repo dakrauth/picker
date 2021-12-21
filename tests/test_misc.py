@@ -1,13 +1,7 @@
-import os
-from datetime import datetime
 import pytest
-from django.urls import reverse
-from django.utils import timezone
-from django.utils.module_loading import import_string
 
 from picker import VERSION, get_version
 from picker import utils, conf
-from picker.templatetags import picker_tags
 from picker import models as picker
 
 
@@ -55,8 +49,8 @@ class TestUtils:
 
     def test_participate(self):
         conf.picker_settings['PARTICIPATION_HOOKS'] = ['tests.test_misc.can_participate']
-        assert True == utils.can_user_participate(None, True)
-        assert False == utils.can_user_participate(None, False)
+        assert utils.can_user_participate(None, True) is True
+        assert utils.can_user_participate(None, False) is False
 
     def test_get_templates(self):
         assert utils.get_templates('foo.html') == 'foo.html'

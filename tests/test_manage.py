@@ -1,14 +1,5 @@
-
-import os
 import pytest
 from django.urls import reverse
-from picker import models as picker
-from picker import (
-    forms,
-    stats,
-    urls,
-    views,
-)
 
 
 @pytest.mark.django_db

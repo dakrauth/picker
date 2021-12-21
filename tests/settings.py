@@ -13,10 +13,8 @@ SECRET_KEY = 'secret-test'
 SITE_ID = 1
 STATIC_ROOT = DEMO_PROJECT / 'static'
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'static'),)
 TIME_ZONE = 'America/New_York'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 
@@ -55,10 +53,9 @@ TEMPLATES = [{
             'django.contrib.messages.context_processors.messages',
         ],
     },
-},]
+}]
 
 PICKER = {
     'NFL': {'TEAM_PICKER_WIDGET': 'django.forms.RadioSelect'},
     'HQ': {'TEAM_PICKER_WIDGET': 'django.forms.RadioSelect'}
 }
-

@@ -7,7 +7,6 @@ from django.core.management import call_command
 
 from picker import models as picker
 from picker import importers, exceptions
-from picker.management.commands import import_picks
 
 
 def load_json(filename):
@@ -20,18 +19,16 @@ def load_json(filename):
 class TestImporters:
 
     def test_import_schema(self):
-        data = {}
-        exc = None
         try:
             importers.valid_schema({}, 'complete')
-        except exceptions.PickerConfigurationError as exc:
+        except exceptions.PickerConfigurationError:
             pass
         else:
             assert False
 
         try:
             importers.valid_schema({'schema': 'league'}, 'complete')
-        except exceptions.PickerConfigurationError as exc:
+        except exceptions.PickerConfigurationError:
             pass
         else:
             assert False
@@ -69,7 +66,7 @@ class TestImporters:
         assert len(info) == 17
         assert league.gamesets.first().sequence == 1
         for gs, is_new, games in info:
-            assert is_new == True
+            assert is_new is True
             assert all(is_new for g, is_new in games)
         assert picker.Game.objects.incomplete().count() == 256
 

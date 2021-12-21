@@ -289,6 +289,7 @@ class GamePick(models.Model):
 
         return None
 
+
 class GameSetPicksManager(models.Manager):
 
     def current_gameset(self, league):
@@ -305,8 +306,9 @@ class GameSetPicksManager(models.Manager):
 
         try:
             return self.filter(league=league, closes__lte=rel).latest('closes')
-        except GameSet.DoesNotExist:
+        except sports.GameSet.DoesNotExist:
             return None
+
 
 class GameSetPicks(sports.GameSet):
 

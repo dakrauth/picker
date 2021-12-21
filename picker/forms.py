@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.utils.module_loading import import_string
 
 from . import models as picker
-from . import utils
 
 _picker_widget = None
 encoded_game_key = 'game_{}'.format

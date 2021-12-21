@@ -1,5 +1,4 @@
 from django.utils import timezone
-from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 
 from dateutil.parser import parse as parse_dt
@@ -17,12 +16,15 @@ def parse_datetime(dtstr):
 
 def can_user_participate():
     hooks = None
+
     def inner(user, gs):
         nonlocal hooks
         if hooks is None:
             hooks = [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
         return all(hook(user, gs) for hook in hooks) if hooks else True
+
     return inner
+
 
 can_user_participate = can_user_participate()
 

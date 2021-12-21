@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -31,7 +32,6 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'demo.middleware.demo_middleware',
 )
 
 TEMPLATES = [{
@@ -47,7 +47,7 @@ TEMPLATES = [{
             'demo.context_processors.demo',
         ],
     },
-},]
+}]
 
 WSGI_APPLICATION = 'demo.wsgi.application'
 DATABASES = {'default': {

@@ -6,6 +6,7 @@ from picker.utils import datetime_now
 def demo_middleware(get_response):
     results = []
     DEMO = getattr(settings, 'DEMO', {})
+
     def middleware(request):
         if DEMO.get('allow_fake_datetime'):
             fake_dt = request.GET.get('fakedt', None)
@@ -19,7 +20,7 @@ def demo_middleware(get_response):
                 data.pop('csrfmiddlewaretoken', None)
                 result = {
                     'request.user': request.user.id if request.user else None,
-                    'post' : data,
+                    'post': data,
                     'url': request.path
                 }
                 results.append(result)

@@ -1,13 +1,10 @@
-# -*- coding:utf8 -*-
 import random
-import itertools
 from datetime import timedelta
 from collections import ChainMap, OrderedDict
 from functools import partialmethod
 
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.utils import timezone
 from django.db import OperationalError
 from django.utils.functional import cached_property
@@ -16,9 +13,7 @@ from django.core.exceptions import ValidationError
 from dateutil.parser import parse as parse_dt
 from choice_enum import ChoiceEnumeration
 
-from ..exceptions import PickerResultException
 from ..conf import picker_settings
-from .. import utils
 from .. import importers
 
 __all__ = [

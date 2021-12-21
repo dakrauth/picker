@@ -1,14 +1,5 @@
-
-import os
 import pytest
 from django.urls import reverse
-from picker import models as picker
-from picker import (
-    forms,
-    stats,
-    urls,
-    views,
-)
 
 
 @pytest.mark.django_db
@@ -27,7 +18,6 @@ class TestViews:
         assert r.status_code == 200
         assert b'Roster unavailable' in r.content
 
-
     def test_views(self, client, league, gamesets, user):
         for code in [302, 200]:
             if code == 200:
@@ -41,7 +31,7 @@ class TestViews:
             r = client.get(reverse('picker-season-roster', args=['hq', '1', league.current_season]))
             assert r.status_code == code
 
-            # /<league>/roster/<var>/p/<var>/ picker.views.picks.RosterProfile    picker-roster-profile
+            # /<league>/roster/<var>/p/<var>/ picker.views.picks.RosterProfile picker-roster-profile
             url = reverse('picker-roster-profile', args=['hq', '1', user.username])
             print('url =', url)
             r = client.get(url)

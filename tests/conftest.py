@@ -1,12 +1,11 @@
-import os
 import pytest
-from datetime import datetime, timedelta
+from datetime import timedelta
 from picker import models as picker
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-
 _now = timezone.now()
+
 
 @pytest.fixture
 def now():
@@ -24,10 +23,10 @@ def league(now):
     conf = league.conferences.create(name='Hogwarts', abbr='HW')
     division = conf.divisions.create(name='Varsity')
     for tm in [
-        {"id": 1, "abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions"},
-        {"id": 2, "abbr": "HUF", "name": "Hufflepuff", "logo": "picker/logos/hq/12657_Black.jpg", "colors": "#fff300,#000000", "nickname": "Badgers"},
-        {"id": 3, "abbr": "RVN", "name": "Ravenclaw", "logo": "picker/logos/hq/12654_Navy.jpg", "colors": "#0644ad,#7e4831", "nickname": "Eagles"},
-        {"id": 4, "abbr": "SLY", "name": "Slytherin", "logo": "picker/logos/hq/12655_Dark_Green.jpg", "colors": "#004101,#dcdcdc", "nickname": "Serpents"}
+        {"id": 1, "abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions"},  # noqa
+        {"id": 2, "abbr": "HUF", "name": "Hufflepuff", "logo": "picker/logos/hq/12657_Black.jpg", "colors": "#fff300,#000000", "nickname": "Badgers"},  # noqa
+        {"id": 3, "abbr": "RVN", "name": "Ravenclaw", "logo": "picker/logos/hq/12654_Navy.jpg", "colors": "#0644ad,#7e4831", "nickname": "Eagles"},  # noqa
+        {"id": 4, "abbr": "SLY", "name": "Slytherin", "logo": "picker/logos/hq/12655_Dark_Green.jpg", "colors": "#004101,#dcdcdc", "nickname": "Serpents"}  # noqa
     ]:
         league.teams.create(conference=conf, division=division, **tm)
 
@@ -45,7 +44,7 @@ def gameset(league, now):
         opens=now - timedelta(days=1),
         closes=now + timedelta(days=6)
     )
-    for away,home in [["GRF", "HUF"], ["RVN", "SLY"]]:
+    for away, home in [["GRF", "HUF"], ["RVN", "SLY"]]:
         gs.games.create(
             home=teams[home],
             away=teams[away],
@@ -74,7 +73,7 @@ def gamesets(league, now):
             closes=rel + timedelta(days=6)
         )
         gamesets.append(gs)
-        for j, (away, home) in enumerate(data,1):
+        for j, (away, home) in enumerate(data, 1):
             gs.games.create(
                 home=teams[home],
                 away=teams[away],

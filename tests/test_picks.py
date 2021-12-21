@@ -1,9 +1,7 @@
-import os
 import pytest
 from django.urls import reverse
 from picker import models as picker
 from picker.stats import RosterStats
-from picker import utils
 
 from .conftest import _now
 YEAR = _now.year
@@ -56,7 +54,6 @@ class TestViews:
             assert r.status_code == 200
 
 
-
 @pytest.mark.django_db
 class TestPicksForm:
 
@@ -64,9 +61,7 @@ class TestPicksForm:
         slug = league.slug
         season = league.current_season
         superuser, user1, user2 = users
-        users_dct = {u.id: u for u in users}
 
-        print(user1)
         client.force_login(user1)
         url = reverse('picker-picks-sequence', args=[slug, season, 1])
         r = client.post(url, {'points': 'X'})
@@ -116,8 +111,8 @@ class TestPicksForm:
         r = client.post(url, {'game_1': GRF, 'game_2': RVN, 'points': '300'})
         assert picker.PickSet.objects.filter(is_winner=True).count() == 1
 
-        assert user1.picksets.get(gameset__sequence=1).is_winner == True
-        assert user2.picksets.get(gameset__sequence=1).is_winner == False
+        assert user1.picksets.get(gameset__sequence=1).is_winner is True
+        assert user2.picksets.get(gameset__sequence=1).is_winner is False
 
         for data, user, seq in [
             [{'game_3': GRF, 'game_4': HUF, 'points': '200'}, user1, 2],
@@ -151,14 +146,14 @@ class TestPicksForm:
         assert user1.picksets.filter(is_winner=True).count() == 2
         assert user2.picksets.filter(is_winner=True).count() == 1
 
-        assert user1.picksets.get(gameset__sequence=1).is_winner == True
-        assert user2.picksets.get(gameset__sequence=1).is_winner == False
+        assert user1.picksets.get(gameset__sequence=1).is_winner is True
+        assert user2.picksets.get(gameset__sequence=1).is_winner is False
 
-        assert user1.picksets.get(gameset__sequence=2).is_winner == False
-        assert user2.picksets.get(gameset__sequence=2).is_winner == True
+        assert user1.picksets.get(gameset__sequence=2).is_winner is False
+        assert user2.picksets.get(gameset__sequence=2).is_winner is True
 
-        assert user1.picksets.get(gameset__sequence=3).is_winner == True
-        assert user2.picksets.get(gameset__sequence=3).is_winner == False
+        assert user1.picksets.get(gameset__sequence=3).is_winner is True
+        assert user2.picksets.get(gameset__sequence=3).is_winner is False
 
         rs = RosterStats.get_details(league, grouping, season=None)
         rs1 = rs[0][0]

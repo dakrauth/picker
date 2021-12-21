@@ -84,7 +84,7 @@ def import_league(cls, data):
             conf_abbr = conf_name = tm['sub'][0]
             if not isinstance(conf_name, str):
                 conf_name, conf_abbr = conf_name
-            
+
             conf_abbr = '-'.join(conf_abbr.lower().split())
 
             if conf_name in confs:

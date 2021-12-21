@@ -11,4 +11,3 @@ schedule_urls = [
     re_path(r'^$', views.Schedule.as_view(), name='picker-schedule'),
     re_path(r'^(?P<season>\d{4})/$', views.Schedule.as_view(), name='picker-schedule-year'),
 ]
-
