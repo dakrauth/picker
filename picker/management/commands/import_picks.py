@@ -6,7 +6,7 @@ from picker import models as picker
 class Command(BaseCommand):
     help = "Loads a new sports league"
     requires_migrations_checks = True
-    requires_system_checks = False
+    requires_system_checks = []
 
     def add_arguments(self, parser):
         parser.add_argument('filenames', nargs='+')

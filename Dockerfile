@@ -6,8 +6,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 
-RUN pip install -r requirements.txt && \
-    pip install django_extensions && \
+RUN pip install django_extensions && \
     pip install -e . && \
     pip install -e demo
 

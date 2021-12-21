@@ -1,13 +1,13 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from .. import views
 from . import picks, sports
 
 urlpatterns = [
-    url(r'^$', views.Home.as_view(), name='picker-home'),
-    url(r'^teams/', include(sports.teams_urls)),
-    url(r'^schedule/', include(sports.schedule_urls)),
-    url(r'^roster/', include(picks.roster_urls)),
-    url(r'^results/', include(picks.results_urls)),
-    url(r'^picks/', include(picks.picks_urls)),
-    url(r'^manage/', include(picks.management_urls))
+    re_path(r'^$', views.Home.as_view(), name='picker-home'),
+    re_path(r'^teams/', include(sports.teams_urls)),
+    re_path(r'^schedule/', include(sports.schedule_urls)),
+    re_path(r'^roster/', include(picks.roster_urls)),
+    re_path(r'^results/', include(picks.results_urls)),
+    re_path(r'^picks/', include(picks.picks_urls)),
+    re_path(r'^manage/', include(picks.management_urls))
 ]

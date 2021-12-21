@@ -170,7 +170,7 @@ class PickSet(models.Model):
 
     objects = PickSetManager()
 
-    updated_signal = Signal(providing_args=['pickset', 'auto_pick'])
+    updated_signal = Signal()
 
     class Meta:
         unique_together = (('user', 'gameset'),)

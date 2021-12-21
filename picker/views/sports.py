@@ -48,4 +48,3 @@ class Schedule(SimplePickerViewBase):
                 current[1].append(game)
 
         return super().get_context_data(gamesets=gamesets, **kwargs)
-

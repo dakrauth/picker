@@ -1,13 +1,13 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='demo-home'),
-    url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^(?P<league>\w+)/', include('picker.urls'))
+    re_path(r'^$', views.home, name='demo-home'),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^accounts/', include('django.contrib.auth.urls')),
+    re_path(r'^(?P<league>\w+)/', include('picker.urls'))
 ]
 
 if settings.DEBUG:
