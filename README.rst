@@ -1,6 +1,9 @@
 Picker
 ======
 
+.. image:: https://github.com/dakrauth/picker/workflows/Test/badge.svg
+    :target: https://github.com/dakrauth/picker/actions
+
 A Django-based sports picker app for various leagues.
 
 Templates
