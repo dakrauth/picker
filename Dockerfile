@@ -4,8 +4,10 @@ ENV PYTHONUNBUFFERED 1
 ENV DEMO_DB_NAME /db.sqlite3
 RUN mkdir -p /app
 WORKDIR /app
-COPY . .
 
+RUN pip install pillow
+
+COPY . .
 RUN pip install django_extensions && \
     pip install -e . && \
     pip install -e demo

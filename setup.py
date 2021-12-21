@@ -27,7 +27,7 @@ setup(
         'Django>=3.2,<4.1',
         'choice-enum==1.0.0',
         'django-bootstrap3>=12.0.1',
-        # 'Pillow>=6.2.1',
+        'Pillow>=6.2.1',
         'python-dateutil>=2.8.1',
     ],
     extras_require={

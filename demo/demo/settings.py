@@ -8,6 +8,7 @@ sys.path.append(os.path.dirname(BASE_DIR))
 SECRET_KEY = '@$n=(b+ih211@e02_kup2i26e)o4ovt6ureh@xbkfz!&@b(hh*'
 DEBUG = True
 ALLOWED_HOSTS = []
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -78,7 +79,6 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 
 
 DEMO = {
-    'allow_fake_datetime': True,
     'dump_post_data': True
 }
 
@@ -91,3 +91,8 @@ PICKER = {
         'TEAM_PICKER_WIDGET': 'demo.forms.TemplateTeamChoice',
     }
 }
+
+
+from freezegun import freeze_time
+freezer = freeze_time("2019-09-14 12:00:01")
+freezer.start()

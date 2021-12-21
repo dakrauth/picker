@@ -6,7 +6,6 @@
         "name": "National Football League",
         "abbr": "NFL",
         "logo": "",
-        "is_pickable": true,
         "current_season": 2019,
         "slug": "nfl",
         "avg_game_duration": 240

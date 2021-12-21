@@ -18,6 +18,9 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ),
+    install_requires=[
+        'freezegun',
+    ],
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

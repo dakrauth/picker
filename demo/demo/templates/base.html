@@ -38,14 +38,14 @@
             <a href="/admin/">Admin</a> |
             {{ now }}
         </footer>
-        {% if allow_fake_datetime %}
+        {% if fake_datetime %}
         <hr>
         <div class="text-center">
             <form action="" class="form-inline">
                 <p>
                     <label class="control-label">Set fake datetime:</label>
                     <input
-                    {% if is_fake_datetime %}value="{{ now }}"{% endif %}
+                    {% if fake_datetime %}value="{{ now }}"{% endif %}
                     class="form-control input-sm"  placeholder="Set fake datetime" type="text" name="fakedt">
                     <input type="submit" class="btn btn-warning btn-sm">
                 </p>

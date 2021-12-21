@@ -1,6 +1,5 @@
 from django.conf import settings
 from pprint import pformat
-from picker.utils import datetime_now
 
 
 def demo_middleware(get_response):
@@ -8,11 +7,9 @@ def demo_middleware(get_response):
     DEMO = getattr(settings, 'DEMO', {})
 
     def middleware(request):
-        if DEMO.get('allow_fake_datetime'):
-            fake_dt = request.GET.get('fakedt', None)
-            if fake_dt:
-                when = datetime_now(fake_dt)
-                print('Using fake datetime from query string: {}'.format(when))
+        fake_datetime = DEMO.get('fake_datetime')
+        if fake_datetime:
+            pass
 
         if DEMO.get('dump_post_data'):
             if request.method == 'POST' and request.path != '/accounts/login/':
