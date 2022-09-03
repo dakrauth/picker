@@ -5,18 +5,20 @@ ENV DEMO_DB_NAME /db.sqlite3
 RUN mkdir -p /app
 WORKDIR /app
 
-RUN pip install pillow
+RUN pip install \
+    pillow \
+    "Django<4.0" \
+    choice-enum==1.0.0 \
+    "django-bootstrap3>=12.0.1" \
+    "python-dateutil>=2.8.1" \
+    django_extensions
 
 COPY . .
-RUN pip install django_extensions && \
-    pip install -e . && \
-    pip install -e demo
-
-RUN demo migrate --no-input && \
+RUN pip install . demo/ && \
+    demo migrate --no-input && \
     demo loaddata demo/demo/fixtures/users.json && \
     demo loaddata demo/demo/fixtures/picker.json && \
     demo import_picks tests/nfl2019.json
-
 
 EXPOSE 80
 RUN echo Load at http://localhost:8080
