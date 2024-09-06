@@ -7,8 +7,7 @@ WORKDIR /app
 
 RUN pip install \
     pillow \
-    "Django<4.0" \
-    choice-enum==1.0.0 \
+    "Django<5.0" \
     "django-bootstrap3>=12.0.1" \
     "python-dateutil>=2.8.1" \
     django_extensions

@@ -16,15 +16,22 @@ from ..conf import picker_settings
 from .. import importers
 
 __all__ = [
-    'League', 'GameSet', 'Team', 'Game', 'Conference', 'Division', 'Alias',
-    'temp_slug', 'valid_team_abbr'
+    "League",
+    "GameSet",
+    "Team",
+    "Game",
+    "Conference",
+    "Division",
+    "Alias",
+    "temp_slug",
+    "valid_team_abbr",
 ]
 
-LOGOS_DIR = picker_settings.get('LOGOS_UPLOAD_DIR', 'picker/logos')
+LOGOS_DIR = picker_settings.get("LOGOS_UPLOAD_DIR", "picker/logos")
 
 
 def temp_slug():
-    return '{:10.0f}'.format(random.random() * 10000000000)
+    return "{:10.0f}".format(random.random() * 10000000000)
 
 
 class League(models.Model):
@@ -44,34 +51,34 @@ class League(models.Model):
     def _reverse(self, name):
         return reverse(name, args=[self.slug])
 
-    get_absolute_url = partialmethod(_reverse, 'picker-home')
-    picks_url = partialmethod(_reverse, 'picker-picks')
-    results_url = partialmethod(_reverse, 'picker-results')
-    roster_url = partialmethod(_reverse, 'picker-roster-base')
-    teams_url = partialmethod(_reverse, 'picker-teams')
-    schedule_url = partialmethod(_reverse, 'picker-schedule')
-    manage_url = partialmethod(_reverse, 'picker-manage')
+    get_absolute_url = partialmethod(_reverse, "picker-home")
+    picks_url = partialmethod(_reverse, "picker-picks")
+    results_url = partialmethod(_reverse, "picker-results")
+    roster_url = partialmethod(_reverse, "picker-roster-base")
+    teams_url = partialmethod(_reverse, "picker-teams")
+    schedule_url = partialmethod(_reverse, "picker-schedule")
+    manage_url = partialmethod(_reverse, "picker-manage")
 
     def to_dict(self):
         return {
-            'schema': 'complete',
-            'league': {
-                'schema': 'league',
-                'name': self.name,
-                'slug': self.slug,
-                'abbr': self.abbr,
-                'current_season': self.current_season,
-                'teams': [team.to_dict() for team in self.teams.all()]
+            "schema": "complete",
+            "league": {
+                "schema": "league",
+                "name": self.name,
+                "slug": self.slug,
+                "abbr": self.abbr,
+                "current_season": self.current_season,
+                "teams": [team.to_dict() for team in self.teams.all()],
             },
-            'season': {
-                'schema': 'season',
-                'league': self.abbr,
-                'season': self.current_season,
-                'gamesets': [
+            "season": {
+                "schema": "season",
+                "league": self.abbr,
+                "season": self.current_season,
+                "gamesets": [
                     gs.to_dict()
                     for gs in self.gamesets.filter(season=self.current_season)
-                ]
-            }
+                ],
+            },
         }
 
     @cached_property
@@ -81,10 +88,10 @@ class League(models.Model):
             names[team.abbr] = team
             names[team.id] = team
             if team.nickname:
-                full_name = '{} {}'.format(team.name, team.nickname)
+                full_name = "{} {}".format(team.name, team.nickname)
                 names[full_name] = team
 
-            for alias in Alias.objects.filter(team=team).values_list('name', flat=True):
+            for alias in Alias.objects.filter(team=team).values_list("name", flat=True):
                 names[alias] = team
 
         return names
@@ -93,12 +100,12 @@ class League(models.Model):
     def latest_gameset(self):
         rel = timezone.now()
         try:
-            return self.gamesets.filter(points=0, opens__gte=rel).earliest('opens')
+            return self.gamesets.filter(points=0, opens__gte=rel).earliest("opens")
         except GameSet.DoesNotExist:
             pass
 
         try:
-            return self.gamesets.filter(closes__lte=rel).latest('closes')
+            return self.gamesets.filter(closes__lte=rel).latest("closes")
         except GameSet.DoesNotExist:
             return None
 
@@ -117,10 +124,11 @@ class League(models.Model):
 
     @cached_property
     def available_seasons(self):
-        return self.gamesets.order_by('-season').values_list(
-            'season',
-            flat=True
-        ).distinct()
+        return (
+            self.gamesets.order_by("-season")
+            .values_list("season", flat=True)
+            .distinct()
+        )
 
     def season_gamesets(self, season=None):
         season = season or self.current_season or self.latest_season
@@ -129,14 +137,13 @@ class League(models.Model):
     def random_points(self):
         try:
             d = self.gamesets.filter(points__gt=0).aggregate(
-                stddev=models.StdDev('points'),
-                avg=models.Avg('points')
+                stddev=models.StdDev("points"), avg=models.Avg("points")
             )
         except OperationalError:
             return 0
         else:
-            avg = int(d.get('avg') or 0)
-            stddev = int(d.get('stddev') or 0)
+            avg = int(d.get("avg") or 0)
+            stddev = int(d.get("stddev") or 0)
             return random.randint(avg - stddev, avg + stddev)
 
     @cached_property
@@ -145,7 +152,7 @@ class League(models.Model):
         base = {}
         league = {}
         for key, value in picker_settings.items():
-            if key == '_BASE':
+            if key == "_BASE":
                 base = picker_settings[key]
             elif isinstance(value, dict) and key == self.abbr:
                 league = value
@@ -167,14 +174,16 @@ class League(models.Model):
 
     @classmethod
     def get(cls, abbr=None):
-        abbr = abbr or picker_settings.get('DEFAULT_LEAGUE', 'nfl')
+        abbr = abbr or picker_settings.get("DEFAULT_LEAGUE", "nfl")
         return cls.objects.get(abbr__iexact=abbr)
 
 
 class Conference(models.Model):
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=8)
-    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='conferences')
+    league = models.ForeignKey(
+        League, on_delete=models.CASCADE, related_name="conferences"
+    )
 
     def __str__(self):
         return self.name
@@ -182,85 +191,81 @@ class Conference(models.Model):
 
 class Division(models.Model):
     name = models.CharField(max_length=50)
-    conference = models.ForeignKey(Conference, on_delete=models.CASCADE, related_name='divisions')
+    conference = models.ForeignKey(
+        Conference, on_delete=models.CASCADE, related_name="divisions"
+    )
 
     def __str__(self):
-        return '{} {}'.format(self.conference.name, self.name)
+        return "{} {}".format(self.conference.name, self.name)
 
 
 def valid_team_abbr(value):
-    if value.startswith('__'):
+    if value.startswith("__"):
         raise ValidationError('Team abbr cannot start with "__"')
 
 
 class Team(models.Model):
-    '''
+    """
     Common team attributes.
-    '''
+    """
 
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=8, blank=True, validators=[valid_team_abbr])
     nickname = models.CharField(max_length=50, blank=True)
     location = models.CharField(max_length=100, blank=True)
     coach = models.CharField(max_length=50, blank=True)
-    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='teams')
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="teams")
     conference = models.ForeignKey(
         Conference,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='teams'
+        related_name="teams",
     )
     division = models.ForeignKey(
-        Division,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='teams'
+        Division, on_delete=models.SET_NULL, blank=True, null=True, related_name="teams"
     )
     colors = models.CharField(max_length=40, blank=True)
     logo = models.ImageField(upload_to=LOGOS_DIR, blank=True, null=True)
-    notes = models.TextField(blank=True, default='')
+    notes = models.TextField(blank=True, default="")
 
     class Meta:
-        ordering = ('name',)
+        ordering = ("name",)
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.nickname)
+        return "{} {}".format(self.name, self.nickname)
 
     def get_absolute_url(self):
-        return reverse('picker-team', args=[self.league.slug, self.abbr])
+        return reverse("picker-team", args=[self.league.slug, self.abbr])
 
     def to_dict(self):
         return {
-            'abbr': self.abbr,
-            'logo': self.logo.name,
-            'name': self.name,
-            'nickname': self.nickname,
-            'sub': [
-                self.conference.name,
-                self.division.name
-            ],
-            'aliases': list(self.aliases.values_list('name', flat=True)),
-            'coach': self.coach,
-            'location': self.location,
+            "abbr": self.abbr,
+            "logo": self.logo.name,
+            "name": self.name,
+            "nickname": self.nickname,
+            "sub": [self.conference.name, self.division.name],
+            "aliases": list(self.aliases.values_list("name", flat=True)),
+            "coach": self.coach,
+            "location": self.location,
         }
 
     def season_record(self, season=None):
         season = season or self.league.current_season
         wins, losses, ties = (0, 0, 0)
-        for status, home_abbr, away_abbr in Game.objects.filter(
-            models.Q(home=self) | models.Q(away=self),
-            gameset__season=season,
-        ).exclude(
-            status__in=[Game.Status.UNPLAYED, Game.Status.CANCELLED]
-        ).values_list('status', 'home__abbr', 'away__abbr'):
+        for status, home_abbr, away_abbr in (
+            Game.objects.filter(
+                models.Q(home=self) | models.Q(away=self),
+                gameset__season=season,
+            )
+            .exclude(status__in=[Game.Status.UNPLAYED, Game.Status.CANCELLED])
+            .values_list("status", "home__abbr", "away__abbr")
+        ):
             if status == Game.Status.TIE:
                 ties += 1
             else:
-                if (
-                    (status == Game.Status.HOME_WIN and self.abbr == home_abbr) or
-                    (status == Game.Status.AWAY_WIN and self.abbr == away_abbr)
+                if (status == Game.Status.HOME_WIN and self.abbr == home_abbr) or (
+                    status == Game.Status.AWAY_WIN and self.abbr == away_abbr
                 ):
                     wins += 1
                 else:
@@ -282,16 +287,16 @@ class Team(models.Model):
         record = self.record
         if not record[2]:
             record = record[:2]
-        return '-'.join(str(s) for s in record)
+        return "-".join(str(s) for s in record)
 
     @property
     def color_options(self):
-        return self.colors.split(',') if self.colors else []
+        return self.colors.split(",") if self.colors else []
 
     def schedule(self, season=None):
-        return Game.objects.select_related('gameset').filter(
+        return Game.objects.select_related("gameset").filter(
             models.Q(away=self) | models.Q(home=self),
-            gameset__season=season or self.league.current_season
+            gameset__season=season or self.league.current_season,
         )
 
     def byes(self, season=None):
@@ -306,8 +311,7 @@ class Team(models.Model):
             (self.home_games, home_games, Game.Status.HOME_WIN),
         ):
             for res in games.exclude(status=Game.Status.UNPLAYED).values_list(
-                'status',
-                flat=True
+                "status", flat=True
             ):
                 if res == status:
                     accum[0] += 1
@@ -316,15 +320,19 @@ class Team(models.Model):
                 else:
                     accum[1] += 1
 
-        return [home_games, away_games, [
-            away_games[0] + home_games[0],
-            away_games[1] + home_games[1],
-            away_games[2] + home_games[2]
-        ]]
+        return [
+            home_games,
+            away_games,
+            [
+                away_games[0] + home_games[0],
+                away_games[1] + home_games[1],
+                away_games[2] + home_games[2],
+            ],
+        ]
 
 
 class Alias(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='aliases')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="aliases")
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -332,69 +340,66 @@ class Alias(models.Model):
 
 
 class GameSet(models.Model):
-    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='gamesets')
+    league = models.ForeignKey(
+        League, on_delete=models.CASCADE, related_name="gamesets"
+    )
     season = models.PositiveSmallIntegerField()
     sequence = models.PositiveSmallIntegerField()
     points = models.PositiveSmallIntegerField(default=0)
     opens = models.DateTimeField()
     closes = models.DateTimeField()
-    description = models.CharField(max_length=60, default='', blank=True)
+    description = models.CharField(max_length=60, default="", blank=True)
     label = models.CharField(max_length=12, blank=True)
 
     byes = models.ManyToManyField(
-        Team,
-        blank=True,
-        verbose_name='Bye Teams',
-        related_name='bye_set'
+        Team, blank=True, verbose_name="Bye Teams", related_name="bye_set"
     )
 
     class Meta:
-        ordering = ('season', 'sequence')
+        ordering = ("season", "sequence")
 
     def __str__(self):
-        return '{}:{}'.format(self.sequence, self.season)
+        return "{}:{}".format(self.sequence, self.season)
 
     def get_absolute_url(self):
         return reverse(
-            'picker-game-sequence',
-            args=[self.league.slug, str(self.season), str(self.sequence)]
+            "picker-game-sequence",
+            args=[self.league.slug, str(self.season), str(self.sequence)],
         )
 
     def picks_url(self):
         return reverse(
-            'picker-picks-sequence',
-            args=[self.league.slug, str(self.season), str(self.sequence)]
+            "picker-picks-sequence",
+            args=[self.league.slug, str(self.season), str(self.sequence)],
         )
 
     def to_dict(self):
         return {
-            'byes': list(self.byes.values_list('abbr', flat=True)),
-            'opens': self.opens.isoformat(),
-            'closes': self.closes.isoformat(),
-            'games': [
-                g.to_dict() for g in self.games.select_related('home', 'away')
-            ]
+            "byes": list(self.byes.values_list("abbr", flat=True)),
+            "opens": self.opens.isoformat(),
+            "closes": self.closes.isoformat(),
+            "games": [g.to_dict() for g in self.games.select_related("home", "away")],
         }
 
     def import_games(self, data, teams=None):
         teams = teams or self.league.team_dict
-        byes = data.get('byes')
+        byes = data.get("byes")
         if byes:
             self.byes.add(*[teams[t] for t in byes])
 
         games = []
-        for dct in data['games']:
-            start_time = parse_dt(dct['start'])
+        for dct in data["games"]:
+            start_time = parse_dt(dct["start"])
             game, is_new = self.games.get_or_create(
-                home=teams.get(dct['home']),
-                away=teams.get(dct['away']),
-                defaults={'start_time': start_time}
+                home=teams.get(dct["home"]),
+                away=teams.get(dct["away"]),
+                defaults={"start_time": start_time},
             )
             game.start_time = start_time
-            game.description = dct.get('description', game.description)
-            game.tv = dct.get('tv', game.tv)
-            game.location = dct.get('location', game.location)
-            game.notes = dct.get('notes', game.notes)
+            game.description = dct.get("description", game.description)
+            game.tv = dct.get("tv", game.tv)
+            game.location = dct.get("location", game.location)
+            game.notes = dct.get("notes", game.notes)
             game.save()
             games.append([game, is_new])
 
@@ -435,54 +440,57 @@ class GameSet(models.Model):
 
 
 class GameManager(models.Manager):
-
     def display_results(self):
-        return OrderedDict([
-            (item['id'], item) for item in self.games_started().annotate(
-                winner=models.Case(
-                    models.When(status='H', then='home__abbr'),
-                    models.When(status='A', then='away__abbr'),
-                    models.When(status='T', then=models.Value('__TIE__')),
-                    default=None,
-                    output_field=models.CharField()
+        return OrderedDict(
+            [
+                (item["id"], item)
+                for item in self.games_started()
+                .annotate(
+                    winner=models.Case(
+                        models.When(status="H", then="home__abbr"),
+                        models.When(status="A", then="away__abbr"),
+                        models.When(status="T", then=models.Value("__TIE__")),
+                        default=None,
+                        output_field=models.CharField(),
+                    )
                 )
-            ).values('id', 'home__abbr', 'away__abbr', 'winner')
-        ])
+                .values("id", "home__abbr", "away__abbr", "winner")
+            ]
+        )
 
     def games_started(self):
         return self.filter(start_time__lte=timezone.now())
 
     def incomplete(self, **kws):
-        kws['status'] = self.model.Status.UNPLAYED
+        kws["status"] = self.model.Status.UNPLAYED
         return self.filter(**kws)
 
     def played(self, **kws):
         Status = self.model.Status
-        kws['status__in'] = [Status.TIE, Status.HOME_WIN, Status.AWAY_WIN]
+        kws["status__in"] = [Status.TIE, Status.HOME_WIN, Status.AWAY_WIN]
         return self.filter(**kws)
 
 
 class Game(models.Model):
-
     class Category(models.TextChoices):
-        REGULAR = 'REG', 'Regular Season'
-        POST = 'POST', 'Post Season'
-        PRE = 'PRE', 'Pre Season'
-        FRIENDLY = 'FRND', 'Friendly'
+        REGULAR = "REG", "Regular Season"
+        POST = "POST", "Post Season"
+        PRE = "PRE", "Pre Season"
+        FRIENDLY = "FRND", "Friendly"
 
     class Status(models.TextChoices):
-        UNPLAYED = 'U', 'Unplayed'
-        TIE = 'T', 'Tie'
-        HOME_WIN = 'H', 'Home Win'
-        AWAY_WIN = 'A', 'Away Win'
-        CANCELLED = 'X', 'Cancelled'
+        UNPLAYED = "U", "Unplayed"
+        TIE = "T", "Tie"
+        HOME_WIN = "H", "Home Win"
+        AWAY_WIN = "A", "Away Win"
+        CANCELLED = "X", "Cancelled"
 
     home = models.ForeignKey(
         Team,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='home_games'
+        related_name="home_games",
     )
     home_score = models.PositiveIntegerField(default=0)
     away = models.ForeignKey(
@@ -490,33 +498,37 @@ class Game(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='away_games'
+        related_name="away_games",
     )
     away_score = models.PositiveIntegerField(default=0)
-    gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='games')
+    gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name="games")
     start_time = models.DateTimeField()
-    tv = models.CharField('TV', max_length=24, blank=True)
+    tv = models.CharField("TV", max_length=24, blank=True)
     notes = models.TextField(blank=True)
-    category = models.CharField(max_length=4, choices=Category.choices, default=Category.REGULAR)
-    status = models.CharField(max_length=1, choices=Status.choices, default=Status.UNPLAYED)
-    location = models.CharField(blank=True, default='', max_length=60)
-    description = models.CharField(max_length=60, default='', blank=True)
+    category = models.CharField(
+        max_length=4, choices=Category.choices, default=Category.REGULAR
+    )
+    status = models.CharField(
+        max_length=1, choices=Status.choices, default=Status.UNPLAYED
+    )
+    location = models.CharField(blank=True, default="", max_length=60)
+    description = models.CharField(max_length=60, default="", blank=True)
 
     objects = GameManager()
 
     class Meta:
-        ordering = ('start_time', 'away')
+        ordering = ("start_time", "away")
 
     def __str__(self):
-        return '{} @ {} {}'.format(self.away.abbr, self.home.abbr, self.gameset)
+        return "{} @ {} {}".format(self.away.abbr, self.home.abbr, self.gameset)
 
     def to_dict(self):
         return {
-            'away': self.away.abbr,
-            'home': self.home.abbr,
-            'start': self.start_time.isoformat(),
-            'tv': self.tv,
-            'location': self.location
+            "away": self.away.abbr,
+            "home": self.home.abbr,
+            "start": self.start_time.isoformat(),
+            "tv": self.tv,
+            "location": self.location,
         }
 
     @property
@@ -529,11 +541,11 @@ class Game(models.Model):
 
     @property
     def short_description(self):
-        return '%s @ %s' % (self.away, self.home)
+        return "%s @ %s" % (self.away, self.home)
 
     @property
     def vs_description(self):
-        return '%s vs %s' % (self.away.nickname, self.home.nickname)
+        return "%s vs %s" % (self.away.nickname, self.home.nickname)
 
     @property
     def is_home_win(self):
@@ -555,7 +567,7 @@ class Game(models.Model):
 
     @winner.setter
     def winner(self, team):
-        '''``team`` can be either a Team instance or PK, or ``None`` to indicate a tie'''
+        """``team`` can be either a Team instance or PK, or ``None`` to indicate a tie"""
         if team is None:
             self.status = self.Status.TIE
         else:
@@ -565,7 +577,7 @@ class Game(models.Model):
             elif team_id == self.home.id:
                 self.status = self.Status.HOME_WIN
             else:
-                raise ValueError(f'{team} is not a valid winning team')
+                raise ValueError(f"{team} is not a valid winning team")
 
         self.save()
 
@@ -574,7 +586,9 @@ class Game(models.Model):
 
     @property
     def end_time(self):
-        return self.start_time + timedelta(minutes=self.gameset.league.avg_game_duration)
+        return self.start_time + timedelta(
+            minutes=self.gameset.league.avg_game_duration
+        )
 
     @property
     def in_progress(self):

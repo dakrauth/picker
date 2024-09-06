@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0010_auto_20181202_1240'),
+        ("picker", "0010_auto_20181202_1240"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='team',
-            name='notes',
-            field=models.TextField(blank=True, default=''),
+            model_name="team",
+            name="notes",
+            field=models.TextField(blank=True, default=""),
         ),
     ]

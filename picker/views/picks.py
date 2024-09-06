@@ -8,43 +8,42 @@ from ..models import Preference, PickerGrouping, GameSetPicks
 
 
 class Home(SimplePickerViewBase):
-    template_name = '@home.html'
+    template_name = "@home.html"
 
 
 class RosterRedirect(PickerViewBase):
-    template_name = '@roster/select.html'
+    template_name = "@roster/select.html"
 
     def get(self, request, *args, **kwargs):
         qs = request.user.picker_memberships.filter(
             group__leagues=self.league
-        ).select_related('group')
+        ).select_related("group")
 
         count = qs.count()
         if count == 1:
             mbr = qs[0]
-            return self.redirect('picker-roster', self.league.slug, mbr.group.id)
+            return self.redirect("picker-roster", self.league.slug, mbr.group.id)
         elif count > 1:
-            return self.render_to_response(self.get_context_data(
-                memberships=qs
-            ))
+            return self.render_to_response(self.get_context_data(memberships=qs))
 
-        self.template_name = '@unavailable.html'
-        return self.render_to_response({
-            'league_base': 'picker/base.html',
-            'heading': 'Roster unavailable',
-            'description': 'Please check back later',
-        })
+        self.template_name = "@unavailable.html"
+        return self.render_to_response(
+            {
+                "league_base": "picker/base.html",
+                "heading": "Roster unavailable",
+                "description": "Please check back later",
+            }
+        )
 
 
 class RosterMixin:
-
     @property
     def group(self):
         return get_object_or_404(PickerGrouping, pk=self.args[0])
 
 
 class Roster(RosterMixin, PickerViewBase):
-    template_name = '@roster/season.html'
+    template_name = "@roster/season.html"
 
     @property
     def season(self):
@@ -65,7 +64,7 @@ class Roster(RosterMixin, PickerViewBase):
 
 
 class RosterProfile(RosterMixin, PickerViewBase):
-    template_name = '@roster/picker.html'
+    template_name = "@roster/picker.html"
 
     def get_context_data(self, **kwargs):
         league = self.league
@@ -81,8 +80,9 @@ class RosterProfile(RosterMixin, PickerViewBase):
 
 #  Results
 
+
 class Results(PickerViewBase):
-    template_name = '@results/results.html'
+    template_name = "@results/results.html"
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -90,16 +90,16 @@ class Results(PickerViewBase):
         league = self.league
         gameset = GameSetPicks.objects.current_gameset(league=league)
         if gameset:
-            context['gameset'] = gameset
+            context["gameset"] = gameset
         else:
-            self.template_name = '@unavailable.html'
-            context['heading'] = 'Results currently unavailable'
+            self.template_name = "@unavailable.html"
+            context["heading"] = "Results currently unavailable"
 
         return self.render_to_response(context)
 
 
 class ResultsBySeason(PickerViewBase):
-    template_name = '@results/season.html'
+    template_name = "@results/season.html"
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(
@@ -108,61 +108,63 @@ class ResultsBySeason(PickerViewBase):
 
 
 class ResultsByWeek(PickerViewBase):
-    template_name = '@results/results.html'
+    template_name = "@results/results.html"
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(gameset=get_object_or_404(
-            GameSetPicks,
-            league=self.league,
-            season=self.season,
-            sequence=self.args[0]
-        ), **kwargs)
+        return super().get_context_data(
+            gameset=get_object_or_404(
+                GameSetPicks,
+                league=self.league,
+                season=self.season,
+                sequence=self.args[0],
+            ),
+            **kwargs
+        )
 
 
 #  Picks
 
+
 class PicksBySeason(PickerViewBase):
-    template_name = '@picks/season.html'
+    template_name = "@picks/season.html"
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(gamesets=[
-            (gs, gs.pick_for_user(self.request.user))
-            for gs in get_list_or_404(GameSetPicks, league=self.league, season=self.season)
-        ], **kwargs)
+        return super().get_context_data(
+            gamesets=[
+                (gs, gs.pick_for_user(self.request.user))
+                for gs in get_list_or_404(
+                    GameSetPicks, league=self.league, season=self.season
+                )
+            ],
+            **kwargs
+        )
 
 
 class Picks(PickerViewBase):
-    template_name = '@unavailable.html'
+    template_name = "@unavailable.html"
 
     def get(self, request, *args, **kwargs):
         league = self.league
         gameset = GameSetPicks.objects.current_gameset(league=league)
         if gameset:
             return self.redirect(
-                'picker-picks-sequence',
-                league.slug,
-                gameset.season,
-                gameset.sequence
+                "picker-picks-sequence", league.slug, gameset.season, gameset.sequence
             )
 
-        return self.render_to_response(self.get_context_data(
-            heading='Picks currently unavailable',
-            **kwargs
-        ))
+        return self.render_to_response(
+            self.get_context_data(heading="Picks currently unavailable", **kwargs)
+        )
 
 
 class PicksByGameset(SimpleFormMixin, PickerViewBase):
-    success_msg = 'Your picks have been saved'
+    success_msg = "Your picks have been saved"
     form_class = forms.UserPickForm
-    template_name = '@picks/make.html'
+    template_name = "@picks/make.html"
 
     @cached_property
     def gameset(self):
         return get_object_or_404(
-            GameSetPicks,
-            league=self.league,
-            season=self.season,
-            sequence=self.args[0]
+            GameSetPicks, league=self.league, season=self.season, sequence=self.args[0]
         )
 
     def form_valid(self, form):
@@ -178,11 +180,12 @@ class PicksByGameset(SimpleFormMixin, PickerViewBase):
         return super().get_context_data(gameset=self.gameset, **kwargs)
 
     def show_picks(self, gameset, **kwargs):
-        self.template_name = '@picks/show.html'
-        return self.render_to_response(self.get_context_data(
-            picks=gameset.pick_for_user(self.request.user),
-            **kwargs
-        ))
+        self.template_name = "@picks/show.html"
+        return self.render_to_response(
+            self.get_context_data(
+                picks=gameset.pick_for_user(self.request.user), **kwargs
+            )
+        )
 
     def post(self, request, *args, **kwargs):
         gameset = self.gameset

@@ -8,7 +8,6 @@ def percent(num, denom):
 
 
 class RosterStats:
-
     def __init__(self, user, league, season=None):
         self.user = user
         self.season = season
@@ -17,8 +16,10 @@ class RosterStats:
         self.wrong = 0
         self.points_delta = 0
 
-        queryset = self.user.picksets.filter(gameset__league=league).select_related().filter(
-            Q(correct__gt=0) | Q(wrong__gt=0)
+        queryset = (
+            self.user.picksets.filter(gameset__league=league)
+            .select_related()
+            .filter(Q(correct__gt=0) | Q(wrong__gt=0))
         )
 
         if season:
@@ -27,11 +28,7 @@ class RosterStats:
         self.picksets_played = 0
         self.picksets_won = 0
         for correct, wrong, is_winner, points, actual_points in queryset.values_list(
-            'correct',
-            'wrong',
-            'is_winner',
-            'points',
-            'gameset__points'
+            "correct", "wrong", "is_winner", "points", "gameset__points"
         ):
             self.picksets_played += 1
             self.correct += correct
@@ -45,13 +42,13 @@ class RosterStats:
         self.is_active = self.user.is_active
         self.pct = percent(self.correct, self.correct + self.wrong)
         self.avg_points_delta = (
-            self.points_delta / self.picksets_played
-            if self.picksets_played
-            else 0
+            self.points_delta / self.picksets_played if self.picksets_played else 0
         )
 
     def __str__(self):
-        return '{}{}'.format(self.user, ' ({})'.format(self.season) if self.season else '')
+        return "{}{}".format(
+            self.user, " ({})".format(self.season) if self.season else ""
+        )
 
     __repr__ = __str__
 
@@ -64,11 +61,7 @@ class RosterStats:
             return (rs.correct, -rs.points_delta, rs.picksets_played)
 
         stats = [cls(u, league) for u in users]
-        by_user = {
-            entry.user: entry for entry in sorted_standings(stats, key=keyfn)
-        }
+        by_user = {entry.user: entry for entry in sorted_standings(stats, key=keyfn)}
         stats = [cls(u, league, season) for u in users]
-        results = [
-            (e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)
-        ]
+        results = [(e, by_user[e.user]) for e in sorted_standings(stats, key=keyfn)]
         return results

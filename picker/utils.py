@@ -20,7 +20,7 @@ def can_user_participate():
     def inner(user, gs):
         nonlocal hooks
         if hooks is None:
-            hooks = [import_string(h) for h in get_setting('PARTICIPATION_HOOKS', [])]
+            hooks = [import_string(h) for h in get_setting("PARTICIPATION_HOOKS", [])]
         return all(hook(user, gs) for hook in hooks) if hooks else True
 
     return inner
@@ -42,12 +42,16 @@ def sorted_standings(items, key=None, reverse=True):
 
 
 def get_templates(component, league=None):
-    if component.startswith('@'):
-        dirs = [component.replace('@', 'picker/{}/'.format(league.slug))] if league else []
-        dirs.extend([
-            component.replace('@', 'picker/'),
-            component.replace('@', 'picker/_base/'),
-        ])
+    if component.startswith("@"):
+        dirs = (
+            [component.replace("@", "picker/{}/".format(league.slug))] if league else []
+        )
+        dirs.extend(
+            [
+                component.replace("@", "picker/"),
+                component.replace("@", "picker/_base/"),
+            ]
+        )
         return dirs
 
     return component

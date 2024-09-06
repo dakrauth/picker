@@ -4,45 +4,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0011_team_notes'),
+        ("picker", "0011_team_notes"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='GameSetPicks',
-            fields=[
-            ],
+            name="GameSetPicks",
+            fields=[],
             options={
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('picker.gameset',),
+            bases=("picker.gameset",),
         ),
         migrations.RemoveField(
-            model_name='league',
-            name='is_pickable',
+            model_name="league",
+            name="is_pickable",
         ),
         migrations.AddField(
-            model_name='game',
-            name='away_score',
+            model_name="game",
+            name="away_score",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='game',
-            name='home_score',
+            model_name="game",
+            name="home_score",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='gamepick',
-            name='confidence',
+            model_name="gamepick",
+            name="confidence",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='gameset',
-            name='label',
+            model_name="gameset",
+            name="label",
             field=models.CharField(blank=True, max_length=12),
         ),
     ]

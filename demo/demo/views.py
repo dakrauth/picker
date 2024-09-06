@@ -4,4 +4,4 @@ from picker.models import League
 
 def home(request):
     leagues = League.objects.all()
-    return render(request, 'picker/home.html', {'leagues': leagues})
+    return render(request, "picker/home.html", {"leagues": leagues})

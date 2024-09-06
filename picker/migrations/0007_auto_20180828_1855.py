@@ -6,20 +6,27 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0006_auto_20180824_1356'),
+        ("picker", "0006_auto_20180824_1356"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='gamepick',
-            name='pick',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gamepicks', to='picker.PickSet'),
+            model_name="gamepick",
+            name="pick",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="gamepicks",
+                to="picker.PickSet",
+            ),
         ),
         migrations.AlterField(
-            model_name='preference',
-            name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='picker_preferences', to=settings.AUTH_USER_MODEL),
+            model_name="preference",
+            name="user",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="picker_preferences",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

@@ -9,31 +9,29 @@ from ..models import Game, GameSetPicks
 from .base import PickerViewBase, SimpleFormMixin
 
 
-__all__ = ['ManagementHome', 'ManageSeason', 'ManageWeek', 'ManageGame']
+__all__ = ["ManagementHome", "ManageSeason", "ManageWeek", "ManageGame"]
 
 
 class ManagementMixin(UserPassesTestMixin):
-
     def test_func(self):
         user = self.request.user
-        return user.is_authenticated and user.has_perm('can_update_score')
+        return user.is_authenticated and user.has_perm("can_update_score")
 
 
 class ManagementViewBase(ManagementMixin, PickerViewBase):
-
     def get_context_data(self, **kwargs):
         return super().get_context_data(management=True, **kwargs)
 
 
 class ManagementHome(ManagementViewBase):
-    template_name = '@manage/home.html'
+    template_name = "@manage/home.html"
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(gameset=self.league.current_gameset, **kwargs)
 
 
 class ManageSeason(ManagementViewBase):
-    template_name = '@manage/season.html'
+    template_name = "@manage/season.html"
 
     def get_context_data(self, **kwargs):
         gamesets = get_list_or_404(self.league.gamesets, season=self.season)
@@ -41,16 +39,13 @@ class ManageSeason(ManagementViewBase):
 
 
 class ManageWeek(SimpleFormMixin, ManagementViewBase):
-    template_name = '@manage/results.html'
+    template_name = "@manage/results.html"
     form_class = forms.ManagementPickForm
 
     @cached_property
     def gameset(self):
         return get_object_or_404(
-            GameSetPicks,
-            league=self.league,
-            season=self.season,
-            sequence=self.args[0]
+            GameSetPicks, league=self.league, season=self.season, sequence=self.args[0]
         )
 
     def get_context_data(self, **kwargs):
@@ -61,7 +56,7 @@ class ManageWeek(SimpleFormMixin, ManagementViewBase):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, 'Results saved')
+        messages.success(self.request, "Results saved")
         return http.HttpResponseRedirect(self.request.path)
 
     def post(self, *args, **kwargs):
@@ -76,9 +71,9 @@ class ManageWeek(SimpleFormMixin, ManagementViewBase):
 
 
 class ManageGame(SimpleFormMixin, ManagementViewBase):
-    template_name = '@manage/game.html'
+    template_name = "@manage/game.html"
     form_class = forms.GameForm
-    success_msg = 'Game saved'
+    success_msg = "Game saved"
 
     @cached_property
     def game(self):
@@ -89,7 +84,7 @@ class ManageGame(SimpleFormMixin, ManagementViewBase):
 
     def get_form_kwargs(self):
         data = super().get_form_kwargs()
-        data['instance'] = self.game
+        data["instance"] = self.game
         return data
 
     def form_valid(self, form):

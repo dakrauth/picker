@@ -39,14 +39,13 @@ class SimpleFormMixin(FormMixin):
 
 
 class SimplePickerViewBase(TemplateView):
-
     @staticmethod
     def redirect(name, *args, **kwargs):
         return http.HttpResponseRedirect(reverse(name, args=args, kwargs=kwargs))
 
     @property
     def season(self):
-        season = self.kwargs.get('season')
+        season = self.kwargs.get("season")
         if season and season.isdigit():
             return int(season)
 
@@ -55,7 +54,7 @@ class SimplePickerViewBase(TemplateView):
 
     @cached_property
     def league(self):
-        return get_object_or_404(League, abbr__iexact=self.kwargs['league'])
+        return get_object_or_404(League, abbr__iexact=self.kwargs["league"])
 
     def get_template_names(self):
         if self.template_name is None:
@@ -69,27 +68,31 @@ class SimplePickerViewBase(TemplateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         league = self.league
-        if hasattr(self.request, 'user') and self.request.user.is_authenticated:
+        if hasattr(self.request, "user") and self.request.user.is_authenticated:
             try:
-                data['preferences'] = Preference.objects.get(user=self.request.user)
+                data["preferences"] = Preference.objects.get(user=self.request.user)
             except Preference.DoesNotExist:
                 pass
 
-        data.update({
-            'now': timezone.now(),
-            'league': league,
-            'season': self.season or league.current_season,
-            'league_base': loader.select_template([
-                'picker/{}/base.html'.format(league.slug),
-                'picker/base.html',
-            ])
-        })
+        data.update(
+            {
+                "now": timezone.now(),
+                "league": league,
+                "season": self.season or league.current_season,
+                "league_base": loader.select_template(
+                    [
+                        "picker/{}/base.html".format(league.slug),
+                        "picker/base.html",
+                    ]
+                ),
+            }
+        )
         return data
 
     def render_to_response(self, context, **response_kwargs):
-        response_kwargs.setdefault('content_type', self.content_type)
+        response_kwargs.setdefault("content_type", self.content_type)
         template_names = self.get_template_names()
-        context['template_names'] = template_names
+        context["template_names"] = template_names
         return self.response_class(
             request=self.request,
             template=template_names,

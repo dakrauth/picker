@@ -5,30 +5,31 @@ import picker.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0008_auto_20180902_1428'),
+        ("picker", "0008_auto_20180902_1428"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='description',
-            field=models.CharField(blank=True, default='', max_length=60),
+            model_name="game",
+            name="description",
+            field=models.CharField(blank=True, default="", max_length=60),
         ),
         migrations.AddField(
-            model_name='gameset',
-            name='description',
-            field=models.CharField(blank=True, default='', max_length=60),
+            model_name="gameset",
+            name="description",
+            field=models.CharField(blank=True, default="", max_length=60),
         ),
         migrations.AlterField(
-            model_name='alias',
-            name='name',
+            model_name="alias",
+            name="name",
             field=models.CharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='abbr',
-            field=models.CharField(blank=True, max_length=8, validators=[picker.models.valid_team_abbr]),
+            model_name="team",
+            name="abbr",
+            field=models.CharField(
+                blank=True, max_length=8, validators=[picker.models.valid_team_abbr]
+            ),
         ),
     ]

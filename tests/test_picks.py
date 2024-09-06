@@ -4,47 +4,43 @@ from picker import models as picker
 from picker.stats import RosterStats
 
 from .conftest import _now
+
 YEAR = _now.year
 
 PICK_ARGS = [
     # /<league>/picks/<season>/ picker.views.picks.PicksBySeason picker-season-picks
-    ('picker-season-picks', ['hq', str(YEAR)]),
-
+    ("picker-season-picks", ["hq", str(YEAR)]),
     # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
-    ('picker-picks-sequence', ['hq', str(YEAR), '1']),
-
+    ("picker-picks-sequence", ["hq", str(YEAR), "1"]),
     # /<league>/results/  picker.views.picks.Results  picker-results
-    ('picker-results', ['hq']),
-
+    ("picker-results", ["hq"]),
     # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
-    ('picker-season-results', ['hq', str(YEAR)]),
-
+    ("picker-season-results", ["hq", str(YEAR)]),
     # /<league>/results/<season>/<var>/ picker.views.picks.ResultsByWeek picker-game-sequence
-    ('picker-game-sequence', ['hq', str(YEAR), '1']),
+    ("picker-game-sequence", ["hq", str(YEAR), "1"]),
 ]
 
 
 @pytest.mark.django_db
 class TestViews:
-
     def test_lookup(self, client, league, gamesets, user):
         # /<league>/picks/    picker.views.picks.Picks    picker-picks
-        url = reverse('picker-picks', args=['hq'])
+        url = reverse("picker-picks", args=["hq"])
         r = client.get(url)
         assert r.status_code == 302
-        assert r.url == reverse('login') + '?next=' + url
+        assert r.url == reverse("login") + "?next=" + url
 
         client.force_login(user)
         r = client.get(url, follow=False)
         assert r.status_code == 302
-        assert r.url == '/hq/picks/{}/1/'.format(YEAR)
+        assert r.url == "/hq/picks/{}/1/".format(YEAR)
 
     def test_views_not_logged_in(self, client, league):
         for name, args in PICK_ARGS:
             url = reverse(name, args=args)
             r = client.get(url)
             assert r.status_code == 302
-            assert r.url == reverse('login') + '?next=' + url
+            assert r.url == reverse("login") + "?next=" + url
 
     def test_views_logged_in(self, client, league, gamesets, user):
         client.force_login(user)
@@ -56,24 +52,23 @@ class TestViews:
 
 @pytest.mark.django_db
 class TestPicksForm:
-
     def test_picks_form(self, client, league, grouping, gamesets, users):
         slug = league.slug
         season = league.current_season
         superuser, user1, user2 = users
 
         client.force_login(user1)
-        url = reverse('picker-picks-sequence', args=[slug, season, 1])
-        r = client.post(url, {'points': 'X'})
+        url = reverse("picker-picks-sequence", args=[slug, season, 1])
+        r = client.post(url, {"points": "X"})
         assert r.status_code == 200
-        assert b'Enter a whole number' in r.content
-        assert b'errorlist' in r.content
+        assert b"Enter a whole number" in r.content
+        assert b"errorlist" in r.content
         assert picker.PickSet.objects.count() == 0
 
-        GRF = str(league.teams.get(abbr='GRF').id)  # 1
-        HUF = str(league.teams.get(abbr='HUF').id)  # 2
-        RVN = str(league.teams.get(abbr='RVN').id)  # 3
-        SLY = str(league.teams.get(abbr='SLY').id)  # 4
+        GRF = str(league.teams.get(abbr="GRF").id)  # 1
+        HUF = str(league.teams.get(abbr="HUF").id)  # 2
+        RVN = str(league.teams.get(abbr="RVN").id)  # 3
+        SLY = str(league.teams.get(abbr="SLY").id)  # 4
 
         #  GM,       WHO, USER1, PTS1, USER2, PTS2, RES,  PTS, SC1, SC2,  WON
         #   1, GRF @ HUF,   GRF,     ,   HUF,     , GRF,     ,   1,   0,
@@ -86,61 +81,63 @@ class TestPicksForm:
         #   6, HUF @ RVN,   HUF,  300,   RVN,  400, HUF,  300,   1,   0, USER1
 
         client.force_login(user1)
-        url = reverse('picker-picks-sequence', args=[slug, season, 1])
-        r = client.post(url, {'game_1': GRF, 'points': '100'})
+        url = reverse("picker-picks-sequence", args=[slug, season, 1])
+        r = client.post(url, {"game_1": GRF, "points": "100"})
         assert picker.PickSet.objects.count() == 1
 
         for data, user, seq in [
-            [{'game_1': GRF, 'game_2': RVN, 'points':   '0'}, user1, 1],
-            [{'game_1': HUF, 'game_2': SLY, 'points':   '0'}, user2, 1],
-
-            [{'game_1': GRF, 'game_2': RVN, 'points': '100'}, user1, 1],
-            [{'game_1': HUF, 'game_2': SLY, 'points': '200'}, user2, 1],
+            [{"game_1": GRF, "game_2": RVN, "points": "0"}, user1, 1],
+            [{"game_1": HUF, "game_2": SLY, "points": "0"}, user2, 1],
+            [{"game_1": GRF, "game_2": RVN, "points": "100"}, user1, 1],
+            [{"game_1": HUF, "game_2": SLY, "points": "200"}, user2, 1],
         ]:
             client.force_login(user)
-            r = client.post(reverse('picker-picks-sequence', args=[slug, season, seq]), data)
+            r = client.post(
+                reverse("picker-picks-sequence", args=[slug, season, seq]), data
+            )
 
         assert picker.PickSet.objects.count() == 2
         assert picker.PickSet.objects.filter(is_winner=True).count() == 0
 
-        url = reverse('picker-manage-week', args=[slug, season, 1])
+        url = reverse("picker-manage-week", args=[slug, season, 1])
         client.force_login(superuser)
-        r = client.post(url, {'game_1': GRF, 'game_2': RVN, 'points': '0'})
+        r = client.post(url, {"game_1": GRF, "game_2": RVN, "points": "0"})
         assert picker.PickSet.objects.filter(is_winner=True).count() == 0
 
-        r = client.post(url, {'game_1': GRF, 'game_2': RVN, 'points': '300'})
+        r = client.post(url, {"game_1": GRF, "game_2": RVN, "points": "300"})
         assert picker.PickSet.objects.filter(is_winner=True).count() == 1
 
         assert user1.picksets.get(gameset__sequence=1).is_winner is True
         assert user2.picksets.get(gameset__sequence=1).is_winner is False
 
         for data, user, seq in [
-            [{'game_3': GRF, 'game_4': HUF, 'points': '200'}, user1, 2],
-            [{'game_3': RVN, 'game_4': SLY, 'points': '300'}, user2, 2],
-
-            [{'game_5': SLY, 'game_6': HUF, 'points': '300'}, user1, 3],
-            [{'game_5': GRF, 'game_6': RVN, 'points': '400'}, user2, 3],
+            [{"game_3": GRF, "game_4": HUF, "points": "200"}, user1, 2],
+            [{"game_3": RVN, "game_4": SLY, "points": "300"}, user2, 2],
+            [{"game_5": SLY, "game_6": HUF, "points": "300"}, user1, 3],
+            [{"game_5": GRF, "game_6": RVN, "points": "400"}, user2, 3],
         ]:
             client.force_login(user)
-            r = client.post(reverse('picker-picks-sequence', args=[slug, season, seq]), data)
+            r = client.post(
+                reverse("picker-picks-sequence", args=[slug, season, seq]), data
+            )
 
         assert picker.PickSet.objects.count() == 6
 
         client.force_login(superuser)
         for data, seq in [
-            [{'game_1': GRF, 'game_2': RVN, 'points': '300'}, 1],
-            [{'game_3': RVN, 'game_4': SLY, 'points': '300'}, 2],
-            [{'game_5': GRF, 'game_6': HUF, 'points': '300'}, 3],
+            [{"game_1": GRF, "game_2": RVN, "points": "300"}, 1],
+            [{"game_3": RVN, "game_4": SLY, "points": "300"}, 2],
+            [{"game_5": GRF, "game_6": HUF, "points": "300"}, 3],
         ]:
-            url = reverse('picker-manage-week', args=[slug, season, seq])
+            url = reverse("picker-manage-week", args=[slug, season, seq])
             r = client.post(url, data)
 
-        assert picker.Team.objects.get(abbr='HUF').record_as_string == '1-2'
-        assert picker.Team.objects.get(abbr='RVN').record_as_string == '2-1'
-        assert picker.Team.objects.get(abbr='SLY').record_as_string == '1-2'
+        assert picker.Team.objects.get(abbr="HUF").record_as_string == "1-2"
+        assert picker.Team.objects.get(abbr="RVN").record_as_string == "2-1"
+        assert picker.Team.objects.get(abbr="SLY").record_as_string == "1-2"
 
-        grf = picker.Team.objects.get(abbr='GRF')
-        assert grf.record_as_string == '2-1'
+        grf = picker.Team.objects.get(abbr="GRF")
+        assert grf.record_as_string == "2-1"
         assert grf.complete_record() == [[1, 0, 0], [1, 1, 0], [2, 1, 0]]
 
         assert user1.picksets.filter(is_winner=True).count() == 2

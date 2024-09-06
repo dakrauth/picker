@@ -5,25 +5,36 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0009_auto_20181127_1329'),
+        ("picker", "0009_auto_20181127_1329"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='away',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='away_games', to='picker.Team'),
+            model_name="game",
+            name="away",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="away_games",
+                to="picker.Team",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='home_games', to='picker.Team'),
+            model_name="game",
+            name="home",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="home_games",
+                to="picker.Team",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='location',
-            field=models.CharField(blank=True, default='', max_length=60),
+            model_name="game",
+            name="location",
+            field=models.CharField(blank=True, default="", max_length=60),
         ),
     ]

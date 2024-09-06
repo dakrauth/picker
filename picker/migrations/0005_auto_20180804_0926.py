@@ -6,43 +6,46 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('picker', '0004_auto_20180802_1515'),
+        ("picker", "0004_auto_20180802_1515"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='gamepick',
-            options={'ordering': ('game__start_time', 'game__away')},
+            name="gamepick",
+            options={"ordering": ("game__start_time", "game__away")},
         ),
         migrations.AlterModelOptions(
-            name='gameset',
-            options={'ordering': ('season', 'sequence')},
+            name="gameset",
+            options={"ordering": ("season", "sequence")},
         ),
         migrations.RenameField(
-            model_name='game',
-            old_name='week',
-            new_name='gameset',
+            model_name="game",
+            old_name="week",
+            new_name="gameset",
         ),
         migrations.RenameField(
-            model_name='gameset',
-            old_name='week',
-            new_name='sequence',
+            model_name="gameset",
+            old_name="week",
+            new_name="sequence",
         ),
         migrations.RenameField(
-            model_name='pickset',
-            old_name='week',
-            new_name='gameset',
+            model_name="pickset",
+            old_name="week",
+            new_name="gameset",
         ),
         migrations.AlterField(
-            model_name='gameset',
-            name='league',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gamesets', to='picker.League'),
+            model_name="gameset",
+            name="league",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="gamesets",
+                to="picker.League",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='pickset',
-            unique_together={('user', 'gameset')},
+            name="pickset",
+            unique_together={("user", "gameset")},
         ),
     ]

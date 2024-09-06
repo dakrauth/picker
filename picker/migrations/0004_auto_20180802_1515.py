@@ -5,33 +5,37 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('picker', '0003_auto_20180801_0800'),
+        ("picker", "0003_auto_20180801_0800"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='game',
-            options={'ordering': ('start_time', 'away')},
+            name="game",
+            options={"ordering": ("start_time", "away")},
         ),
         migrations.RenameField(
-            model_name='game',
-            old_name='kickoff',
-            new_name='start_time',
+            model_name="game",
+            old_name="kickoff",
+            new_name="start_time",
         ),
         migrations.RemoveField(
-            model_name='team',
-            name='image',
+            model_name="team",
+            name="image",
         ),
         migrations.AddField(
-            model_name='league',
-            name='avg_game_duration',
+            model_name="league",
+            name="avg_game_duration",
             field=models.PositiveIntegerField(default=240),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='conference',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='picker.Conference'),
+            model_name="team",
+            name="conference",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="picker.Conference",
+            ),
         ),
     ]
