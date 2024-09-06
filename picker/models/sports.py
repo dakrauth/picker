@@ -495,7 +495,7 @@ class Game(models.Model):
     away_score = models.PositiveIntegerField(default=0)
     gameset = models.ForeignKey(GameSet, on_delete=models.CASCADE, related_name='games')
     start_time = models.DateTimeField()
-    tv = models.CharField('TV', max_length=8, blank=True)
+    tv = models.CharField('TV', max_length=24, blank=True)
     notes = models.TextField(blank=True)
     category = models.CharField(max_length=4, choices=Category.choices, default=Category.REGULAR)
     status = models.CharField(max_length=1, choices=Status.choices, default=Status.UNPLAYED)
