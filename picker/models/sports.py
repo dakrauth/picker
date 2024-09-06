@@ -11,7 +11,6 @@ from django.utils.functional import cached_property
 from django.core.exceptions import ValidationError
 
 from dateutil.parser import parse as parse_dt
-from choice_enum import ChoiceEnumeration
 
 from ..conf import picker_settings
 from .. import importers
@@ -465,18 +464,18 @@ class GameManager(models.Manager):
 
 class Game(models.Model):
 
-    class Category(ChoiceEnumeration):
-        REGULAR = ChoiceEnumeration.Option('REG', 'Regular Season', default=True)
-        POST = ChoiceEnumeration.Option('POST', 'Post Season')
-        PRE = ChoiceEnumeration.Option('PRE', 'Pre Season')
-        FRIENDLY = ChoiceEnumeration.Option('FRND', 'Friendly')
+    class Category(models.TextChoices):
+        REGULAR = 'REG', 'Regular Season'
+        POST = 'POST', 'Post Season'
+        PRE = 'PRE', 'Pre Season'
+        FRIENDLY = 'FRND', 'Friendly'
 
-    class Status(ChoiceEnumeration):
-        UNPLAYED = ChoiceEnumeration.Option('U', 'Unplayed', default=True)
-        TIE = ChoiceEnumeration.Option('T', 'Tie')
-        HOME_WIN = ChoiceEnumeration.Option('H', 'Home Win')
-        AWAY_WIN = ChoiceEnumeration.Option('A', 'Away Win')
-        CANCELLED = ChoiceEnumeration.Option('X', 'Cancelled')
+    class Status(models.TextChoices):
+        UNPLAYED = 'U', 'Unplayed'
+        TIE = 'T', 'Tie'
+        HOME_WIN = 'H', 'Home Win'
+        AWAY_WIN = 'A', 'Away Win'
+        CANCELLED = 'X', 'Cancelled'
 
     home = models.ForeignKey(
         Team,
@@ -498,8 +497,8 @@ class Game(models.Model):
     start_time = models.DateTimeField()
     tv = models.CharField('TV', max_length=8, blank=True)
     notes = models.TextField(blank=True)
-    category = models.CharField(max_length=4, choices=Category.CHOICES, default=Category.DEFAULT)
-    status = models.CharField(max_length=1, choices=Status.CHOICES, default=Status.DEFAULT)
+    category = models.CharField(max_length=4, choices=Category.choices, default=Category.REGULAR)
+    status = models.CharField(max_length=1, choices=Status.choices, default=Status.UNPLAYED)
     location = models.CharField(blank=True, default='', max_length=60)
     description = models.CharField(max_length=60, default='', blank=True)
 

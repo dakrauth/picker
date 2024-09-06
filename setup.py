@@ -24,8 +24,7 @@ setup(
     platforms=['any'],
     license='MIT License',
     install_requires=[
-        'Django>=3.2,<4.1',
-        'choice-enum==1.0.0',
+        'Django>=4.2,<5.0',
         'django-bootstrap3>=12.0.1',
         'Pillow>=6.2.1',
         'python-dateutil>=2.8.1',

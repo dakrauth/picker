@@ -5,7 +5,6 @@ from django.conf import settings
 from django.utils import timezone
 from django.dispatch import Signal
 
-from choice_enum import ChoiceEnumeration
 from . import sports
 from ..exceptions import PickerResultException
 from .. import utils
@@ -24,11 +23,11 @@ class PreferenceManager(models.Manager):
 
 class Preference(models.Model):
 
-    class Autopick(ChoiceEnumeration):
-        NONE = ChoiceEnumeration.Option('NONE', 'None')
-        RAND = ChoiceEnumeration.Option('RAND', 'Random', default=True)
+    class Autopick(models.TextChoices):
+        NONE = 'NONE', 'None'
+        RAND = 'RAND', 'Random'
 
-    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
+    autopick = models.CharField(max_length=4, choices=Autopick.choices, default=Autopick.RAND)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -46,26 +45,26 @@ class Preference(models.Model):
 
 
 class PickerGrouping(models.Model):
-    class Category(ChoiceEnumeration):
-        PUBLIC = ChoiceEnumeration.Option('PUB', 'Public')
-        PROTECTED = ChoiceEnumeration.Option('PRT', 'Protected')
-        PRIVATE = ChoiceEnumeration.Option('PVT', 'Private', default=True)
+    class Category(models.TextChoices):
+        PUBLIC = 'PUB', 'Public'
+        PROTECTED = 'PRT', 'Protected'
+        PRIVATE = 'PVT', 'Private'
 
-    class Status(ChoiceEnumeration):
-        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
-        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
+    class Status(models.TextChoices):
+        ACTIVE = 'ACTV', 'Active'
+        INACTIVE = 'IDLE', 'Inactive'
 
     name = models.CharField(max_length=75, unique=True)
     leagues = models.ManyToManyField(sports.League, blank=True)
     status = models.CharField(
         max_length=4,
-        choices=Status.CHOICES,
-        default=Status.DEFAULT
+        choices=Status.choices,
+        default=Status.ACTIVE
     )
     category = models.CharField(
         max_length=3,
-        choices=Category.CHOICES,
-        default=Category.DEFAULT
+        choices=Category.choices,
+        default=Category.PRIVATE
     )
 
     def __str__(self):
@@ -89,15 +88,15 @@ class PickerFavorite(models.Model):
 
 class PickerMembership(models.Model):
 
-    class Autopick(ChoiceEnumeration):
-        NONE = ChoiceEnumeration.Option('NONE', 'None')
-        RANDOM = ChoiceEnumeration.Option('RAND', 'Random', default=True)
+    class Autopick(models.TextChoices):
+        NONE = 'NONE', 'None'
+        RANDOM = 'RAND', 'Random'
 
-    class Status(ChoiceEnumeration):
-        ACTIVE = ChoiceEnumeration.Option('ACTV', 'Active', default=True)
-        INACTIVE = ChoiceEnumeration.Option('IDLE', 'Inactive')
-        SUSPENDED = ChoiceEnumeration.Option('SUSP', 'Suspended')
-        MANAGER = ChoiceEnumeration.Option('MNGT', 'Manager')
+    class Status(models.TextChoices):
+        ACTIVE = 'ACTV', 'Active'
+        INACTIVE = 'IDLE', 'Inactive'
+        SUSPENDED = 'SUSP', 'Suspended'
+        MANAGER = 'MNGT', 'Manager'
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -105,8 +104,8 @@ class PickerMembership(models.Model):
         related_name='picker_memberships'
     )
     group = models.ForeignKey(PickerGrouping, on_delete=models.CASCADE, related_name='members')
-    status = models.CharField(max_length=4, choices=Status.CHOICES, default=Status.DEFAULT)
-    autopick = models.CharField(max_length=4, choices=Autopick.CHOICES, default=Autopick.DEFAULT)
+    status = models.CharField(max_length=4, choices=Status.choices, default=Status.ACTIVE)
+    autopick = models.CharField(max_length=4, choices=Autopick.choices, default=Autopick.RANDOM)
 
     def __str__(self):
         return str(self.user)
@@ -147,11 +146,11 @@ class PickSetManager(models.Manager):
 
 class PickSet(models.Model):
 
-    class Strategy(ChoiceEnumeration):
-        USER = ChoiceEnumeration.Option('USER', 'User', default=True)
-        RANDOM = ChoiceEnumeration.Option('RAND', 'Random')
-        HOME = ChoiceEnumeration.Option('HOME', 'Home Team')
-        BEST = ChoiceEnumeration.Option('BEST', 'Best Record')
+    class Strategy(models.TextChoices):
+        USER = 'USER', 'User'
+        RANDOM = 'RAND', 'Random'
+        HOME = 'HOME', 'Home Team'
+        BEST = 'BEST', 'Best Record'
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -165,7 +164,7 @@ class PickSet(models.Model):
     wrong = models.PositiveSmallIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    strategy = models.CharField(max_length=4, choices=Strategy.CHOICES, default=Strategy.DEFAULT)
+    strategy = models.CharField(max_length=4, choices=Strategy.choices, default=Strategy.USER)
     is_winner = models.BooleanField(default=False)
 
     objects = PickSetManager()
