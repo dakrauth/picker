@@ -32,11 +32,25 @@ def get_picker_widget(league):
     return _picker_widget
 
 
+class ChoiceOption(tuple):
+    @classmethod
+    def make(cls, team, winner):
+        if team:
+            choice = cls((str(team.id), team))
+            choice.winner = winner.id if winner else None
+            return choice
+
+        choice = cls((__TIE__, ""))
+        choice.winner = winner.id if winner else None
+        return choice
+
+
 class GameField(forms.ChoiceField):
     def __init__(self, game, manage=False, widget=None, allow_ties=False):
-        choices = [(str(game.away.id), game.away), (str(game.home.id), game.home)]
+        winner = game.winner
+        choices = [ChoiceOption.make(game.away, winner), ChoiceOption.make(game.home, winner)]
         if allow_ties:
-            choices.insert(1, (TIE_KEY, ""))
+            choices.insert(1, ChoiceOption.make(None, winner))
 
         self.game = game
         self.manage = manage
@@ -79,6 +93,7 @@ class BasePickForm(forms.Form):
                 key = encoded_game_key(gm.id)
                 self.fields[key] = GameField(gm, manage=self.management, allow_ties=self.allow_ties)
                 self.game_fields.append(key)
+
             self.fields["points"] = forms.IntegerField(
                 label="{}:".format(games[-1].vs_description), required=False
             )
