@@ -368,9 +368,7 @@ class GameSetPicks(sports.GameSet):
                 game.winner = (
                     game.home
                     if game.home.abbr == winner
-                    else game.away
-                    if game.away.abbr == winner
-                    else None
+                    else game.away if game.away.abbr == winner else None
                 )
                 count += 1
 

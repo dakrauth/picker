@@ -48,7 +48,10 @@ class ChoiceOption(tuple):
 class GameField(forms.ChoiceField):
     def __init__(self, game, manage=False, widget=None, allow_ties=False):
         winner = game.winner
-        choices = [ChoiceOption.make(game.away, winner), ChoiceOption.make(game.home, winner)]
+        choices = [
+            ChoiceOption.make(game.away, winner),
+            ChoiceOption.make(game.home, winner),
+        ]
         if allow_ties:
             choices.insert(1, ChoiceOption.make(None, winner))
 
@@ -83,7 +86,7 @@ class BasePickForm(forms.Form):
     management = False
 
     def __init__(self, gameset, *args, **kws):
-        self.allow_ties = kws.pop('allow_ties', gameset.league.config('ALLOW_TIES'))
+        self.allow_ties = kws.pop("allow_ties", gameset.league.config("ALLOW_TIES"))
         super(BasePickForm, self).__init__(*args, **kws)
         self.gameset = gameset
         self.game_fields = FieldIter(self)
@@ -91,7 +94,9 @@ class BasePickForm(forms.Form):
         if games:
             for gm in games:
                 key = encoded_game_key(gm.id)
-                self.fields[key] = GameField(gm, manage=self.management, allow_ties=self.allow_ties)
+                self.fields[key] = GameField(
+                    gm, manage=self.management, allow_ties=self.allow_ties
+                )
                 self.game_fields.append(key)
 
             self.fields["points"] = forms.IntegerField(
@@ -104,7 +109,7 @@ class ManagementPickForm(BasePickForm):
 
     def __init__(self, gameset, *args, **kws):
         kws.setdefault("initial", {}).update(**self.get_initial_picks(gameset))
-        kws['allow_ties'] = True
+        kws["allow_ties"] = True
         super(ManagementPickForm, self).__init__(gameset, *args, **kws)
 
     def save(self):
