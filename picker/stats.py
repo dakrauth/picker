@@ -55,7 +55,7 @@ class RosterStats:
     @classmethod
     def get_details(cls, league, group, season=None):
         season = season or league.current_season
-        users = get_user_model().objects.filter(picker_memberships__group=group)
+        users = get_user_model().objects.filter(is_active=True, picker_memberships__group=group)
 
         def keyfn(rs):
             return (rs.correct, -rs.points_delta, rs.picksets_played)

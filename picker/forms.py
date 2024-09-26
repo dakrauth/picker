@@ -40,7 +40,7 @@ class ChoiceOption(tuple):
             choice.winner = winner.id if winner else None
             return choice
 
-        choice = cls((__TIE__, ""))
+        choice = cls((TIE_KEY, ""))
         choice.winner = winner.id if winner else None
         return choice
 
