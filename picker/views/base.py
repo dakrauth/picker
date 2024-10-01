@@ -56,14 +56,15 @@ class SimplePickerViewBase(TemplateView):
     def league(self):
         return get_object_or_404(League, abbr__iexact=self.kwargs["league"])
 
-    def get_template_names(self):
-        if self.template_name is None:
+    def get_template_names(self, template_override=None):
+        if template_override is None and self.template_name is None:
             raise ImproperlyConfigured(
                 "TemplateResponseMixin requires either a definition of "
-                "'template_name' or an implementation of 'get_template_names()'"
+                "'template_name', 'template_override' argument, or an implementation of "
+                "'get_template_names()'"
             )
 
-        return utils.get_templates(self.template_name, self.league)
+        return utils.get_templates(template_override or self.template_name, self.league)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -89,9 +90,9 @@ class SimplePickerViewBase(TemplateView):
         )
         return data
 
-    def render_to_response(self, context, **response_kwargs):
+    def render_to_response(self, context, template_override=None, **response_kwargs):
         response_kwargs.setdefault("content_type", self.content_type)
-        template_names = self.get_template_names()
+        template_names = self.get_template_names(template_override=template_override)
         context["template_names"] = template_names
         return self.response_class(
             request=self.request,

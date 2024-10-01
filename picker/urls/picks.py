@@ -39,9 +39,14 @@ picks_urls = [
 ]
 
 results_urls = [
-    re_path(r"^$", views.Results.as_view(), name="picker-results"),
     re_path(
-        r"^(?P<season>\d{4})/",
+        r"^$",
+        views.GroupMembershipRedirect.as_view(redirect_view_name="picker-results-group"),
+        name="picker-results"
+    ),
+    re_path(r"^(?P<group_id>\d)/$", views.Results.as_view(), name="picker-results-group"),
+    re_path(
+        r"^(?P<group_id>\d+)/(?P<season>\d{4})/",
         include(
             [
                 re_path(
@@ -57,8 +62,13 @@ results_urls = [
     ),
 ]
 
+
 roster_urls = [
-    re_path(r"^$", views.RosterRedirect.as_view(), name="picker-roster-base"),
+    re_path(
+        r"^$",
+        views.GroupMembershipRedirect.as_view(redirect_view_name="picker-roster"),
+        name="picker-roster-base"
+    ),
     re_path(
         r"^(\d+)/",
         include(

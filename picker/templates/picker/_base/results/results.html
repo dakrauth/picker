@@ -4,7 +4,7 @@
 {% block main_content %}
     <h1>
         Results for week {{ gameset.sequence }}
-        <small><a href="{% url 'picker-season-results' gameset.league.slug gameset.season %}">{{ gameset.season }}</a></small>
+        <small><a href="{% url 'picker-season-results' gameset.league.slug group.id gameset.season %}">{{ gameset.season }}</a></small>
     </h1>
     {% season_nav gameset "results" %}
     {% with gameset.results as results %}
@@ -31,8 +31,6 @@
             {% for result in results %}
             <tr>
                 <td>
-                    <img src="{{ result.user|picker_user_image:"32" }}">
-                    <br>
                     <strong class="username {{ result.is_autopicked|yesno:"auto,user" }}pick">{{ result.user }}</strong>
                 </td>
                 <td>{{ result.progress }}</td>
@@ -63,8 +61,6 @@
             <tr>
                 <td>{{ wp.place }}</td>
                 <td>
-                    <img src="{{ wp.user|picker_user_image:"32" }}">
-                    <br>
                     <strong class="username {{ wp.is_autopicked|yesno:"auto,user" }}pick">{{ wp.user }}</strong>
                 </td>
                 <td>{{ wp.correct }}</td>

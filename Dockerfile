@@ -1,4 +1,4 @@
-FROM python:3.7.4-alpine3.9
+FROM python:3.10.15-alpine3.20
 RUN apk --update add build-base bash jpeg-dev zlib-dev python3-dev
 ENV PYTHONUNBUFFERED 1
 ENV DEMO_DB_NAME /db.sqlite3

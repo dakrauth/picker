@@ -11,28 +11,33 @@ class Home(SimplePickerViewBase):
     template_name = "@home.html"
 
 
-class RosterRedirect(PickerViewBase):
-    template_name = "@roster/select.html"
+class GroupMembershipRedirect(PickerViewBase):
+    redirect_view_name = None  # "picker-roster"
+
+    def group_redirect(self, view_name, membership):
+        return self.redirect(view_name, self.league.slug, membership.group.id)
 
     def get(self, request, *args, **kwargs):
-        qs = request.user.picker_memberships.filter(
+        memberships = request.user.picker_memberships.filter(
             group__leagues=self.league
         ).select_related("group")
 
-        count = qs.count()
+        count = memberships.count()
         if count == 1:
-            mbr = qs[0]
-            return self.redirect("picker-roster", self.league.slug, mbr.group.id)
+            return self.redirect(self.redirect_view_name, self.league.slug, memberships[0].group.id)
         elif count > 1:
-            return self.render_to_response(self.get_context_data(memberships=qs))
+            return self.render_to_response(
+                self.get_context_data(memberships=memberships),
+                template_override="@group_select.html"
+            )
 
-        self.template_name = "@unavailable.html"
         return self.render_to_response(
             {
                 "league_base": "picker/base.html",
-                "heading": "Roster unavailable",
+                "heading": "Membership group unavailable",
                 "description": "Please check back later",
-            }
+            },
+            template_override="@unavailable.html"
         )
 
 
@@ -81,12 +86,20 @@ class RosterProfile(RosterMixin, PickerViewBase):
 #  Results
 
 
-class Results(PickerViewBase):
+class ResultsBase(PickerViewBase):
+    @cached_property
+    def group(self):
+        return get_object_or_404(PickerGrouping, pk=int(self.kwargs["group_id"]))
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(group=self.group, **kwargs)
+
+
+class Results(ResultsBase):
     template_name = "@results/results.html"
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-
         league = self.league
         gameset = GameSetPicks.objects.current_gameset(league=league)
         if gameset:
@@ -98,16 +111,16 @@ class Results(PickerViewBase):
         return self.render_to_response(context)
 
 
-class ResultsBySeason(PickerViewBase):
+class ResultsBySeason(ResultsBase):
     template_name = "@results/season.html"
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(
-            gamesets=self.league.gamesets.filter(season=self.season), **kwargs
+            gamesets=GameSetPicks.objects.filter(league=self.league, season=self.season), **kwargs
         )
 
 
-class ResultsByWeek(PickerViewBase):
+class ResultsByWeek(ResultsBase):
     template_name = "@results/results.html"
 
     def get_context_data(self, **kwargs):

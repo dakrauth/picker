@@ -361,12 +361,6 @@ class GameSet(models.Model):
     def __str__(self):
         return "{}:{}".format(self.sequence, self.season)
 
-    def get_absolute_url(self):
-        return reverse(
-            "picker-game-sequence",
-            args=[self.league.slug, str(self.season), str(self.sequence)],
-        )
-
     def picks_url(self):
         return reverse(
             "picker-picks-sequence",

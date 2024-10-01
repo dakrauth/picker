@@ -5,9 +5,6 @@
 {% block fav_team %}team-{{ fav.abbr|default:"none"|lower }}{% endblock fav_team %}
 {% block main_content %}
 <div class="media">
-    <div class="media-left">
-        <img src="{{ profile.user|picker_user_image }}">
-    </div>
     <div class="media-body">
         <h1>{{ profile.user.username }}</h1>
         <p>

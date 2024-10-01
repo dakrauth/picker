@@ -15,7 +15,7 @@ class TestViews:
         client.force_login(user_ng)
         r = client.get(url)
         assert r.status_code == 200
-        assert b"Roster unavailable" in r.content
+        assert b"<h1>Membership group unavailable</h1>" in r.content
 
     def test_views(self, client, league, gamesets, user):
         for code in [302, 200]:

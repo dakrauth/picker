@@ -13,11 +13,11 @@ PICK_ARGS = [
     # /<league>/picks/<season>/<var>/ picker.views.picks.PicksByWeek  picker-picks-sequence
     ("picker-picks-sequence", ["hq", str(YEAR), "1"]),
     # /<league>/results/  picker.views.picks.Results  picker-results
-    ("picker-results", ["hq"]),
+    ("picker-results-group", ["hq", "1"]),
     # /<league>/results/<season>/ picker.views.picks.ResultsBySeason  picker-season-results
-    ("picker-season-results", ["hq", str(YEAR)]),
+    ("picker-season-results", ["hq", "1", str(YEAR)]),
     # /<league>/results/<season>/<var>/ picker.views.picks.ResultsByWeek picker-game-sequence
-    ("picker-game-sequence", ["hq", str(YEAR), "1"]),
+    ("picker-game-sequence", ["hq", "1", str(YEAR), "1"]),
 ]
 
 
@@ -35,19 +35,20 @@ class TestViews:
         assert r.status_code == 302
         assert r.url == "/hq/picks/{}/1/".format(YEAR)
 
-    def test_views_not_logged_in(self, client, league):
-        for name, args in PICK_ARGS:
-            url = reverse(name, args=args)
-            r = client.get(url)
-            assert r.status_code == 302
-            assert r.url == reverse("login") + "?next=" + url
 
-    def test_views_logged_in(self, client, league, gamesets, user):
+    @pytest.mark.parametrize("name,args", PICK_ARGS)
+    def test_views_not_logged_in(self, client, league, name, args):
+        url = reverse(name, args=args)
+        r = client.get(url)
+        assert r.status_code == 302
+        assert r.url == reverse("login") + "?next=" + url
+
+    @pytest.mark.parametrize("name,args", PICK_ARGS)
+    def test_views_logged_in(self, client, league, gamesets, user, name, args):
         client.force_login(user)
-        for name, args in PICK_ARGS:
-            url = reverse(name, args=args)
-            r = client.get(url)
-            assert r.status_code == 200
+        url = reverse(name, args=args)
+        r = client.get(url)
+        assert r.status_code == 200
 
 
 @pytest.mark.django_db

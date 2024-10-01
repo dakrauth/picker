@@ -2,7 +2,7 @@
 {% block title %}Roster{% endblock %}
 {% block main_content %}
     <h1>Roster and Season Standings &mdash; {{ group }} {{ season }}</h1>
-    {% all_seasons_nav season league "roster" group=group %}
+    {% all_seasons_nav season league "roster" %}
     <div class="panel panel-default">
         <table class="table table-striped table-hover roster">
         <thead>
@@ -30,7 +30,6 @@
             {% for entry,all_time_stats in roster %}{% if entry.is_active %}
             <tr>
                 <td class="player">
-                    <img src="{{ entry.user|picker_user_image:"32" }}">
                     <div>
                         <strong>
                             <a href="{% url 'picker-roster-profile' league.slug 1 entry.user.username %}">

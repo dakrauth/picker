@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 from django.template import loader, TemplateDoesNotExist
 
@@ -17,7 +17,7 @@ class TemplateTeamChoice(forms.RadioSelect):
             return super(TemplateTeamChoice, self).render(name, value, attrs)
 
         labels = ""
-        str_value = force_text(value if value is not None else "")
+        str_value = force_str(value if value is not None else "")
         final_attrs = self.build_attrs(attrs)
         for i, (game_id, team) in enumerate(self.choices):
             readonly = bool("readonly" in final_attrs)
