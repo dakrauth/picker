@@ -1,0 +1,2520 @@
+{
+    "schema": "complete",
+    "league": {
+        "schema": "league",
+        "name": "National Football League",
+        "slug": "nfl",
+        "abbr": "NFL",
+        "current_season": 2024,
+        "teams": [
+            {
+                "abbr": "ARI",
+                "logo": "picker/logos/nfl/ari.gif",
+                "name": "Arizona",
+                "nickname": "Cardinals",
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Jonathan Gannon",
+                "location": "State Farm Stadium, Glendale, AZ"
+            },
+            {
+                "abbr": "ATL",
+                "logo": "picker/logos/nfl/atl.gif",
+                "name": "Atlanta",
+                "nickname": "Falcons",
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Raheem Morris",
+                "location": "Mercedes-Benz Stadium, Atlanta, GA"
+            },
+            {
+                "abbr": "BAL",
+                "logo": "picker/logos/nfl/bal.gif",
+                "name": "Baltimore",
+                "nickname": "Ravens",
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "John Harbaugh",
+                "location": "M&T Bank Stadium, Baltimore, MD"
+            },
+            {
+                "abbr": "BUF",
+                "logo": "picker/logos/nfl/buf.gif",
+                "name": "Buffalo",
+                "nickname": "Bills",
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "aliases": [],
+                "coach": "Sean McDermott",
+                "location": "Highmark Stadium, Orchard Park, NY"
+            },
+            {
+                "abbr": "CAR",
+                "logo": "picker/logos/nfl/car.gif",
+                "name": "Carolina",
+                "nickname": "Panthers",
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Dave Canales",
+                "location": "Bank of America Stadium, Charlotte, NC"
+            },
+            {
+                "abbr": "CHI",
+                "logo": "picker/logos/nfl/chi.gif",
+                "name": "Chicago",
+                "nickname": "Bears",
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Matt Eberflus",
+                "location": "Soldier Field, Chicago, IL"
+            },
+            {
+                "abbr": "CIN",
+                "logo": "picker/logos/nfl/cin.gif",
+                "name": "Cincinnati",
+                "nickname": "Bengals",
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Zac Taylor",
+                "location": "Paycor Stadium, Cincinnati, OH"
+            },
+            {
+                "abbr": "CLE",
+                "logo": "picker/logos/nfl/cle.gif",
+                "name": "Cleveland",
+                "nickname": "Browns",
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Kevin Stefanski",
+                "location": "Cleveland Browns Stadium, Cleveland, OH"
+            },
+            {
+                "abbr": "DAL",
+                "logo": "picker/logos/nfl/dal.gif",
+                "name": "Dallas",
+                "nickname": "Cowboys",
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "aliases": [],
+                "coach": "Mike McCarthy",
+                "location": "AT&T Stadium, Arlington, TX"
+            },
+            {
+                "abbr": "DEN",
+                "logo": "picker/logos/nfl/den.gif",
+                "name": "Denver",
+                "nickname": "Broncos",
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Sean Payton",
+                "location": "Empower Field at Mile High, Denver, CO"
+            },
+            {
+                "abbr": "DET",
+                "logo": "picker/logos/nfl/det.gif",
+                "name": "Detroit",
+                "nickname": "Lions",
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Dan Campbell",
+                "location": "Ford Field, Detroit, MI"
+            },
+            {
+                "abbr": "GB",
+                "logo": "picker/logos/nfl/gb.gif",
+                "name": "Green Bay",
+                "nickname": "Packers",
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Matt LaFleur",
+                "location": "Lambeau Field, Green Bay, WI"
+            },
+            {
+                "abbr": "HOU",
+                "logo": "picker/logos/nfl/hou.gif",
+                "name": "Houston",
+                "nickname": "Texans",
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "DeMeco Ryans",
+                "location": "NRG Stadium, Houston, TX"
+            },
+            {
+                "abbr": "IND",
+                "logo": "picker/logos/nfl/ind.gif",
+                "name": "Indianapolis",
+                "nickname": "Colts",
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Shane Steichen",
+                "location": "Lucas Oil Stadium, Indianapolis, IN"
+            },
+            {
+                "abbr": "JAC",
+                "logo": "picker/logos/nfl/jax.gif",
+                "name": "Jacksonville",
+                "nickname": "Jaguars",
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "aliases": [
+                    "JAX"
+                ],
+                "coach": "Doug Pederson",
+                "location": "TIAA Bank Field, Jacksonville, FL"
+            },
+            {
+                "abbr": "KC",
+                "logo": "picker/logos/nfl/kc.gif",
+                "name": "Kansas City",
+                "nickname": "Chiefs",
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Andy Reid",
+                "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+            },
+            {
+                "abbr": "LV",
+                "logo": "picker/logos/nfl/oak.gif",
+                "name": "Las Vegas",
+                "nickname": "Raiders",
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Antonio Pierce",
+                "location": "Allegiant Stadium, Las Vegas, NV"
+            },
+            {
+                "abbr": "LAR",
+                "logo": "picker/logos/nfl/lar.gif",
+                "name": "Los Angeles",
+                "nickname": "Rams",
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "aliases": [
+                    "Saint Louis",
+                    "St Louis",
+                    "STL"
+                ],
+                "coach": "Sean McVay",
+                "location": "Los Angeles Memorial Coliseum, Los Angeles, CA"
+            },
+            {
+                "abbr": "LAC",
+                "logo": "picker/logos/nfl/lac.gif",
+                "name": "Los Angeles",
+                "nickname": "Chargers",
+                "sub": [
+                    "AFC",
+                    "West"
+                ],
+                "aliases": [
+                    "SD"
+                ],
+                "coach": "Jim Harbaugh",
+                "location": "Dignity Health Sports Park, Carson, CA"
+            },
+            {
+                "abbr": "MIA",
+                "logo": "picker/logos/nfl/mia.gif",
+                "name": "Miami",
+                "nickname": "Dolphins",
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "aliases": [],
+                "coach": "Mike McDaniel",
+                "location": "Hard Rock Stadium, Miami Gardens, FL"
+            },
+            {
+                "abbr": "MIN",
+                "logo": "picker/logos/nfl/min.gif",
+                "name": "Minnesota",
+                "nickname": "Vikings",
+                "sub": [
+                    "NFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Kevin O'Connell",
+                "location": "U.S. Bank Stadium, Minneapolis, MN"
+            },
+            {
+                "abbr": "NE",
+                "logo": "picker/logos/nfl/ne.gif",
+                "name": "New England",
+                "nickname": "Patriots",
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "aliases": [],
+                "coach": "Jerod Mayo",
+                "location": "Gillette Stadium, Foxboro, MA"
+            },
+            {
+                "abbr": "NO",
+                "logo": "picker/logos/nfl/no.gif",
+                "name": "New Orleans",
+                "nickname": "Saints",
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Dennis Allen",
+                "location": "Caesars Superdome, New Orleans, LA"
+            },
+            {
+                "abbr": "NYG",
+                "logo": "picker/logos/nfl/nyg.gif",
+                "name": "New York",
+                "nickname": "Giants",
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "aliases": [
+                    "NY Giants"
+                ],
+                "coach": "Brian Daboll",
+                "location": "MetLife Stadium, East Rutherford, NJ"
+            },
+            {
+                "abbr": "NYJ",
+                "logo": "picker/logos/nfl/nyj.gif",
+                "name": "New York",
+                "nickname": "Jets",
+                "sub": [
+                    "AFC",
+                    "East"
+                ],
+                "aliases": [
+                    "NY Jets"
+                ],
+                "coach": "Robert Saleh",
+                "location": "MetLife Stadium, East Rutherford, NJ"
+            },
+            {
+                "abbr": "PHI",
+                "logo": "picker/logos/nfl/phi.gif",
+                "name": "Philadelphia",
+                "nickname": "Eagles",
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "aliases": [],
+                "coach": "Nick Sirianni",
+                "location": "Lincoln Financial Field, Philadelphia, PA"
+            },
+            {
+                "abbr": "PIT",
+                "logo": "picker/logos/nfl/pit.gif",
+                "name": "Pittsburgh",
+                "nickname": "Steelers",
+                "sub": [
+                    "AFC",
+                    "North"
+                ],
+                "aliases": [],
+                "coach": "Mike Tomlin",
+                "location": "Acrisure Stadium, Pittsburgh, PA"
+            },
+            {
+                "abbr": "SF",
+                "logo": "picker/logos/nfl/sf.gif",
+                "name": "San Francisco",
+                "nickname": "49ers",
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Kyle Shanahan",
+                "location": "Levi's Stadium, Santa Clara, CA"
+            },
+            {
+                "abbr": "SEA",
+                "logo": "picker/logos/nfl/sea.gif",
+                "name": "Seattle",
+                "nickname": "Seahawks",
+                "sub": [
+                    "NFC",
+                    "West"
+                ],
+                "aliases": [],
+                "coach": "Mike Macdonald",
+                "location": "Lumen Field, Seattle, WA"
+            },
+            {
+                "abbr": "TB",
+                "logo": "picker/logos/nfl/tb.gif",
+                "name": "Tampa Bay",
+                "nickname": "Buccaneers",
+                "sub": [
+                    "NFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Todd Bowles",
+                "location": "Raymond James Stadium, Tampa, FL"
+            },
+            {
+                "abbr": "TEN",
+                "logo": "picker/logos/nfl/ten.gif",
+                "name": "Tennessee",
+                "nickname": "Titans",
+                "sub": [
+                    "AFC",
+                    "South"
+                ],
+                "aliases": [],
+                "coach": "Brian Callahan",
+                "location": "Nissan Stadium, Nashville, TN"
+            },
+            {
+                "abbr": "WSH",
+                "logo": "picker/logos/nfl/wsh.gif",
+                "name": "Washington",
+                "nickname": "Commanders",
+                "sub": [
+                    "NFC",
+                    "East"
+                ],
+                "aliases": [
+                    "WSH",
+                    "WAS"
+                ],
+                "coach": "Dan Quinn",
+                "location": "FedExField, Landover, MD"
+            }
+        ]
+    },
+    "season": {
+        "schema": "season",
+        "league": "NFL",
+        "season": 2024,
+        "gamesets": [
+            {
+                "byes": [],
+                "opens": "2024-09-03T12:00:00+00:00",
+                "closes": "2024-09-10T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "BAL",
+                        "home": "KC",
+                        "start": "2024-09-06T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "PHI",
+                        "start": "2024-09-07T00:15:00+00:00",
+                        "tv": "Peacock",
+                        "location": "Corinthians Arena, Sao Paulo"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "BUF",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "NO",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "IND",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "MIA",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "NYG",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "CIN",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "ATL",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "CHI",
+                        "start": "2024-09-08T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "SEA",
+                        "start": "2024-09-08T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "LAC",
+                        "start": "2024-09-08T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "CLE",
+                        "start": "2024-09-08T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "TB",
+                        "start": "2024-09-08T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "DET",
+                        "start": "2024-09-09T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "SF",
+                        "start": "2024-09-10T00:20:00+00:00",
+                        "tv": "ESPN, ABC, ESPN+",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-09-10T12:00:00+00:00",
+                "closes": "2024-09-17T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "BUF",
+                        "home": "MIA",
+                        "start": "2024-09-13T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "JAC",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "GB",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "BAL",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "CAR",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "DAL",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "TEN",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "WSH",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "MIN",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "NE",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "DET",
+                        "start": "2024-09-15T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "ARI",
+                        "start": "2024-09-15T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "KC",
+                        "start": "2024-09-15T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "DEN",
+                        "start": "2024-09-15T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "HOU",
+                        "start": "2024-09-16T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "PHI",
+                        "start": "2024-09-17T00:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-09-17T12:00:00+00:00",
+                "closes": "2024-09-24T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "NE",
+                        "home": "NYJ",
+                        "start": "2024-09-20T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "IND",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "TB",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "TEN",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "MIN",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "PIT",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "CLE",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "NO",
+                        "start": "2024-09-22T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "LV",
+                        "start": "2024-09-22T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "SEA",
+                        "start": "2024-09-22T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "DAL",
+                        "start": "2024-09-22T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "ARI",
+                        "start": "2024-09-22T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "LAR",
+                        "start": "2024-09-22T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "ATL",
+                        "start": "2024-09-23T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "BUF",
+                        "start": "2024-09-23T23:30:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "CIN",
+                        "start": "2024-09-24T00:15:00+00:00",
+                        "tv": "ABC, ESPN+",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-09-24T12:00:00+00:00",
+                "closes": "2024-10-01T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "DAL",
+                        "home": "NYG",
+                        "start": "2024-09-27T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "CAR",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "NYJ",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "HOU",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "CHI",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "GB",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "ATL",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "TB",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "IND",
+                        "start": "2024-09-29T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "SF",
+                        "start": "2024-09-29T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "ARI",
+                        "start": "2024-09-29T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "LV",
+                        "start": "2024-09-29T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "LAC",
+                        "start": "2024-09-29T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "BAL",
+                        "start": "2024-09-30T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "MIA",
+                        "start": "2024-09-30T23:30:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "DET",
+                        "start": "2024-10-01T00:15:00+00:00",
+                        "tv": "ABC, ESPN+",
+                        "location": "Ford Field, Detroit, MI"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "DET",
+                    "LAC",
+                    "PHI",
+                    "TEN"
+                ],
+                "opens": "2024-10-01T12:00:00+00:00",
+                "closes": "2024-10-08T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "TB",
+                        "home": "ATL",
+                        "start": "2024-10-04T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "MIN",
+                        "start": "2024-10-06T13:30:00+00:00",
+                        "tv": "NFL Net",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "CIN",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "HOU",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "CHI",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "WSH",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "JAC",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "NE",
+                        "start": "2024-10-06T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "SF",
+                        "start": "2024-10-06T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "DEN",
+                        "start": "2024-10-06T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "LAR",
+                        "start": "2024-10-06T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "SEA",
+                        "start": "2024-10-06T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "PIT",
+                        "start": "2024-10-07T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "KC",
+                        "start": "2024-10-08T00:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "KC",
+                    "LAR",
+                    "MIA",
+                    "MIN"
+                ],
+                "opens": "2024-10-08T12:00:00+00:00",
+                "closes": "2024-10-15T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "SF",
+                        "home": "SEA",
+                        "start": "2024-10-11T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "CHI",
+                        "start": "2024-10-13T13:30:00+00:00",
+                        "tv": "NFL Net",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "GB",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "PHI",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "NE",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "TEN",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "NO",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "BAL",
+                        "start": "2024-10-13T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "DEN",
+                        "start": "2024-10-13T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "LV",
+                        "start": "2024-10-13T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "CAR",
+                        "start": "2024-10-13T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "DAL",
+                        "start": "2024-10-13T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "NYG",
+                        "start": "2024-10-14T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "NYJ",
+                        "start": "2024-10-15T00:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "CHI",
+                    "DAL"
+                ],
+                "opens": "2024-10-15T12:00:00+00:00",
+                "closes": "2024-10-22T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "DEN",
+                        "home": "NO",
+                        "start": "2024-10-18T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "JAC",
+                        "start": "2024-10-20T13:30:00+00:00",
+                        "tv": "NFL Net",
+                        "location": "Wembley Stadium, London"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "CLE",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "MIN",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "GB",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "IND",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "NYG",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "ATL",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "BUF",
+                        "start": "2024-10-20T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "WSH",
+                        "start": "2024-10-20T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "LAR",
+                        "start": "2024-10-20T20:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "SF",
+                        "start": "2024-10-20T20:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "PIT",
+                        "start": "2024-10-21T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "TB",
+                        "start": "2024-10-22T00:15:00+00:00",
+                        "tv": "ESPN, ESPN+",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "ARI",
+                        "start": "2024-10-22T01:00:00+00:00",
+                        "tv": "ESPN+",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-10-22T12:00:00+00:00",
+                "closes": "2024-10-29T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "MIN",
+                        "home": "LAR",
+                        "start": "2024-10-25T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "MIA",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "TB",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "CLE",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "WSH",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "JAC",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "HOU",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "NE",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "DET",
+                        "start": "2024-10-27T17:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "SEA",
+                        "start": "2024-10-27T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "LAC",
+                        "start": "2024-10-27T20:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "DEN",
+                        "start": "2024-10-27T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "LV",
+                        "start": "2024-10-27T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "CIN",
+                        "start": "2024-10-27T20:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "SF",
+                        "start": "2024-10-28T00:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "PIT",
+                        "start": "2024-10-29T00:15:00+00:00",
+                        "tv": "ESPN, ABC, ESPN+",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "PIT",
+                    "SF"
+                ],
+                "opens": "2024-10-29T12:00:00+00:00",
+                "closes": "2024-11-05T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "HOU",
+                        "home": "NYJ",
+                        "start": "2024-11-01T00:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "ATL",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "BAL",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "MIN",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "CIN",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "CLE",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "BUF",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "TEN",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "CAR",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "NYG",
+                        "start": "2024-11-03T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "ARI",
+                        "start": "2024-11-03T21:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "GB",
+                        "start": "2024-11-03T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "SEA",
+                        "start": "2024-11-03T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "PHI",
+                        "start": "2024-11-04T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "KC",
+                        "start": "2024-11-05T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "CLE",
+                    "GB",
+                    "LV",
+                    "SEA"
+                ],
+                "opens": "2024-11-05T12:00:00+00:00",
+                "closes": "2024-11-12T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "CIN",
+                        "home": "BAL",
+                        "start": "2024-11-08T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "CAR",
+                        "start": "2024-11-10T14:30:00+00:00",
+                        "tv": "NFL Net",
+                        "location": "Allianz Arena, Munich"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "NO",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "IND",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "KC",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "JAC",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "CHI",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "WSH",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "TB",
+                        "start": "2024-11-10T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "LAC",
+                        "start": "2024-11-10T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "ARI",
+                        "start": "2024-11-10T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "DAL",
+                        "start": "2024-11-10T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "HOU",
+                        "start": "2024-11-11T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "LAR",
+                        "start": "2024-11-12T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "ARI",
+                    "CAR",
+                    "NYG",
+                    "TB"
+                ],
+                "opens": "2024-11-12T12:00:00+00:00",
+                "closes": "2024-11-19T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "WSH",
+                        "home": "PHI",
+                        "start": "2024-11-15T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "PIT",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "NO",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "CHI",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "DET",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "MIA",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "NE",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "TEN",
+                        "start": "2024-11-17T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "DEN",
+                        "start": "2024-11-17T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "SF",
+                        "start": "2024-11-17T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "LAC",
+                        "start": "2024-11-17T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "BUF",
+                        "start": "2024-11-17T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "NYJ",
+                        "start": "2024-11-18T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "DAL",
+                        "start": "2024-11-19T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "ATL",
+                    "BUF",
+                    "CIN",
+                    "JAC",
+                    "NO",
+                    "NYJ"
+                ],
+                "opens": "2024-11-19T12:00:00+00:00",
+                "closes": "2024-11-26T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "PIT",
+                        "home": "CLE",
+                        "start": "2024-11-22T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "WSH",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "IND",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "CAR",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "CHI",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "MIA",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "NYG",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "HOU",
+                        "start": "2024-11-24T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "LV",
+                        "start": "2024-11-24T21:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "SEA",
+                        "start": "2024-11-24T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "GB",
+                        "start": "2024-11-24T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "LAR",
+                        "start": "2024-11-25T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "LAC",
+                        "start": "2024-11-26T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-11-26T12:00:00+00:00",
+                "closes": "2024-12-03T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "CHI",
+                        "home": "DET",
+                        "start": "2024-11-28T17:30:00+00:00",
+                        "tv": "CBS",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "DAL",
+                        "start": "2024-11-28T21:30:00+00:00",
+                        "tv": "FOX",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "GB",
+                        "start": "2024-11-29T01:20:00+00:00",
+                        "tv": "NBC, Peacock, Universo",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "KC",
+                        "start": "2024-11-29T20:00:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "MIN",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "JAC",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "NE",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "ATL",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "CIN",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "NYJ",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "WSH",
+                        "start": "2024-12-01T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "NO",
+                        "start": "2024-12-01T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "CAR",
+                        "start": "2024-12-01T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "BAL",
+                        "start": "2024-12-01T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "BUF",
+                        "start": "2024-12-02T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "DEN",
+                        "start": "2024-12-03T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    }
+                ]
+            },
+            {
+                "byes": [
+                    "BAL",
+                    "DEN",
+                    "HOU",
+                    "IND",
+                    "NE",
+                    "WSH"
+                ],
+                "opens": "2024-12-03T12:00:00+00:00",
+                "closes": "2024-12-10T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "GB",
+                        "home": "DET",
+                        "start": "2024-12-06T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "MIN",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "PHI",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "PIT",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "TEN",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "TB",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "NYG",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "MIA",
+                        "start": "2024-12-08T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "ARI",
+                        "start": "2024-12-08T21:05:00+00:00",
+                        "tv": "CBS",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "LAR",
+                        "start": "2024-12-08T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "SF",
+                        "start": "2024-12-08T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "KC",
+                        "start": "2024-12-09T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "DAL",
+                        "start": "2024-12-10T01:15:00+00:00",
+                        "tv": "ESPN, ABC, ESPN+",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-12-10T12:00:00+00:00",
+                "closes": "2024-12-17T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "LAR",
+                        "home": "SF",
+                        "start": "2024-12-13T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "NYG",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "TEN",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "CAR",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "CLE",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "HOU",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "JAC",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "NO",
+                        "start": "2024-12-15T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "BUF",
+                        "home": "DET",
+                        "start": "2024-12-15T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "DEN",
+                        "start": "2024-12-15T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "ARI",
+                        "start": "2024-12-15T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "PHI",
+                        "start": "2024-12-15T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "LAC",
+                        "start": "2024-12-15T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "SEA",
+                        "start": "2024-12-16T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "MIN",
+                        "start": "2024-12-17T01:00:00+00:00",
+                        "tv": "ABC, ESPN+",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "LV",
+                        "start": "2024-12-17T01:30:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-12-17T12:00:00+00:00",
+                "closes": "2024-12-24T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "CLE",
+                        "home": "CIN",
+                        "start": "2024-12-20T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "KC",
+                        "start": "2024-12-21T18:00:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "GEHA Field at Arrowhead Stadium, Kansas City, MO"
+                    },
+                    {
+                        "away": "PIT",
+                        "home": "BAL",
+                        "start": "2024-12-21T21:30:00+00:00",
+                        "tv": "FOX",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "CAR",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Bank of America Stadium, Charlotte, NC"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "CHI",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "LAR",
+                        "home": "NYJ",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "NE",
+                        "home": "BUF",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "ATL",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "PHI",
+                        "home": "WSH",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "IND",
+                        "start": "2024-12-22T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "LAC",
+                        "start": "2024-12-22T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "SEA",
+                        "start": "2024-12-22T21:05:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lumen Field, Seattle, WA"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "LV",
+                        "start": "2024-12-22T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "MIA",
+                        "start": "2024-12-22T21:25:00+00:00",
+                        "tv": "CBS",
+                        "location": "Hard Rock Stadium, Miami Gardens, FL"
+                    },
+                    {
+                        "away": "TB",
+                        "home": "DAL",
+                        "start": "2024-12-23T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "GB",
+                        "start": "2024-12-24T01:15:00+00:00",
+                        "tv": "ESPN",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-12-24T12:00:00+00:00",
+                "closes": "2024-12-31T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "KC",
+                        "home": "PIT",
+                        "start": "2024-12-25T18:00:00+00:00",
+                        "tv": "Netflix",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "BAL",
+                        "home": "HOU",
+                        "start": "2024-12-25T21:30:00+00:00",
+                        "tv": "Netflix",
+                        "location": "NRG Stadium, Houston, TX"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "CHI",
+                        "start": "2024-12-27T01:15:00+00:00",
+                        "tv": "Prime Video",
+                        "location": "Soldier Field, Chicago, IL"
+                    },
+                    {
+                        "away": "ARI",
+                        "home": "LAR",
+                        "start": "2024-12-29T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "ATL",
+                        "home": "WSH",
+                        "start": "2024-12-29T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Northwest Stadium, Landover, MD"
+                    },
+                    {
+                        "away": "DEN",
+                        "home": "CIN",
+                        "start": "2024-12-29T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Paycor Stadium, Cincinnati, OH"
+                    },
+                    {
+                        "away": "IND",
+                        "home": "NYG",
+                        "start": "2024-12-29T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "NE",
+                        "start": "2024-12-29T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "TB",
+                        "start": "2024-12-29T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "GB",
+                        "home": "MIN",
+                        "start": "2024-12-29T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "U.S. Bank Stadium, Minneapolis, MN"
+                    },
+                    {
+                        "away": "LV",
+                        "home": "NO",
+                        "start": "2024-12-29T18:00:00+00:00",
+                        "tv": "FOX",
+                        "location": "Caesars Superdome, New Orleans, LA"
+                    },
+                    {
+                        "away": "NYJ",
+                        "home": "BUF",
+                        "start": "2024-12-29T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "Highmark Stadium, Orchard Park, NY"
+                    },
+                    {
+                        "away": "TEN",
+                        "home": "JAC",
+                        "start": "2024-12-29T18:00:00+00:00",
+                        "tv": "CBS",
+                        "location": "EverBank Stadium, Jacksonville, FL"
+                    },
+                    {
+                        "away": "DAL",
+                        "home": "PHI",
+                        "start": "2024-12-29T21:25:00+00:00",
+                        "tv": "FOX",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "CLE",
+                        "start": "2024-12-30T01:20:00+00:00",
+                        "tv": "NBC, Peacock",
+                        "location": "Huntington Bank Field, Cleveland, OH"
+                    },
+                    {
+                        "away": "DET",
+                        "home": "SF",
+                        "start": "2024-12-31T01:15:00+00:00",
+                        "tv": "ESPN, ABC, ESPN+",
+                        "location": "Levi's Stadium, Santa Clara, CA"
+                    }
+                ]
+            },
+            {
+                "byes": [],
+                "opens": "2024-12-31T12:00:00+00:00",
+                "closes": "2025-01-07T11:59:59+00:00",
+                "games": [
+                    {
+                        "away": "BUF",
+                        "home": "NE",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Gillette Stadium, Foxborough, MA"
+                    },
+                    {
+                        "away": "CAR",
+                        "home": "ATL",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Mercedes-Benz Stadium, Atlanta, GA"
+                    },
+                    {
+                        "away": "CHI",
+                        "home": "GB",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Lambeau Field, Green Bay, WI"
+                    },
+                    {
+                        "away": "CIN",
+                        "home": "PIT",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Acrisure Stadium, Pittsburgh, PA"
+                    },
+                    {
+                        "away": "CLE",
+                        "home": "BAL",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "M&T Bank Stadium, Baltimore, MD"
+                    },
+                    {
+                        "away": "HOU",
+                        "home": "TEN",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Nissan Stadium, Nashville, TN"
+                    },
+                    {
+                        "away": "JAC",
+                        "home": "IND",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Lucas Oil Stadium, Indianapolis, IN"
+                    },
+                    {
+                        "away": "KC",
+                        "home": "DEN",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Empower Field at Mile High, Denver, CO"
+                    },
+                    {
+                        "away": "LAC",
+                        "home": "LV",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Allegiant Stadium, Las Vegas, NV"
+                    },
+                    {
+                        "away": "MIA",
+                        "home": "NYJ",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "MetLife Stadium, East Rutherford, NJ"
+                    },
+                    {
+                        "away": "MIN",
+                        "home": "DET",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Ford Field, Detroit, MI"
+                    },
+                    {
+                        "away": "NO",
+                        "home": "TB",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Raymond James Stadium, Tampa, FL"
+                    },
+                    {
+                        "away": "NYG",
+                        "home": "PHI",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "Lincoln Financial Field, Philadelphia, PA"
+                    },
+                    {
+                        "away": "SF",
+                        "home": "ARI",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "State Farm Stadium, Glendale, AZ"
+                    },
+                    {
+                        "away": "SEA",
+                        "home": "LAR",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "SoFi Stadium, Inglewood, CA"
+                    },
+                    {
+                        "away": "WSH",
+                        "home": "DAL",
+                        "start": "2025-01-05T05:00:00+00:00",
+                        "tv": "NFL Sunday Ticket",
+                        "location": "AT&T Stadium, Arlington, TX"
+                    }
+                ]
+            }
+        ]
+    }
+}

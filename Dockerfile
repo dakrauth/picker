@@ -17,7 +17,7 @@ RUN pip install . demo/ && \
     demo migrate --no-input && \
     demo loaddata demo/demo/fixtures/users.json && \
     demo loaddata demo/demo/fixtures/picker.json && \
-    demo import_picks tests/nfl2019.json
+    demo import_picks tests/nfl2024.json
 
 EXPOSE 80
 RUN echo Load at http://localhost:8080
