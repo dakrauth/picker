@@ -47,26 +47,29 @@ class ChoiceOption(tuple):
 
 class GameField(forms.ChoiceField):
     def __init__(self, game, manage=False, widget=None, allow_ties=False):
-        winner = game.winner
-        choices = [
-            ChoiceOption.make(game.away, winner),
-            ChoiceOption.make(game.home, winner),
-        ]
+        self.winner = game.winner
+        choices = [(str(game.away.id), game.away), (str(game.home.id), game.home)]
         if allow_ties:
-            choices.insert(1, ChoiceOption.make(None, winner))
+            choices.insert(1, (TIE_KEY, ""))
 
         self.game = game
         self.manage = manage
         self.game_id = game.id
         self.is_game = True
+        widget = widget or get_picker_widget(game.gameset.league)
         super(GameField, self).__init__(
             choices=choices,
             label=game.start_time.strftime("%a, %b %d %I:%M %p"),
             required=False,
             help_text=game.tv,
             disabled=not self.manage and (self.game.start_time <= timezone.now()),
-            widget=widget or get_picker_widget(game.gameset.league),
+            widget=widget,
         )
+
+    def widget_attrs(self, widget):
+        attrs = super().widget_attrs(widget)
+        attrs["winner"] = self.winner
+        return attrs
 
 
 class FieldIter:
