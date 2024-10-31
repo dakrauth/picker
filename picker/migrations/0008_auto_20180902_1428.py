@@ -36,16 +36,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="league",
             name="logo",
-            field=models.ImageField(
-                blank=True, null=True, upload_to="picker/logos/nfl"
-            ),
+            field=models.ImageField(blank=True, null=True, upload_to="picker/logos/nfl"),
         ),
         migrations.AlterField(
             model_name="team",
             name="logo",
-            field=models.ImageField(
-                blank=True, null=True, upload_to="picker/logos/nfl"
-            ),
+            field=models.ImageField(blank=True, null=True, upload_to="picker/logos/nfl"),
         ),
         migrations.DeleteModel(
             name="Playoff",

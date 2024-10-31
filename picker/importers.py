@@ -8,17 +8,13 @@ from .exceptions import PickerConfigurationError
 def valid_schema(data, expected_schema):
     schema = data.get("schema")
     if not schema:
-        raise PickerConfigurationError(
-            "Missing schema type for {}".format(expected_schema)
-        )
+        raise PickerConfigurationError("Missing schema type for {}".format(expected_schema))
 
     if schema == "complete":
         data = data[expected_schema]
 
     if data.get("schema") != expected_schema:
-        raise PickerConfigurationError(
-            "Missing schema type for {}".format(expected_schema)
-        )
+        raise PickerConfigurationError("Missing schema type for {}".format(expected_schema))
 
     return data
 
@@ -103,9 +99,7 @@ def import_league(cls, data):
                 if (div_name, conf_name) in divs:
                     div = divs[(div_name, conf_name)]
                 else:
-                    div, div_created = confs[conf_name].divisions.get_or_create(
-                        name=div_name
-                    )
+                    div, div_created = confs[conf_name].divisions.get_or_create(name=div_name)
                     divs[(div_name, conf_name)] = div
 
         team, created = league.teams.get_or_create(

@@ -97,9 +97,7 @@ class BasePickForm(forms.Form):
         if games:
             for gm in games:
                 key = encoded_game_key(gm.id)
-                self.fields[key] = GameField(
-                    gm, manage=self.management, allow_ties=self.allow_ties
-                )
+                self.fields[key] = GameField(gm, manage=self.management, allow_ties=self.allow_ties)
                 self.game_fields.append(key)
 
             self.fields["points"] = forms.IntegerField(
@@ -195,9 +193,7 @@ class PreferenceForm(forms.ModelForm):
             current = None
             if instance:
                 try:
-                    current = picker.PickerFavorite.objects.get(
-                        user=instance.user, league=league
-                    )
+                    current = picker.PickerFavorite.objects.get(user=instance.user, league=league)
                 except picker.PickerFavorite.DoesNotExist:
                     pass
 

@@ -28,7 +28,7 @@ class GroupMembershipRedirect(PickerViewBase):
         elif count > 1:
             return self.render_to_response(
                 self.get_context_data(memberships=memberships),
-                template_override="@group_select.html"
+                template_override="@group_select.html",
             )
 
         return self.render_to_response(
@@ -37,7 +37,7 @@ class GroupMembershipRedirect(PickerViewBase):
                 "heading": "Membership group unavailable",
                 "description": "Please check back later",
             },
-            template_override="@unavailable.html"
+            template_override="@unavailable.html",
         )
 
 
@@ -77,9 +77,7 @@ class RosterProfile(RosterMixin, PickerViewBase):
         pref = get_object_or_404(Preference, user__username=username)
         seasons = list(league.available_seasons) + [None]
         return super().get_context_data(
-            profile=pref,
-            stats=[RosterStats(pref.user, league, s) for s in seasons],
-            **kwargs
+            profile=pref, stats=[RosterStats(pref.user, league, s) for s in seasons], **kwargs
         )
 
 
@@ -145,9 +143,7 @@ class PicksBySeason(PickerViewBase):
         return super().get_context_data(
             gamesets=[
                 (gs, gs.pick_for_user(self.request.user))
-                for gs in get_list_or_404(
-                    GameSetPicks, league=self.league, season=self.season
-                )
+                for gs in get_list_or_404(GameSetPicks, league=self.league, season=self.season)
             ],
             **kwargs
         )
@@ -195,9 +191,7 @@ class PicksByGameset(SimpleFormMixin, PickerViewBase):
     def show_picks(self, gameset, **kwargs):
         self.template_name = "@picks/show.html"
         return self.render_to_response(
-            self.get_context_data(
-                picks=gameset.pick_for_user(self.request.user), **kwargs
-            )
+            self.get_context_data(picks=gameset.pick_for_user(self.request.user), **kwargs)
         )
 
     def post(self, request, *args, **kwargs):

@@ -75,8 +75,7 @@ class League(models.Model):
                 "league": self.abbr,
                 "season": self.current_season,
                 "gamesets": [
-                    gs.to_dict()
-                    for gs in self.gamesets.filter(season=self.current_season)
+                    gs.to_dict() for gs in self.gamesets.filter(season=self.current_season)
                 ],
             },
         }
@@ -124,11 +123,7 @@ class League(models.Model):
 
     @cached_property
     def available_seasons(self):
-        return (
-            self.gamesets.order_by("-season")
-            .values_list("season", flat=True)
-            .distinct()
-        )
+        return self.gamesets.order_by("-season").values_list("season", flat=True).distinct()
 
     def season_gamesets(self, season=None):
         season = season or self.current_season or self.latest_season
@@ -181,9 +176,7 @@ class League(models.Model):
 class Conference(models.Model):
     name = models.CharField(max_length=50)
     abbr = models.CharField(max_length=8)
-    league = models.ForeignKey(
-        League, on_delete=models.CASCADE, related_name="conferences"
-    )
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="conferences")
 
     def __str__(self):
         return self.name
@@ -191,9 +184,7 @@ class Conference(models.Model):
 
 class Division(models.Model):
     name = models.CharField(max_length=50)
-    conference = models.ForeignKey(
-        Conference, on_delete=models.CASCADE, related_name="divisions"
-    )
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE, related_name="divisions")
 
     def __str__(self):
         return "{} {}".format(self.conference.name, self.name)
@@ -310,9 +301,7 @@ class Team(models.Model):
             (self.away_games, away_games, Game.Status.AWAY_WIN),
             (self.home_games, home_games, Game.Status.HOME_WIN),
         ):
-            for res in games.exclude(status=Game.Status.UNPLAYED).values_list(
-                "status", flat=True
-            ):
+            for res in games.exclude(status=Game.Status.UNPLAYED).values_list("status", flat=True):
                 if res == status:
                     accum[0] += 1
                 elif res == Game.Status.TIE:
@@ -340,9 +329,7 @@ class Alias(models.Model):
 
 
 class GameSet(models.Model):
-    league = models.ForeignKey(
-        League, on_delete=models.CASCADE, related_name="gamesets"
-    )
+    league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="gamesets")
     season = models.PositiveSmallIntegerField()
     sequence = models.PositiveSmallIntegerField()
     points = models.PositiveSmallIntegerField(default=0)
@@ -499,12 +486,8 @@ class Game(models.Model):
     start_time = models.DateTimeField()
     tv = models.CharField("TV", max_length=24, blank=True)
     notes = models.TextField(blank=True)
-    category = models.CharField(
-        max_length=4, choices=Category.choices, default=Category.REGULAR
-    )
-    status = models.CharField(
-        max_length=1, choices=Status.choices, default=Status.UNPLAYED
-    )
+    category = models.CharField(max_length=4, choices=Category.choices, default=Category.REGULAR)
+    status = models.CharField(max_length=1, choices=Status.choices, default=Status.UNPLAYED)
     location = models.CharField(blank=True, default="", max_length=60)
     description = models.CharField(max_length=60, default="", blank=True)
 
@@ -580,9 +563,7 @@ class Game(models.Model):
 
     @property
     def end_time(self):
-        return self.start_time + timedelta(
-            minutes=self.gameset.league.avg_game_duration
-        )
+        return self.start_time + timedelta(minutes=self.gameset.league.avg_game_duration)
 
     @property
     def in_progress(self):

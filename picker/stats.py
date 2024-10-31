@@ -46,9 +46,7 @@ class RosterStats:
         )
 
     def __str__(self):
-        return "{}{}".format(
-            self.user, " ({})".format(self.season) if self.season else ""
-        )
+        return "{}{}".format(self.user, " ({})".format(self.season) if self.season else "")
 
     __repr__ = __str__
 

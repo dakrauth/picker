@@ -43,9 +43,7 @@ def sorted_standings(items, key=None, reverse=True):
 
 def get_templates(component, league=None):
     if component.startswith("@"):
-        dirs = (
-            [component.replace("@", "picker/{}/".format(league.slug))] if league else []
-        )
+        dirs = [component.replace("@", "picker/{}/".format(league.slug))] if league else []
         dirs.extend(
             [
                 component.replace("@", "picker/"),

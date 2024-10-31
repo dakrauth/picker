@@ -25,9 +25,7 @@ class Command(BaseCommand):
                     )
                 )
                 for t, created in teams_info:
-                    self.stdout.write(
-                        "{} team {}\n".format("Created" if created else "Updated", t)
-                    )
+                    self.stdout.write("{} team {}\n".format("Created" if created else "Updated", t))
 
             if schema == "complete" or schema == "season":
                 results = picker.League.import_season(data)
