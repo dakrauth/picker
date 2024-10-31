@@ -322,7 +322,7 @@ class GameSetPicks(sports.GameSet):
         if results["sequence"] != self.sequence or results["season"] != self.season:
             raise PickerResultException("Results not updated, wrong season or week")
 
-        games = sorted(results["games"], key=lambda g: g["start"])
+        games = sorted(results["games"], key=lambda g: g.get("start"))
         completed = {g["home"]: g for g in games if g["status"].startswith("F")}
         if not completed:
             return (0, None)
