@@ -19,7 +19,7 @@ setup(
     platforms=["any"],
     license="MIT License",
     install_requires=[
-        "Django>=4.2,<5.0",
+        "Django>=4.2",
         "django-bootstrap3>=12.0.1",
         "Pillow>=6.2.1",
         "python-dateutil>=2.8.1",
@@ -42,6 +42,8 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ),
     packages=find_packages(),
     include_package_data=True,

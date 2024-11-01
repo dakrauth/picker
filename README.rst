@@ -30,6 +30,8 @@ all share password ``password``.
 Meta
 ----
 
+Requires Python >= 3.10, Django >= 4.2
+
 Distributed under the MIT License, see ``LICENSE`` file for more information.
 
 https://github.com/dakrauth/picker
