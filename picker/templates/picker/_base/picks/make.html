@@ -40,9 +40,7 @@
                     {% if field.errors %}{{ field.errors }}<br>{% endif %}
                     {% bootstrap_field field %}
                     {% if gameset.is_open %}
-                    {% buttons %}
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    {% endbuttons %}
                     {% endif %}
                 </td>
                 <td></td>

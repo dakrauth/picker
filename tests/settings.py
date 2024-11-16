@@ -27,7 +27,7 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "picker.apps.PickerConfig",
-    "bootstrap3",
+    "django_bootstrap5",
 )
 
 

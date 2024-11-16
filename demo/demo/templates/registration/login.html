@@ -9,9 +9,7 @@
                 <form action="" method="post" role="form" >
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    {% buttons %}
                     <button type="submit" class="btn btn-primary">Log In</button>
-                    {% endbuttons %}
                     <input type="hidden" name="next" value="{{ next }}">
                 </form>
             </div>
