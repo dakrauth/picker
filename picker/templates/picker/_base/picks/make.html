@@ -2,7 +2,7 @@
 {% load picker_tags %}
 {% block title %}Picks{% endblock %}
 {% block main_content %}
-    {% load bootstrap3 %}
+    {% load django_bootstrap5 %}
     <h1>
         Week #{{ gameset.sequence }}
         <small><a href="{% url 'picker-season-picks' gameset.league.slug gameset.season %}">{{ gameset.season }}</a></small>

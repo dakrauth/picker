@@ -5,11 +5,9 @@
     <p>
         Week {{ game.gameset.sequence }} &middot; {{ game.start_time }}
     </p>
-    {% load bootstrap3 %}
+    {% load django_bootstrap5 %}
     <form method="post">{% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons %}
         <button type="submit" class="btn btn-primary">Submit</button>
-        {% endbuttons %}
     </form>
 {% endblock %}

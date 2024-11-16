@@ -2,7 +2,7 @@
 {% block title %}Picks Management{% endblock %}
 {% block main_content %}
     <h1>Manage Picks: Week {{ gameset.sequence }}, {{ gameset.season }}</h1>
-    {% load bootstrap3 picker_tags %}
+    {% load django_bootstrap5 picker_tags %}
     {% all_seasons_nav season league "manage" %}
     {% season_nav gameset "manage" %}
     {% if form.errors %}

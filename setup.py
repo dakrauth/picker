@@ -20,7 +20,7 @@ setup(
     license="MIT License",
     install_requires=[
         "Django>=4.2",
-        "django-bootstrap3>=12.0.1",
+        "django-bootstrap5",
         "Pillow>=6.2.1",
         "python-dateutil>=2.8.1",
     ],
