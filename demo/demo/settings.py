@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(BASE_DIR))
 
 SECRET_KEY = "@$n=(b+ih211@e02_kup2i26e)o4ovt6ureh@xbkfz!&@b(hh*"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INSTALLED_APPS = (

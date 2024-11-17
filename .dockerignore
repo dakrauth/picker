@@ -1,0 +1,17 @@
+.DS_Store
+.git
+.github
+.tox
+.dev
+.pytest_cache
+.coverage
+.dockerignore
+.gitignore
+Dockerfile
+docker-compose.yml
+dist
+build
+venv
+htmlcov
+picker.egg-info
+demo/demo.egg-info

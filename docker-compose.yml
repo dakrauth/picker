@@ -3,6 +3,7 @@ services:
   app:
     build: .
     volumes:
-      - .:/app
+      - ./picker:/app/picker
+      - ./demo:/app/demo
     ports:
-      - "8080:80"
+      - "8008:8008"

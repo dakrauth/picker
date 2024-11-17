@@ -4,6 +4,9 @@
     <p>
         Select an option from the menu above.
     </p>
+    <p class="text-danger">
+        <em><strong>Time frozen as {{ now }}</strong></em>
+    </p>
     {% if not user.is_authenticated %}
     <p>
         You can sign in as an admin using <code>demo</code> as both username and password,

@@ -22,10 +22,44 @@ For Linux/Mac OS X:
     $ cd django-picker
     $ docker-compose up --build
 
-Browse to: http://127.0.0.1:8080
+Browse to: http://127.0.0.1:8008
 
 User ``demo``, password ``demo`` has management rights. Users [``user1``, ``user2``, ..., ``user9``]
 all share password ``password``.
+
+Development
+-----------
+
+For convenience, please install `just <https://github.com/casey/just>`_.
+
+.. code-block:: bash
+
+    $ git clone https://github.com/dakrauth/django-picker.git
+    $ cd django-picker
+
+    # Show all available recipes
+    $ just
+
+Build and execute the demo in a Docker container:
+
+.. code-block:: bash
+
+    $ just dbuild
+    $ just drun
+
+To test:
+
+.. code-block:: bash
+
+    $ just test
+
+    # or
+
+    $ just retest
+
+    # or, for all tox tests
+
+    $ just tox
 
 Meta
 ----
