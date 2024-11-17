@@ -1,12 +1,14 @@
 {% load picker_tags %}
 <nav class="season-nav">
-    <ul class="pagination {{ relative_to }}">{% for gs in season_gamesets %}
-        <li{% if gs == gameset %} class="active"{% endif %}>
-            <a href="/{{ league.slug }}/{{ relative_to }}/{{ gs.season }}/{{ gs.sequence }}/">{{ gs.sequence }}</a>
+    <ul class="pagination pagination-sm {{ relative_to }}">{% for gs in season_gamesets %}
+        <li class="page-item {% if gs == gameset %} active{% endif %}">
+            <a class="page-link" href="/{{ league.slug }}/{{ relative_to }}/{{ gs.season }}/{{ gs.sequence }}/">{{ gs.sequence }}</a>
         </li> {% endfor %}
         {% if gameset %}
         {% if is_manager %}
-        <li><a href="{% url 'picker-manage-week' league.slug gameset.season gameset.sequence %}">Manage</a></li>
+        <li class="page-item">
+            <a class="page-link" href="{% url 'picker-manage-week' league.slug gameset.season gameset.sequence %}">Manage</a>
+        </li>
         {% endif %}
         {% endif %}
     </ul>

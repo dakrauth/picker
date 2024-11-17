@@ -9,7 +9,7 @@
         "teams": [
             {
                 "abbr": "ARI",
-                "logo": "picker/logos/nfl/ari.gif",
+                "logo": "picker/logos/nfl/ari.jpg",
                 "name": "Arizona",
                 "nickname": "Cardinals",
                 "sub": [
@@ -22,7 +22,7 @@
             },
             {
                 "abbr": "ATL",
-                "logo": "picker/logos/nfl/atl.gif",
+                "logo": "picker/logos/nfl/atl.jpg",
                 "name": "Atlanta",
                 "nickname": "Falcons",
                 "sub": [
@@ -35,7 +35,7 @@
             },
             {
                 "abbr": "BAL",
-                "logo": "picker/logos/nfl/bal.gif",
+                "logo": "picker/logos/nfl/bal.jpg",
                 "name": "Baltimore",
                 "nickname": "Ravens",
                 "sub": [
@@ -48,7 +48,7 @@
             },
             {
                 "abbr": "BUF",
-                "logo": "picker/logos/nfl/buf.gif",
+                "logo": "picker/logos/nfl/buf.jpg",
                 "name": "Buffalo",
                 "nickname": "Bills",
                 "sub": [
@@ -61,7 +61,7 @@
             },
             {
                 "abbr": "CAR",
-                "logo": "picker/logos/nfl/car.gif",
+                "logo": "picker/logos/nfl/car.jpg",
                 "name": "Carolina",
                 "nickname": "Panthers",
                 "sub": [
@@ -74,7 +74,7 @@
             },
             {
                 "abbr": "CHI",
-                "logo": "picker/logos/nfl/chi.gif",
+                "logo": "picker/logos/nfl/chi.jpg",
                 "name": "Chicago",
                 "nickname": "Bears",
                 "sub": [
@@ -87,7 +87,7 @@
             },
             {
                 "abbr": "CIN",
-                "logo": "picker/logos/nfl/cin.gif",
+                "logo": "picker/logos/nfl/cin.jpg",
                 "name": "Cincinnati",
                 "nickname": "Bengals",
                 "sub": [
@@ -100,7 +100,7 @@
             },
             {
                 "abbr": "CLE",
-                "logo": "picker/logos/nfl/cle.gif",
+                "logo": "picker/logos/nfl/cle.jpg",
                 "name": "Cleveland",
                 "nickname": "Browns",
                 "sub": [
@@ -113,7 +113,7 @@
             },
             {
                 "abbr": "DAL",
-                "logo": "picker/logos/nfl/dal.gif",
+                "logo": "picker/logos/nfl/dal.jpg",
                 "name": "Dallas",
                 "nickname": "Cowboys",
                 "sub": [
@@ -126,7 +126,7 @@
             },
             {
                 "abbr": "DEN",
-                "logo": "picker/logos/nfl/den.gif",
+                "logo": "picker/logos/nfl/den.jpg",
                 "name": "Denver",
                 "nickname": "Broncos",
                 "sub": [
@@ -139,7 +139,7 @@
             },
             {
                 "abbr": "DET",
-                "logo": "picker/logos/nfl/det.gif",
+                "logo": "picker/logos/nfl/det.jpg",
                 "name": "Detroit",
                 "nickname": "Lions",
                 "sub": [
@@ -152,7 +152,7 @@
             },
             {
                 "abbr": "GB",
-                "logo": "picker/logos/nfl/gb.gif",
+                "logo": "picker/logos/nfl/gb.jpg",
                 "name": "Green Bay",
                 "nickname": "Packers",
                 "sub": [
@@ -165,7 +165,7 @@
             },
             {
                 "abbr": "HOU",
-                "logo": "picker/logos/nfl/hou.gif",
+                "logo": "picker/logos/nfl/hou.jpg",
                 "name": "Houston",
                 "nickname": "Texans",
                 "sub": [
@@ -178,7 +178,7 @@
             },
             {
                 "abbr": "IND",
-                "logo": "picker/logos/nfl/ind.gif",
+                "logo": "picker/logos/nfl/ind.jpg",
                 "name": "Indianapolis",
                 "nickname": "Colts",
                 "sub": [
@@ -190,8 +190,8 @@
                 "location": "Lucas Oil Stadium, Indianapolis, IN"
             },
             {
-                "abbr": "JAC",
-                "logo": "picker/logos/nfl/jax.gif",
+                "abbr": "JAX",
+                "logo": "picker/logos/nfl/jax.jpg",
                 "name": "Jacksonville",
                 "nickname": "Jaguars",
                 "sub": [
@@ -199,14 +199,14 @@
                     "South"
                 ],
                 "aliases": [
-                    "JAX"
+                    "JAC"
                 ],
                 "coach": "Doug Pederson",
                 "location": "TIAA Bank Field, Jacksonville, FL"
             },
             {
                 "abbr": "KC",
-                "logo": "picker/logos/nfl/kc.gif",
+                "logo": "picker/logos/nfl/kc.jpg",
                 "name": "Kansas City",
                 "nickname": "Chiefs",
                 "sub": [
@@ -219,7 +219,7 @@
             },
             {
                 "abbr": "LV",
-                "logo": "picker/logos/nfl/oak.gif",
+                "logo": "picker/logos/nfl/lv.jpg",
                 "name": "Las Vegas",
                 "nickname": "Raiders",
                 "sub": [
@@ -232,7 +232,7 @@
             },
             {
                 "abbr": "LAR",
-                "logo": "picker/logos/nfl/lar.gif",
+                "logo": "picker/logos/nfl/lar.jpg",
                 "name": "Los Angeles",
                 "nickname": "Rams",
                 "sub": [
@@ -249,7 +249,7 @@
             },
             {
                 "abbr": "LAC",
-                "logo": "picker/logos/nfl/lac.gif",
+                "logo": "picker/logos/nfl/lac.jpg",
                 "name": "Los Angeles",
                 "nickname": "Chargers",
                 "sub": [
@@ -264,7 +264,7 @@
             },
             {
                 "abbr": "MIA",
-                "logo": "picker/logos/nfl/mia.gif",
+                "logo": "picker/logos/nfl/mia.jpg",
                 "name": "Miami",
                 "nickname": "Dolphins",
                 "sub": [
@@ -277,7 +277,7 @@
             },
             {
                 "abbr": "MIN",
-                "logo": "picker/logos/nfl/min.gif",
+                "logo": "picker/logos/nfl/min.jpg",
                 "name": "Minnesota",
                 "nickname": "Vikings",
                 "sub": [
@@ -290,7 +290,7 @@
             },
             {
                 "abbr": "NE",
-                "logo": "picker/logos/nfl/ne.gif",
+                "logo": "picker/logos/nfl/ne.jpg",
                 "name": "New England",
                 "nickname": "Patriots",
                 "sub": [
@@ -303,7 +303,7 @@
             },
             {
                 "abbr": "NO",
-                "logo": "picker/logos/nfl/no.gif",
+                "logo": "picker/logos/nfl/no.jpg",
                 "name": "New Orleans",
                 "nickname": "Saints",
                 "sub": [
@@ -316,7 +316,7 @@
             },
             {
                 "abbr": "NYG",
-                "logo": "picker/logos/nfl/nyg.gif",
+                "logo": "picker/logos/nfl/nyg.jpg",
                 "name": "New York",
                 "nickname": "Giants",
                 "sub": [
@@ -331,7 +331,7 @@
             },
             {
                 "abbr": "NYJ",
-                "logo": "picker/logos/nfl/nyj.gif",
+                "logo": "picker/logos/nfl/nyj.jpg",
                 "name": "New York",
                 "nickname": "Jets",
                 "sub": [
@@ -346,7 +346,7 @@
             },
             {
                 "abbr": "PHI",
-                "logo": "picker/logos/nfl/phi.gif",
+                "logo": "picker/logos/nfl/phi.jpg",
                 "name": "Philadelphia",
                 "nickname": "Eagles",
                 "sub": [
@@ -359,7 +359,7 @@
             },
             {
                 "abbr": "PIT",
-                "logo": "picker/logos/nfl/pit.gif",
+                "logo": "picker/logos/nfl/pit.jpg",
                 "name": "Pittsburgh",
                 "nickname": "Steelers",
                 "sub": [
@@ -372,7 +372,7 @@
             },
             {
                 "abbr": "SF",
-                "logo": "picker/logos/nfl/sf.gif",
+                "logo": "picker/logos/nfl/sf.jpg",
                 "name": "San Francisco",
                 "nickname": "49ers",
                 "sub": [
@@ -385,7 +385,7 @@
             },
             {
                 "abbr": "SEA",
-                "logo": "picker/logos/nfl/sea.gif",
+                "logo": "picker/logos/nfl/sea.jpg",
                 "name": "Seattle",
                 "nickname": "Seahawks",
                 "sub": [
@@ -398,7 +398,7 @@
             },
             {
                 "abbr": "TB",
-                "logo": "picker/logos/nfl/tb.gif",
+                "logo": "picker/logos/nfl/tb.jpg",
                 "name": "Tampa Bay",
                 "nickname": "Buccaneers",
                 "sub": [
@@ -411,7 +411,7 @@
             },
             {
                 "abbr": "TEN",
-                "logo": "picker/logos/nfl/ten.gif",
+                "logo": "picker/logos/nfl/ten.jpg",
                 "name": "Tennessee",
                 "nickname": "Titans",
                 "sub": [
@@ -424,7 +424,7 @@
             },
             {
                 "abbr": "WSH",
-                "logo": "picker/logos/nfl/wsh.gif",
+                "logo": "picker/logos/nfl/wsh.jpg",
                 "name": "Washington",
                 "nickname": "Commanders",
                 "sub": [

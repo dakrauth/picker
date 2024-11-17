@@ -15,17 +15,17 @@
     <div class="panel panel-primary">
         <div class="panel-heading">Your weekly picks</div>
         <form method="post" action="">{% csrf_token %}
-        <table class="table table-striped picks">
+        <table class="table table-sm table-responsive table-striped picks">
             <tbody>
             <tr>
                 <th class="start-time">Start Time</th>
-                <th class="teams">Away vs. Home</th>
+                <th class="teams w-50">Away vs. Home</th>
                 <th class="tv">TV</th>
             </tr> {% for field in form.game_fields %}{% with field.field.game as gm %}
             <tr>
                 <td class="kickoff">
-                    <span class="date-day">{{ gm.start_time|date:"M jS, Y"}}</span>
-                    <span class="date-weekday">{{ gm.start_time|date:"D, P" }}</span>
+                    <span class="date-day">{{ gm.start_time|date:"M jS, Y"}}</span><br>
+                    <span class="date-weekday">{{ gm.start_time|date:"P D" }}</span>
                     {% if gm.location %}<br>
                     <span class="location">{{ gm.location }}</span>{% endif %}
                 </td>

@@ -9,7 +9,7 @@ A Django-based sports picker app for various leagues.
 Templates
 ---------
 
-The default, included templates are all `Bootstrap 3 <http://getbootstrap.com/>`_ based.
+The included templates are all `Bootstrap 5 <http://getbootstrap.com/>`_ based.
 
 Demo
 ----
@@ -18,8 +18,8 @@ For Linux/Mac OS X:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/dakrauth/picker.git
-    $ cd picker
+    $ git clone https://github.com/dakrauth/django-picker.git
+    $ cd django-picker
     $ docker-compose up --build
 
 Browse to: http://127.0.0.1:8080

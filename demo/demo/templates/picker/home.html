@@ -5,12 +5,6 @@
     <p>
         Select an option from the menu above.
     </p>
-    <p>
-        You can sign in as an admin using <code>demo</code> as both username and password,
-        or as standard user using <code>user1</code>, <code>user2</code>, ...
-        <code>user9</code> as username and password.
-    </p>
-
     {% else %}
     <p class="">Select a demo:</p>
     <div class="list-group">
@@ -18,5 +12,13 @@
         <a href="{{ league.get_absolute_url }}" class="list-group-item">{{ league }} Demo</a>
         {% endfor %}
     </div>
+    {% endif %}
+    <hr>
+    {% if not user.is_authenticated %}
+    <p>
+        You can sign in as an admin using <code>demo</code> as both username and password,
+        or as standard user using <code>user1</code>, <code>user2</code>, ...
+        <code>user9</code> as username and password.
+    </p>
     {% endif %}
 {% endblock main_content %}
