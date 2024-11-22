@@ -28,7 +28,6 @@ def get_picker_widget(league):
             _picker_widget = import_string(widget_path)
 
         _picker_widget = _picker_widget or forms.RadioSelect
-
     return _picker_widget
 
 

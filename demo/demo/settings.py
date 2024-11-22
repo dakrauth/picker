@@ -93,6 +93,10 @@ PICKER = {
     "HQ": {
         "TEAM_PICKER_WIDGET": "demo.forms.TemplateTeamChoice",
     },
+    "ENG1": {
+        "TEAM_PICKER_WIDGET": "demo.forms.TemplateTeamChoice",
+        "ALLOW_TIES": True
+    },
 }
 
 

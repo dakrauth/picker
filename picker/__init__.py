@@ -1,6 +1,8 @@
-VERSION = (2, 3, 0)
+__version__ = "2.3.0"
+VERSION = tuple(int(i) for i in __version__.split("."))
+
 default_app_config = "picker.apps.PickerConfig"
 
 
 def get_version():
-    return ".".join(map(str, VERSION))
+    return __version__

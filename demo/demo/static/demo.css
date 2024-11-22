@@ -16,12 +16,11 @@ table.picks .teams label {
 }
 table.picks .teams label input {
     display:inline-block;
-    height:135px
 }
 table.picks .teams label > div {
     display: inline-block;
     text-align: center;
-    width: 160px;
+    width: 200px;
 }
 table.picks .teams label > div .record { display: block; }
 .team-listing .team-logo, .team-info img { height: 80px; }

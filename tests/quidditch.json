@@ -5,7 +5,7 @@
         "name": "Hogwarts Quidditch",
         "slug": "hq",
         "abbr": "HQ",
-        "current_season": "2018",
+        "current_season": "2024",
         "teams": [
             {"abbr": "GRF", "name": "Gryffindor", "logo": "picker/logos/hq/12656_Gold.jpg", "colors": "#c40002,#f39f00", "nickname": "Lions", "sub": ["Hogwarts"]},
             {"abbr": "HUF", "name": "Hufflepuff", "logo": "picker/logos/hq/12657_Black.jpg", "colors": "#fff300,#000000", "nickname": "Badgers", "sub": ["Hogwarts"]},
@@ -16,19 +16,19 @@
     "season": {
         "schema": "season",
         "league": "HQ",
-        "season": 2018,
+        "season": 2024,
         "gamesets": [
-            {"opens": "2018-08-18T00:00Z", "games": [
-                {"away": "GRF", "home": "HUF", "start": "2018-09-07T00:00Z", "location": "Hogwarts"},
-                {"away": "RVN", "home": "SLY", "start": "2018-09-07T08:00Z", "location": "Hogwarts"}
+            {"opens": "2024-10-01T00:00Z", "games": [
+                {"away": "GRF", "home": "HUF", "start": "2024-10-01T13:00Z", "location": "Hogwarts"},
+                {"away": "RVN", "home": "SLY", "start": "2024-10-01T16:00Z", "location": "Hogwarts"}
             ]},
             {"games": [
-                {"away": "GRF", "home": "RVN", "start": "2018-09-14T04:00Z", "location": "Hogwarts"},
-                {"away": "HUF", "home": "SLY", "start": "2018-09-14T08:00Z", "location": "Hogwarts"}
+                {"away": "GRF", "home": "RVN", "start": "2024-10-08T13:00Z", "location": "Hogwarts"},
+                {"away": "HUF", "home": "SLY", "start": "2024-10-08T16:00Z", "location": "Hogwarts"}
             ]},
             {"games": [
-                {"away": "SLY", "home": "GRF", "start": "2018-09-21T04:00Z", "location": "Hogwarts"},
-                {"away": "HUF", "home": "RVN", "start": "2018-09-21T08:00Z", "location": "Hogwarts"}
+                {"away": "SLY", "home": "GRF", "start": "2024-10-15T13:00Z", "location": "Hogwarts"},
+                {"away": "HUF", "home": "RVN", "start": "2024-10-15T16:00Z", "location": "Hogwarts"}
             ]}
         ]
     }

@@ -1,0 +1,2631 @@
+{
+    "schema": "complete",
+    "league": {
+        "current_season": 2024,
+        "abbr": "ENG1",
+        "schema": "league",
+        "slug": "eng1",
+        "name": "English Premier League",
+        "teams": [
+            {
+                "abbr": "BOU",
+                "logo": "picker/logos/eng1/bou.png",
+                "name": "AFC Bournemouth",
+                "nickname": "",
+                "aliases": [],
+                "coach": "",
+                "location": "AFC Bournemouth"
+            },
+            {
+                "abbr": "ARS",
+                "logo": "picker/logos/eng1/ars.png",
+                "name": "Arsenal",
+                "nickname": "Gunners",
+                "aliases": [],
+                "coach": "",
+                "location": "Arsenal"
+            },
+            {
+                "abbr": "AVL",
+                "logo": "picker/logos/eng1/avl.png",
+                "name": "Aston Villa",
+                "nickname": "",
+                "aliases": [],
+                "coach": "",
+                "location": "Aston Villa"
+            },
+            {
+                "abbr": "BRE",
+                "logo": "picker/logos/eng1/bre.png",
+                "name": "Brentford",
+                "nickname": "",
+                "aliases": [],
+                "coach": "",
+                "location": "Brentford"
+            },
+            {
+                "abbr": "BHA",
+                "logo": "picker/logos/eng1/bha.png",
+                "name": "Brighton & Hove Albion",
+                "nickname": "Seagulls",
+                "aliases": [],
+                "coach": "",
+                "location": "Brighton & Hove Albion"
+            },
+            {
+                "abbr": "CHE",
+                "logo": "picker/logos/eng1/che.png",
+                "name": "Chelsea",
+                "nickname": "Blues",
+                "aliases": [],
+                "coach": "",
+                "location": "Chelsea"
+            },
+            {
+                "abbr": "CRY",
+                "logo": "picker/logos/eng1/cry.png",
+                "name": "Crystal Palace",
+                "nickname": "Eagles",
+                "aliases": [],
+                "coach": "",
+                "location": "Crystal Palace"
+            },
+            {
+                "abbr": "EVE",
+                "logo": "picker/logos/eng1/eve.png",
+                "name": "Everton",
+                "nickname": "Toffees",
+                "aliases": [],
+                "coach": "",
+                "location": "Everton"
+            },
+            {
+                "abbr": "FUL",
+                "logo": "picker/logos/eng1/ful.png",
+                "name": "Fulham",
+                "nickname": "",
+                "aliases": [],
+                "coach": "",
+                "location": "Fulham"
+            },
+            {
+                "abbr": "IPS",
+                "logo": "picker/logos/eng1/ips.png",
+                "name": "Ipswich Town",
+                "nickname": "Tractor Boys",
+                "aliases": [],
+                "coach": "",
+                "location": "Ipswich Town"
+            },
+            {
+                "abbr": "LEI",
+                "logo": "picker/logos/eng1/lei.png",
+                "name": "Leicester City",
+                "nickname": "Foxes",
+                "aliases": [],
+                "coach": "",
+                "location": "Leicester City"
+            },
+            {
+                "abbr": "LIV",
+                "logo": "picker/logos/eng1/liv.png",
+                "name": "Liverpool",
+                "nickname": "Reds",
+                "aliases": [],
+                "coach": "",
+                "location": "Liverpool"
+            },
+            {
+                "abbr": "MNC",
+                "logo": "picker/logos/eng1/mnc.png",
+                "name": "Manchester City",
+                "nickname": "Sky Blues",
+                "aliases": [],
+                "coach": "",
+                "location": "Manchester City"
+            },
+            {
+                "abbr": "MAN",
+                "logo": "picker/logos/eng1/man.png",
+                "name": "Manchester United",
+                "nickname": "Red Devils",
+                "aliases": [],
+                "coach": "",
+                "location": "Manchester United"
+            },
+            {
+                "abbr": "NEW",
+                "logo": "picker/logos/eng1/new.png",
+                "name": "Newcastle United",
+                "nickname": "Magpies/Toon",
+                "aliases": [],
+                "coach": "",
+                "location": "Newcastle United"
+            },
+            {
+                "abbr": "NFO",
+                "logo": "picker/logos/eng1/nfo.png",
+                "name": "Nottingham Forest",
+                "nickname": "Nottingham F.",
+                "aliases": [],
+                "coach": "",
+                "location": "Nottingham Forest"
+            },
+            {
+                "abbr": "SOU",
+                "logo": "picker/logos/eng1/sou.png",
+                "name": "Southampton",
+                "nickname": "Saints",
+                "aliases": [],
+                "coach": "",
+                "location": "Southampton"
+            },
+            {
+                "abbr": "TOT",
+                "logo": "picker/logos/eng1/tot.png",
+                "name": "Tottenham Hotspur",
+                "nickname": "Spurs",
+                "aliases": [],
+                "coach": "",
+                "location": "Tottenham Hotspur"
+            },
+            {
+                "abbr": "WHU",
+                "logo": "picker/logos/eng1/whu.png",
+                "name": "West Ham United",
+                "nickname": "Hammers/Iron",
+                "aliases": [],
+                "coach": "",
+                "location": "West Ham United"
+            },
+            {
+                "abbr": "WOL",
+                "logo": "picker/logos/eng1/wol.png",
+                "name": "Wolverhampton Wanderers",
+                "nickname": "Wolves",
+                "aliases": [],
+                "coach": "",
+                "location": "Wolverhampton Wanderers"
+            }
+        ]
+    },
+    "season": {
+        "schema": "season",
+        "league": "ENG1",
+        "season": 2024,
+        "gamesets": [
+            {
+                "games": [
+                    {
+                        "away": "FUL",
+                        "home": "MAN",
+                        "start": "2024-08-16T19:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "IPS",
+                        "start": "2024-08-17T11:30Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "ARS",
+                        "start": "2024-08-17T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "EVE",
+                        "start": "2024-08-17T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "NEW",
+                        "start": "2024-08-17T14:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "NFO",
+                        "start": "2024-08-17T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "WHU",
+                        "start": "2024-08-17T16:30Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "BRE",
+                        "start": "2024-08-18T13:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "CHE",
+                        "start": "2024-08-18T15:30Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "LEI",
+                        "start": "2024-08-19T19:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MAN",
+                        "home": "BHA",
+                        "start": "2024-08-24T11:30Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "CRY",
+                        "start": "2024-08-24T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "FUL",
+                        "start": "2024-08-24T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "MNC",
+                        "start": "2024-08-24T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "SOU",
+                        "start": "2024-08-24T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "TOT",
+                        "start": "2024-08-24T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "AVL",
+                        "start": "2024-08-24T16:30Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "BOU",
+                        "start": "2024-08-25T13:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "WOL",
+                        "start": "2024-08-25T13:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "LIV",
+                        "start": "2024-08-25T15:30Z",
+                        "location": "Anfield, Liverpool"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "BHA",
+                        "home": "ARS",
+                        "start": "2024-08-31T11:30Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "BRE",
+                        "start": "2024-08-31T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "EVE",
+                        "start": "2024-08-31T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "IPS",
+                        "start": "2024-08-31T14:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "LEI",
+                        "start": "2024-08-31T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "NFO",
+                        "start": "2024-08-31T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "WHU",
+                        "start": "2024-08-31T16:30Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "CHE",
+                        "start": "2024-09-01T12:30Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "NEW",
+                        "start": "2024-09-01T12:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "MAN",
+                        "start": "2024-09-01T15:00Z",
+                        "location": "Old Trafford, Manchester"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MAN",
+                        "home": "SOU",
+                        "start": "2024-09-14T11:30Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "BHA",
+                        "start": "2024-09-14T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "CRY",
+                        "start": "2024-09-14T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "FUL",
+                        "start": "2024-09-14T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "LIV",
+                        "start": "2024-09-14T14:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "MNC",
+                        "start": "2024-09-14T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "AVL",
+                        "start": "2024-09-14T16:30Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "BOU",
+                        "start": "2024-09-14T19:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "TOT",
+                        "start": "2024-09-15T13:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "WOL",
+                        "start": "2024-09-15T15:30Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "CHE",
+                        "home": "WHU",
+                        "start": "2024-09-21T11:30Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "AVL",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "FUL",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "LEI",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "LIV",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "SOU",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "TOT",
+                        "start": "2024-09-21T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "CRY",
+                        "start": "2024-09-21T16:30Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "BHA",
+                        "start": "2024-09-22T13:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "MNC",
+                        "start": "2024-09-22T15:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MNC",
+                        "home": "NEW",
+                        "start": "2024-09-28T11:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "ARS",
+                        "start": "2024-09-28T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "BRE",
+                        "start": "2024-09-28T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "CHE",
+                        "start": "2024-09-28T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "EVE",
+                        "start": "2024-09-28T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "NFO",
+                        "start": "2024-09-28T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "WOL",
+                        "start": "2024-09-28T16:30Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "IPS",
+                        "start": "2024-09-29T13:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "MAN",
+                        "start": "2024-09-29T15:30Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "BOU",
+                        "start": "2024-09-30T19:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "LIV",
+                        "home": "CRY",
+                        "start": "2024-10-05T11:30Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "ARS",
+                        "start": "2024-10-05T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "BRE",
+                        "start": "2024-10-05T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "LEI",
+                        "start": "2024-10-05T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "MNC",
+                        "start": "2024-10-05T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "WHU",
+                        "start": "2024-10-05T14:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "EVE",
+                        "start": "2024-10-05T16:30Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "AVL",
+                        "start": "2024-10-06T13:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "CHE",
+                        "start": "2024-10-06T13:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "BHA",
+                        "start": "2024-10-06T15:30Z",
+                        "location": "American Express Stadium, Falmer"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "WHU",
+                        "home": "TOT",
+                        "start": "2024-10-19T11:30Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "FUL",
+                        "start": "2024-10-19T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "MAN",
+                        "start": "2024-10-19T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "NEW",
+                        "start": "2024-10-19T14:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "SOU",
+                        "start": "2024-10-19T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "IPS",
+                        "start": "2024-10-19T14:15Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "BOU",
+                        "start": "2024-10-19T16:30Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "WOL",
+                        "start": "2024-10-20T13:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "LIV",
+                        "start": "2024-10-20T15:30Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "NFO",
+                        "start": "2024-10-21T19:00Z",
+                        "location": "The City Ground, Nottingham"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NFO",
+                        "home": "LEI",
+                        "start": "2024-10-25T19:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "AVL",
+                        "start": "2024-10-26T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "BRE",
+                        "start": "2024-10-26T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "BHA",
+                        "start": "2024-10-26T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "MNC",
+                        "start": "2024-10-26T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "EVE",
+                        "start": "2024-10-26T16:30Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "CHE",
+                        "start": "2024-10-27T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "CRY",
+                        "start": "2024-10-27T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "WHU",
+                        "start": "2024-10-27T14:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "ARS",
+                        "start": "2024-10-27T16:30Z",
+                        "location": "Emirates Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "ARS",
+                        "home": "NEW",
+                        "start": "2024-11-02T12:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "BOU",
+                        "start": "2024-11-02T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "IPS",
+                        "start": "2024-11-02T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "LIV",
+                        "start": "2024-11-02T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "NFO",
+                        "start": "2024-11-02T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "SOU",
+                        "start": "2024-11-02T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "WOL",
+                        "start": "2024-11-02T17:30Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "TOT",
+                        "start": "2024-11-03T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "MAN",
+                        "start": "2024-11-03T16:30Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "FUL",
+                        "start": "2024-11-04T20:00Z",
+                        "location": "Craven Cottage, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "BOU",
+                        "home": "BRE",
+                        "start": "2024-11-09T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "CRY",
+                        "start": "2024-11-09T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "WHU",
+                        "start": "2024-11-09T15:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "WOL",
+                        "start": "2024-11-09T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "BHA",
+                        "start": "2024-11-09T17:30Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "LIV",
+                        "start": "2024-11-09T20:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "MAN",
+                        "start": "2024-11-10T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "NFO",
+                        "start": "2024-11-10T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "TOT",
+                        "start": "2024-11-10T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "CHE",
+                        "start": "2024-11-10T16:30Z",
+                        "location": "Stamford Bridge, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "CHE",
+                        "home": "LEI",
+                        "start": "2024-11-23T12:30Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "BOU",
+                        "start": "2024-11-23T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "ARS",
+                        "start": "2024-11-23T15:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "AVL",
+                        "start": "2024-11-23T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "EVE",
+                        "start": "2024-11-23T15:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "FUL",
+                        "start": "2024-11-23T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "MNC",
+                        "start": "2024-11-23T17:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "SOU",
+                        "start": "2024-11-24T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "IPS",
+                        "start": "2024-11-24T16:30Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "NEW",
+                        "start": "2024-11-25T20:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "SOU",
+                        "home": "BHA",
+                        "start": "2024-11-29T20:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "BRE",
+                        "start": "2024-11-30T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "CRY",
+                        "start": "2024-11-30T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "NFO",
+                        "start": "2024-11-30T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "WOL",
+                        "start": "2024-11-30T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "WHU",
+                        "start": "2024-11-30T17:30Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "CHE",
+                        "start": "2024-12-01T13:30Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "MAN",
+                        "start": "2024-12-01T13:30Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "TOT",
+                        "start": "2024-12-01T13:30Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "LIV",
+                        "start": "2024-12-01T16:00Z",
+                        "location": "Anfield, Liverpool"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "CRY",
+                        "home": "IPS",
+                        "start": "2024-12-03T19:30Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "LEI",
+                        "start": "2024-12-03T20:15Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "EVE",
+                        "start": "2024-12-04T19:30Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "MNC",
+                        "start": "2024-12-04T19:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "NEW",
+                        "start": "2024-12-04T19:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "SOU",
+                        "start": "2024-12-04T19:30Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "ARS",
+                        "start": "2024-12-04T20:15Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "AVL",
+                        "start": "2024-12-04T20:15Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "FUL",
+                        "start": "2024-12-05T19:30Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "BOU",
+                        "start": "2024-12-05T20:15Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "LIV",
+                        "home": "EVE",
+                        "start": "2024-12-07T12:30Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "AVL",
+                        "start": "2024-12-07T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "BRE",
+                        "start": "2024-12-07T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "CRY",
+                        "start": "2024-12-07T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "MAN",
+                        "start": "2024-12-07T17:30Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "FUL",
+                        "start": "2024-12-08T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "IPS",
+                        "start": "2024-12-08T14:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "LEI",
+                        "start": "2024-12-08T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "TOT",
+                        "start": "2024-12-08T16:30Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "WHU",
+                        "start": "2024-12-09T20:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "EVE",
+                        "home": "ARS",
+                        "start": "2024-12-14T15:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "LIV",
+                        "start": "2024-12-14T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "NEW",
+                        "start": "2024-12-14T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "WOL",
+                        "start": "2024-12-14T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "NFO",
+                        "start": "2024-12-14T17:30Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "BHA",
+                        "start": "2024-12-15T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "MNC",
+                        "start": "2024-12-15T16:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "CHE",
+                        "start": "2024-12-15T19:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "SOU",
+                        "start": "2024-12-15T19:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "BOU",
+                        "start": "2024-12-16T20:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MNC",
+                        "home": "AVL",
+                        "start": "2024-12-21T12:30Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "BRE",
+                        "start": "2024-12-21T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "IPS",
+                        "start": "2024-12-21T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "WHU",
+                        "start": "2024-12-21T15:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "CRY",
+                        "start": "2024-12-21T17:30Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "EVE",
+                        "start": "2024-12-22T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "FUL",
+                        "start": "2024-12-22T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "LEI",
+                        "start": "2024-12-22T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "MAN",
+                        "start": "2024-12-22T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "TOT",
+                        "start": "2024-12-22T16:30Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "EVE",
+                        "home": "MNC",
+                        "start": "2024-12-26T12:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "BOU",
+                        "start": "2024-12-26T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "CHE",
+                        "start": "2024-12-26T15:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "NEW",
+                        "start": "2024-12-26T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "NFO",
+                        "start": "2024-12-26T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "SOU",
+                        "start": "2024-12-26T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "WOL",
+                        "start": "2024-12-26T17:30Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "LIV",
+                        "start": "2024-12-26T20:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "BHA",
+                        "start": "2024-12-27T19:30Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "ARS",
+                        "start": "2024-12-27T20:15Z",
+                        "location": "Emirates Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MNC",
+                        "home": "LEI",
+                        "start": "2024-12-29T14:30Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "CRY",
+                        "start": "2024-12-29T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "EVE",
+                        "start": "2024-12-29T15:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "FUL",
+                        "start": "2024-12-29T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "TOT",
+                        "start": "2024-12-29T15:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "WHU",
+                        "start": "2024-12-29T17:15Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "AVL",
+                        "start": "2024-12-30T19:45Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "IPS",
+                        "start": "2024-12-30T19:45Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "MAN",
+                        "start": "2024-12-30T20:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "BRE",
+                        "start": "2025-01-01T17:30Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NEW",
+                        "home": "TOT",
+                        "start": "2025-01-04T12:30Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "BOU",
+                        "start": "2025-01-04T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "AVL",
+                        "start": "2025-01-04T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "CRY",
+                        "start": "2025-01-04T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "MNC",
+                        "start": "2025-01-04T15:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "SOU",
+                        "start": "2025-01-04T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "BHA",
+                        "start": "2025-01-04T17:30Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "FUL",
+                        "start": "2025-01-05T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "LIV",
+                        "start": "2025-01-05T16:30Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "WOL",
+                        "start": "2025-01-06T20:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MNC",
+                        "home": "BRE",
+                        "start": "2025-01-14T19:30Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "CHE",
+                        "start": "2025-01-14T19:30Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "WHU",
+                        "start": "2025-01-14T19:30Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "NFO",
+                        "start": "2025-01-14T20:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "EVE",
+                        "start": "2025-01-15T19:30Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "LEI",
+                        "start": "2025-01-15T19:30Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "NEW",
+                        "start": "2025-01-15T19:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "ARS",
+                        "start": "2025-01-15T20:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "IPS",
+                        "start": "2025-01-16T19:30Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "MAN",
+                        "start": "2025-01-16T20:00Z",
+                        "location": "Old Trafford, Manchester"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "BOU",
+                        "home": "NEW",
+                        "start": "2025-01-18T12:30Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "BRE",
+                        "start": "2025-01-18T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "LEI",
+                        "start": "2025-01-18T15:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "WHU",
+                        "start": "2025-01-18T15:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "ARS",
+                        "start": "2025-01-18T17:30Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "EVE",
+                        "start": "2025-01-19T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "MAN",
+                        "start": "2025-01-19T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "NFO",
+                        "start": "2025-01-19T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "IPS",
+                        "start": "2025-01-19T16:30Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "CHE",
+                        "start": "2025-01-20T20:00Z",
+                        "location": "Stamford Bridge, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NFO",
+                        "home": "BOU",
+                        "start": "2025-01-25T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "BHA",
+                        "start": "2025-01-25T15:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "LIV",
+                        "start": "2025-01-25T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "SOU",
+                        "start": "2025-01-25T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "WOL",
+                        "start": "2025-01-25T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "MNC",
+                        "start": "2025-01-25T17:30Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "CRY",
+                        "start": "2025-01-26T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "TOT",
+                        "start": "2025-01-26T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "AVL",
+                        "start": "2025-01-26T16:30Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "FUL",
+                        "start": "2025-01-26T19:00Z",
+                        "location": "Craven Cottage, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "LIV",
+                        "home": "BOU",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "ARS",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "BRE",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "CHE",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "EVE",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "IPS",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "MAN",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "NEW",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "NFO",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "WOL",
+                        "start": "2025-02-01T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "IPS",
+                        "home": "AVL",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "BHA",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "CRY",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "FUL",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "LEI",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "LIV",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "MNC",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "SOU",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "TOT",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "WHU",
+                        "start": "2025-02-15T15:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "WOL",
+                        "home": "BOU",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "ARS",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "AVL",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "EVE",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "FUL",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "IPS",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "LEI",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "MNC",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "NEW",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "SOU",
+                        "start": "2025-02-22T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "EVE",
+                        "home": "BRE",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "BHA",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "NFO",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "TOT",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "WHU",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "WOL",
+                        "start": "2025-02-25T19:45Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "CRY",
+                        "start": "2025-02-25T20:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "CHE",
+                        "start": "2025-02-26T19:45Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "LIV",
+                        "start": "2025-02-26T20:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "MAN",
+                        "start": "2025-02-26T20:00Z",
+                        "location": "Old Trafford, Manchester"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "AVL",
+                        "home": "BRE",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "BHA",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "CHE",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "CRY",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "LIV",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "MAN",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "NFO",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "TOT",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "WHU",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "London Stadium, London"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "WOL",
+                        "start": "2025-03-08T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "BRE",
+                        "home": "BOU",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "ARS",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "AVL",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "EVE",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "FUL",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "IPS",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "LEI",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "MNC",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "NEW",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "SOU",
+                        "start": "2025-03-15T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "IPS",
+                        "home": "BOU",
+                        "start": "2025-04-01T18:45Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "ARS",
+                        "start": "2025-04-01T18:45Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "BHA",
+                        "start": "2025-04-01T18:45Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "NFO",
+                        "start": "2025-04-01T18:45Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "WOL",
+                        "start": "2025-04-01T18:45Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "CHE",
+                        "start": "2025-04-02T18:45Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "MNC",
+                        "start": "2025-04-02T18:45Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "NEW",
+                        "start": "2025-04-02T18:45Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "SOU",
+                        "start": "2025-04-02T18:45Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "LIV",
+                        "start": "2025-04-02T19:00Z",
+                        "location": "Anfield, Liverpool"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NFO",
+                        "home": "AVL",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "BRE",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "CRY",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "EVE",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "FUL",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "IPS",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "LEI",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "MAN",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "TOT",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "WHU",
+                        "start": "2025-04-05T14:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "FUL",
+                        "home": "BOU",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "ARS",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "BHA",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "CHE",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "LIV",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "MNC",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "NEW",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "NFO",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "SOU",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "WOL",
+                        "start": "2025-04-12T14:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NEW",
+                        "home": "AVL",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "BRE",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "CRY",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "EVE",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "FUL",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "IPS",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "LEI",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "MAN",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "TOT",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "WHU",
+                        "start": "2025-04-19T14:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "MAN",
+                        "home": "BOU",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "ARS",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "BHA",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "CHE",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "LIV",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "MNC",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "NEW",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "NFO",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "SOU",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "WOL",
+                        "start": "2025-04-26T14:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "BOU",
+                        "home": "ARS",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "AVL",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "BRE",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "NEW",
+                        "home": "BHA",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "CHE",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "CRY",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "EVE",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "LEI",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "MNC",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "WHU",
+                        "start": "2025-05-03T14:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "AVL",
+                        "home": "BOU",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "FUL",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "IPS",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "LIV",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "MAN",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "NEW",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "LEI",
+                        "home": "NFO",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "SOU",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "TOT",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "WOL",
+                        "start": "2025-05-10T14:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "NEW",
+                        "home": "ARS",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Emirates Stadium, London"
+                    },
+                    {
+                        "away": "TOT",
+                        "home": "AVL",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Villa Park, Birmingham"
+                    },
+                    {
+                        "away": "FUL",
+                        "home": "BRE",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Gtech Community Stadium, Brentford"
+                    },
+                    {
+                        "away": "LIV",
+                        "home": "BHA",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "American Express Stadium, Falmer"
+                    },
+                    {
+                        "away": "MAN",
+                        "home": "CHE",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Stamford Bridge, London"
+                    },
+                    {
+                        "away": "WOL",
+                        "home": "CRY",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Selhurst Park, London"
+                    },
+                    {
+                        "away": "SOU",
+                        "home": "EVE",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Goodison Park, Liverpool"
+                    },
+                    {
+                        "away": "IPS",
+                        "home": "LEI",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "King Power Stadium, Leicester"
+                    },
+                    {
+                        "away": "BOU",
+                        "home": "MNC",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "Etihad Stadium, Manchester"
+                    },
+                    {
+                        "away": "NFO",
+                        "home": "WHU",
+                        "start": "2025-05-18T14:00Z",
+                        "location": "London Stadium, London"
+                    }
+                ]
+            },
+            {
+                "games": [
+                    {
+                        "away": "LEI",
+                        "home": "BOU",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Vitality Stadium, Bournemouth"
+                    },
+                    {
+                        "away": "MNC",
+                        "home": "FUL",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Craven Cottage, London"
+                    },
+                    {
+                        "away": "WHU",
+                        "home": "IPS",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Portman Road, Ipswich"
+                    },
+                    {
+                        "away": "CRY",
+                        "home": "LIV",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Anfield, Liverpool"
+                    },
+                    {
+                        "away": "AVL",
+                        "home": "MAN",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Old Trafford, Manchester"
+                    },
+                    {
+                        "away": "EVE",
+                        "home": "NEW",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "St. James' Park, Newcastle-upon-Tyne"
+                    },
+                    {
+                        "away": "CHE",
+                        "home": "NFO",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "The City Ground, Nottingham"
+                    },
+                    {
+                        "away": "ARS",
+                        "home": "SOU",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "St. Mary's Stadium, Southampton"
+                    },
+                    {
+                        "away": "BHA",
+                        "home": "TOT",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Tottenham Hotspur Stadium, London"
+                    },
+                    {
+                        "away": "BRE",
+                        "home": "WOL",
+                        "start": "2025-05-25T15:00Z",
+                        "location": "Molineux Stadium, Wolverhampton"
+                    }
+                ]
+            }
+        ]
+    }
+}

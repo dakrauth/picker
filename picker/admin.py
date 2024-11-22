@@ -110,3 +110,21 @@ class PickSetAdmin(admin.ModelAdmin):
 
     def league(self, obj):
         return obj.gameset.league
+
+
+@admin.register(picker.PickerMembership)
+class PickerMembershipAdmin(admin.ModelAdmin):
+    list_display = ("user", "group", "status", "autopick")
+    ordering = ("user",)
+    list_filter = ("group",)
+
+
+class PickerMembershipInline(admin.TabularInline):
+    model = picker.PickerMembership
+
+
+@admin.register(picker.PickerGrouping)
+class PickerGroupingAdmin(admin.ModelAdmin):
+    list_display = ("name", "id", "status", "category")
+    filter_horizontal = ["leagues"]
+    inlines = [PickerMembershipInline]

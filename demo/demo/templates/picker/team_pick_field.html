@@ -6,12 +6,13 @@
         <span class="market">{{ team.name }}</span><br>
         <span class="nickname">{{ team.nickname }}</span><br>
         <span class="record">{{ team.record_as_string }}</span>
+        <input type="radio"
+            id="{{ choice_id }}"
+            {{ readonly }}
+            {{ disabled }}
+            value="{{ value }}"
+            name="{{ name }}"
+            {{ checked }}>
+
     </div>
-    <input type="radio"
-        id="{{ choice_id }}"
-        {{ readonly }}
-        {{ disabled }}
-        value="{{ value }}"
-        name="{{ name }}"
-        {{ checked }}>
 </label>
