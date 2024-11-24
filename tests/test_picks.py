@@ -35,7 +35,6 @@ class TestViews:
         assert r.status_code == 302
         assert r.url == "/hq/picks/{}/1/".format(YEAR)
 
-
     @pytest.mark.parametrize("name,args", PICK_ARGS)
     def test_views_not_logged_in(self, client, league, name, args):
         url = reverse(name, args=args)

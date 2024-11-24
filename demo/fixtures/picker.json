@@ -219,14 +219,20 @@
     "model": "picker.pickergrouping",
     "pk": 1,
     "fields": {
-        "name": "Demo Group",
+        "name": "Group 1 - All",
         "status": "ACTV",
         "category": "PVT",
-        "leagues": [
-            1,
-            2,
-            3
-        ]
+        "leagues": [1, 2, 3]
+    }
+},
+{
+    "model": "picker.pickergrouping",
+    "pk": 2,
+    "fields": {
+        "name": "Group 2 - ENG1",
+        "status": "ACTV",
+        "category": "PVT",
+        "leagues": [3]
     }
 },
 {
@@ -325,6 +331,26 @@
     "fields": {
         "user": 10,
         "group": 1,
+        "status": "ACTV",
+        "autopick": "RAND"
+    }
+},
+{
+    "model": "picker.pickermembership",
+    "pk": 11,
+    "fields": {
+        "user": 1,
+        "group": 2,
+        "status": "ACTV",
+        "autopick": "RAND"
+    }
+},
+{
+    "model": "picker.pickermembership",
+    "pk": 12,
+    "fields": {
+        "user": 2,
+        "group": 2,
         "status": "ACTV",
         "autopick": "RAND"
     }

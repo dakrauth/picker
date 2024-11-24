@@ -1,10 +1,10 @@
-Picker
-======
+django-picker
+=============
 
 .. image:: https://github.com/dakrauth/picker/workflows/Test/badge.svg
     :target: https://github.com/dakrauth/picker/actions
 
-A Django-based sports picker app for various leagues.
+A Django-based sports picker app for various leagues (NFL, English Premier, etc).
 
 Templates
 ---------
@@ -44,8 +44,8 @@ Build and execute the demo in a Docker container:
 
 .. code-block:: bash
 
-    $ just dbuild
-    $ just drun
+    $ just docker-build
+    $ just docker-run
 
 To test:
 
@@ -64,8 +64,8 @@ To test:
 Meta
 ----
 
-Requires Python >= 3.10, Django >= 4.2
+:Version: 2.3.0
+:Requirements: Python >= 3.10, Django >= 4.2
+:License: MIT (see ``LICENSE`` file for more information)
+:Source: https://github.com/dakrauth/django-picker
 
-Distributed under the MIT License, see ``LICENSE`` file for more information.
-
-https://github.com/dakrauth/picker

@@ -2,6 +2,7 @@ import random
 from datetime import timedelta
 from collections import ChainMap, OrderedDict
 from functools import partialmethod
+from types import SimpleNamespace
 
 from django.db import models
 from django.urls import reverse
@@ -156,7 +157,10 @@ class League(models.Model):
 
         return ChainMap(league, base, core)
 
-    def config(self, key, default=None):
+    def config(self, key=None, default=None):
+        if key is None:
+            return SimpleNamespace(**self._config)
+
         return self._config.get(key, default)
 
     @classmethod

@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=75.6", "wheel"]
+requires = ["setuptools>=61.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-picker"
-dynamic = ["version"]
+version = "2.3.0"
 description = "A Django sports picker app"
 license = { file = "LICENSE" }
 readme = { file = "README.rst", content-type = "text/x-rst" }
@@ -38,17 +38,34 @@ dependencies = [
 Homepage = "https://github.com/dakrauth/django-picker"
 
 [project.optional-dependencies]
-tests = [
-    "tox",
+test = [
+    "pytest",
     "coverage",
     "pytest-django",
-    "pytest",
     "pytest-cov",
-    "flake8",
+    "freezegun"
+]
+dev = [
+    "tox",
+    "build",
+    "ipython",
+    "twine",
+    "ruff",
+    "django-extensions",
+    "pytest-sugar",
+    "pytest-clarity"
 ]
 
-[tool.setuptools.dynamic]
-version = { attr = "when.__version__"}
+[tool.setuptools.packages.find]
+include = ["picker*"]
 
 [tool.black]
 line-length = 100
+
+[tool.ruff]
+cache-dir = ".dev/ruff"
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+ignore = ["E741"]

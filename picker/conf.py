@@ -16,10 +16,11 @@ DEFAULT_PICKER_SETTINGS = {
         "PARTICIPATION_HOOKS": [],
         "TEAM_PICKER_WIDGET": None,
         "FAKE_DATETIME_NOW": False,
+        "ALLOW_TIES": False,
+        "SHOW_TV": True,
         "GAMESET_DURATION": {"days": 7, "seconds": -1},
     },
 }
 
-picker_settings = dict(DEFAULT_PICKER_SETTINGS, **getattr(settings, "PICKER", {}))
-
+picker_settings = {**DEFAULT_PICKER_SETTINGS, **getattr(settings, "PICKER", {})}
 get_setting = picker_settings.get

@@ -1,0 +1,16 @@
+{% load picker_tags %}
+<div class="dropdown">
+    <button class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">Go to week</button>
+    <ul class="dropdown-menu">{% for gs in season_gamesets %}
+        <li>
+            <a class="dropdown-item" href="/{{ league.slug }}/{{ relative_to }}/{{ gs.season }}/{{ gs.sequence }}/">{{ gs.sequence }}</a>
+        </li> {% endfor %}
+        {% if gameset %}
+        {% if is_manager %}
+        <li>
+            <a class="dropdown-item" href="{% url 'picker-manage-week' league.slug gameset.season gameset.sequence %}">Manage</a>
+        </li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>

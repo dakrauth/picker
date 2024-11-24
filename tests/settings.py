@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DEMO_PROJECT = Path(__file__).parents[1] / "demo/demo"
+DEMO_PROJECT = Path(__file__).parents[1] / "demo"
 
 ALLOWED_HOSTS = ["*"]
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3"}}

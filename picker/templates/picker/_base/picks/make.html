@@ -12,15 +12,18 @@
     {% if form.errors %}
     <p class="errorlist">Please fix the errors below:</p>
     {% endif %}
+    {% with show_tv=league.config.SHOW_TV %}
     <div class="panel panel-primary">
         <div class="panel-heading">Your weekly picks</div>
         <form method="post" action="">{% csrf_token %}
-        <table class="table table-sm table-responsive table-striped picks">
+        <table class="table table-sm table-responsive table-striped picks {% if not show_tv %}no-tv{% endif %}">
             <tbody>
             <tr>
                 <th class="start-time">Start Time</th>
                 <th class="teams w-50">Away vs. Home</th>
+                {% if show_tv %}
                 <th class="tv">TV</th>
+                {% endif %}
             </tr> {% for field in form.game_fields %}{% with field.field.game as gm %}
             <tr>
                 <td class="kickoff">
@@ -32,7 +35,9 @@
                 <td class="{% if field.field.disabled %}disabled-choice {% endif %}teams">
                     {{ field }}
                 </td>
+                {% if show_tv %}
                 <td class="tv">{{ gm.tv|default:"" }}</td>
+                {% endif %}
             </tr>{% endwith %}{% endfor %}
             <tr>{% with form.points as field %}
                 <td><strong>Points Total</strong><br></td>
@@ -49,5 +54,5 @@
         </table>
         </form>
     </div>
-
+    {% endwith %}
 {% endblock %}

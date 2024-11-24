@@ -99,7 +99,7 @@ class SimplePickerViewBase(TemplateView):
             template=template_names,
             context=context,
             using=self.template_engine,
-            **response_kwargs
+            **response_kwargs,
         )
 
 

@@ -1,7 +1,32 @@
+from pathlib import Path
 from django import forms
+from django.conf import settings
+from django.urls import include, re_path
+from django.contrib import admin
+from django.shortcuts import render
+from django.conf.urls.static import static
 from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 from django.template import loader, TemplateDoesNotExist
+
+from picker.models import League
+
+
+def home(request):
+    leagues = League.objects.all()
+    return render(request, "picker/home.html", {"leagues": leagues})
+
+
+urlpatterns = static(
+    "/static/", document_root=Path(admin.__file__).parent / "static", show_indexes=True
+) + [
+    re_path(r"^$", home, name="demo-home"),
+    re_path(r"^admin/", admin.site.urls),
+    re_path(r"^accounts/", include("django.contrib.auth.urls")),
+    re_path(r"^(?P<league>\w+)/", include("picker.urls")),
+] + static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True
+)
 
 
 class TemplateTeamChoice(forms.RadioSelect):

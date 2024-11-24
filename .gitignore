@@ -34,10 +34,6 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
 .cache
 nosetests.xml
 coverage.xml
@@ -55,7 +51,7 @@ docs/_build/
 
 # PyBuilder
 target/
-db.sqlite3
+demo.sqlite3
 .python-version
 venv
 .pylintrc

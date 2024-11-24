@@ -64,7 +64,7 @@ class Roster(RosterMixin, PickerViewBase):
             roster=roster,
             group=group,
             other_groups=PickerGrouping.objects.filter(members__user=self.request.user),
-            **kwargs
+            **kwargs,
         )
 
 
@@ -129,7 +129,7 @@ class ResultsByWeek(ResultsBase):
                 season=self.season,
                 sequence=self.args[0],
             ),
-            **kwargs
+            **kwargs,
         )
 
 
@@ -145,7 +145,7 @@ class PicksBySeason(PickerViewBase):
                 (gs, gs.pick_for_user(self.request.user))
                 for gs in get_list_or_404(GameSetPicks, league=self.league, season=self.season)
             ],
-            **kwargs
+            **kwargs,
         )
 
 
