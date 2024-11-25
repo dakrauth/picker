@@ -229,7 +229,7 @@
     "model": "picker.pickergrouping",
     "pk": 2,
     "fields": {
-        "name": "Group 2 - ENG1",
+        "name": "Group 2 - Premier",
         "status": "ACTV",
         "category": "PVT",
         "leagues": [3]
@@ -320,16 +320,6 @@
     "pk": 9,
     "fields": {
         "user": 9,
-        "group": 1,
-        "status": "ACTV",
-        "autopick": "RAND"
-    }
-},
-{
-    "model": "picker.pickermembership",
-    "pk": 10,
-    "fields": {
-        "user": 10,
         "group": 1,
         "status": "ACTV",
         "autopick": "RAND"

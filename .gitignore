@@ -57,3 +57,4 @@ venv
 .pylintrc
 .pytest_cache/
 .dev
+/.vscode

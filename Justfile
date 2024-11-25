@@ -39,6 +39,7 @@ update: venv
 
 # Setup the demo project for non-docker development
 demo-init:
+    rm -f demo/demo.sqlite3
     {{DJ}} migrate --no-input
     {{DJ}} loaddata demo/fixtures/picker.json
     {{DJ}} import_picks tests/nfl2024.json tests/quidditch.json tests/eng1.json

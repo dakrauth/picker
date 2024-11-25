@@ -3,18 +3,23 @@ from django import forms
 from django.conf import settings
 from django.urls import include, re_path
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.conf.urls.static import static
 from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 from django.template import loader, TemplateDoesNotExist
 
-from picker.models import League
+from picker.models import League, PickerGrouping
 
 
 def home(request):
     leagues = League.objects.all()
-    return render(request, "picker/home.html", {"leagues": leagues})
+    return render(
+        request,
+        "picker/home.html",
+        {"leagues": leagues, "users": User.objects.all(), "groups": PickerGrouping.objects.all()}
+    )
 
 
 urlpatterns = static(

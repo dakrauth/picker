@@ -1,24 +1,58 @@
 {% extends "picker/base.html" %}
 {% block main_content %}
-    {% if league %}
-    <h2>{{ league }} Home</h2>
-    <p>
-        Select an option from the menu above.
-    </p>
-    {% else %}
+    {% if leagues %}
+    <h3>Leagues</h3>
     <p class="">Select a demo:</p>
-    <div class="list-group">
-        {% for league in leagues %}
-        <a href="{{ league.get_absolute_url }}" class="list-group-item">{{ league }} Demo</a>
-        {% endfor %}
+    <div class="mb-3">{% for league in leagues %}
+        <a href="{{ league.get_absolute_url }}" class="btn btn-primary btn-sm">{{ league }}</a>{% endfor %}
     </div>
     {% endif %}
-    <hr>
-    {% if not user.is_authenticated %}
+    
+    {% if user.is_authenticated %}
+    <p>Greetings, {{ user }}</p>
+    {% endif %}
+
+    {% if groups %}
+    <h3>Groups</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Group</th>
+            <th>Leagues</th>
+        </tr>
+        {% for group in groups %}
+        <tr>
+            <td>{{ group }}</td>
+            <td>{% for lg in group.leagues.all %}
+                {{ lg }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if users %}
+    <h3>Users</h3>
+    <p>The following users are available to use:</p>
+    <table class="table table-striped">
+        <tr>
+            <th>User</th>
+            <th>Password</th>
+            <th>Group Memberships</th>
+        </tr>
+        {% for u in users %}
+        <tr>
+            <td>{{ u }}</td>
+            <td>{{ u.username }}</td>
+            <td>{% for m in u.picker_memberships.all %}
+                {{ m.group }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
     <p>
         You can sign in as an admin using <code>demo</code> as both username and password,
         or as standard user using <code>user1</code>, <code>user2</code>, ...
         <code>user9</code> as username and password.
     </p>
-    {% endif %}
 {% endblock main_content %}
