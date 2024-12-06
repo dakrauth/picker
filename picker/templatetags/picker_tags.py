@@ -1,4 +1,5 @@
 from django.template import Library
+from django.core.exceptions import ObjectDoesNotExist
 
 from ..models import PickerFavorite
 from ..utils import get_templates
@@ -22,13 +23,19 @@ def user_result(user_pick, actual_results):
 def season_nav(context, gameset, relative_to):
     user = context["user"]
     league = context["league"]
-    group = context.get("group")
+    prev = following = None
+    if gameset:
+        prev = gameset.previous_gameset
+        following = gameset.next_gameset
+
     return {
         "gameset": gameset,
         "relative_to": relative_to,
         "user": user,
-        "group": group,
+        "group": context.get("group"),
         "league": league,
+        "previous": prev,
+        "following": following,
         "is_manager": user.is_superuser or user.is_staff,
         "season_gamesets": league.season_gamesets(gameset.season if gameset else None),
     }

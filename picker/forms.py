@@ -1,3 +1,4 @@
+from functools import cache
 from django import forms
 from django.utils import timezone
 from django.utils.module_loading import import_string
@@ -6,7 +7,6 @@ from . import models as picker
 
 _picker_widget = None
 encoded_game_key = "game_{}".format
-TIE_KEY = "__TIE__"
 
 
 def decoded_game_key(value):
@@ -16,32 +16,17 @@ def decoded_game_key(value):
 def encoded_game_item(game):
     return (
         encoded_game_key(game.id),
-        str(game.winner.id) if game.winner else (TIE_KEY if game.is_tie else ""),
+        str(game.winner.id) if game.winner else (picker.TIE_KEY if game.is_tie else ""),
     )
 
 
+@cache
 def get_picker_widget(league):
-    global _picker_widget
-    if not _picker_widget:
-        widget_path = league.config("TEAM_PICKER_WIDGET")
-        if widget_path:
-            _picker_widget = import_string(widget_path)
+    widget_path = league.config("TEAM_PICKER_WIDGET")
+    if widget_path:
+        return import_string(widget_path)
 
-        _picker_widget = _picker_widget or forms.RadioSelect
-    return _picker_widget
-
-
-class ChoiceOption(tuple):
-    @classmethod
-    def make(cls, team, winner):
-        if team:
-            choice = cls((str(team.id), team))
-            choice.winner = winner.id if winner else None
-            return choice
-
-        choice = cls((TIE_KEY, ""))
-        choice.winner = winner.id if winner else None
-        return choice
+    return forms.RadioSelect
 
 
 class GameField(forms.ChoiceField):
@@ -49,7 +34,7 @@ class GameField(forms.ChoiceField):
         self.winner = game.winner
         choices = [(str(game.away.id), game.away), (str(game.home.id), game.home)]
         if allow_ties:
-            choices.insert(1, (TIE_KEY, ""))
+            choices.insert(1, (picker.TIE_KEY, ""))
 
         self.game = game
         self.manage = manage
@@ -122,7 +107,7 @@ class ManagementPickForm(BasePickForm):
             if winner:
                 pk = decoded_game_key(key)
                 game = gameset.games.get(pk=pk)
-                game.winner = None if winner == TIE_KEY else int(winner)
+                game.winner = None if winner == picker.TIE_KEY else int(winner)
 
         gameset.update_pick_status()
 
