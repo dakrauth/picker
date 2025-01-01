@@ -54,11 +54,11 @@ class SimplePickerViewBase(TemplateView):
 
     @cached_property
     def leagues(self):
-        return League.active.all()
+        return League.objects.active()
 
     @cached_property
     def league(self):
-        return get_object_or_404(League.active, slug=self.kwargs["league"])
+        return get_object_or_404(League.objects.active(), slug=self.kwargs["league"])
 
     def get_template_names(self, template_override=None):
         if template_override is None and self.template_name is None:
@@ -114,4 +114,4 @@ class PickerViewBase(LoginRequiredMixin, SimplePickerViewBase):
 
     @cached_property
     def memberships(self):
-        return list(PickerMembership.active.for_user(self.request.user, league=self.league))
+        return list(PickerMembership.objects.for_user(self.request.user, league=self.league))

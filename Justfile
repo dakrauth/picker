@@ -119,10 +119,10 @@ upload:
 # Run linter and code formatter tools
 lint:
     @echo Linting...
-    -{{BIN}}/flake8 picker tests demo
+    -{{BIN}}/ruff check picker tests demo
 
     @echo Format checks...
-    -{{BIN}}/black --check --diff -l 100 picker tests demo
+    -{{BIN}}/ruff format --diff --line-length 100 picker tests demo
 
 # Build the demo Docker container
 docker-build *args='':

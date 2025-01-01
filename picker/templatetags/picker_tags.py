@@ -1,5 +1,4 @@
 from django.template import Library
-from django.core.exceptions import ObjectDoesNotExist
 
 from ..models import PickerFavorite
 from ..utils import get_templates

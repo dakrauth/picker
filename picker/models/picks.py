@@ -47,9 +47,11 @@ class Preference(models.Model):
         return self.autopick != self.Autopick.NONE
 
 
-class ActiveStatusManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(status=self.model.Status.ACTIVE)
+class PickerGroupingManager(models.Manager):
+    def active(self):
+        return self.filter(
+            status=self.model.Status.ACTIVE, leagues__is_active=True
+        ).prefetch_related("leagues", "members")
 
 
 class PickerGrouping(models.Model):
@@ -67,8 +69,7 @@ class PickerGrouping(models.Model):
     status = models.CharField(max_length=4, choices=Status.choices, default=Status.ACTIVE)
     category = models.CharField(max_length=3, choices=Category.choices, default=Category.PRIVATE)
 
-    objects = models.Manager()
-    active = ActiveStatusManager()
+    objects = PickerGroupingManager()
 
     def __str__(self):
         return self.name
@@ -89,15 +90,17 @@ class PickerFavorite(models.Model):
         return super().save(*args, **kws)
 
 
-class ActiveMembershipManager(models.Manager):
-    def get_queryset(self):
+class MembershipManager(models.Manager):
+    def active(self, **kwargs):
         return (
-            super()
-            .get_queryset()
-            .filter(status=self.model.Status.ACTIVE, group__status=PickerGrouping.Status.ACTIVE)
+            self.filter(
+                status=self.model.Status.ACTIVE,
+                group__status=PickerGrouping.Status.ACTIVE,
+                **kwargs,
+            )
             .select_related("group")
             .prefetch_related(
-                models.Prefetch("group__leagues", queryset=sports.League.active.all())
+                models.Prefetch("group__leagues", queryset=sports.League.objects.active())
             )
         )
 
@@ -106,7 +109,7 @@ class ActiveMembershipManager(models.Manager):
         if league:
             kwargs["group__leagues"] = league
 
-        return self.filter(**kwargs)
+        return self.active(**kwargs)
 
 
 class PickerMembership(models.Model):
@@ -129,8 +132,7 @@ class PickerMembership(models.Model):
     status = models.CharField(max_length=4, choices=Status.choices, default=Status.ACTIVE)
     autopick = models.CharField(max_length=4, choices=Autopick.choices, default=Autopick.RANDOM)
 
-    objects = models.Manager()
-    active = ActiveMembershipManager()
+    objects = MembershipManager()
 
     def __str__(self):
         return f"{self.user}@{self.group}"

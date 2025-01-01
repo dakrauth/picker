@@ -37,9 +37,9 @@ def temp_slug():
     return "{:10.0f}".format(random.random() * 10000000000)
 
 
-class ActiveManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
+class LeagueManager(models.Manager):
+    def active(self):
+        return self.filter(is_active=True)
 
 
 class League(models.Model):
@@ -51,8 +51,7 @@ class League(models.Model):
     avg_game_duration = models.PositiveIntegerField(default=240)
     is_active = models.BooleanField(default=True)
 
-    objects = models.Manager()
-    active = ActiveManager()
+    objects = LeagueManager()
 
     class Meta:
         permissions = (("can_update_score", "Can update scores"),)
@@ -426,7 +425,7 @@ class GameSet(models.Model):
     @cached_property
     def next_gameset(self):
         try:
-            return self.league.gamesets.get(season=self.season, sequence = self.sequence + 1)
+            return self.league.gamesets.get(season=self.season, sequence=self.sequence + 1)
         except GameSet.DoesNotExist:
             return None
 
